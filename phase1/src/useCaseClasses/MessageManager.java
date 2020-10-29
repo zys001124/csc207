@@ -31,9 +31,9 @@ public class MessageManager {
         return m; //TEMPORARY
     }
 
-    //public List<Message> messagesBetweenTwo(Attendee a1, Attendee a2){
+    public List<Message> messagesBetweenTwo(Attendee a1, Attendee a2){
         //TODO: Returns an orderd list of the messages sent between a1 and a2.
-    //}
+    }
 
 
 }
