@@ -1,7 +1,4 @@
-
-
 public class Test {
     //test
-    String s = "TEST";
+    Sytem.out.println("TEST");
 }
-
