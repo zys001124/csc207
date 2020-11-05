@@ -1,17 +1,25 @@
 package entities;
 
+import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
-public class Event {
+public class Event implements Serializable {
 
-    private int eventTime;
+    private LocalDateTime eventTime;
     private UUID eventId;
     private String eventTitle;
 
-    public Event(String title, int time) {
+    public Event(String title, LocalDateTime time, UUID id) {
         eventTime = time;
         eventTitle = title;
 
-        eventId = UUID.randomUUID();
+        eventId = id;
     }
+
+    public String getEventTitle() {return eventTitle;}
+
+    public UUID getId() {return eventId;}
+
+    public LocalDateTime getEventTime() {return eventTime;}
 }

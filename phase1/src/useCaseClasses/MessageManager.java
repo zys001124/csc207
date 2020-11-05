@@ -21,7 +21,7 @@ public class MessageManager {
 
     public void addMessage(UUID sender, UUID receiver, String message){
 
-        messages.add(new Message(message, sender, receiver));
+        messages.add(new Message(message, sender, receiver, UUID.randomUUID()));
     }
 
     public List<Message> getMessages(){

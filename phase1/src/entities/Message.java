@@ -1,8 +1,12 @@
 package entities;
 
+import java.io.Serializable;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.UUID;
 
-public class Message {
+public class Message implements Serializable {
 
     private UUID messageId;
 
@@ -10,11 +14,17 @@ public class Message {
     private UUID senderId;
     private UUID recipientId;
 
-    public Message(String message, UUID sender, UUID recipient) {
+    private LocalDateTime timeSent;
+
+    public Message(String message, UUID sender, UUID recipient, UUID id) {
         messageText = message;
         senderId = sender;
         recipientId = recipient;
-        messageId = UUID.randomUUID();
+        messageId = id;
+
+
+        Instant now = Instant.ofEpochMilli(System.currentTimeMillis());
+        timeSent = LocalDateTime.ofInstant(now, ZoneId.of("-5:00")); //Toronto time
     }
 
     public UUID getSenderId(){return senderId;}
@@ -22,4 +32,6 @@ public class Message {
     public UUID getRecipientId(){return recipientId;}
 
     public UUID getId(){return messageId;}
+
+    public String getMessageText() {return messageText;}
 }

@@ -21,9 +21,8 @@ public class AttendeeManager {
         messages = new ArrayList<>();
     }
 
-    public AttendeeManager(List<Attendee> attendees, List<Message> messages){
+    public AttendeeManager(List<Attendee> attendees){
         this.attendees = attendees;
-        this.messages = messages;
     }
 
     public Attendee getAttendee(UUID id) {
