@@ -5,6 +5,7 @@ import entities.Message;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class MessageManager {
 
@@ -18,8 +19,9 @@ public class MessageManager {
         this.messages = messages;
     }
 
-    public void addMessage(Message m){
-        messages.add(m);
+    public void addMessage(UUID sender, UUID receiver, String message){
+
+        messages.add(new Message(message, sender, receiver));
     }
 
     public List<Message> getMessages(){
@@ -33,7 +35,6 @@ public class MessageManager {
 
     public List<Message> messagesBetweenTwo(Attendee a1, Attendee a2){
         //TODO: Returns an orderd list of the messages sent between a1 and a2.
+        return null;
     }
-
-
 }

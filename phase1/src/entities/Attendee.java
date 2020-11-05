@@ -21,8 +21,4 @@ public class Attendee {
     public boolean verifyLogin(String usr, String pass) {
         return usr.equals(username) && pass.equals(password);
     }
-
-    public Message sendMessage(String text, UUID recipient) {
-        return new Message(text, attendeeId, recipient);
-    }
 }
