@@ -6,3 +6,14 @@
 -Need a login system (Controller and Presenter)
 -Creation of text file - Luka
 -Unittest Classes
+
+
+Roles:
+Jon - Use case classes
+Lewis - Gateways
+Luka - Presenters
+J - Finish Controllers
+Kelvin - UI
+Simon - Test classes
+Ysz -
+
