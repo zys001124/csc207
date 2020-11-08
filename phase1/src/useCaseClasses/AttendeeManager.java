@@ -59,21 +59,6 @@ public class AttendeeManager {
         return messages;
     }
 
-//    public boolean attendeeLogin(Attendee a, String username, String password){
-//
-//        /*
-//        TODO change this back to void and throw a custom exception (i.e. incorrectPasswordException) if it fails
-//         */
-//
-//        if(a.verifyLogin(username, password)) {
-//            currentlyLoggedIn = a.getId();
-//            return true;
-//        }
-//        else {
-//            return false;
-//        }
-//    }
-
     public void attendeeLogin(Attendee a, String username, String password) throws IncorrectPasswordException {
         if(!a.verifyLogin(username, password)){
             throw new IncorrectPasswordException("Incorrect Username or Password.");
@@ -81,7 +66,6 @@ public class AttendeeManager {
         else{
             System.out.println("Username and Password correct. \n Welcome " + username);
         }
-        /* TODO: Do we want this code to run like this.? */
     }
 
 

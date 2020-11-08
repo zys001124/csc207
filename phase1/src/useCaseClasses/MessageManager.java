@@ -37,7 +37,6 @@ public class MessageManager {
             }
         }
         throw new NoMessageException("No message exists in the system.");
-        //TODO: Is this exception needed?
     }
 
     public List<Message> messagesBetweenTwo(Attendee a1, Attendee a2){
@@ -57,7 +56,7 @@ public class MessageManager {
         for(int i = 0; i < len-1; i++){
             for(int j = 1; j<len-i-1; j++){
                 //TODO im not sure if this actually works because the int could only be for years. Need to check up on this.
-                if(theMessages.get(j).getTimeSent().compareTo(theMessages.get(j+1).getTimeSent()) > 0){
+                if(theMessages.get(j).getTimeSent().isAfter(theMessages.get(j+1).getTimeSent())){
                     Message tempj = theMessages.get(j);
                     Message tempjp1 = theMessages.get(j+1);
                     theMessages.set(j, tempjp1);

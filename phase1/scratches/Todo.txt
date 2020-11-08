@@ -15,5 +15,5 @@ Luka - Presenters
 J - Finish Controllers
 Kelvin - UI
 Simon - Test classes
-Ysz -
+Ysz - Help with presenters
 
