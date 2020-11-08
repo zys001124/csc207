@@ -6,7 +6,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.UUID;
 
-public class Message implements Serializable {
+public class Message implements Serializable, Comparable<Message> {
 
     private UUID messageId;
 
@@ -36,4 +36,9 @@ public class Message implements Serializable {
     public String getMessageText() {return messageText;}
 
     public LocalDateTime getTimeSent() {return timeSent;}
+
+    @Override
+    public int compareTo(Message o) {
+        return timeSent.compareTo(o.timeSent);
+    }
 }
