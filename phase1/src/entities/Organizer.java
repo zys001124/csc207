@@ -7,7 +7,7 @@ import java.util.UUID;
 
 public class Organizer extends Attendee {
 
-    List<Integer> eventsOrganized;
+    private List<Event> eventsOrganized;
 
     // Do not need to generate ID as this is handled by Attendee constructor
     public Organizer(String username, String password, UUID id) {
@@ -26,5 +26,9 @@ public class Organizer extends Attendee {
         }
 
         return messages;
+    }
+
+    public List<Event> getEventsOrganized(){
+        return eventsOrganized;
     }
 }

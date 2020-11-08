@@ -3,6 +3,7 @@ package useCaseClasses;
 
 import entities.Attendee;
 import entities.Message;
+import exceptions.IncorrectPasswordException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,19 +59,29 @@ public class AttendeeManager {
         return messages;
     }
 
-    public boolean attendeeLogin(Attendee a, String username, String password){
+//    public boolean attendeeLogin(Attendee a, String username, String password){
+//
+//        /*
+//        TODO change this back to void and throw a custom exception (i.e. incorrectPasswordException) if it fails
+//         */
+//
+//        if(a.verifyLogin(username, password)) {
+//            currentlyLoggedIn = a.getId();
+//            return true;
+//        }
+//        else {
+//            return false;
+//        }
+//    }
 
-        /*
-        TODO change this back to void and throw a custom exception (i.e. incorrectPasswordException) if it fails
-         */
-
-        if(a.verifyLogin(username, password)) {
-            currentlyLoggedIn = a.getId();
-            return true;
+    public void attendeeLogin(Attendee a, String username, String password) throws IncorrectPasswordException {
+        if(!a.verifyLogin(username, password)){
+            throw new IncorrectPasswordException("Incorrect Username or Password.");
         }
-        else {
-            return false;
+        else{
+            System.out.println("Username and Password correct. \n Welcome " + username);
         }
+        /* TODO: Do we want this code to run like this.? */
     }
 
 

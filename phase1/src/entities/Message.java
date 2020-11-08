@@ -34,4 +34,6 @@ public class Message implements Serializable {
     public UUID getId(){return messageId;}
 
     public String getMessageText() {return messageText;}
+
+    public LocalDateTime getTimeSent() {return timeSent;}
 }

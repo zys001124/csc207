@@ -32,7 +32,12 @@ public class EventManager {
     }
 
     public boolean isHostingRightEvent(Organizer o, Event e){
-        //TODO
-        return true; //temporary
+        List<Event> hosting = o.getEventsOrganized();
+        for(Event event : hosting) {
+            if (event == e) {
+                return true;
+            }
+        }
+        return false;
     }
 }
