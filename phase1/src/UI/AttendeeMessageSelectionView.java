@@ -17,7 +17,7 @@ public class AttendeeMessageSelectionView extends ConsoleView {
     }
 
     @Override
-    public ConsoleView handleInput(Scanner inputScanner) {
+    public ConsoleViewType runFlow(Scanner inputScanner) {
         return null;
     }
 }

@@ -2,6 +2,7 @@ package UI;
 
 import controllers.MenuInputController;
 import entities.User;
+import exceptions.InvalidInputException;
 import presenters.MenuInputPresenter;
 
 import java.util.Scanner;
@@ -23,6 +24,13 @@ public class MenuInputView extends ConsoleView {
     public ConsoleViewType runFlow(Scanner inputScanner) {
         System.out.println(menuInputPresenter.getMenuOptions(userType));
         String input = inputScanner.nextLine();
-        menuInputController.getNextScreen(input);
+
+        //TODO finish
+        try {
+            return menuInputController.getNextScreen(input);
+        } catch (InvalidInputException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

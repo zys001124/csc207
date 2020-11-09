@@ -24,10 +24,10 @@ public class LoginView extends ConsoleView {
     public ConsoleViewType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getIntro());
 
-        System.out.println(presenter.getUsernameInputPrompt());
+        System.out.print(presenter.getUsernameInputPrompt());
         String username = inputScanner.nextLine();
 
-        System.out.println(presenter.getPasswordInputPrompt());
+        System.out.print(presenter.getPasswordInputPrompt());
         String password = inputScanner.nextLine();
 
         LoginController.LoginResult result = controller.verifyLogin(username, password);

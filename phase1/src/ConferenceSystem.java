@@ -54,7 +54,17 @@ public class ConferenceSystem {
         while(true) {
             // UI prints string for whatever option the user is on
             ConsoleView.ConsoleViewType nextScreenType = view.runFlow(in);
-            if(nextScreenType == null) { // If a null view is returned it means the user has exited the program;
+            if(nextScreenType != ConsoleView.ConsoleViewType.LOGIN) { // If a null view is returned it means the user has exited the program;
+                break;
+            }
+        }
+
+        menuInputView = new MenuInputView(menuInputController, menuInputPresenter, userManager.getCurrentlyLoggedIn().getType());
+
+        while(true) {
+            // UI prints string for whatever option the user is on
+            ConsoleView.ConsoleViewType nextScreenType = view.runFlow(in);
+            if(nextScreenType != ConsoleView.ConsoleViewType.LOGIN) { // If a null view is returned it means the user has exited the program;
                 break;
             }
 
@@ -111,7 +121,6 @@ public class ConferenceSystem {
 
     private void initializeViews() {
         loginView = new LoginView(loginController, loginPresenter);
-        menuInputView = new MenuInputView(menuInputController, menuInputPresenter);
     }
 
     private ConsoleView getView(ConsoleView.ConsoleViewType type) {
