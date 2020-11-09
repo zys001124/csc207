@@ -4,6 +4,10 @@ import entities.User;
 
 public class MenuInputPresenter {
 
+    public String getInvalidInputMessage() {
+        return "Invalid input, please try again.";
+    }
+
     public String getMenuOptions(User.UserType userType) {
         if(userType == User.UserType.ATTENDEE) {
             return getAttendeeOptions();
@@ -34,11 +38,11 @@ public class MenuInputPresenter {
     private String getOrganizerOptions() {
         return "1. Create event \n"+
                 "2. Cancel event \n"+
-                "3. Message User"+
+                "3. Message User \n"+
                 "4. Message all speakers\n"+
                 "5. Message all attendees\n"+
-                "5. Create speaker account \n"+
-                "6. Log out";
+                "6. Create speaker account \n"+
+                "7. Log out";
     }
 
 }

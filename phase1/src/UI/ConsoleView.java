@@ -14,12 +14,14 @@ public abstract class ConsoleView {
         MESSAGE_USER, // Luka
         EVENT_LIST_FOR_MESSAGING, // Jon
         MESSAGE_ALL_ATTENDING_EVENT, // Jon
+        MESSAGE_ALL_SPEAKERS,
+        MESSAGE_ALL_ATTENDEES,
         EVENT_SCHEDULE, // Kelvin
         CREATE_EVENT, // Jay
         CANCEL_EVENT, // Yaosheng
         ENROLL_IN_EVENT, // Kelvin or Simon?
         UNENROLL_IN_EVENT, // Kelvin or Simon?
-        CREATE_SPEAKER_ACCOUNT, // Lewis
+        CREATE_SPEAKER_ACCOUNT, // Lewis - Finished
 
     }
 }

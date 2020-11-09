@@ -5,6 +5,7 @@ import entities.User;
 import entities.Message;
 import exceptions.IncorrectPasswordException;
 import exceptions.UserNotFoundException;
+import exceptions.UsernameAlreadyExistsException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,8 +39,21 @@ public class UserManager {
 
     public User getCurrentlyLoggedIn() {return currentlyLoggedIn;}
 
-    public void addUser(User user){
+    public void addUser(User user) throws UsernameAlreadyExistsException {
+        if(doesUserExist(user.getUsername())) {
+            throw new UsernameAlreadyExistsException("Username: "+user.getUsername()+" is taken");
+        }
         users.add(user);
+    }
+
+    public boolean doesUserExist(String username) {
+        for(User user: users) {
+            if(user.getUsername().equals(username))
+            {
+                return true;
+            }
+        }
+        return false;
     }
 
     public User removeUser(UUID id){

@@ -25,12 +25,12 @@ public class MenuInputView extends ConsoleView {
         System.out.println(menuInputPresenter.getMenuOptions(userType));
         String input = inputScanner.nextLine();
 
-        //TODO finish
-        try {
-            return menuInputController.getNextScreen(input);
-        } catch (InvalidInputException e) {
-            e.printStackTrace();
+        ConsoleViewType nextScreenType = menuInputController.getNextScreen(input);
+
+        if(nextScreenType == ConsoleViewType.MAIN_MENU) {
+            System.out.println(menuInputPresenter.getInvalidInputMessage());
         }
-        return null;
+
+        return nextScreenType;
     }
 }
