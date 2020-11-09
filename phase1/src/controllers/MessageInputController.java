@@ -1,24 +1,23 @@
 package controllers;
 
-import entities.Attendee;
-import entities.Message;
-import useCaseClasses.AttendeeManager;
+import useCaseClasses.UserManager;
 import useCaseClasses.MessageManager;
 
 import java.util.UUID;
 
 public class MessageInputController {
 
-    private AttendeeManager attendeeManager;
+    private UserManager userManager;
     private MessageManager messageManager;
 
-    public MessageInputController(AttendeeManager am, MessageManager mm) {
-        attendeeManager = am;
+    public MessageInputController(UserManager am, MessageManager mm) {
+        userManager = am;
         messageManager = mm;
     }
 
     public void sendMessage(UUID receiver, String message)
     {
-        messageManager.addMessage(attendeeManager.getCurrentlyLoggedIn(), receiver, message);
+        messageManager.addMessage(userManager.getCurrentlyLoggedIn().getId(),
+                receiver, message);
     }
 }

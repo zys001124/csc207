@@ -1,23 +1,22 @@
 package gateways.loaders;
 
-import entities.Attendee;
-import entities.Organizer;
+import entities.User;
 import exceptions.IncorrectNumberOfParametersException;
 
 import java.util.UUID;
 
-public class AttendeeLoader extends Loader<Attendee> {
+public class UserLoader extends Loader<User> {
 
     @Override
-    public Attendee createInstance(String[] parameters) {
+    public User createInstance(String[] parameters) {
         if(parameters.length == 4){
             if(parameters[3].equals("O"))
             {
-                return new Organizer(parameters[0], parameters[1], UUID.fromString(parameters[2]));
+                return new User(User.UserType.ORGANIZER, parameters[0], parameters[1], UUID.fromString(parameters[2]));
             }
             else
             {
-                return new Attendee(parameters[0], parameters[1], UUID.fromString(parameters[2]));
+                return new User(User.UserType.ATTENDEE, parameters[0], parameters[1], UUID.fromString(parameters[2]));
             }
         }
         else {

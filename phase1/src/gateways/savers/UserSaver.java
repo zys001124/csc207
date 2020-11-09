@@ -1,28 +1,30 @@
 package gateways.savers;
 
-import entities.Attendee;
-import entities.Organizer;
+import entities.User;
 
 import java.io.IOException;
 
-public class AttendeeSaver extends Saver<Attendee> {
+public class UserSaver extends Saver<User> {
 
-    public AttendeeSaver(String outputFileName) throws IOException {
+    public UserSaver(String outputFileName) throws IOException {
         super(outputFileName);
     }
 
-    public void save(Attendee attendee) throws IOException {
+    public void save(User attendee) throws IOException {
         output.append(attendee.getUsername());
         output.append(",");
         output.append(attendee.getPassword());
         output.append(",");
         output.append(attendee.getId().toString());
         output.append(",");
-        if(attendee instanceof Organizer) {
+        if(attendee.getType() == User.UserType.ORGANIZER) {
             output.append("O");
         }
-        else {
+        else if(attendee.getType() == User.UserType.ATTENDEE) {
             output.append("A");
+        }
+        else {
+            output.append("S");
         }
         output.append("\n");
 

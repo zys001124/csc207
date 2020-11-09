@@ -3,7 +3,9 @@ package UI;
 import controllers.MessageInputController;
 import presenters.MessageInputPresenter;
 
-public class MessageInputView {
+import java.util.Scanner;
+
+public class MessageInputView extends ConsoleView {
     private MessageInputController messageInputController;
     private MessageInputPresenter messageInputPresenter;
 
@@ -11,5 +13,10 @@ public class MessageInputView {
                             MessageInputPresenter messageInputPresenter){
         this.messageInputController = messageInputController;
         this.messageInputPresenter = messageInputPresenter;
+    }
+
+    @Override
+    public ConsoleView handleInput(Scanner inputScanner) {
+        return null;
     }
 }

@@ -1,14 +1,13 @@
 package controllers;
 
-import UI.ConsoleView;
-import useCaseClasses.AttendeeManager;
+import useCaseClasses.UserManager;
 
 public class AttendeeMessageSelectionController {
 
-    private AttendeeManager attendeeManager;
+    private UserManager userManager;
 
-    public AttendeeMessageSelectionController(AttendeeManager am) {
-        attendeeManager = am;
+    public AttendeeMessageSelectionController(UserManager am) {
+        userManager = am;
     }
 
     // TODO signal to presenter(s) which screen to prepare

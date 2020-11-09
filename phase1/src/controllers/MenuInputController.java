@@ -1,20 +1,22 @@
 package controllers;
 
 import UI.ConsoleView;
-import useCaseClasses.AttendeeManager;
+import entities.User;
+import exceptions.InvalidInputException;
+import useCaseClasses.UserManager;
 import useCaseClasses.MessageManager;
 
 public class MenuInputController {
 
-    private AttendeeManager attendeeManager;
-    private MessageManager messageManager;
+    private UserManager userManager;
 
-    public MenuInputController(AttendeeManager am, MessageManager mm) {
-        attendeeManager = am;
-        messageManager = mm;
+    public MenuInputController(UserManager um) {
+        userManager = um;
     }
 
-    public void getNextScreen(String input) {
-        // TODO signal to presenter(s) which screen to prepare
+    public ConsoleView.ConsoleViewType getNextScreen(String input) throws InvalidInputException {
+        User.UserType userType = userManager.getCurrentlyLoggedIn().getType();
+
+        return null; //TODO finish method
     }
 }

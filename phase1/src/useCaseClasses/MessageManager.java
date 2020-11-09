@@ -1,7 +1,9 @@
 package useCaseClasses;
 
-import entities.Attendee;
+import entities.Event;
 import entities.Message;
+import entities.User;
+import exceptions.InvalidUserTypeException;
 import exceptions.NoMessageException;
 
 import java.util.ArrayList;
@@ -29,6 +31,12 @@ public class MessageManager {
         return messages;
     }
 
+    public void messageAllAttendingEvent(String message, Event e, User sender) {
+        for(UUID userId: e) {
+            messages.add(new Message(message, sender.getId(), userId, UUID.randomUUID()));
+        }
+    }
+
     public Message findMessage(Message m) throws NoMessageException{
 
         for(Message message : messages) {
@@ -39,7 +47,7 @@ public class MessageManager {
         throw new NoMessageException("No message exists in the system.");
     }
 
-    public List<Message> messagesBetweenTwo(Attendee a1, Attendee a2){
+    public List<Message> messagesBetweenTwo(User a1, User a2){
         //TODO: Returns an orderd list of the messages sent between a1 and a2.
         UUID a1id = a1.getId();
         UUID a2id = a2.getId();

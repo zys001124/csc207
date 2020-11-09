@@ -1,10 +1,12 @@
 package useCaseClasses;
 
 import entities.Event;
-import entities.Organizer;
+import entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class EventManager {
 
@@ -27,18 +29,25 @@ public class EventManager {
         return events.remove(i);
     }
 
+    public Event getEvent(UUID id) {
+        for(Event event: events) {
+            if(event.getId().equals(id)) {
+                return event;
+            }
+        }
+        return null;
+    }
+
     public List<Event> getEvents(){
         return events;
     }
 
-    public boolean isHostingRightEvent(Organizer o, Event e){
-        List<Event> hosting = o.getEventsOrganized();
-        for(Event event : hosting) {
-            if (event == e) {
-                return true;
-            }
-        }
-        return false;
+    public boolean hasOrganizedEvent(User u, Event e){
+        return e.getOrganizerId() == u.getId();
+    }
+
+    public boolean isSpeakerForEvent(User u, Event e) {
+        return e.getSpeakerId() == u.getId();
     }
 
 }
