@@ -25,6 +25,16 @@ public abstract class ConsoleView {
 
     public enum ConsoleViewType {
         LOGIN,
-        MAIN_MENU
+        MAIN_MENU,
+        MESSAGE_USERS_MENU,
+        MESSAGE_USER,
+        EVENT_LIST_FOR_MESSAGING,
+        MESSAGE_ALL_ATTENDING_EVENT,
+        EVENT_SCHEDULE,
+        CREATE_EVENT,
+        CANCEL_EVENT,
+        ENROLL_IN_EVENT,
+        UNENROLL_IN_EVENT,
+
     }
 }
