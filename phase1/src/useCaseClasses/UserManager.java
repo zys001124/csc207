@@ -62,6 +62,7 @@ public class UserManager {
                 if(!user.verifyPassword(password)) {
                     throw new IncorrectPasswordException(username);
                 }
+                currentlyLoggedIn = user;
                 return;
             }
         }
