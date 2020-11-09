@@ -47,7 +47,7 @@ public class ConferenceSystem {
     // This will instantiate all relevant objects and then present the menu view
     public void run() {
         init();
-
+        loginView = new LoginView(loginController, loginPresenter);
         // Program loop
         Scanner in = new Scanner(System.in);
         ConsoleView view = loginView;
@@ -59,7 +59,9 @@ public class ConferenceSystem {
             }
         }
 
-        menuInputView = new MenuInputView(menuInputController, menuInputPresenter, userManager.getCurrentlyLoggedIn().getType());
+        // This depends on the type of user logged in
+        initializeViews();
+        view = menuInputView;
 
         while(true) {
             // UI prints string for whatever option the user is on
@@ -76,11 +78,8 @@ public class ConferenceSystem {
 
     private void init() {
         initializeUseCases();
-
         initializeControllers();
         initializePresenters();
-
-        initializeViews();
     }
 
     private void initializeUseCases() {
@@ -120,7 +119,8 @@ public class ConferenceSystem {
     }
 
     private void initializeViews() {
-        loginView = new LoginView(loginController, loginPresenter);
+        menuInputView = new MenuInputView(menuInputController, menuInputPresenter, userManager.getCurrentlyLoggedIn().getType());
+
     }
 
     private ConsoleView getView(ConsoleView.ConsoleViewType type) {
