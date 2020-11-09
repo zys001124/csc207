@@ -1,40 +1,25 @@
 package UI;
 
-import entities.Event;
-import entities.User;
-import useCaseClasses.EventManager;
-import useCaseClasses.MessageManager;
-import useCaseClasses.UserManager;
-
 import java.util.Scanner;
 
-//TODO place base functions
 public abstract class ConsoleView {
-
-//    protected MessageManager messageManager;
-//    protected UserManager userManager;
-//    protected EventManager eventManager;
-//
-//    public ConsoleView(MessageManager messageManager, UserManager userManager, EventManager eventManager) {
-//        this.messageManager = messageManager;
-//        this.userManager = userManager;
-//        this.eventManager = eventManager;
-//    }
 
     public abstract ConsoleViewType runFlow(Scanner inputScanner);
 
+    // If your name is next to something make sure it works
     public enum ConsoleViewType {
         LOGIN,
         MAIN_MENU,
-        MESSAGE_USERS_MENU,
-        MESSAGE_USER,
-        EVENT_LIST_FOR_MESSAGING,
-        MESSAGE_ALL_ATTENDING_EVENT,
-        EVENT_SCHEDULE,
-        CREATE_EVENT,
-        CANCEL_EVENT,
-        ENROLL_IN_EVENT,
-        UNENROLL_IN_EVENT,
+        MESSAGE_USERS_MENU, // Luka
+        MESSAGE_USER, // Luka
+        EVENT_LIST_FOR_MESSAGING, // Jon
+        MESSAGE_ALL_ATTENDING_EVENT, // Jon
+        EVENT_SCHEDULE, // Kelvin
+        CREATE_EVENT, // Jay
+        CANCEL_EVENT, // Yaosheng
+        ENROLL_IN_EVENT, // Kelvin or Simon?
+        UNENROLL_IN_EVENT, // Kelvin or Simon?
+        CREATE_SPEAKER_ACCOUNT, // Lewis
 
     }
 }

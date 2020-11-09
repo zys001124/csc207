@@ -25,7 +25,8 @@ public class MenuInputPresenter {
     }
 
     private String getSpeakerOptions() {
-        return "1. Message Users in event \n" +
+        return "1. Message all Attendees of your event \n" +
+                "2. Message Attendee \n"+
                 "3. See event schedule \n"+
                 "4. Log out";
     }
@@ -33,8 +34,11 @@ public class MenuInputPresenter {
     private String getOrganizerOptions() {
         return "1. Create event \n"+
                 "2. Cancel event \n"+
-                "3. Create speaker account \n"+
-                "4. Log out";
+                "3. Message User"+
+                "4. Message all speakers\n"+
+                "5. Message all attendees\n"+
+                "5. Create speaker account \n"+
+                "6. Log out";
     }
 
 }
