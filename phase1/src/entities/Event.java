@@ -13,15 +13,18 @@ public class Event implements Serializable, Iterable<UUID> {
     private LocalDateTime eventTime;
     private UUID eventId;
     private String eventTitle;
+    private Integer eventRoom;
 
     private UUID organizerId;
     private UUID speakerId;
 
     private List<UUID> attendees;
 
-    public Event(String title, LocalDateTime time, UUID id, UUID organizerId, UUID speakerId, List<UUID> attendees) {
+    public Event(String title, LocalDateTime time, UUID id, UUID organizerId, UUID speakerId, List<UUID> attendees,
+                 int room) {
         eventTime = time;
         eventTitle = title;
+        eventRoom = room;
 
         eventId = id;
         this.organizerId = organizerId;
@@ -49,6 +52,8 @@ public class Event implements Serializable, Iterable<UUID> {
 
     public LocalDateTime getEventTime() {return eventTime;}
 
+    public int getEventRoom(){return eventRoom;}
+
     @Override
     public Iterator iterator() {
         return attendees.iterator();
@@ -59,6 +64,7 @@ public class Event implements Serializable, Iterable<UUID> {
         private LocalDateTime eventTime = null;
         private UUID eventId = null;
         private String eventTitle = null;
+        private int eventRoom;
 
         private UUID organizerId = null;
         private UUID speakerId = null;
@@ -95,8 +101,13 @@ public class Event implements Serializable, Iterable<UUID> {
             return this;
         }
 
+        public EventBuilder setRoom(Integer room) {
+            this.eventRoom = room;
+            return this;
+        }
+
         public Event build() {
-            return new Event(eventTitle, eventTime, eventId, organizerId, speakerId, attendees);
+            return new Event(eventTitle, eventTime, eventId, organizerId, speakerId, attendees, eventRoom);
         }
     }
 }
