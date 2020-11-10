@@ -24,6 +24,6 @@ public class MessageAllAttendingEventController {
     public void sendMessage(String message)
     {
         messageManager.messageAllAttendingEvent(message, eventManager.getEvent(eventId),
-                userManager.getCurrentlyLoggedIn());
+                userManager.getCurrentlyLoggedIn().getId());
     }
 }
