@@ -94,4 +94,17 @@ public class EventManager {
         throw new EventNotFoundException(eventName);
     }
 
+    public List<UUID> idOfEventsHosting(User u) {
+        //returns a list of the events a presenter is hosting
+        List<UUID> theList = new ArrayList<>();
+        for(Event e: events){
+            if(e.getSpeakerId() == u.getId()){
+                theList.add(e.getId());
+            }
+        }
+        return theList;
+    }
+
+
+
 }
