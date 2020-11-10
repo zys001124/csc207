@@ -37,6 +37,7 @@ public class ConferenceSystem {
     private CreateSpeakerAccountController createSpeakerAccountController;
     private EventEnrollController eventEnrollController;
     private EventCancelController eventCancelController;
+    private EventCreationController eventCreationController;
 
     // Presenters
     private LoginPresenter loginPresenter;
@@ -44,6 +45,7 @@ public class ConferenceSystem {
     private CreateSpeakerAccountPresenter createSpeakerAccountPresenter;
     private EventEnrollPresenter eventEnrollPresenter;
     private EventCancelPresenter eventCancelPresenter;
+    private EventCreationPresenter eventCreationPresenter;
 
     // Views
     private LoginView loginView;
@@ -51,6 +53,7 @@ public class ConferenceSystem {
     private CreateSpeakerAccountView createSpeakerAccountView;
     private EventEnrollView eventEnrollView;
     private EventCancelView eventCancelView;
+    private EventCreationView eventCreationView;
 
     // This will instantiate all relevant objects and then present the menu view
     public void run() {
@@ -139,6 +142,7 @@ public class ConferenceSystem {
                 createSpeakerAccountPresenter);
         eventEnrollController = new EventEnrollController(eventManager, userManager);
         eventCancelController = new EventCancelController(eventManager,eventCancelPresenter,userManager);
+        eventCreationController = new EventCreationController(eventManager, eventCreationPresenter);
     }
 
     private void initializePresenters() {
@@ -147,6 +151,7 @@ public class ConferenceSystem {
         createSpeakerAccountPresenter = new CreateSpeakerAccountPresenter();
         eventEnrollPresenter = new EventEnrollPresenter(eventManager);
         eventCancelPresenter = new EventCancelPresenter();
+        eventCreationPresenter = new EventCreationPresenter();
     }
 
     private void initializeViews() {
@@ -154,6 +159,7 @@ public class ConferenceSystem {
         createSpeakerAccountView = new CreateSpeakerAccountView(createSpeakerAccountController, createSpeakerAccountPresenter);
         eventEnrollView = new EventEnrollView(eventEnrollController, eventEnrollPresenter);
         eventCancelView = new EventCancelView(eventCancelController,eventCancelPresenter);
+        eventCreationView = new EventCreationView(eventCreationController, eventCreationPresenter);
     }
 
     private ConsoleView getView(ConsoleView.ConsoleViewType type) {
@@ -163,6 +169,7 @@ public class ConferenceSystem {
             case CREATE_SPEAKER_ACCOUNT: return createSpeakerAccountView;
             case ENROLL_IN_EVENT: return eventEnrollView;
             case CANCEL_EVENT: return eventCancelView;
+            case CREATE_EVENT: return eventCreationView;
         }
         return null;
     }

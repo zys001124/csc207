@@ -14,15 +14,10 @@ public class EventManager {
 
     private List<Event> events;
 
-    public EventManager(){
-        events = new ArrayList<>();
-    }
-
-    public EventManager(List<Event> events){
+    public EventManager(List<Event> events) {
         this.events = events;
 
     }
-
     public boolean addEvent(Event e){
         LocalDateTime time = e.getEventTime();
         ArrayList<Boolean> eventInTime = new ArrayList<>(6);
@@ -40,6 +35,17 @@ public class EventManager {
             return true;
         }
 
+    }
+
+    public boolean availabilityInTime(LocalDateTime time){
+        int num = 0;
+        for (Event temp: events) {
+            LocalDateTime timeGot = temp.getEventTime();
+            if (timeGot.equals(time)) {
+                num++;
+            }
+        }
+        return num == 6;
     }
 
     public Event removeEvent(int i){
