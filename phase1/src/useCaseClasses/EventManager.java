@@ -3,6 +3,7 @@ package useCaseClasses;
 import entities.Event;
 import entities.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +22,23 @@ public class EventManager {
 
     }
 
-    public void addEvent(Event e){
-        events.add(e);
+    public boolean addEvent(Event e){
+        LocalDateTime time = e.getEventTime();
+        ArrayList<Boolean> eventInTime = new ArrayList<>(6);
+        for (Event temp: events){
+            LocalDateTime timeGot = temp.getEventTime();
+            if (timeGot.equals(time)){
+                eventInTime.add(temp.getEventRoom(),true);
+            }
+        }
+        int roomNum = e.getEventRoom();
+        if (eventInTime.get(roomNum)){
+            return false;
+        }else{
+            events.add(e);
+            return true;
+        }
+
     }
 
     public Event removeEvent(int i){
