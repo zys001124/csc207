@@ -1,9 +1,7 @@
 
-import UI.ConsoleView;
-import UI.CreateSpeakerAccountView;
-import UI.LoginView;
-import UI.MenuInputView;
+import UI.*;
 import controllers.CreateSpeakerAccountController;
+import controllers.EventCancelController;
 import controllers.LoginController;
 import controllers.MenuInputController;
 import entities.Event;
@@ -16,6 +14,7 @@ import gateways.savers.EventSaver;
 import gateways.savers.MessageSaver;
 import gateways.savers.UserSaver;
 import presenters.CreateSpeakerAccountPresenter;
+import presenters.EventCancelPresenter;
 import presenters.LoginPresenter;
 import presenters.MenuInputPresenter;
 import useCaseClasses.UserManager;
@@ -42,16 +41,19 @@ public class ConferenceSystem {
     private LoginController loginController;
     private MenuInputController menuInputController;
     private CreateSpeakerAccountController createSpeakerAccountController;
+    private EventCancelController eventCancelController;
 
     // Presenters
     private LoginPresenter loginPresenter;
     private MenuInputPresenter menuInputPresenter;
     private CreateSpeakerAccountPresenter createSpeakerAccountPresenter;
+    private EventCancelPresenter eventCancelPresenter;
 
     // Views
     private LoginView loginView;
     private MenuInputView menuInputView;
     private CreateSpeakerAccountView createSpeakerAccountView;
+    private EventCancelView eventCancelView;
 
     // This will instantiate all relevant objects and then present the menu view
     public void run() {
@@ -138,18 +140,20 @@ public class ConferenceSystem {
         menuInputController = new MenuInputController(userManager);
         createSpeakerAccountController = new CreateSpeakerAccountController(userManager,
                 createSpeakerAccountPresenter);
-
+        eventCancelController = new EventCancelController(eventManager,eventCancelPresenter,userManager);
     }
 
     private void initializePresenters() {
         loginPresenter = new LoginPresenter();
         menuInputPresenter = new MenuInputPresenter();
         createSpeakerAccountPresenter = new CreateSpeakerAccountPresenter();
+        eventCancelPresenter = new EventCancelPresenter();
     }
 
     private void initializeViews() {
         menuInputView = new MenuInputView(menuInputController, menuInputPresenter, userManager.getCurrentlyLoggedIn().getType());
         createSpeakerAccountView = new CreateSpeakerAccountView(createSpeakerAccountController, createSpeakerAccountPresenter);
+        eventCancelView = new EventCancelView(eventCancelController,eventCancelPresenter);
     }
 
     private ConsoleView getView(ConsoleView.ConsoleViewType type) {
@@ -157,6 +161,7 @@ public class ConferenceSystem {
             case LOGIN: return loginView;
             case MAIN_MENU: return menuInputView;
             case CREATE_SPEAKER_ACCOUNT: return createSpeakerAccountView;
+            case CANCEL_EVENT: return eventCancelView;
         }
         return null;
     }

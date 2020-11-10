@@ -29,6 +29,17 @@ public class EventManager {
         return events.remove(i);
     }
 
+    public Event removeEvent(UUID id){
+        for(Event event: events){
+            int index = events.indexOf(event);
+            if(event.getId().equals(id)){
+                return events.remove(index);
+            }
+        }
+        return null;
+    }
+
+
     public Event getEvent(UUID id) {
         for(Event event: events) {
             if(event.getId().equals(id)) {
@@ -43,7 +54,7 @@ public class EventManager {
     }
 
     public boolean hasOrganizedEvent(User u, Event e){
-        return e.getOrganizerId() == u.getId();
+        return e.getOrganizerId().equals(u.getId());
     }
 
     public boolean isSpeakerForEvent(User u, Event e) {
