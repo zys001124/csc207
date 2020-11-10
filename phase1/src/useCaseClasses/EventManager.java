@@ -88,6 +88,7 @@ public class EventManager {
         for(Event event: events){
             if(event.getEventTitle().equals(eventName)){
                 event.addAttendee(attendee);
+                return;
             }
         }
         throw new EventNotFoundException(eventName);

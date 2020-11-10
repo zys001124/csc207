@@ -80,7 +80,7 @@ public class ConferenceSystem {
 
             view = getView(nextScreenType);
 
-            if(nextScreenType == null || view == null) {
+            if(view == null) {
                 break;
             }
         }
@@ -165,6 +165,9 @@ public class ConferenceSystem {
     }
 
     private ConsoleView getView(ConsoleView.ConsoleViewType type) {
+        if(type == null) {
+            return null;
+        }
         switch (type) {
             case LOGIN: return loginView;
             case MAIN_MENU: return menuInputView;
@@ -172,7 +175,7 @@ public class ConferenceSystem {
             case ENROLL_IN_EVENT: return eventEnrollView;
             case CANCEL_EVENT: return eventCancelView;
             case CREATE_EVENT: return eventCreationView;
+            default: return null;
         }
-        return null;
     }
 }

@@ -20,7 +20,7 @@ public class EventEnrollPresenter{
 
     public String getAllEvents(){
         String result = "";
-        for(int i = 1; i<=manager.getEvents().size(); i++)
+        for(int i = 0; i<manager.getEvents().size(); i++)
         {
             result = result.concat(i+". ").concat(manager.getEvents().get(i).getEventTitle()+'\n');
         }
