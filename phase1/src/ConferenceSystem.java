@@ -77,10 +77,12 @@ public class ConferenceSystem {
         while(true) {
             // UI prints string for whatever option the user is on
             ConsoleView.ConsoleViewType nextScreenType = view.runFlow(in);
-            if(nextScreenType == null) {
+
+            view = getView(nextScreenType);
+
+            if(nextScreenType == null || view == null) {
                 break;
             }
-            view = getView(nextScreenType);
         }
 
         saveEntities();
