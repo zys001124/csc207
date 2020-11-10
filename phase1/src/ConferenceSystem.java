@@ -61,28 +61,23 @@ public class ConferenceSystem {
         loginView = new LoginView(loginController, loginPresenter);
         // Program loop
         Scanner in = new Scanner(System.in);
-        ConsoleView view = loginView;
-        while(true) {
+
+        ConsoleView.ConsoleViewType nextScreenType = ConsoleView.ConsoleViewType.LOGIN;
+        ConsoleView view = getView(nextScreenType);
+
+        while(nextScreenType == ConsoleView.ConsoleViewType.LOGIN) {
             // UI prints string for whatever option the user is on
-            ConsoleView.ConsoleViewType nextScreenType = view.runFlow(in);
-            if(nextScreenType != ConsoleView.ConsoleViewType.LOGIN) { // If a null view is returned it means the user has exited the program;
-                break;
-            }
+            nextScreenType = view.runFlow(in);
         }
 
         // This depends on the type of user logged in
         initializeViews();
         view = menuInputView;
 
-        while(true) {
+        while(view != null) {
             // UI prints string for whatever option the user is on
-            ConsoleView.ConsoleViewType nextScreenType = view.runFlow(in);
-
+            nextScreenType = view.runFlow(in);
             view = getView(nextScreenType);
-
-            if(view == null) {
-                break;
-            }
         }
 
         saveEntities();
