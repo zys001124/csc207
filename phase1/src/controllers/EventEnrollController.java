@@ -13,18 +13,13 @@ public class EventEnrollController {
         this.userManager = userManager;
     }
 
-    public EnrollResult enrollEvent(String eventName){
+    public InputProcessResult enrollEvent(String eventName){
         try{
             eventManager.addUserToEvent(eventName, userManager.getCurrentlyLoggedIn());
         }catch(EventNotFoundException e){
-            return EnrollResult.EVENT_NOT_FOUND;
+            return InputProcessResult.EVENT_NOT_FOUND;
         }
-        return EnrollResult.SUCCESS;
-    }
-
-    public enum EnrollResult{
-        SUCCESS,
-        EVENT_NOT_FOUND,
+        return InputProcessResult.SUCCESS;
     }
 
 }

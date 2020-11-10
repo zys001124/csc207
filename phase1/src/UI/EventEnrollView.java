@@ -1,6 +1,7 @@
 package UI;
 
 import controllers.EventEnrollController;
+import controllers.InputProcessResult;
 import presenters.EventEnrollPresenter;
 
 import java.util.Scanner;
@@ -22,7 +23,7 @@ public class EventEnrollView extends ConsoleView {
         System.out.print(presenter.getEventNumberInputPrompt());
         String eventName = inputScanner.nextLine();
 
-        EventEnrollController.EnrollResult result = controller.enrollEvent(eventName);
+        InputProcessResult result = controller.enrollEvent(eventName);
 
         String EnrollResultOutput = presenter.getEnrollResultMessage(result);
         System.out.println(EnrollResultOutput);
@@ -30,8 +31,8 @@ public class EventEnrollView extends ConsoleView {
         return getNextScreen(result);
     }
 
-    private ConsoleViewType getNextScreen(EventEnrollController.EnrollResult result) {
-        if(result == EventEnrollController.EnrollResult.SUCCESS) {
+    private ConsoleViewType getNextScreen(InputProcessResult result) {
+        if(result == InputProcessResult.SUCCESS) {
             return ConsoleViewType.MAIN_MENU;
         }
         else {

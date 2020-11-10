@@ -1,6 +1,7 @@
 package UI;
 
 import controllers.CreateSpeakerAccountController;
+import controllers.InputProcessResult;
 import presenters.CreateSpeakerAccountPresenter;
 import useCaseClasses.UserManager;
 
@@ -22,9 +23,16 @@ public class CreateSpeakerAccountView extends ConsoleView {
         String input = inputScanner.nextLine();
 
         presenter.setInputResponse("");
-        ConsoleViewType nextScreenType = controller.getNextScreen(input);
+        InputProcessResult result = controller.getNextScreen(input);
         System.out.println(presenter.getInputResponse());
 
-        return nextScreenType;
+        return getScreen(result);
+    }
+
+    private ConsoleViewType getScreen(InputProcessResult result) {
+        switch (result) {
+            case SUCCESS: return ConsoleViewType.MAIN_MENU;
+            default: return ConsoleViewType.CREATE_SPEAKER_ACCOUNT;
+        }
     }
 }

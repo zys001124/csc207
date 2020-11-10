@@ -1,6 +1,7 @@
 package presenters;
 
 import controllers.EventEnrollController;
+import controllers.InputProcessResult;
 import useCaseClasses.EventManager;
 
 public class EventEnrollPresenter{
@@ -27,8 +28,8 @@ public class EventEnrollPresenter{
         return result;
     }
 
-    public String getEnrollResultMessage(EventEnrollController.EnrollResult result){
-        if(result == EventEnrollController.EnrollResult.SUCCESS)
+    public String getEnrollResultMessage(InputProcessResult result){
+        if(result == InputProcessResult.SUCCESS)
         {
             return "Enroll Successful!";
         }

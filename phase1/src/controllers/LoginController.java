@@ -3,6 +3,7 @@ package controllers;
 import entities.User;
 import exceptions.IncorrectPasswordException;
 import exceptions.UserNotFoundException;
+import jdk.internal.util.xml.impl.Input;
 import presenters.LoginPresenter;
 import useCaseClasses.UserManager;
 
@@ -15,21 +16,16 @@ public class LoginController {
         this.manager = manager;
     }
 
-    public LoginResult verifyLogin(String username, String password) {
+    public InputProcessResult verifyLogin(String username, String password) {
         try {
             manager.userLogin(username, password);
         } catch (IncorrectPasswordException e) {
-            return LoginResult.INCORRECT_PASSWORD;
+            return InputProcessResult.INCORRECT_PASSWORD;
         } catch (UserNotFoundException e) {
-            return LoginResult.USER_NOT_FOUND;
+            return InputProcessResult.USER_NOT_FOUND;
         }
 
-        return LoginResult.SUCCESS;
+        return InputProcessResult.SUCCESS;
     }
 
-    public enum LoginResult {
-        SUCCESS,
-        INCORRECT_PASSWORD,
-        USER_NOT_FOUND
-    }
 }

@@ -1,6 +1,5 @@
 package controllers;
 
-import UI.ConsoleView;
 import entities.Event;
 import presenters.EventCreationPresenter;
 import useCaseClasses.EventManager;
@@ -20,9 +19,9 @@ public class EventCreationController {
     }
 
 
-    public ConsoleView.ConsoleViewType getNextScreen(String input){
+    public InputProcessResult getNextScreen(String input){
         if(input.equals("back")) {
-            return ConsoleView.ConsoleViewType.MAIN_MENU;
+            return InputProcessResult.BACK;
         }
 
         String[] parametersForEvent = input.split(",");
@@ -37,7 +36,7 @@ public class EventCreationController {
 
         if (manager.availabilityInTime(time)){
             System.out.println("This time slot is full");
-            return ConsoleView.ConsoleViewType.CREATE_EVENT;
+            return InputProcessResult.TIMESLOT_FULL;
         }
 
         Event eventCreated = new Event(parametersForEvent[0], time, eventID, organizerID, speakerID,
@@ -45,11 +44,11 @@ public class EventCreationController {
 
         if (manager.addEvent(eventCreated)){
             presenter.setInputResponse("The event is added");
+            return InputProcessResult.SUCCESS;
         }else{
             presenter.setInputResponse("The room is already booked. Try another room");
-            return ConsoleView.ConsoleViewType.CREATE_EVENT;
+            return InputProcessResult.ROOM_FULL;
         }
-
-        return ConsoleView.ConsoleViewType.MAIN_MENU;
     }
+
 }

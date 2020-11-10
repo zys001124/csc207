@@ -1,6 +1,5 @@
 package controllers;
 
-import UI.ConsoleView;
 import entities.User;
 import exceptions.UsernameAlreadyExistsException;
 import presenters.CreateSpeakerAccountPresenter;
@@ -18,10 +17,10 @@ public class CreateSpeakerAccountController {
         this.presenter = presenter;
     }
 
-    public ConsoleView.ConsoleViewType getNextScreen(String input) {
+    public InputProcessResult getNextScreen(String input) {
 
         if(input.equals("back")) {
-            return ConsoleView.ConsoleViewType.MAIN_MENU;
+            return InputProcessResult.BACK;
         }
 
         String[] usernameAndPassword = input.split(" ");
@@ -29,21 +28,21 @@ public class CreateSpeakerAccountController {
         // Invalid input
         if(usernameAndPassword.length != 2) {
             presenter.setInputResponse("Expecting two, and only two inputs. Try again.");
-            return ConsoleView.ConsoleViewType.CREATE_SPEAKER_ACCOUNT;
+            return InputProcessResult.INVALID_INPUT;
         }
 
         String username = usernameAndPassword[0];
         String password = usernameAndPassword[1];
 
-
-
         try {
             userManager.addUser(User.UserType.SPEAKER, username, password);
             presenter.setInputResponse("Speaker added successfully");
+            return InputProcessResult.SUCCESS;
         } catch (UsernameAlreadyExistsException e) {
             presenter.setInputResponse("Username taken. Try again.");
+            return InputProcessResult.USERNAME_TAKEN;
         }
 
-        return ConsoleView.ConsoleViewType.CREATE_SPEAKER_ACCOUNT;
     }
+
 }
