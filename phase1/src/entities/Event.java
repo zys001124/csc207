@@ -54,6 +54,10 @@ public class Event implements Serializable, Iterable<UUID> {
 
     public int getEventRoom(){return eventRoom;}
 
+    public void addAttendee(User attendee){
+        attendees.add(attendee.getId());
+    }
+
     @Override
     public Iterator iterator() {
         return attendees.iterator();

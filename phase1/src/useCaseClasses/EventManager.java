@@ -2,6 +2,7 @@ package useCaseClasses;
 
 import entities.Event;
 import entities.User;
+import exceptions.EventNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -75,6 +76,15 @@ public class EventManager {
 
     public boolean isSpeakerForEvent(User u, Event e) {
         return e.getSpeakerId() == u.getId();
+    }
+
+    public void addUserToEvent(String eventName, User attendee) throws EventNotFoundException{
+        for(Event event: events){
+            if(event.getEventTitle().equals(eventName)){
+                event.addAttendee(attendee);
+            }
+        }
+        throw new EventNotFoundException(eventName);
     }
 
 }
