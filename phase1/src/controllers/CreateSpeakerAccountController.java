@@ -35,10 +35,10 @@ public class CreateSpeakerAccountController {
         String username = usernameAndPassword[0];
         String password = usernameAndPassword[1];
 
-        User speaker = new User(User.UserType.SPEAKER, username, password, UUID.randomUUID());
+
 
         try {
-            userManager.addUser(speaker);
+            userManager.addUser(User.UserType.SPEAKER, username, password);
             presenter.setInputResponse("Speaker added successfully");
         } catch (UsernameAlreadyExistsException e) {
             presenter.setInputResponse("Username taken. Try again.");

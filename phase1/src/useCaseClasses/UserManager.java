@@ -46,6 +46,14 @@ public class UserManager {
         users.add(user);
     }
 
+    public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException {
+        if(doesUserExist(username)) {
+            throw new UsernameAlreadyExistsException("Username: "+username+" is taken");
+        }
+        User user = new User(type, username, password, UUID.randomUUID());
+        users.add(user);
+    }
+
     public boolean doesUserExist(String username) {
         for(User user: users) {
             if(user.getUsername().equals(username))
