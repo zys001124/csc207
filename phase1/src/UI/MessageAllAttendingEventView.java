@@ -5,7 +5,7 @@ import presenters.MessageAllAttendingEventPresenter;
 
 import java.util.Scanner;
 
-public class MessageAllAttendingEventView {
+public class MessageAllAttendingEventView extends ConsoleView{
 
     private MessageAllAttendingEventController controller;
     private MessageAllAttendingEventPresenter presenter;
@@ -15,7 +15,7 @@ public class MessageAllAttendingEventView {
         this.presenter = presenter;
     }
 
-    public ConsoleView.ConsoleViewType runFlow(Scanner inputScanner){
+    public ConsoleViewType runFlow(Scanner inputScanner){
         System.out.println(presenter.getIntro());
         String uuidInput = inputScanner.nextLine();
 
@@ -24,7 +24,7 @@ public class MessageAllAttendingEventView {
 
 
         presenter.setInputResponse("");
-        ConsoleView.ConsoleViewType nextScreen = controller.getNextScreen(uuidInput, message);
+        ConsoleViewType nextScreen = controller.getNextScreen(uuidInput, message);
         System.out.println(presenter.getInputResponse());
 
         return nextScreen;

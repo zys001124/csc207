@@ -5,7 +5,7 @@ import presenters.EventListForMessagingPresenter;
 
 import java.util.Scanner;
 
-public class EventListForMessagingView {
+public class EventListForMessagingView extends ConsoleView{
 
     private EventListForMessagingController controller;
     private EventListForMessagingPresenter presenter;
@@ -15,11 +15,11 @@ public class EventListForMessagingView {
         this.presenter = presenter;
     }
 
-    public ConsoleView.ConsoleViewType runFlow(Scanner inputScanner){
+    public ConsoleViewType runFlow(Scanner inputScanner){
         System.out.println(presenter.getIntro());
         String input = inputScanner.nextLine();
 
-        ConsoleView.ConsoleViewType nextScreen = controller.getNextScreen(input);
+        ConsoleViewType nextScreen = controller.getNextScreen(input);
         System.out.println(presenter.getInputResponse());
         return nextScreen;
 
