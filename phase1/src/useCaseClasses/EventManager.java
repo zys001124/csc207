@@ -20,21 +20,16 @@ public class EventManager {
     }
     public boolean addEvent(Event e){
         LocalDateTime time = e.getEventTime();
-        ArrayList<Boolean> eventInTime = new ArrayList<>(6);
         for (Event temp: events){
             LocalDateTime timeGot = temp.getEventTime();
             if (timeGot.equals(time)){
-                eventInTime.add(temp.getEventRoom(),true);
+                if (temp.getEventRoom() == e.getEventRoom()){
+                    return false;
+                }
             }
         }
-        int roomNum = e.getEventRoom();
-        if (eventInTime.get(roomNum)){
-            return false;
-        }else{
-            events.add(e);
-            return true;
-        }
 
+        return true;
     }
 
     public boolean availabilityInTime(LocalDateTime time){

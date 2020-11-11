@@ -7,6 +7,7 @@ import useCaseClasses.EventManager;
 import useCaseClasses.UserManager;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -52,7 +53,7 @@ public class EventCreationController {
         boolean registeredUser = false;
         User speaker = uManager.getCurrentlyLoggedIn();
         for (User choice:uManager.getusers()){
-            if (choice.getUsername().equals(parametersForEvent[3])){
+            if (choice.getUsername().equals(parametersForEvent[2])){
                 registeredUser = true;
                 speaker = choice;
             }
@@ -72,15 +73,18 @@ public class EventCreationController {
         UUID speakerID = speaker.getId();
         UUID organizerID = uManager.getCurrentlyLoggedIn().getId();
 
-        LocalDateTime time = LocalDateTime.parse(parametersForEvent[1]);
+        String time = parametersForEvent[1];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime dateTime = LocalDateTime.parse(time, formatter);
+
         int roomNum = Integer.parseInt(parametersForEvent[3]);
 
-        if (Emanager.availabilityInTime(time)){
+        if (Emanager.availabilityInTime(dateTime)){
             System.out.println("This time slot is full");
             return InputProcessResult.TIMESLOT_FULL;
         }
 
-        Event eventCreated = new Event(parametersForEvent[0], time, eventID, organizerID, speakerID,
+        Event eventCreated = new Event(parametersForEvent[0], dateTime, eventID, organizerID, speakerID,
         new ArrayList<>(), roomNum);
 
         if (Emanager.addEvent(eventCreated)){
