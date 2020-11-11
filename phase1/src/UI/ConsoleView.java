@@ -19,7 +19,7 @@ public abstract class ConsoleView {
         EVENT_SCHEDULE, // Kelvin
         CREATE_EVENT, // Jay
         CANCEL_EVENT, // Yaosheng
-        ENROLL_IN_EVENT, // Kelvin or Simon?
+        ENROLL_IN_EVENT, // Kelvin
         UNENROLL_IN_EVENT, // Kelvin or Simon?
         CREATE_SPEAKER_ACCOUNT, // Lewis - Finished
 
