@@ -19,13 +19,13 @@ public class MessageAllAttendingEventController {
     private MessageAllAttendingEventPresenter presenter;
     private User user;
 
-    public MessageAllAttendingEventController(UserManager am, MessageManager mm, EventManager em, UUID eventId, MessageAllAttendingEventPresenter presenter, User user) {
+    public MessageAllAttendingEventController(UserManager am, MessageManager mm, EventManager em){//, UUID eventId, MessageAllAttendingEventPresenter presenter, User user) {
         userManager = am;
         messageManager = mm;
         eventManager = em;
         //this.eventId = eventId;
-        this.presenter = presenter;
-        this.user = user; //Is this needed?
+        //this.presenter = presenter;
+        //this.user = user; //Is this needed?
 
     }
 
