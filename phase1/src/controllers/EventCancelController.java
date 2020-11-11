@@ -27,48 +27,30 @@ public class EventCancelController {
             return InputProcessResult.BACK;
         }
 
-        String[] userIdandEventId = input.split(" ");
-        if (userIdandEventId.length != 2) {
-            presenter.setInputResponse("Expecting two, and only two inputs. Try again.");
+        String[] eventName = input.split(" ");
+        if (eventName.length != 1) {
+            presenter.setInputResponse("Expecting one, and only one input. Try again.\n");
             return InputProcessResult.INVALID_INPUT;
         }
 
-        for (String s : userIdandEventId) {
-            if (!isUUID(s)) {
-                System.out.println("Incorrect ID. Try again.");
-                return InputProcessResult.INCORRECT_EVENT_ID;
-            }
-        }
 
-        UUID eventId = UUID.fromString(userIdandEventId[1]);
-        UUID userId = UUID.fromString(userIdandEventId[0]);
-
-        if (Emanager.getEvent(eventId) == null) {
-            presenter.setInputResponse("This event does not exist. Try again.");
+        if (!presenter.getAllEvents().contains(eventName[0])) {
+            presenter.setInputResponse("This event does not exist. Try again.\n");
             return InputProcessResult.EVENT_DOES_NOT_EXIST;
         }
 
-        Event currentEvent = Emanager.getEvent(eventId);
-        User currentUser = Umanager.getUser(userId);
+          Event currentEvent = Emanager.getEvent(eventName[0]);
+          User currentUser = Umanager.getCurrentlyLoggedIn();
 
-        if (!Emanager.hasOrganizedEvent(currentUser, currentEvent)) {
-            presenter.setInputResponse("This event is not organized by you. Try again.");
+        if (!Emanager.hasOrganizedEvent(currentUser,currentEvent)) {
+            presenter.setInputResponse("This event is not organized by you. Try again.\n");
             return InputProcessResult.USER_DID_NOT_ORGANIZE_EVENT;
         }
 
-        Emanager.removeEvent(eventId);
+        Emanager.removeEvent(currentEvent.getId());
         presenter.setInputResponse("Event Canceled successfully");
 
         return InputProcessResult.SUCCESS;
-    }
-
-    private boolean isUUID(String string) {
-        try {
-            UUID.fromString(string);
-            return true;
-        } catch (IllegalArgumentException ex) {
-            return false;
-        }
     }
 
 }

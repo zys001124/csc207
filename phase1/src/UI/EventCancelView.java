@@ -5,6 +5,7 @@ import controllers.InputProcessResult;
 import presenters.EventCancelPresenter;
 
 import java.util.Scanner;
+import java.util.SortedMap;
 
 public class EventCancelView extends ConsoleView {
 
@@ -18,6 +19,7 @@ public class EventCancelView extends ConsoleView {
 
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner){
+        System.out.println(presenter.getAllEvents());
         System.out.println(presenter.getIntro());
         String input = inputScanner.nextLine();
 
