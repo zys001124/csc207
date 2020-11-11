@@ -18,7 +18,7 @@ public class EventListForMessagingController {
         if(input.equals("back")) {
             return InputProcessResult.BACK;
         }
-        presenter.setInputResponse("Could not understand your input. Please try again.");
+        //presenter.setInputResponse("Could not understand your input. Please try again.");
         return InputProcessResult.NAVIGATE_TO_EVENT_LIST_FOR_MESSAGING;
 
     }

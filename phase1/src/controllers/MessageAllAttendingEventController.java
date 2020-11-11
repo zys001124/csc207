@@ -35,20 +35,18 @@ public class MessageAllAttendingEventController {
                 userManager.getCurrentlyLoggedIn().getId());
     }
 
-    public ConsoleView.ConsoleViewType getNextScreen(String name, String message) {
+    public InputProcessResult handleInput(String name, String message) {
         if (name.equals("back")) {
-            return ConsoleView.ConsoleViewType.MAIN_MENU;
+            return InputProcessResult.BACK;
         }
         else{
             FindEvent verify = verifyEvent(name);
             if(verify == FindEvent.FAIL){
-                presenter.setInputResponse("UUID for event not found for your presentation. Please try again.");
-                return ConsoleView.ConsoleViewType.MESSAGE_ALL_ATTENDING_EVENT;
+                return InputProcessResult.INVALID_INPUT;
             }
             else{
                 sendMessage(message, name);
-                presenter.setInputResponse("You have successfully messaged all the users going to this event.");
-                return ConsoleView.ConsoleViewType.MAIN_MENU;
+                return InputProcessResult.SUCCESS;
             }
         }
 

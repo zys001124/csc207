@@ -1,5 +1,6 @@
 package presenters;
 
+import controllers.InputProcessResult;
 import entities.Event;
 import entities.User;
 import useCaseClasses.EventManager;
@@ -27,20 +28,25 @@ public class EventListForMessagingPresenter {
     }
 
     public String getEvents(List<String> events){
-        String s = "";
+        StringBuilder s = new StringBuilder();
         for(String e: events){
-            s += e + "\n";
+            s.append(e).append("\n");
         }
-        return s;
+        return s.toString();
     }
 
 
 
-    public void setInputResponse(String message) {
-        inputResponse = message;
-    }
+//    public void setInputResponse(String message) {
+//        inputResponse = message;
+//    }
 
-    public String getInputResponse() {
-        return inputResponse;
+    public String getInputResponse(InputProcessResult result) {
+        if(result == InputProcessResult.SUCCESS) {
+            return "";
+        }
+        else {
+            return "Event Not found. Please try again.";
+        }
     }
 }

@@ -1,6 +1,8 @@
 package UI;
 
+import controllers.InputProcessResult;
 import controllers.MessageAllAttendingEventController;
+import jdk.internal.util.xml.impl.Input;
 import presenters.MessageAllAttendingEventPresenter;
 
 import java.util.Scanner;
@@ -23,10 +25,21 @@ public class MessageAllAttendingEventView extends ConsoleView{
         String message = inputScanner.nextLine();
 
 
-        presenter.setInputResponse("");
-        ConsoleViewType nextScreen = controller.getNextScreen(eventName, message);
-        System.out.println(presenter.getInputResponse());
 
-        return nextScreen;
+        InputProcessResult result = controller.handleInput(eventName, message);
+
+        String resultOutput = presenter.getInputResponse(result);
+        System.out.println(resultOutput);
+
+        return getNextScreen(result);
+    }
+
+    private ConsoleViewType getNextScreen(InputProcessResult result) {
+        if(result == InputProcessResult.SUCCESS) {
+            return ConsoleViewType.MAIN_MENU;
+        }
+        else {
+            return ConsoleViewType.MESSAGE_ALL_ATTENDING_EVENT;
+        }
     }
 }
