@@ -1,5 +1,7 @@
 package presenters;
 
+import controllers.InputProcessResult;
+
 public class EventCreationPresenter {
 
     private String inputResponse = "";
@@ -17,8 +19,19 @@ public class EventCreationPresenter {
         inputResponse = message;
     }
 
-    public String getInputResponse() {
-        return inputResponse;
+    public String getInputResponse(InputProcessResult result) {
+        if (result == InputProcessResult.BACK){
+            return null;
+        }else if(result == InputProcessResult.USER_NOT_FOUND){
+            return "The speaker user is not a register user";
+        }else if (result == InputProcessResult.USER_NOT_SPEAKER){
+            return "The given speaker is not a speaker";
+        }else if (result == InputProcessResult.TIMESLOT_FULL){
+            return "This time slot is full";
+        }else if (result == InputProcessResult.SUCCESS){
+            return "The event is added";
+        }else{return "The room is already booked. Try another room";}
+
     }
 
 }

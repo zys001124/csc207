@@ -24,7 +24,9 @@ public class CreateSpeakerAccountView extends ConsoleView {
 
         presenter.setInputResponse("");
         InputProcessResult result = controller.getNextScreen(input);
-        System.out.println(presenter.getInputResponse());
+
+        String CreateSpeakerOutput = presenter.getInputResponse(result);
+        System.out.println(CreateSpeakerOutput);
 
         return getScreen(result);
     }
@@ -32,6 +34,7 @@ public class CreateSpeakerAccountView extends ConsoleView {
     private ConsoleViewType getScreen(InputProcessResult result) {
         switch (result) {
             case SUCCESS: return ConsoleViewType.MAIN_MENU;
+            case BACK: return ConsoleViewType.MAIN_MENU;
             default: return ConsoleViewType.CREATE_SPEAKER_ACCOUNT;
         }
     }

@@ -1,5 +1,7 @@
 package presenters;
 
+import controllers.InputProcessResult;
+
 public class CreateSpeakerAccountPresenter {
 
     private String inputResponse = "";
@@ -13,8 +15,14 @@ public class CreateSpeakerAccountPresenter {
         inputResponse = message;
     }
 
-    public String getInputResponse() {
-        return inputResponse;
+    public String getInputResponse(InputProcessResult result) {
+        if (result == InputProcessResult.INVALID_INPUT){
+            return "Expecting two, and only two inputs. Try again.";
+        }else if(result == InputProcessResult.SUCCESS){
+            return "Speaker added successfully";
+        }else if (result == InputProcessResult.USERNAME_TAKEN){
+            return "Username taken. Try again.";
+        }else{return null;}
     }
 
 }

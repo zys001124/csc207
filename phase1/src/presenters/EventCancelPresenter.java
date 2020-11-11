@@ -1,6 +1,7 @@
 package presenters;
 
 
+import controllers.InputProcessResult;
 import entities.Event;
 import useCaseClasses.EventManager;
 
@@ -31,7 +32,14 @@ public class EventCancelPresenter {
         return events;
     }
 
-    public String getInputResponse() {
-        return inputResponse;
+    public String getInputResponse(InputProcessResult result) {
+        if (result == InputProcessResult.BACK){
+            return null;
+        }else if(result == InputProcessResult.EVENT_DOES_NOT_EXIST){
+            return "This event does not exist. Try again.\n";
+        }else if(result == InputProcessResult.USER_DID_NOT_ORGANIZE_EVENT){
+            return "This event is not organized by you. Try again.\n";
+        }else{return "Event Canceled successfully";}
+
     }
 }

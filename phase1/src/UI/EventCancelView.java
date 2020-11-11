@@ -26,11 +26,11 @@ public class EventCancelView extends ConsoleView {
         presenter.setInputResponse("");
         InputProcessResult result = controller.getNextScreen(input);
 
-        ConsoleViewType nextScreenType = getScreen(result);
+        String CancelEventOutput = presenter.getInputResponse(result);
 
-        System.out.println(presenter.getInputResponse());
+        System.out.println(CancelEventOutput);
 
-        return nextScreenType;
+        return getScreen(result);
     }
 
     private ConsoleViewType getScreen(InputProcessResult result) {

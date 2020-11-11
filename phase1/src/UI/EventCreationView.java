@@ -22,16 +22,15 @@ public class EventCreationView extends ConsoleView {
         String input = inputScanner.nextLine();
 
         presenter.setInputResponse("");
-        InputProcessResult result = controller.getNextScreen(input);
+        InputProcessResult result = controller.createEvent(input);
 
-        ConsoleViewType nextScreenType = getScreen(result);
+        String CreateEventOutput = presenter.getInputResponse(result);
+        System.out.println(CreateEventOutput);
 
-        System.out.println(presenter.getInputResponse());
-
-        return nextScreenType;
+        return getNextScreen(result);
     }
 
-    private ConsoleViewType getScreen(InputProcessResult result) {
+    private ConsoleViewType getNextScreen(InputProcessResult result) {
         switch (result) {
             case BACK: return ConsoleViewType.MAIN_MENU;
             case SUCCESS: return ConsoleViewType.MAIN_MENU;
