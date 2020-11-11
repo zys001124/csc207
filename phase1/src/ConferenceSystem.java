@@ -22,9 +22,9 @@ import java.util.Scanner;
 public class ConferenceSystem {
 
     // global final variables
-    public static final String USER_CSV_PATH = "userData.csv";
-    public static final String MESSAGE_CSV_PATH = "messageData.csv";
-    public static final String EVENT_CSV_PATH = "eventData.csv";
+    public static final String USER_CSV_PATH = "C:/Users/z1094/IdeaProjects/group_0186/phase1/resources/userData.csv";
+    public static final String MESSAGE_CSV_PATH = "C:/Users/z1094/IdeaProjects/group_0186/phase1/resources/messageData.csv";
+    public static final String EVENT_CSV_PATH = "C:/Users/z1094/IdeaProjects/group_0186/phase1/resources/eventData.csv";
 
     // Managers
     private UserManager userManager;
@@ -147,7 +147,7 @@ public class ConferenceSystem {
         menuInputPresenter = new MenuInputPresenter();
         createSpeakerAccountPresenter = new CreateSpeakerAccountPresenter();
         eventEnrollPresenter = new EventEnrollPresenter(eventManager);
-        eventCancelPresenter = new EventCancelPresenter();
+        eventCancelPresenter = new EventCancelPresenter(eventManager);
         eventCreationPresenter = new EventCreationPresenter();
     }
 
