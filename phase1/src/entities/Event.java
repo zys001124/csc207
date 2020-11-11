@@ -58,6 +58,10 @@ public class Event implements Serializable, Iterable<UUID> {
         attendees.add(attendee.getId());
     }
 
+    public void removeAttendee(User attendee){
+        attendees.remove(attendee.getId());
+    }
+
     @Override
     public Iterator iterator() {
         return attendees.iterator();

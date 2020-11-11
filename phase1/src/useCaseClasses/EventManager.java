@@ -96,6 +96,14 @@ public class EventManager {
         throw new EventNotFoundException(parsedInput);
     }
 
+    public void removeUserFromEvent(int parsedInput, User attendee) throws EventNotFoundException, NumberFormatException{
+        if (parsedInput <= events.size() && parsedInput > 0){
+            this.events.get(parsedInput - 1).removeAttendee(attendee);
+            return;
+        }
+        throw new EventNotFoundException(parsedInput);
+    }
+
     public List<String> ListOfEventsHosting(User u) {
         //returns a list of the events a presenter is hosting
         List<String> theList = new ArrayList<>();
