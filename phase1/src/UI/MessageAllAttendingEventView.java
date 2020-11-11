@@ -38,6 +38,9 @@ public class MessageAllAttendingEventView extends ConsoleView{
         if(result == InputProcessResult.SUCCESS) {
             return ConsoleViewType.MAIN_MENU;
         }
+        else if(result == InputProcessResult.BACK){
+            return ConsoleViewType.MAIN_MENU;
+        }
         else {
             return ConsoleViewType.MESSAGE_ALL_ATTENDING_EVENT;
         }

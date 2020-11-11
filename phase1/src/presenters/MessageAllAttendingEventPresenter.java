@@ -1,13 +1,24 @@
 package presenters;
 
 import controllers.InputProcessResult;
+import useCaseClasses.EventManager;
+import useCaseClasses.UserManager;
+
+import java.util.List;
 
 public class MessageAllAttendingEventPresenter {
 
-    //private String inputResponse = "";
+    private EventManager eventManager;
+    private UserManager userManager;
+
+    public MessageAllAttendingEventPresenter(UserManager userManager, EventManager eventManager){
+        this.userManager = userManager;
+        this.eventManager = eventManager;
+    }
 
     public String getIntro(){
-        return "Please enter the event name of the event you would like to message all of the attendees for:\n" +
+        return "Welcome. Here are the event names of the events that you are hosting and you can message: \n" + getEvents(eventManager.ListOfEventsHosting(userManager.getCurrentlyLoggedIn())) +
+                "Please enter the event name of the event you would like to message all of the attendees for:\n" +
                 "Enter \"back\" to go back to the main menu.";
     }
 
@@ -15,7 +26,13 @@ public class MessageAllAttendingEventPresenter {
         return "Please enter the message you wish to send out to your users:";
     }
 
-
+    private String getEvents(List<String> events){
+        StringBuilder s = new StringBuilder();
+        for(String e: events){
+            s.append(e).append("\n");
+        }
+        return s.toString();
+    }
     //public void setInputResponse(String s){ inputResponse = s;}
 
     public String getInputResponse(InputProcessResult result){

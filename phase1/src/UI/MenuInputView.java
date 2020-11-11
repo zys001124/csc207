@@ -42,7 +42,7 @@ public class MenuInputView extends ConsoleView {
         }
         switch (result) {
             case NAVIGATE_TO_MESSAGE_USERS_MENU: return ConsoleViewType.MESSAGE_USERS_MENU;
-            case NAVIGATE_TO_EVENT_LIST_FOR_MESSAGING: return ConsoleViewType.EVENT_LIST_FOR_MESSAGING;
+            case NAVIGATE_TO_MESSAGE_ALL_ATTENDING_EVENT: return ConsoleViewType.MESSAGE_ALL_ATTENDING_EVENT;
             case NAVIGATE_TO_MESSAGE_ALL_SPEAKERS: return ConsoleViewType.MESSAGE_ALL_SPEAKERS;
             case NAVIGATE_TO_MESSAGE_ALL_ATTENDEES: return ConsoleViewType.MESSAGE_ALL_ATTENDEES;
             case NAVIGATE_TO_EVENT_SCHEDULE: return ConsoleViewType.EVENT_SCHEDULE;

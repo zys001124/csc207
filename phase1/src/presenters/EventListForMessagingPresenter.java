@@ -23,16 +23,16 @@ public class EventListForMessagingPresenter {
 
 
     public String getIntro(){
-        return "Welcome. Here are the UUID's of theEvents that you are hosting and you can message: \n" + getEvents(eventManager.ListOfEventsHosting(userManager.getCurrentlyLoggedIn())) +
+        return "Welcome. Here are the event names of the events that you are hosting and you can message: \n" + getEvents(eventManager.ListOfEventsHosting(userManager.getCurrentlyLoggedIn())) +
                 "type \"back\" to return to the main menu.";
     }
 
     public String getEvents(List<String> events){
-        StringBuilder s = new StringBuilder();
+        String s = "";
         for(String e: events){
-            s.append(e).append("\n");
+            s += e + "\n";
         }
-        return s.toString();
+        return s;
     }
 
 

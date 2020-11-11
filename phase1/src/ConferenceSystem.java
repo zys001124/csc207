@@ -164,7 +164,7 @@ public class ConferenceSystem {
         eventCancelPresenter = new EventCancelPresenter(eventManager);
         eventCreationPresenter = new EventCreationPresenter();
         eventListForMessagingPresenter = new EventListForMessagingPresenter(userManager, eventManager);
-        messageAllAttendingEventPresenter = new MessageAllAttendingEventPresenter();
+        messageAllAttendingEventPresenter = new MessageAllAttendingEventPresenter(userManager, eventManager);
     }
 
     private void initializeViews() {
@@ -190,6 +190,8 @@ public class ConferenceSystem {
             case UNENROLL_IN_EVENT: return eventUnEnrollView;
             case CANCEL_EVENT: return eventCancelView;
             case CREATE_EVENT: return eventCreationView;
+            case EVENT_LIST_FOR_MESSAGING: return eventListForMessagingView;
+            case MESSAGE_ALL_ATTENDING_EVENT: return messageAllAttendingEventView;
             default: return null;
         }
     }

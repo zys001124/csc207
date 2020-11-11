@@ -67,4 +67,6 @@ public class Event implements Serializable, Iterable<UUID> {
         return attendees.iterator();
     }
 
+    public List<UUID> getAttendees(){return attendees;}
+
 }

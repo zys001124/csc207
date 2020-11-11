@@ -36,7 +36,7 @@ public class MessageAllAttendingEventController {
     }
 
     public InputProcessResult handleInput(String name, String message) {
-        if (name.equals("back")) {
+        if(name.equals("back")) {
             return InputProcessResult.BACK;
         }
         else{

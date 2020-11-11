@@ -42,7 +42,7 @@ public class MenuInputController {
 
     private InputProcessResult parseSpeakerInput(int input) {
         switch (input) {
-            case 1: return InputProcessResult.NAVIGATE_TO_EVENT_LIST_FOR_MESSAGING;
+            case 1: return InputProcessResult.NAVIGATE_TO_MESSAGE_ALL_ATTENDING_EVENT;
             case 2: return InputProcessResult.NAVIGATE_TO_MESSAGE_USERS_MENU;
             case 3: return InputProcessResult.NAVIGATE_TO_EVENT_SCHEDULE;
             case 4: return null;
