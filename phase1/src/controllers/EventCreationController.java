@@ -24,7 +24,7 @@ public class EventCreationController {
     }
 
 
-    public InputProcessResult getNextScreen(String input){
+    public InputProcessResult createEvent(String input){
         if(input.equals("back")) {
             return InputProcessResult.BACK;
         }
@@ -60,12 +60,10 @@ public class EventCreationController {
         }
 
         if (!registeredUser){
-            System.out.println("The speaker user is not a register user");
             return InputProcessResult.USER_NOT_FOUND;
         }
 
         if (!(speaker.getType().equals(User.UserType.SPEAKER))){
-            System.out.println("The given speaker is not a speaker");
             return InputProcessResult.USER_NOT_SPEAKER;
         }
 
@@ -80,7 +78,6 @@ public class EventCreationController {
         int roomNum = Integer.parseInt(parametersForEvent[3]);
 
         if (Emanager.availabilityInTime(dateTime)){
-            System.out.println("This time slot is full");
             return InputProcessResult.TIMESLOT_FULL;
         }
 
@@ -88,10 +85,8 @@ public class EventCreationController {
         new ArrayList<>(), roomNum);
 
         if (Emanager.addEvent(eventCreated)){
-            presenter.setInputResponse("The event is added");
             return InputProcessResult.SUCCESS;
         }else{
-            presenter.setInputResponse("The room is already booked. Try another room");
             return InputProcessResult.ROOM_FULL;
         }
     }

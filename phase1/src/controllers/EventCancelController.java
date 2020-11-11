@@ -30,7 +30,6 @@ public class EventCancelController {
         String eventName = input;
 
         if (!presenter.getAllEvents().contains(eventName)) {
-            presenter.setInputResponse("This event does not exist. Try again.\n");
             return InputProcessResult.EVENT_DOES_NOT_EXIST;
         }
 
@@ -38,12 +37,10 @@ public class EventCancelController {
           User currentUser = Umanager.getCurrentlyLoggedIn();
 
         if (!Emanager.hasOrganizedEvent(currentUser,currentEvent)) {
-            presenter.setInputResponse("This event is not organized by you. Try again.\n");
             return InputProcessResult.USER_DID_NOT_ORGANIZE_EVENT;
         }
 
         Emanager.removeEvent(currentEvent.getId());
-        presenter.setInputResponse("Event Canceled successfully");
 
         return InputProcessResult.SUCCESS;
     }

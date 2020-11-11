@@ -27,7 +27,6 @@ public class CreateSpeakerAccountController {
 
         // Invalid input
         if(usernameAndPassword.length != 2) {
-            presenter.setInputResponse("Expecting two, and only two inputs. Try again.");
             return InputProcessResult.INVALID_INPUT;
         }
 
@@ -36,10 +35,8 @@ public class CreateSpeakerAccountController {
 
         try {
             userManager.addUser(User.UserType.SPEAKER, username, password);
-            presenter.setInputResponse("Speaker added successfully");
             return InputProcessResult.SUCCESS;
         } catch (UsernameAlreadyExistsException e) {
-            presenter.setInputResponse("Username taken. Try again.");
             return InputProcessResult.USERNAME_TAKEN;
         }
 
