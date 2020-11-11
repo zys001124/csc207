@@ -17,14 +17,14 @@ public class MessageAllAttendingEventView extends ConsoleView{
 
     public ConsoleViewType runFlow(Scanner inputScanner){
         System.out.println(presenter.getIntro());
-        String uuidInput = inputScanner.nextLine();
+        String eventName = inputScanner.nextLine();
 
         System.out.println(presenter.getMessage());
         String message = inputScanner.nextLine();
 
 
         presenter.setInputResponse("");
-        ConsoleViewType nextScreen = controller.getNextScreen(uuidInput, message);
+        ConsoleViewType nextScreen = controller.getNextScreen(eventName, message);
         System.out.println(presenter.getInputResponse());
 
         return nextScreen;

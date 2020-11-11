@@ -22,13 +22,13 @@ public class EventListForMessagingPresenter {
 
 
     public String getIntro(){
-        return "Welcome. Here are the UUID's of theEvents that you are hosting and you can message: \n" + getEvents(eventManager.idOfEventsHosting(userManager.getCurrentlyLoggedIn())) +
+        return "Welcome. Here are the UUID's of theEvents that you are hosting and you can message: \n" + getEvents(eventManager.ListOfEventsHosting(userManager.getCurrentlyLoggedIn())) +
                 "type \"back\" to return to the main menu.";
     }
 
-    public String getEvents(List<UUID> events){
+    public String getEvents(List<String> events){
         String s = "";
-        for(UUID e: events){
+        for(String e: events){
             s += e + "\n";
         }
         return s;
