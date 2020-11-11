@@ -17,7 +17,7 @@ public class EventEnrollPresenter{
     }
 
     public String getEventNumberInputPrompt(){
-        return "Event Name: ";
+        return "Event Number: ";
     }
 
     public String getAllEvents(){
@@ -32,13 +32,12 @@ public class EventEnrollPresenter{
     }
 
     public String getEnrollResultMessage(InputProcessResult result){
-        if(result == InputProcessResult.SUCCESS)
-        {
+        if(result == InputProcessResult.SUCCESS) {
             return "Enroll Successful!";
-        }
-        else
-        {
-            return "Event not found. Please try again";
+        } else if(result == InputProcessResult.EVENT_NOT_FOUND) {
+            return "Event not found. Please try again.";
+        } else{
+            return "Invalid Input. Please try again.";
         }
     }
 }

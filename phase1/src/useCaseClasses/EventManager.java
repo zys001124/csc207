@@ -93,14 +93,12 @@ public class EventManager {
         return e.getSpeakerId() == u.getId();
     }
 
-    public void addUserToEvent(String eventName, User attendee) throws EventNotFoundException{
-        for(Event event: events){
-            if(event.getEventTitle().equals(eventName)){
-                event.addAttendee(attendee);
-                return;
-            }
+    public void addUserToEvent(int parsedInput, User attendee) throws EventNotFoundException, NumberFormatException {
+        if (parsedInput <= events.size() && parsedInput > 0) {
+            this.events.get(parsedInput - 1).addAttendee(attendee);
+            return;
         }
-        throw new EventNotFoundException(eventName);
+        throw new EventNotFoundException(parsedInput);
     }
 
     public List<String> ListOfEventsHosting(User u) {

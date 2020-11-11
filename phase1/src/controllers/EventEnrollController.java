@@ -13,11 +13,14 @@ public class EventEnrollController {
         this.userManager = userManager;
     }
 
-    public InputProcessResult enrollEvent(String eventName){
+    public InputProcessResult enrollEvent(String eventInput){
         try{
-            eventManager.addUserToEvent(eventName, userManager.getCurrentlyLoggedIn());
+            int parsedInput = Integer.parseInt(eventInput);
+            eventManager.addUserToEvent(parsedInput, userManager.getCurrentlyLoggedIn());
         }catch(EventNotFoundException e){
             return InputProcessResult.EVENT_NOT_FOUND;
+        }catch(NumberFormatException e){
+            return InputProcessResult.INVALID_INPUT;
         }
         return InputProcessResult.SUCCESS;
     }
