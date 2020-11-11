@@ -39,7 +39,6 @@ public class ConferenceSystem {
     private EventUnEnrollController eventUnEnrollController;
     private EventCancelController eventCancelController;
     private EventCreationController eventCreationController;
-    private EventListForMessagingController eventListForMessagingController;
     private MessageAllAttendingEventController messageAllAttendingEventController;
 
     // Presenters
@@ -50,7 +49,6 @@ public class ConferenceSystem {
     private EventUnEnrollPresenter eventUnEnrollPresenter;
     private EventCancelPresenter eventCancelPresenter;
     private EventCreationPresenter eventCreationPresenter;
-    private EventListForMessagingPresenter eventListForMessagingPresenter;
     private MessageAllAttendingEventPresenter messageAllAttendingEventPresenter;
 
     // Views
@@ -61,7 +59,6 @@ public class ConferenceSystem {
     private EventUnEnrollView eventUnEnrollView;
     private EventCancelView eventCancelView;
     private EventCreationView eventCreationView;
-    private EventListForMessagingView eventListForMessagingView;
     private MessageAllAttendingEventView messageAllAttendingEventView;
 
     // This will instantiate all relevant objects and then present the menu view
@@ -150,7 +147,6 @@ public class ConferenceSystem {
         eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
         eventCancelController = new EventCancelController(eventManager,eventCancelPresenter,userManager);
         eventCreationController = new EventCreationController(eventManager, eventCreationPresenter, userManager);
-        eventListForMessagingController = new EventListForMessagingController();
         messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
 
     }
@@ -163,7 +159,6 @@ public class ConferenceSystem {
         eventUnEnrollPresenter = new EventUnEnrollPresenter(eventManager, userManager);
         eventCancelPresenter = new EventCancelPresenter(eventManager);
         eventCreationPresenter = new EventCreationPresenter();
-        eventListForMessagingPresenter = new EventListForMessagingPresenter(userManager, eventManager);
         messageAllAttendingEventPresenter = new MessageAllAttendingEventPresenter(userManager, eventManager);
     }
 
@@ -174,7 +169,6 @@ public class ConferenceSystem {
         eventUnEnrollView = new EventUnEnrollView(eventUnEnrollController, eventUnEnrollPresenter);
         eventCancelView = new EventCancelView(eventCancelController,eventCancelPresenter);
         eventCreationView = new EventCreationView(eventCreationController, eventCreationPresenter);
-        eventListForMessagingView = new EventListForMessagingView(eventListForMessagingController, eventListForMessagingPresenter);
         messageAllAttendingEventView = new MessageAllAttendingEventView(messageAllAttendingEventController, messageAllAttendingEventPresenter);
     }
 
@@ -190,7 +184,6 @@ public class ConferenceSystem {
             case UNENROLL_IN_EVENT: return eventUnEnrollView;
             case CANCEL_EVENT: return eventCancelView;
             case CREATE_EVENT: return eventCreationView;
-            case EVENT_LIST_FOR_MESSAGING: return eventListForMessagingView;
             case MESSAGE_ALL_ATTENDING_EVENT: return messageAllAttendingEventView;
             default: return null;
         }

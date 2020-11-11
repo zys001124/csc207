@@ -12,7 +12,6 @@ public abstract class ConsoleView {
         MAIN_MENU,
         MESSAGE_USERS_MENU, // Luka
         MESSAGE_USER, // Luka
-        EVENT_LIST_FOR_MESSAGING, // Jon
         MESSAGE_ALL_ATTENDING_EVENT, // Jon
         MESSAGE_ALL_SPEAKERS,
         MESSAGE_ALL_ATTENDEES,
