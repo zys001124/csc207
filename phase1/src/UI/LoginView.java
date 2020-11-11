@@ -1,5 +1,6 @@
 package UI;
 
+import controllers.InputProcessResult;
 import controllers.LoginController;
 import controllers.MenuInputController;
 import presenters.LoginPresenter;
@@ -30,7 +31,7 @@ public class LoginView extends ConsoleView {
         System.out.print(presenter.getPasswordInputPrompt());
         String password = inputScanner.nextLine();
 
-        LoginController.LoginResult result = controller.verifyLogin(username, password);
+        InputProcessResult result = controller.verifyLogin(username, password);
 
         String loginResultOutput = presenter.getLoginResultMessage(result);
         System.out.println(loginResultOutput);
@@ -38,8 +39,8 @@ public class LoginView extends ConsoleView {
         return getNextScreen(result);
     }
 
-    private ConsoleViewType getNextScreen(LoginController.LoginResult result) {
-        if(result == LoginController.LoginResult.SUCCESS) {
+    private ConsoleViewType getNextScreen(InputProcessResult result) {
+        if(result == InputProcessResult.SUCCESS) {
             return ConsoleViewType.MAIN_MENU;
         }
         else {

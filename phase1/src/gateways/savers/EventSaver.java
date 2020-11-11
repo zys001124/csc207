@@ -3,6 +3,7 @@ package gateways.savers;
 import entities.Event;
 
 import java.io.IOException;
+import java.util.UUID;
 
 public class EventSaver extends Saver<Event>{
 
@@ -17,6 +18,15 @@ public class EventSaver extends Saver<Event>{
         output.append(",");
         output.append(event.getId().toString());
         output.append(",");
+        output.append(event.getOrganizerId().toString());
+        output.append(",");
+        output.append(event.getSpeakerId().toString());
+        output.append(",");
+        for(UUID attendeeId: event) {
+            output.append(attendeeId.toString());
+            output.append(",");
+        }
+        output.append(event.getEventRoom()+"");
         output.append("\n");
 
         output.flush();

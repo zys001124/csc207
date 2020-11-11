@@ -1,6 +1,7 @@
 package UI;
 
 import controllers.EventCancelController;
+import controllers.InputProcessResult;
 import presenters.EventCancelPresenter;
 
 import java.util.Scanner;
@@ -21,9 +22,20 @@ public class EventCancelView extends ConsoleView {
         String input = inputScanner.nextLine();
 
         presenter.setInputResponse("");
-        ConsoleViewType nextScreenType = controller.getNextScreen(input);
+        InputProcessResult result = controller.getNextScreen(input);
+
+        ConsoleViewType nextScreenType = getScreen(result);
+
         System.out.println(presenter.getInputResponse());
 
         return nextScreenType;
+    }
+
+    private ConsoleViewType getScreen(InputProcessResult result) {
+        switch (result) {
+            case BACK: return ConsoleViewType.MAIN_MENU;
+            case SUCCESS: return ConsoleViewType.MAIN_MENU;
+            default: return ConsoleViewType.CANCEL_EVENT;
+        }
     }
 }

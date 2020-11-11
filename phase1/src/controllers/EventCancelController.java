@@ -1,8 +1,5 @@
 package controllers;
 
-import UI.ConsoleView;
-import exceptions.InvalidInputException;
-import exceptions.UsernameAlreadyExistsException;
 import useCaseClasses.EventManager;
 import presenters.EventCancelPresenter;
 import entities.Event;
@@ -24,46 +21,45 @@ public class EventCancelController {
         this.Umanager = Umanager;
     }
 
-    public ConsoleView.ConsoleViewType getNextScreen(String input){
+    public InputProcessResult getNextScreen(String input) {
 
-        if(input.equals("back")) {
-            return ConsoleView.ConsoleViewType.MAIN_MENU;
+        if (input.equals("back")) {
+            return InputProcessResult.BACK;
         }
 
         String[] userIdandEventId = input.split(" ");
-        if(userIdandEventId.length != 2) {
+        if (userIdandEventId.length != 2) {
             presenter.setInputResponse("Expecting two, and only two inputs. Try again.");
-            return ConsoleView.ConsoleViewType.CANCEL_EVENT;
+            return InputProcessResult.INVALID_INPUT;
         }
 
-        for(String s: userIdandEventId){
-            if(!isUUID(s)){
+        for (String s : userIdandEventId) {
+            if (!isUUID(s)) {
                 System.out.println("Incorrect ID. Try again.");
-                return ConsoleView.ConsoleViewType.CANCEL_EVENT;
+                return InputProcessResult.INCORRECT_EVENT_ID;
             }
         }
 
         UUID eventId = UUID.fromString(userIdandEventId[1]);
         UUID userId = UUID.fromString(userIdandEventId[0]);
 
-        if(Emanager.getEvent(eventId)==null){
+        if (Emanager.getEvent(eventId) == null) {
             presenter.setInputResponse("This event does not exist. Try again.");
-            return ConsoleView.ConsoleViewType.CANCEL_EVENT;
+            return InputProcessResult.EVENT_DOES_NOT_EXIST;
         }
 
         Event currentEvent = Emanager.getEvent(eventId);
         User currentUser = Umanager.getUser(userId);
 
-        if(!Emanager.hasOrganizedEvent(currentUser, currentEvent)){
+        if (!Emanager.hasOrganizedEvent(currentUser, currentEvent)) {
             presenter.setInputResponse("This event is not organized by you. Try again.");
-            return ConsoleView.ConsoleViewType.CANCEL_EVENT;
+            return InputProcessResult.USER_DID_NOT_ORGANIZE_EVENT;
         }
-
 
         Emanager.removeEvent(eventId);
         presenter.setInputResponse("Event Canceled successfully");
 
-        return ConsoleView.ConsoleViewType.CANCEL_EVENT;
+        return InputProcessResult.SUCCESS;
     }
 
     private boolean isUUID(String string) {
@@ -74,4 +70,5 @@ public class EventCancelController {
             return false;
         }
     }
+
 }

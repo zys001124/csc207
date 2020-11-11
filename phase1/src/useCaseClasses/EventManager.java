@@ -72,6 +72,15 @@ public class EventManager {
         return null;
     }
 
+    public Event getEvent(String event){
+        for(Event e: events) {
+            if(e.getEventTitle().equals(event)) {
+                return e;
+            }
+        }
+        return null;
+    }
+
     public List<Event> getEvents(){
         return events;
     }
@@ -88,9 +97,23 @@ public class EventManager {
         for(Event event: events){
             if(event.getEventTitle().equals(eventName)){
                 event.addAttendee(attendee);
+                return;
             }
         }
         throw new EventNotFoundException(eventName);
     }
+
+    public List<String> ListOfEventsHosting(User u) {
+        //returns a list of the events a presenter is hosting
+        List<String> theList = new ArrayList<>();
+        for(Event e: events){
+            if(e.getSpeakerId() == u.getId()){
+                theList.add(e.getEventTitle());
+            }
+        }
+        return theList;
+    }
+
+
 
 }

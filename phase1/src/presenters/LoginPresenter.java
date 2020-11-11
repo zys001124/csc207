@@ -1,5 +1,6 @@
 package presenters;
 
+import controllers.InputProcessResult;
 import controllers.LoginController;
 
 public class LoginPresenter {
@@ -16,11 +17,11 @@ public class LoginPresenter {
         return "Password: ";
     }
 
-    public String getLoginResultMessage(LoginController.LoginResult result) {
-        if(result == LoginController.LoginResult.SUCCESS) {
+    public String getLoginResultMessage(InputProcessResult result) {
+        if(result == InputProcessResult.SUCCESS) {
             return "Login Successful!";
         }
-        else if(result == LoginController.LoginResult.INCORRECT_PASSWORD) {
+        else if(result == InputProcessResult.INCORRECT_PASSWORD) {
             return "Incorrect password. Please try again";
         }
         else {

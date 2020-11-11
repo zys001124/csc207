@@ -1,7 +1,10 @@
 package presenters;
 
 import controllers.EventEnrollController;
+import controllers.InputProcessResult;
 import useCaseClasses.EventManager;
+
+import java.time.format.DateTimeFormatter;
 
 public class EventEnrollPresenter{
     private EventManager manager;
@@ -20,15 +23,17 @@ public class EventEnrollPresenter{
 
     public String getAllEvents(){
         String result = "";
-        for(int i = 1; i<=manager.getEvents().size(); i++)
+        for(int i = 1; i <= manager.getEvents().size(); i++)
         {
-            result = result.concat(i+". ").concat(manager.getEvents().get(i).getEventTitle()+'\n');
+            result = result.concat(i+". ").concat(manager.getEvents().get(i-1).getEventTitle()+", ")
+            .concat(manager.getEvents().get(i-1).getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))+", ")
+            .concat("Room "+ manager.getEvents().get(i-1).getEventRoom()+'\n');
         }
         return result;
     }
 
-    public String getEnrollResultMessage(EventEnrollController.EnrollResult result){
-        if(result == EventEnrollController.EnrollResult.SUCCESS)
+    public String getEnrollResultMessage(InputProcessResult result){
+        if(result == InputProcessResult.SUCCESS)
         {
             return "Enroll Successful!";
         }

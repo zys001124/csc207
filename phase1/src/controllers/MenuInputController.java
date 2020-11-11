@@ -1,10 +1,7 @@
 package controllers;
 
-import UI.ConsoleView;
 import entities.User;
-import exceptions.InvalidInputException;
 import useCaseClasses.UserManager;
-import useCaseClasses.MessageManager;
 
 public class MenuInputController {
 
@@ -14,7 +11,7 @@ public class MenuInputController {
         userManager = um;
     }
 
-    public ConsoleView.ConsoleViewType getNextScreen(String input) {
+    public InputProcessResult handleInput(String input) {
         User.UserType userType = userManager.getCurrentlyLoggedIn().getType();
 
         int parsedInput;
@@ -22,7 +19,7 @@ public class MenuInputController {
             parsedInput = Integer.parseInt(input);
         }
         catch (NumberFormatException e) {
-            return ConsoleView.ConsoleViewType.MAIN_MENU;
+            return InputProcessResult.INVALID_INPUT;
         }
 
         switch (userType) {
@@ -32,38 +29,39 @@ public class MenuInputController {
         }
     }
 
-    private ConsoleView.ConsoleViewType parseAttendeeInput(int input) {
+    private InputProcessResult parseAttendeeInput(int input) {
         switch (input) {
-            case 1: return ConsoleView.ConsoleViewType.MESSAGE_USERS_MENU;
-            case 2: return ConsoleView.ConsoleViewType.ENROLL_IN_EVENT;
-            case 3: return ConsoleView.ConsoleViewType.UNENROLL_IN_EVENT;
-            case 4: return ConsoleView.ConsoleViewType.EVENT_SCHEDULE;
+            case 1: return InputProcessResult.NAVIGATE_TO_MESSAGE_USERS_MENU;
+            case 2: return InputProcessResult.NAVIGATE_TO_ENROLL_IN_EVENT;
+            case 3: return InputProcessResult.NAVIGATE_TO_UNENROLL_IN_EVENT;
+            case 4: return InputProcessResult.NAVIGATE_TO_EVENT_SCHEDULE;
             case 5: return null;
-            default: return ConsoleView.ConsoleViewType.MAIN_MENU;
+            default: return InputProcessResult.INVALID_INPUT;
         }
     }
 
-    private ConsoleView.ConsoleViewType parseSpeakerInput(int input) {
+    private InputProcessResult parseSpeakerInput(int input) {
         switch (input) {
-            case 1: return ConsoleView.ConsoleViewType.EVENT_LIST_FOR_MESSAGING;
-            case 2: return ConsoleView.ConsoleViewType.MESSAGE_USER;
-            case 3: return ConsoleView.ConsoleViewType.EVENT_SCHEDULE;
+            case 1: return InputProcessResult.NAVIGATE_TO_EVENT_LIST_FOR_MESSAGING;
+            case 2: return InputProcessResult.NAVIGATE_TO_MESSAGE_USERS_MENU;
+            case 3: return InputProcessResult.NAVIGATE_TO_EVENT_SCHEDULE;
             case 4: return null;
-            default: return ConsoleView.ConsoleViewType.MAIN_MENU;
+            default: return InputProcessResult.INVALID_INPUT;
         }
     }
 
 
-    private ConsoleView.ConsoleViewType parseOrganizerInput(int input) {
+    private InputProcessResult parseOrganizerInput(int input) {
         switch (input) {
-            case 1: return ConsoleView.ConsoleViewType.CREATE_EVENT;
-            case 2: return ConsoleView.ConsoleViewType.CANCEL_EVENT;
-            case 3: return ConsoleView.ConsoleViewType.MESSAGE_USER;
-            case 4: return ConsoleView.ConsoleViewType.MESSAGE_ALL_SPEAKERS;
-            case 5: return ConsoleView.ConsoleViewType.MESSAGE_ALL_ATTENDEES;
-            case 6: return ConsoleView.ConsoleViewType.CREATE_SPEAKER_ACCOUNT;
+            case 1: return InputProcessResult.NAVIGATE_TO_CREATE_EVENT;
+            case 2: return InputProcessResult.NAVIGATE_TO_CANCEL_EVENT;
+            case 3: return InputProcessResult.NAVIGATE_TO_MESSAGE_USERS_MENU;
+            case 4: return InputProcessResult.NAVIGATE_TO_MESSAGE_ALL_SPEAKERS;
+            case 5: return InputProcessResult.NAVIGATE_TO_MESSAGE_ALL_ATTENDEES;
+            case 6: return InputProcessResult.NAVIGATE_TO_CREATE_SPEAKER_ACCOUNT;
             case 7: return null;
-            default: return ConsoleView.ConsoleViewType.MAIN_MENU;
+            default: return InputProcessResult.INVALID_INPUT;
         }
     }
+
 }

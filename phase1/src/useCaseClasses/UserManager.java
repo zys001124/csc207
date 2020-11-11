@@ -27,14 +27,13 @@ public class UserManager {
     }
 
     public User getUser(UUID id) {
-        User search = null;
+
         for(User u: users) {
             if(u.getId().equals(id)) {
-                search = u;
-                break;
+                return u;
             }
         }
-        return search;
+        return null;
     }
 
     public User getCurrentlyLoggedIn() {return currentlyLoggedIn;}

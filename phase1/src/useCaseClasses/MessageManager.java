@@ -31,9 +31,9 @@ public class MessageManager {
         return messages;
     }
 
-    public void messageAllAttendingEvent(String message, Event e, User sender) {
+    public void messageAllAttendingEvent(String message, Event e, UUID sender) {
         for(UUID userId: e) {
-            messages.add(new Message(message, sender.getId(), userId, UUID.randomUUID()));
+            messages.add(new Message(message, sender, userId, UUID.randomUUID()));
         }
     }
 

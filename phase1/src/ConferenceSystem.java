@@ -61,25 +61,22 @@ public class ConferenceSystem {
         loginView = new LoginView(loginController, loginPresenter);
         // Program loop
         Scanner in = new Scanner(System.in);
-        ConsoleView view = loginView;
-        while(true) {
+
+        ConsoleView.ConsoleViewType nextScreenType = ConsoleView.ConsoleViewType.LOGIN;
+        ConsoleView view = getView(nextScreenType);
+
+        while(nextScreenType == ConsoleView.ConsoleViewType.LOGIN) {
             // UI prints string for whatever option the user is on
-            ConsoleView.ConsoleViewType nextScreenType = view.runFlow(in);
-            if(nextScreenType != ConsoleView.ConsoleViewType.LOGIN) { // If a null view is returned it means the user has exited the program;
-                break;
-            }
+            nextScreenType = view.runFlow(in);
         }
 
         // This depends on the type of user logged in
         initializeViews();
         view = menuInputView;
 
-        while(true) {
+        while(view != null) {
             // UI prints string for whatever option the user is on
-            ConsoleView.ConsoleViewType nextScreenType = view.runFlow(in);
-            if(nextScreenType == null) {
-                break;
-            }
+            nextScreenType = view.runFlow(in);
             view = getView(nextScreenType);
         }
 
@@ -163,6 +160,9 @@ public class ConferenceSystem {
     }
 
     private ConsoleView getView(ConsoleView.ConsoleViewType type) {
+        if(type == null) {
+            return null;
+        }
         switch (type) {
             case LOGIN: return loginView;
             case MAIN_MENU: return menuInputView;
@@ -170,7 +170,7 @@ public class ConferenceSystem {
             case ENROLL_IN_EVENT: return eventEnrollView;
             case CANCEL_EVENT: return eventCancelView;
             case CREATE_EVENT: return eventCreationView;
+            default: return null;
         }
-        return null;
     }
 }
