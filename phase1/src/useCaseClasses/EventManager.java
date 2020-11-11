@@ -28,7 +28,7 @@ public class EventManager {
                 }
             }
         }
-
+        events.add(e);
         return true;
     }
 

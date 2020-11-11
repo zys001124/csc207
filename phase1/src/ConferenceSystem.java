@@ -38,6 +38,7 @@ public class ConferenceSystem {
     private EventEnrollController eventEnrollController;
     private EventCancelController eventCancelController;
     private EventCreationController eventCreationController;
+    private EventListForMessagingController eventListForMessagingController;
 
     // Presenters
     private LoginPresenter loginPresenter;
@@ -46,6 +47,7 @@ public class ConferenceSystem {
     private EventEnrollPresenter eventEnrollPresenter;
     private EventCancelPresenter eventCancelPresenter;
     private EventCreationPresenter eventCreationPresenter;
+    private EventListForMessagingPresenter eventListForMessagingPresenter;
 
     // Views
     private LoginView loginView;

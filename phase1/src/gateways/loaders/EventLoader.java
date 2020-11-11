@@ -13,7 +13,7 @@ public class EventLoader extends Loader<Event> {
     @Override
     public Event createInstance(String[] parameters) {
 
-        if(parameters.length < 7 && parameters.length != 0){
+        if(parameters.length < 6 && parameters.length != 0){
             throw new IncorrectNumberOfParametersException();
         }
 

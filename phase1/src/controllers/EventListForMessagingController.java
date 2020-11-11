@@ -13,14 +13,13 @@ public class EventListForMessagingController {
 
 
 
-
-    public ConsoleView.ConsoleViewType getNextScreen(String input) {
+    public InputProcessResult getNextScreen(String input) {
 
         if(input.equals("back")) {
-            return ConsoleView.ConsoleViewType.MAIN_MENU;
+            return InputProcessResult.BACK;
         }
         presenter.setInputResponse("Could not understand your input. Please try again.");
-        return ConsoleView.ConsoleViewType.EVENT_LIST_FOR_MESSAGING;
+        return InputProcessResult.NAVIGATE_TO_EVENT_LIST_FOR_MESSAGING;
 
     }
 }

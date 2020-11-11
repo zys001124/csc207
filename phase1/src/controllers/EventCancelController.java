@@ -27,19 +27,14 @@ public class EventCancelController {
             return InputProcessResult.BACK;
         }
 
-        String[] eventName = input.split(" ");
-        if (eventName.length != 1) {
-            presenter.setInputResponse("Expecting one, and only one input. Try again.\n");
-            return InputProcessResult.INVALID_INPUT;
-        }
+        String eventName = input;
 
-
-        if (!presenter.getAllEvents().contains(eventName[0])) {
+        if (!presenter.getAllEvents().contains(eventName)) {
             presenter.setInputResponse("This event does not exist. Try again.\n");
             return InputProcessResult.EVENT_DOES_NOT_EXIST;
         }
 
-          Event currentEvent = Emanager.getEvent(eventName[0]);
+          Event currentEvent = Emanager.getEvent(eventName);
           User currentUser = Umanager.getCurrentlyLoggedIn();
 
         if (!Emanager.hasOrganizedEvent(currentUser,currentEvent)) {

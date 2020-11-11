@@ -1,6 +1,7 @@
 package UI;
 
 import controllers.EventListForMessagingController;
+import controllers.InputProcessResult;
 import presenters.EventListForMessagingPresenter;
 
 import java.util.Scanner;
@@ -19,9 +20,9 @@ public class EventListForMessagingView extends ConsoleView{
         System.out.println(presenter.getIntro());
         String input = inputScanner.nextLine();
 
-        ConsoleViewType nextScreen = controller.getNextScreen(input);
+        InputProcessResult result = controller.getNextScreen(input);
         System.out.println(presenter.getInputResponse());
-        return nextScreen;
+        return null;
 
     }
 }
