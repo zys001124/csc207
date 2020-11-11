@@ -12,6 +12,7 @@ public enum InputProcessResult {
     USER_NOT_FOUND,
     TIMESLOT_FULL,
     ROOM_FULL,
+    USER_NOT_SPEAKER,
     EVENT_NOT_FOUND,
     NAVIGATE_TO_LOGIN,
     NAVIGATE_TO_MAIN_MENU,

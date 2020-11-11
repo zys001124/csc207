@@ -139,7 +139,7 @@ public class ConferenceSystem {
                 createSpeakerAccountPresenter);
         eventEnrollController = new EventEnrollController(eventManager, userManager);
         eventCancelController = new EventCancelController(eventManager,eventCancelPresenter,userManager);
-        eventCreationController = new EventCreationController(eventManager, eventCreationPresenter);
+        eventCreationController = new EventCreationController(eventManager, eventCreationPresenter, userManager);
     }
 
     private void initializePresenters() {
