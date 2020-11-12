@@ -10,7 +10,6 @@ public abstract class ConsoleView {
     public enum ConsoleViewType {
         LOGIN,
         MAIN_MENU,
-        MESSAGE_USERS_MENU, // Luka
         MESSAGE_USER, // Luka
         MESSAGE_ALL_ATTENDING_EVENT, // Jon
         MESSAGE_ALL_SPEAKERS,
