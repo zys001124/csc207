@@ -104,7 +104,7 @@ public class EventManager {
         throw new EventNotFoundException(parsedInput);
     }
 
-    public List<String> ListOfEventsHosting(User u) {
+    public List<String> listOfEventsHosting(User u) {
         //returns a list of the events a presenter is hosting
         List<String> theList = new ArrayList<>();
         for(Event e: events){

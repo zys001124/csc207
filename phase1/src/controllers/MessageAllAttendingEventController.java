@@ -1,7 +1,5 @@
 package controllers;
 
-import UI.ConsoleView;
-import entities.Event;
 import entities.User;
 import presenters.MessageAllAttendingEventPresenter;
 import useCaseClasses.EventManager;
@@ -54,7 +52,7 @@ public class MessageAllAttendingEventController {
 
     public FindEvent verifyEvent(String name){
         //Should we be using userManager.getCurrentlyLoggedIn() or should we just use the user field?
-        if(eventManager.ListOfEventsHosting(userManager.getCurrentlyLoggedIn()).contains(name)){
+        if(eventManager.listOfEventsHosting(userManager.getCurrentlyLoggedIn()).contains(name)){
             return FindEvent.SUCCESS;
         }
         else{

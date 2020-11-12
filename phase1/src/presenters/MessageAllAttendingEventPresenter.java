@@ -17,7 +17,7 @@ public class MessageAllAttendingEventPresenter {
     }
 
     public String getIntro(){
-        return "Welcome. Here are the event names of the events that you are hosting and you can message: \n" + getEvents(eventManager.ListOfEventsHosting(userManager.getCurrentlyLoggedIn())) +
+        return "Welcome. Here are the event names of the events that you are hosting and you can message: \n" + getEvents(eventManager.listOfEventsHosting(userManager.getCurrentlyLoggedIn())) +
                 "Please enter the event name of the event you would like to message all of the attendees for:\n" +
                 "Enter \"back\" to go back to the main menu.";
     }
