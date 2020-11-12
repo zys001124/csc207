@@ -24,7 +24,7 @@ public class Message implements Serializable, Comparable<Message> {
 
 
         Instant now = Instant.ofEpochMilli(System.currentTimeMillis());
-        timeSent = LocalDateTime.ofInstant(now, ZoneId.of("-5:00")); //Toronto time
+        timeSent = LocalDateTime.ofInstant(now, ZoneId.of("America/New_York")); //Toronto time
     }
 
     public UUID getSenderId(){return senderId;}

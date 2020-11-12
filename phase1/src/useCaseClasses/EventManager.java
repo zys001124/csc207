@@ -108,7 +108,7 @@ public class EventManager {
         //returns a list of the events a presenter is hosting
         List<String> theList = new ArrayList<>();
         for(Event e: events){
-            if(e.getSpeakerId() == u.getId()){
+            if(e.getSpeakerId().equals(u.getId())){
                 theList.add(e.getEventTitle());
             }
         }

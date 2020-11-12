@@ -24,8 +24,6 @@ public class MessageAllAttendingEventView extends ConsoleView{
         System.out.println(presenter.getMessage());
         String message = inputScanner.nextLine();
 
-
-
         InputProcessResult result = controller.handleInput(eventName, message);
 
         String resultOutput = presenter.getInputResponse(result);

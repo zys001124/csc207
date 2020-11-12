@@ -29,7 +29,6 @@ public class Event implements Serializable, Iterable<UUID> {
         eventId = id;
         this.organizerId = organizerId;
         this.speakerId = speakerId;
-
         this.attendees = attendees;
     }
 
@@ -62,11 +61,10 @@ public class Event implements Serializable, Iterable<UUID> {
         attendees.remove(attendee.getId());
     }
 
+    public List<UUID> getAttendees(){return attendees;}
+
     @Override
     public Iterator iterator() {
         return attendees.iterator();
     }
-
-    public List<UUID> getAttendees(){return attendees;}
-
 }
