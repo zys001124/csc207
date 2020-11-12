@@ -1,6 +1,8 @@
 package controllers;
 
 import exceptions.EventNotFoundException;
+import exceptions.UserNotEnrolledInEventException;
+import exceptions.UserNotFoundException;
 import useCaseClasses.EventManager;
 import useCaseClasses.UserManager;
 
@@ -19,7 +21,7 @@ public class EventUnEnrollController {
             eventManager.removeUserFromEvent(parsedInt, userManager.getCurrentlyLoggedIn());
         }catch(EventNotFoundException e){
             return InputProcessResult.EVENT_NOT_FOUND;
-        }catch(NumberFormatException e){
+        }catch(NumberFormatException | UserNotEnrolledInEventException e){
             return InputProcessResult.INVALID_INPUT;
         }
         return InputProcessResult.SUCCESS;

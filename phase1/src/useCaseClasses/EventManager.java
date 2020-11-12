@@ -3,6 +3,9 @@ package useCaseClasses;
 import entities.Event;
 import entities.User;
 import exceptions.EventNotFoundException;
+import exceptions.UserAlreadyEnrolledException;
+import exceptions.UserNotEnrolledInEventException;
+import exceptions.UserNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -88,17 +91,27 @@ public class EventManager {
         return e.getSpeakerId() == u.getId();
     }
 
-    public void addUserToEvent(int parsedInput, User attendee) throws EventNotFoundException, NumberFormatException {
+    public void addUserToEvent(int parsedInput, User attendee) throws EventNotFoundException,
+            NumberFormatException, UserAlreadyEnrolledException {
         if (parsedInput <= events.size() && parsedInput > 0) {
-            this.events.get(parsedInput - 1).addAttendee(attendee);
+            Event e = events.get(parsedInput-1);
+            if(e.hasAttendee(attendee.getId())) {
+                throw new UserAlreadyEnrolledException();
+            }
+            e.addAttendee(attendee);
             return;
         }
         throw new EventNotFoundException(parsedInput);
     }
 
-    public void removeUserFromEvent(int parsedInput, User attendee) throws EventNotFoundException, NumberFormatException{
-        if (parsedInput <= events.size() && parsedInput > 0){
-            this.events.get(parsedInput - 1).removeAttendee(attendee);
+    public void removeUserFromEvent(int parsedInput, User attendee) throws EventNotFoundException,
+            NumberFormatException, UserNotEnrolledInEventException {
+        if (parsedInput <= events.size() && parsedInput > 0) {
+            if(!events.get(parsedInput-1).hasAttendee(attendee.getId())) {
+                throw new UserNotEnrolledInEventException();
+            }
+
+            events.get(parsedInput - 1).removeAttendee(attendee);
             return;
         }
         throw new EventNotFoundException(parsedInput);

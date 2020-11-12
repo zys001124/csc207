@@ -1,5 +1,6 @@
 package presenters;
 
+import entities.Event;
 import useCaseClasses.EventManager;
 import useCaseClasses.UserManager;
 import controllers.InputProcessResult;
@@ -26,10 +27,11 @@ public class EventUnEnrollPresenter {
     public String getAttendeeAllEvents(){
         String result = "";
         for(int i = 1; i <= eventManager.getEvents().size(); i++){
-            if(eventManager.getEvents().get(i-1).hasAttendee(userManager.getCurrentlyLoggedIn().getId())){
-                result = result.concat(i+". ").concat(eventManager.getEvents().get(i-1).getEventTitle()+", ")
-                        .concat(eventManager.getEvents().get(i-1).getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))+", ")
-                        .concat("Room " + eventManager.getEvents().get(i-1).getEventRoom()+'\n');
+            Event e = eventManager.getEvents().get(i-1);
+            if(e.hasAttendee(userManager.getCurrentlyLoggedIn().getId())){
+                result = result.concat(i+". ").concat(e.getEventTitle()+", ")
+                        .concat(e.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))+", ")
+                        .concat("Room " + e.getEventRoom()+'\n');
             }
         }
         return result;

@@ -36,7 +36,11 @@ public class EventEnrollPresenter{
             return "Enroll Successful!";
         } else if(result == InputProcessResult.EVENT_NOT_FOUND) {
             return "Event not found. Please try again.";
-        } else{
+        }
+        else if(result == InputProcessResult.USER_ALREADY_ENROLLED) {
+            return "You are already enrolled in this event. Please try again.";
+        }
+        else{
             return "Invalid Input. Please try again.";
         }
     }

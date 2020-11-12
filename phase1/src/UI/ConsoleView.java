@@ -20,6 +20,5 @@ public abstract class ConsoleView {
         ENROLL_IN_EVENT, // Kelvin - Finished
         UNENROLL_IN_EVENT, // Kelvin - Finished
         CREATE_SPEAKER_ACCOUNT, // Lewis - Finished
-
     }
 }

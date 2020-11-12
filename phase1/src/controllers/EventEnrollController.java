@@ -1,5 +1,6 @@
 package controllers;
 
+import exceptions.UserAlreadyEnrolledException;
 import useCaseClasses.UserManager;
 import exceptions.EventNotFoundException;
 import useCaseClasses.EventManager;
@@ -21,6 +22,8 @@ public class EventEnrollController {
             return InputProcessResult.EVENT_NOT_FOUND;
         }catch(NumberFormatException e){
             return InputProcessResult.INVALID_INPUT;
+        } catch (UserAlreadyEnrolledException e) {
+            return InputProcessResult.USER_ALREADY_ENROLLED;
         }
         return InputProcessResult.SUCCESS;
     }
