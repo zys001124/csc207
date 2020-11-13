@@ -10,10 +10,10 @@ public abstract class ConsoleView {
     public enum ConsoleViewType {
         LOGIN,
         MAIN_MENU,
-        MESSAGE_USER, // Luka
+        MESSAGE_USER, // Luka - Finished
         MESSAGE_ALL_ATTENDING_EVENT, // Jon - Finished
-        MESSAGE_ALL_SPEAKERS, // Luka
-        MESSAGE_ALL_ATTENDEES, // Luka
+        MESSAGE_ALL_SPEAKERS, // Luka - Finished
+        MESSAGE_ALL_ATTENDEES, // Luka - Finished
         EVENT_SCHEDULE, // Kelvin
         CREATE_EVENT, // Jay - Finished
         CANCEL_EVENT, // Yaosheng - Finished

@@ -41,6 +41,8 @@ public class ConferenceSystem {
     private EventCancelController eventCancelController;
     private EventCreationController eventCreationController;
     private MessageAllAttendingEventController messageAllAttendingEventController;
+    private MessageAllSpeakersController messageAllSpeakersController;
+    private MessageAllAttendeesController messageAllAttendeesController;
 
     // Presenters
     private LoginPresenter loginPresenter;
@@ -52,6 +54,8 @@ public class ConferenceSystem {
     private EventCancelPresenter eventCancelPresenter;
     private EventCreationPresenter eventCreationPresenter;
     private MessageAllAttendingEventPresenter messageAllAttendingEventPresenter;
+    private MessageAllSpeakersPresenter messageAllSpeakersPresenter;
+    private MessageAllAttendeesPresenter messageAllAttendeesPresenter;
 
     // Views
     private LoginView loginView;
@@ -63,6 +67,8 @@ public class ConferenceSystem {
     private EventCancelView eventCancelView;
     private EventCreationView eventCreationView;
     private MessageAllAttendingEventView messageAllAttendingEventView;
+    private MessageAllSpeakersView messageAllSpeakersView;
+    private MessageAllAttendeesView messageAllAttendeesView;
 
     // This will instantiate all relevant objects and then present the menu view
     public void run() {
@@ -152,6 +158,8 @@ public class ConferenceSystem {
         eventCancelController = new EventCancelController(eventManager,eventCancelPresenter,userManager);
         eventCreationController = new EventCreationController(eventManager, eventCreationPresenter, userManager);
         messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
+        messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
+        messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
 
     }
 
@@ -165,6 +173,8 @@ public class ConferenceSystem {
         eventCancelPresenter = new EventCancelPresenter(eventManager);
         eventCreationPresenter = new EventCreationPresenter();
         messageAllAttendingEventPresenter = new MessageAllAttendingEventPresenter(userManager, eventManager);
+        messageAllSpeakersPresenter = new MessageAllSpeakersPresenter();
+        messageAllAttendeesPresenter = new MessageAllAttendeesPresenter();
     }
 
     private void initializeViews() {
@@ -176,6 +186,8 @@ public class ConferenceSystem {
         eventCancelView = new EventCancelView(eventCancelController,eventCancelPresenter);
         eventCreationView = new EventCreationView(eventCreationController, eventCreationPresenter);
         messageAllAttendingEventView = new MessageAllAttendingEventView(messageAllAttendingEventController, messageAllAttendingEventPresenter);
+        messageAllSpeakersView = new MessageAllSpeakersView(messageAllSpeakersController, messageAllSpeakersPresenter);
+        messageAllAttendeesView = new MessageAllAttendeesView(messageAllAttendeesController, messageAllAttendeesPresenter);
     }
 
     private ConsoleView getView(ConsoleView.ConsoleViewType type) {
@@ -192,6 +204,8 @@ public class ConferenceSystem {
             case CANCEL_EVENT: return eventCancelView;
             case CREATE_EVENT: return eventCreationView;
             case MESSAGE_ALL_ATTENDING_EVENT: return messageAllAttendingEventView;
+            case MESSAGE_ALL_SPEAKERS: return messageAllSpeakersView;
+            case MESSAGE_ALL_ATTENDEES: return messageAllAttendeesView;
             default: return null;
         }
     }
