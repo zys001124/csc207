@@ -34,7 +34,6 @@ public class MessageManager {
     public void messageAllAttendingEvent(String message, Event e, UUID sender) {
 
         for(UUID userId: e) {
-            System.out.println("Test");
             messages.add(new Message(message, sender, userId, UUID.randomUUID()));
         }
     }

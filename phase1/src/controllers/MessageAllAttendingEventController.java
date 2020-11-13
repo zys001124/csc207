@@ -33,21 +33,23 @@ public class MessageAllAttendingEventController {
                 userManager.getCurrentlyLoggedIn().getId());
     }
 
-    public InputProcessResult handleInput(String name, String message) {
+    public InputProcessResult findBack(String name){
         if(name.equals("back")) {
             return InputProcessResult.BACK;
         }
         else{
-            FindEvent verify = verifyEvent(name);
-            if(verify == FindEvent.FAIL){
-                return InputProcessResult.INVALID_INPUT;
-            }
-            else{
-                sendMessage(message, name);
-                return InputProcessResult.SUCCESS;
-            }
+            return InputProcessResult.SUCCESS;
         }
+    }
 
+    public InputProcessResult handleInput(String name, String message) {
+        FindEvent verify = verifyEvent(name);
+        if (verify == FindEvent.FAIL) {
+            return InputProcessResult.INVALID_INPUT;
+        } else {
+            sendMessage(message, name);
+            return InputProcessResult.SUCCESS;
+        }
     }
 
     public FindEvent verifyEvent(String name){

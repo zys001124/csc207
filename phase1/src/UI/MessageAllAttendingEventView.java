@@ -21,15 +21,22 @@ public class MessageAllAttendingEventView extends ConsoleView{
         System.out.println(presenter.getIntro());
         String eventName = inputScanner.nextLine();
 
-        System.out.println(presenter.getMessage());
-        String message = inputScanner.nextLine();
+        InputProcessResult findBack = controller.findBack(eventName);
+        if(findBack == InputProcessResult.BACK){
+            return getNextScreen(findBack);
+        }
+        else {
 
-        InputProcessResult result = controller.handleInput(eventName, message);
+            System.out.println(presenter.getMessage());
+            String message = inputScanner.nextLine();
 
-        String resultOutput = presenter.getInputResponse(result);
-        System.out.println(resultOutput);
+            InputProcessResult result = controller.handleInput(eventName, message);
 
-        return getNextScreen(result);
+            String resultOutput = presenter.getInputResponse(result);
+            System.out.println(resultOutput);
+
+            return getNextScreen(result);
+        }
     }
 
     private ConsoleViewType getNextScreen(InputProcessResult result) {

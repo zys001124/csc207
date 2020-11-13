@@ -26,6 +26,7 @@ public class MessageAllAttendingEventPresenter {
         return "Please enter the message you wish to send out to your users:";
     }
 
+
     private String getEvents(List<String> events){
         StringBuilder s = new StringBuilder();
         for(String e: events){
@@ -40,7 +41,7 @@ public class MessageAllAttendingEventPresenter {
             return "Could Not understand your input. Staying on this screen";
         }
         else {
-            return "Returning to Main Menu";
+            return "Message successfully sent. \nReturning to Main Menu";
         }
     }
 }
