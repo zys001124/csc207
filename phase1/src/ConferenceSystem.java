@@ -158,7 +158,7 @@ public class ConferenceSystem {
     private void initializePresenters() {
         loginPresenter = new LoginPresenter();
         menuInputPresenter = new MenuInputPresenter();
-        messageUserPresenter = new MessageUserPresenter();
+        messageUserPresenter = new MessageUserPresenter(userManager, messageManager);
         createSpeakerAccountPresenter = new CreateSpeakerAccountPresenter();
         eventEnrollPresenter = new EventEnrollPresenter(eventManager);
         eventUnEnrollPresenter = new EventUnEnrollPresenter(eventManager, userManager);

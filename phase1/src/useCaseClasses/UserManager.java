@@ -27,13 +27,24 @@ public class UserManager {
     }
 
     public User getUser(UUID id) {
-
+        //TODO this method should be able to throw a UserNotFoundException but isn't supplied
+        // a username, so this is impossible. It's not used at all so I'm not sure if we need it.
         for(User u: users) {
             if(u.getId().equals(id)) {
                 return u;
             }
         }
         return null;
+    }
+
+    public User getUser(String username) throws UserNotFoundException{
+        for(User u: users) {
+            if(u.getUsername().equals(username))
+            {
+                return u;
+            }
+        }
+        throw new UserNotFoundException(username);
     }
 
     public User getCurrentlyLoggedIn() {return currentlyLoggedIn;}

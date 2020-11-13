@@ -48,6 +48,16 @@ public class MessageManager {
         throw new NoMessageException("No message exists in the system.");
     }
 
+    public boolean messageSentBy(UUID sender, UUID receiver){
+        for(Message message : messages){
+            if(message.getSenderId().equals(sender) &&
+            message.getRecipientId().equals(receiver)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public List<Message> messagesBetweenTwo(User a1, User a2){
         //TODO: Returns an orderd list of the messages sent between a1 and a2.
         UUID a1id = a1.getId();

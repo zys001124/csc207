@@ -31,7 +31,7 @@ public class MenuInputController {
 
     private InputProcessResult parseAttendeeInput(int input) {
         switch (input) {
-            case 1: return InputProcessResult.NAVIGATE_TO_MESSAGE_USERS_MENU;
+            case 1: return InputProcessResult.NAVIGATE_TO_MESSAGE_USER;
             case 2: return InputProcessResult.NAVIGATE_TO_ENROLL_IN_EVENT;
             case 3: return InputProcessResult.NAVIGATE_TO_UNENROLL_IN_EVENT;
             case 4: return InputProcessResult.NAVIGATE_TO_EVENT_SCHEDULE;
@@ -43,7 +43,7 @@ public class MenuInputController {
     private InputProcessResult parseSpeakerInput(int input) {
         switch (input) {
             case 1: return InputProcessResult.NAVIGATE_TO_MESSAGE_ALL_ATTENDING_EVENT;
-            case 2: return InputProcessResult.NAVIGATE_TO_MESSAGE_USERS_MENU;
+            case 2: return InputProcessResult.NAVIGATE_TO_MESSAGE_USER;
             case 3: return InputProcessResult.NAVIGATE_TO_EVENT_SCHEDULE;
             case 4: return null;
             default: return InputProcessResult.INVALID_INPUT;
@@ -55,7 +55,7 @@ public class MenuInputController {
         switch (input) {
             case 1: return InputProcessResult.NAVIGATE_TO_CREATE_EVENT;
             case 2: return InputProcessResult.NAVIGATE_TO_CANCEL_EVENT;
-            case 3: return InputProcessResult.NAVIGATE_TO_MESSAGE_USERS_MENU;
+            case 3: return InputProcessResult.NAVIGATE_TO_MESSAGE_USER;
             case 4: return InputProcessResult.NAVIGATE_TO_MESSAGE_ALL_SPEAKERS;
             case 5: return InputProcessResult.NAVIGATE_TO_MESSAGE_ALL_ATTENDEES;
             case 6: return InputProcessResult.NAVIGATE_TO_CREATE_SPEAKER_ACCOUNT;
