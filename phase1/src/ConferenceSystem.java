@@ -56,6 +56,7 @@ public class ConferenceSystem {
     private MessageAllAttendingEventPresenter messageAllAttendingEventPresenter;
     private MessageAllSpeakersPresenter messageAllSpeakersPresenter;
     private MessageAllAttendeesPresenter messageAllAttendeesPresenter;
+    private SeeSchedulePresenter seeSchedulePresenter;
 
     // Views
     private LoginView loginView;
@@ -69,6 +70,7 @@ public class ConferenceSystem {
     private MessageAllAttendingEventView messageAllAttendingEventView;
     private MessageAllSpeakersView messageAllSpeakersView;
     private MessageAllAttendeesView messageAllAttendeesView;
+    private SeeScheduleView seeScheduleView;
 
     // This will instantiate all relevant objects and then present the menu view
     public void run() {
@@ -175,6 +177,7 @@ public class ConferenceSystem {
         messageAllAttendingEventPresenter = new MessageAllAttendingEventPresenter(userManager, eventManager);
         messageAllSpeakersPresenter = new MessageAllSpeakersPresenter();
         messageAllAttendeesPresenter = new MessageAllAttendeesPresenter();
+        seeSchedulePresenter = new SeeSchedulePresenter(eventManager, userManager);
     }
 
     private void initializeViews() {
@@ -188,6 +191,7 @@ public class ConferenceSystem {
         messageAllAttendingEventView = new MessageAllAttendingEventView(messageAllAttendingEventController, messageAllAttendingEventPresenter);
         messageAllSpeakersView = new MessageAllSpeakersView(messageAllSpeakersController, messageAllSpeakersPresenter);
         messageAllAttendeesView = new MessageAllAttendeesView(messageAllAttendeesController, messageAllAttendeesPresenter);
+        seeScheduleView = new SeeScheduleView(seeSchedulePresenter);
     }
 
     private ConsoleView getView(ConsoleView.ConsoleViewType type) {
@@ -201,6 +205,7 @@ public class ConferenceSystem {
             case CREATE_SPEAKER_ACCOUNT: return createSpeakerAccountView;
             case ENROLL_IN_EVENT: return eventEnrollView;
             case UNENROLL_IN_EVENT: return eventUnEnrollView;
+            case EVENT_SCHEDULE: return seeScheduleView;
             case CANCEL_EVENT: return eventCancelView;
             case CREATE_EVENT: return eventCreationView;
             case MESSAGE_ALL_ATTENDING_EVENT: return messageAllAttendingEventView;

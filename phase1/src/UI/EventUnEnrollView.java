@@ -21,9 +21,9 @@ public class EventUnEnrollView extends ConsoleView{
         System.out.println(presenter.getAttendeeAllEvents());
 
         System.out.print(presenter.getEventNumberInputPrompt());
-        String eventName = inputScanner.nextLine();
+        String eventNumber = inputScanner.nextLine();
 
-        InputProcessResult result = controller.unEnrollEvent(eventName);
+        InputProcessResult result = controller.unEnrollEvent(eventNumber);
 
         String unEnrollResultOutput = presenter.getUnEnrollResultMessage(result);
         System.out.println(unEnrollResultOutput);

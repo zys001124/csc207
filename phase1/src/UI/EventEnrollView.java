@@ -21,9 +21,9 @@ public class EventEnrollView extends ConsoleView {
         System.out.println(presenter.getAllEvents());
 
         System.out.print(presenter.getEventNumberInputPrompt());
-        String eventName = inputScanner.nextLine();
+        String eventNumber = inputScanner.nextLine();
 
-        InputProcessResult result = controller.enrollEvent(eventName);
+        InputProcessResult result = controller.enrollEvent(eventNumber);
 
         String enrollResultOutput = presenter.getEnrollResultMessage(result);
         System.out.println(enrollResultOutput);

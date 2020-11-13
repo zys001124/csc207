@@ -2,7 +2,6 @@ package UI;
 
 import controllers.InputProcessResult;
 import controllers.MessageAllAttendingEventController;
-import jdk.internal.util.xml.impl.Input;
 import presenters.MessageAllAttendingEventPresenter;
 
 import java.util.Scanner;

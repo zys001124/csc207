@@ -117,6 +117,24 @@ public class EventManager {
         throw new EventNotFoundException(parsedInput);
     }
 
+    public ArrayList<Event> eventSortTime(){
+        ArrayList<Event> result = new ArrayList<>(events);
+
+        //Insertion Sort
+        for(int i = 1; i < result.size(); i++){
+            Event cur = result.get(i);
+            int j = i-1;
+            while(j>=0 && result.get(j).getEventTime().isAfter(cur.getEventTime())){
+                result.set(j + 1, result.get(j));
+                j = j-1;
+            }
+            result.set(j+1,cur);
+        }
+
+        return result;
+    }
+
+
     public List<String> listOfEventsHosting(User u) {
         //returns a list of the events a presenter is hosting
         List<String> theList = new ArrayList<>();

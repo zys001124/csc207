@@ -14,7 +14,7 @@ public abstract class ConsoleView {
         MESSAGE_ALL_ATTENDING_EVENT, // Jon - Finished
         MESSAGE_ALL_SPEAKERS, // Luka - Finished
         MESSAGE_ALL_ATTENDEES, // Luka - Finished
-        EVENT_SCHEDULE, // Kelvin
+        EVENT_SCHEDULE, // Kelvin - Finished
         CREATE_EVENT, // Jay - Finished
         CANCEL_EVENT, // Yaosheng - Finished
         ENROLL_IN_EVENT, // Kelvin - Finished
