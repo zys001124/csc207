@@ -17,7 +17,7 @@ public class MessageAllAttendingEventView extends ConsoleView{
     }
 
     public ConsoleViewType runFlow(Scanner inputScanner){
-        System.out.println(presenter.getIntro());
+        System.out.println(presenter.getPreInputText());
         String eventName = inputScanner.nextLine();
 
         InputProcessResult findBack = controller.findBack(eventName);
@@ -31,7 +31,7 @@ public class MessageAllAttendingEventView extends ConsoleView{
 
             InputProcessResult result = controller.handleInput(eventName, message);
 
-            String resultOutput = presenter.getInputResponse(result);
+            String resultOutput = presenter.getInputResponseText(result);
             System.out.println(resultOutput);
 
             return getNextScreen(result);

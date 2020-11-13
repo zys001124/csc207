@@ -12,11 +12,11 @@ public class UserSaver extends Saver<User> {
 
     public void save(User attendee) throws IOException {
         output.append(attendee.getUsername());
-        output.append(",");
+        output.append(parameterSeparationChar);
         output.append(attendee.getPassword());
-        output.append(",");
+        output.append(parameterSeparationChar);
         output.append(attendee.getId().toString());
-        output.append(",");
+        output.append(parameterSeparationChar);
         if(attendee.getType() == User.UserType.ORGANIZER) {
             output.append("O");
         }

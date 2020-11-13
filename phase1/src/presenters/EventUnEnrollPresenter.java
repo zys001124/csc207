@@ -7,7 +7,7 @@ import controllers.InputProcessResult;
 
 import java.time.format.DateTimeFormatter;
 
-public class EventUnEnrollPresenter {
+public class EventUnEnrollPresenter extends Presenter {
     private EventManager eventManager;
     private UserManager userManager;
 
@@ -16,7 +16,7 @@ public class EventUnEnrollPresenter {
         this.userManager = userManager;
     }
 
-    public String unEnrollIntro(){
+    public String getPreInputText(){
         return "Please Enter the event number that you want to un-enroll.";
     }
 
@@ -37,7 +37,7 @@ public class EventUnEnrollPresenter {
         return result;
     }
 
-    public String getUnEnrollResultMessage(InputProcessResult result){
+    public String getInputResponseText(InputProcessResult result){
         if(result == InputProcessResult.SUCCESS){
             return "Un-Enroll Successful!";
         }else if(result == InputProcessResult.EVENT_NOT_FOUND){

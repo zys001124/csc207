@@ -8,7 +8,7 @@ import useCaseClasses.UserManager;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
-public class SeeSchedulePresenter {
+public class SeeSchedulePresenter extends Presenter {
     private EventManager eventManager;
     private UserManager userManager;
 
@@ -17,8 +17,8 @@ public class SeeSchedulePresenter {
         this.userManager = userManager;
     }
 
-    public String intro(){
-        return "Here are the event(s) you are enrolled in.";
+    public String getPreInputText(){
+        return "Here are the event(s) you are enrolled in: \n"+getAttendeeEvents();
     }
 
     public String getAttendeeEvents(){
@@ -33,6 +33,10 @@ public class SeeSchedulePresenter {
             }
         }
         return result;
+    }
+
+    public String getInputResponseText(InputProcessResult result) {
+        return "";
     }
 
     public String outro(){

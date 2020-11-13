@@ -6,7 +6,7 @@ import entities.User;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
-public class MessageUserPresenter {
+public class MessageUserPresenter extends Presenter {
     private UserManager userManager;
     private MessageManager messageManager;
 
@@ -15,7 +15,7 @@ public class MessageUserPresenter {
         this.messageManager = messageManager;
     }
 
-    public String getIntro(){
+    public String getPreInputText(){
         return "Please type in the username of the account you wish to message (type q in both fields to quit):";
     }
 
@@ -68,7 +68,7 @@ public class MessageUserPresenter {
         return userList.toString().trim();
     }
 
-    public String getMessageResult(InputProcessResult result) {
+    public String getInputResponseText(InputProcessResult result) {
         if(result.equals(InputProcessResult.SUCCESS)) {
             return "Message sent successfully!";
         } else if(result.equals(InputProcessResult.USER_NOT_FOUND)) {

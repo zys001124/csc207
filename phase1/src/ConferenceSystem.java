@@ -22,9 +22,9 @@ import java.util.Scanner;
 public class ConferenceSystem {
 
     // global final variables
-    public static final String USER_CSV_PATH = "userData.csv";
-    public static final String MESSAGE_CSV_PATH = "messageData.csv";
-    public static final String EVENT_CSV_PATH = "eventData.csv";
+    public static final String USER_DATA_PATH = "userData.txt";
+    public static final String MESSAGE_DATA_PATH = "messageData.txt";
+    public static final String EVENT_DATA_PATH = "eventData.txt";
 
     // Managers
     private UserManager userManager;
@@ -118,9 +118,9 @@ public class ConferenceSystem {
 
         try {
 
-            users = userLoader.loadAll(USER_CSV_PATH);
-            messages = messageLoader.loadAll(MESSAGE_CSV_PATH);
-            events = eventLoader.loadAll(EVENT_CSV_PATH);
+            users = userLoader.loadAll(USER_DATA_PATH);
+            messages = messageLoader.loadAll(MESSAGE_DATA_PATH);
+            events = eventLoader.loadAll(EVENT_DATA_PATH);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -135,9 +135,9 @@ public class ConferenceSystem {
 
     private void saveEntities() {
         try {
-            UserSaver userSaver = new UserSaver(USER_CSV_PATH);
-            MessageSaver messageSaver = new MessageSaver(MESSAGE_CSV_PATH);
-            EventSaver eventSaver = new EventSaver(EVENT_CSV_PATH);
+            UserSaver userSaver = new UserSaver(USER_DATA_PATH);
+            MessageSaver messageSaver = new MessageSaver(MESSAGE_DATA_PATH);
+            EventSaver eventSaver = new EventSaver(EVENT_DATA_PATH);
 
             userSaver.saveAll(userManager.getusers());
             messageSaver.saveAll(messageManager.getMessages());
@@ -167,7 +167,7 @@ public class ConferenceSystem {
 
     private void initializePresenters() {
         loginPresenter = new LoginPresenter();
-        menuInputPresenter = new MenuInputPresenter();
+        menuInputPresenter = new MenuInputPresenter(userManager);
         messageUserPresenter = new MessageUserPresenter(userManager, messageManager);
         createSpeakerAccountPresenter = new CreateSpeakerAccountPresenter();
         eventEnrollPresenter = new EventEnrollPresenter(eventManager);
@@ -181,7 +181,7 @@ public class ConferenceSystem {
     }
 
     private void initializeViews() {
-        menuInputView = new MenuInputView(menuInputController, menuInputPresenter, userManager.getCurrentlyLoggedIn().getType());
+        menuInputView = new MenuInputView(menuInputController, menuInputPresenter);
         messageUserView = new MessageUserView(messageUserController, messageUserPresenter);
         createSpeakerAccountView = new CreateSpeakerAccountView(createSpeakerAccountController, createSpeakerAccountPresenter);
         eventEnrollView = new EventEnrollView(eventEnrollController, eventEnrollPresenter);

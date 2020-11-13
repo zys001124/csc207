@@ -13,18 +13,18 @@ public class EventSaver extends Saver<Event>{
 
     public void save(Event event) throws IOException {
         output.append(event.getEventTitle());
-        output.append(",");
+        output.append(parameterSeparationChar);
         output.append(event.getEventTime().toString());
-        output.append(",");
+        output.append(parameterSeparationChar);
         output.append(event.getId().toString());
-        output.append(",");
+        output.append(parameterSeparationChar);
         output.append(event.getOrganizerId().toString());
-        output.append(",");
+        output.append(parameterSeparationChar);
         output.append(event.getSpeakerId().toString());
-        output.append(",");
+        output.append(parameterSeparationChar);
         for(UUID attendeeId: event) {
             output.append(attendeeId.toString());
-            output.append(",");
+            output.append(parameterSeparationChar);
         }
         output.append(event.getEventRoom()+"");
         output.append("\n");

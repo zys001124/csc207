@@ -17,7 +17,7 @@ public class EventEnrollView extends ConsoleView {
 
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
-        System.out.println(presenter.enrollIntro());
+        System.out.println(presenter.getPreInputText());
         System.out.println(presenter.getAllEvents());
 
         System.out.print(presenter.getEventNumberInputPrompt());
@@ -25,7 +25,7 @@ public class EventEnrollView extends ConsoleView {
 
         InputProcessResult result = controller.enrollEvent(eventNumber);
 
-        String enrollResultOutput = presenter.getEnrollResultMessage(result);
+        String enrollResultOutput = presenter.getInputResponseText(result);
         System.out.println(enrollResultOutput);
 
         return getNextScreen(result);

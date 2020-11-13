@@ -3,9 +3,9 @@ package presenters;
 import controllers.InputProcessResult;
 import controllers.LoginController;
 
-public class LoginPresenter {
+public class LoginPresenter extends Presenter {
 
-    public String getIntro() {
+    public String getPreInputText() {
         return "Welcome to Tech Conference, please login.";
     }
 
@@ -17,7 +17,7 @@ public class LoginPresenter {
         return "Password: ";
     }
 
-    public String getLoginResultMessage(InputProcessResult result) {
+    public String getInputResponseText(InputProcessResult result) {
         if(result == InputProcessResult.SUCCESS) {
             return "Login Successful!";
         }

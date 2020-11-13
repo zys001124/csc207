@@ -18,13 +18,13 @@ public class EventCreationView extends ConsoleView {
 
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
-        System.out.println(presenter.getIntro());
+        System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
 
         presenter.setInputResponse("");
         InputProcessResult result = controller.createEvent(input);
 
-        String CreateEventOutput = presenter.getInputResponse(result);
+        String CreateEventOutput = presenter.getInputResponseText(result);
         System.out.println(CreateEventOutput);
 
         return getNextScreen(result);

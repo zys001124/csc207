@@ -18,11 +18,11 @@ public class MessageAllAttendeesView extends ConsoleView{
 
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
-        System.out.println(presenter.messagePrompt());
+        System.out.println(presenter.getPreInputText());
         String message = inputScanner.nextLine();
 
         InputProcessResult result = controller.sendMessage(message);
-        System.out.println(presenter.getMessageResult(result));
+        System.out.println(presenter.getInputResponseText(result));
         return getNextScreen(result);
     }
 

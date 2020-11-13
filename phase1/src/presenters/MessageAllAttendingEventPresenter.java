@@ -6,7 +6,7 @@ import useCaseClasses.UserManager;
 
 import java.util.List;
 
-public class MessageAllAttendingEventPresenter {
+public class MessageAllAttendingEventPresenter extends Presenter {
 
     private EventManager eventManager;
     private UserManager userManager;
@@ -16,7 +16,7 @@ public class MessageAllAttendingEventPresenter {
         this.eventManager = eventManager;
     }
 
-    public String getIntro(){
+    public String getPreInputText(){
         return "Welcome. Here are the event names of the events that you are hosting and you can message: \n" + getEvents(eventManager.listOfEventsHosting(userManager.getCurrentlyLoggedIn())) +
                 "Please enter the event name of the event you would like to message all of the attendees for:\n" +
                 "Enter \"back\" to go back to the main menu.";
@@ -36,7 +36,7 @@ public class MessageAllAttendingEventPresenter {
     }
     //public void setInputResponse(String s){ inputResponse = s;}
 
-    public String getInputResponse(InputProcessResult result){
+    public String getInputResponseText(InputProcessResult result){
         if(result == InputProcessResult.NAVIGATE_TO_EVENT_LIST_FOR_MESSAGING) {
             return "Could Not understand your input. Staying on this screen";
         }

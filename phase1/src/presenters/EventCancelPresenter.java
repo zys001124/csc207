@@ -5,23 +5,19 @@ import controllers.InputProcessResult;
 import entities.Event;
 import useCaseClasses.EventManager;
 
-public class EventCancelPresenter {
+public class EventCancelPresenter extends Presenter {
 
     private EventManager manager;
-    private String inputResponse = "";
 
     public EventCancelPresenter(EventManager manager){
         this.manager = manager;
     }
 
-    public String getIntro() {
+    @Override
+    public String getPreInputText() {
         return "Here is the list of events.\n"+
                 "To cancel an event please type in the name of the event you wish to cancel \n"+
                 "Type \"back\" to return to the menu";
-    }
-
-    public void setInputResponse(String message) {
-        inputResponse = message;
     }
 
     public String getAllEvents(){
@@ -32,7 +28,7 @@ public class EventCancelPresenter {
         return events;
     }
 
-    public String getInputResponse(InputProcessResult result) {
+    public String getInputResponseText(InputProcessResult result) {
         if (result == InputProcessResult.BACK){
             return null;
         }else if(result == InputProcessResult.EVENT_DOES_NOT_EXIST){

@@ -3,7 +3,7 @@ package gateways.savers;
 import java.io.*;
 
 public abstract class Saver<T> {
-
+    public static final char parameterSeparationChar = '\u02AC';
     protected FileWriter output;
 
     public Saver(String filepath) throws IOException {

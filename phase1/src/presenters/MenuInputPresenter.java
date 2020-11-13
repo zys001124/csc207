@@ -1,14 +1,19 @@
 package presenters;
 
+import controllers.InputProcessResult;
 import entities.User;
+import useCaseClasses.UserManager;
 
-public class MenuInputPresenter {
+public class MenuInputPresenter extends Presenter {
 
-    public String getInvalidInputMessage() {
-        return "Invalid input, please try again.";
+
+    private UserManager userManager;
+    public MenuInputPresenter(UserManager manager) {
+        userManager = manager;
     }
 
-    public String getMenuOptions(User.UserType userType) {
+    public String getPreInputText() {
+        User.UserType userType = userManager.getCurrentlyLoggedIn().getType();
         if(userType == User.UserType.ATTENDEE) {
             return getAttendeeOptions();
         }
@@ -43,6 +48,17 @@ public class MenuInputPresenter {
                 "5. Message all attendees\n"+
                 "6. Create speaker account \n"+
                 "7. Log out";
+    }
+
+    public String getInputResponseText(InputProcessResult result)
+    {
+        if(result == InputProcessResult.INVALID_INPUT)
+        {
+            return "Invalid input, please try again.";
+        }
+        else {
+            return "";
+        }
     }
 
 }

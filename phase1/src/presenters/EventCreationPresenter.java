@@ -2,11 +2,11 @@ package presenters;
 
 import controllers.InputProcessResult;
 
-public class EventCreationPresenter {
+public class EventCreationPresenter extends Presenter {
 
     private String inputResponse = "";
 
-    public String getIntro() {
+    public String getPreInputText() {
         return "The event should be between 9am-5pm in November 10. There are 6 possible rooms for speeches. " +
                 "The room number is from 0-5. Every speech is one hour long\n"+
                 "To add an event, enter information in following way: " +
@@ -19,7 +19,7 @@ public class EventCreationPresenter {
         inputResponse = message;
     }
 
-    public String getInputResponse(InputProcessResult result) {
+    public String getInputResponseText(InputProcessResult result) {
         if (result == InputProcessResult.BACK){
             return null;
         }else if(result == InputProcessResult.USER_NOT_FOUND){

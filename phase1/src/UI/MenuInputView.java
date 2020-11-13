@@ -12,25 +12,23 @@ public class MenuInputView extends ConsoleView {
 
     private MenuInputController menuInputController;
     private MenuInputPresenter menuInputPresenter;
-    private User.UserType userType;
 
-    public MenuInputView(MenuInputController menuInputController, MenuInputPresenter menuInputPresenter, User.UserType userType)
+    public MenuInputView(MenuInputController menuInputController, MenuInputPresenter menuInputPresenter)
     {
         this.menuInputController = menuInputController;
         this.menuInputPresenter = menuInputPresenter;
-        this.userType = userType;
     }
 
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
-        System.out.println(menuInputPresenter.getMenuOptions(userType));
+        System.out.println(menuInputPresenter.getPreInputText());
         String input = inputScanner.nextLine();
 
         InputProcessResult result = menuInputController.handleInput(input);
         ConsoleViewType nextScreenType = getScreen(result);
 
         if(result == InputProcessResult.INVALID_INPUT) {
-            System.out.println(menuInputPresenter.getInvalidInputMessage());
+            System.out.println(menuInputPresenter.getInputResponseText(result));
         }
 
         return nextScreenType;

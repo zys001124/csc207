@@ -19,13 +19,12 @@ public class CreateSpeakerAccountView extends ConsoleView {
 
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
-        System.out.println(presenter.getIntro());
+        System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
-
-        presenter.setInputResponse("");
+        
         InputProcessResult result = controller.getNextScreen(input);
 
-        String CreateSpeakerOutput = presenter.getInputResponse(result);
+        String CreateSpeakerOutput = presenter.getInputResponseText(result);
         System.out.println(CreateSpeakerOutput);
 
         return getScreen(result);

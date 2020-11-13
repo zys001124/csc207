@@ -12,13 +12,13 @@ public class MessageSaver extends Saver<Message> {
 
     public void save(Message message) throws IOException {
         output.append(message.getMessageText());
-        output.append(",");
+        output.append(parameterSeparationChar);
         output.append(message.getSenderId().toString());
-        output.append(",");
+        output.append(parameterSeparationChar);
         output.append(message.getRecipientId().toString());
-        output.append(",");
+        output.append(parameterSeparationChar);
         output.append(message.getId().toString());
-        output.append("\n");
+        output.append(parameterSeparationChar);
 
         output.flush();
     }

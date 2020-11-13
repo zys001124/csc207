@@ -23,7 +23,7 @@ public class LoginView extends ConsoleView {
 
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
-        System.out.println(presenter.getIntro());
+        System.out.println(presenter.getPreInputText());
 
         System.out.print(presenter.getUsernameInputPrompt());
         String username = inputScanner.nextLine();
@@ -33,7 +33,7 @@ public class LoginView extends ConsoleView {
 
         InputProcessResult result = controller.verifyLogin(username, password);
 
-        String loginResultOutput = presenter.getLoginResultMessage(result);
+        String loginResultOutput = presenter.getInputResponseText(result);
         System.out.println(loginResultOutput);
 
         return getNextScreen(result);

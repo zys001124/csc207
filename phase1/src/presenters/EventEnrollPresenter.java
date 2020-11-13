@@ -5,14 +5,14 @@ import useCaseClasses.EventManager;
 
 import java.time.format.DateTimeFormatter;
 
-public class EventEnrollPresenter{
+public class EventEnrollPresenter extends Presenter {
     private EventManager manager;
 
     public EventEnrollPresenter(EventManager manager){
         this.manager = manager;
     }
 
-    public String enrollIntro(){
+    public String getPreInputText(){
         return "Please Enter the event name that you want to enroll in.";
     }
 
@@ -31,7 +31,7 @@ public class EventEnrollPresenter{
         return result;
     }
 
-    public String getEnrollResultMessage(InputProcessResult result){
+    public String getInputResponseText(InputProcessResult result){
         if(result == InputProcessResult.SUCCESS) {
             return "Enroll Successful!";
         } else if(result == InputProcessResult.EVENT_NOT_FOUND) {

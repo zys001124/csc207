@@ -1,6 +1,7 @@
 package gateways.loaders;
 
 import entities.Event;
+import gateways.savers.Saver;
 
 import java.io.*;
 import java.time.LocalDateTime;
@@ -19,7 +20,7 @@ public abstract class Loader<T> {
         String[] info;
 
         while((line = reader.readLine()) != null) {
-            info = line.split(",");
+            info = line.split(Saver.parameterSeparationChar+"");
             objs.add(createInstance(info));
         }
         return objs;

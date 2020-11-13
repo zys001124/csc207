@@ -19,7 +19,7 @@ public class MessageUserView extends ConsoleView {
 
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
-        System.out.println(presenter.getIntro());
+        System.out.println(presenter.getPreInputText());
         System.out.println(presenter.getPossibleUsers());
         String receiverUsername = inputScanner.nextLine();
 
@@ -27,7 +27,7 @@ public class MessageUserView extends ConsoleView {
         String messageText = inputScanner.nextLine();
 
         InputProcessResult result = controller.sendMessage(receiverUsername, messageText);
-        System.out.println(presenter.getMessageResult(result));
+        System.out.println(presenter.getInputResponseText(result));
         return getNextScreen(result);
     }
 

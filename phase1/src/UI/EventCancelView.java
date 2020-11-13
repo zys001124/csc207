@@ -20,13 +20,12 @@ public class EventCancelView extends ConsoleView {
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner){
         System.out.println(presenter.getAllEvents());
-        System.out.println(presenter.getIntro());
+        System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
 
-        presenter.setInputResponse("");
         InputProcessResult result = controller.getNextScreen(input);
 
-        String CancelEventOutput = presenter.getInputResponse(result);
+        String CancelEventOutput = presenter.getInputResponseText(result);
 
         System.out.println(CancelEventOutput);
 

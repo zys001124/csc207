@@ -17,7 +17,7 @@ public class EventUnEnrollView extends ConsoleView{
 
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
-        System.out.println(presenter.unEnrollIntro());
+        System.out.println(presenter.getPreInputText());
         System.out.println(presenter.getAttendeeAllEvents());
 
         System.out.print(presenter.getEventNumberInputPrompt());
@@ -25,7 +25,7 @@ public class EventUnEnrollView extends ConsoleView{
 
         InputProcessResult result = controller.unEnrollEvent(eventNumber);
 
-        String unEnrollResultOutput = presenter.getUnEnrollResultMessage(result);
+        String unEnrollResultOutput = presenter.getInputResponseText(result);
         System.out.println(unEnrollResultOutput);
 
         return getNextScreen(result);
