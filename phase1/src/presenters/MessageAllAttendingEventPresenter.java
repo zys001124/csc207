@@ -37,7 +37,7 @@ public class MessageAllAttendingEventPresenter extends Presenter {
     //public void setInputResponse(String s){ inputResponse = s;}
 
     public String getInputResponseText(InputProcessResult result){
-        if(result == InputProcessResult.NAVIGATE_TO_EVENT_LIST_FOR_MESSAGING) {
+        if(result == InputProcessResult.INVALID_INPUT) {
             return "Could Not understand your input. Staying on this screen";
         }
         else {
