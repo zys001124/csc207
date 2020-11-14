@@ -21,7 +21,7 @@ public class SeeSchedulePresenter extends Presenter {
         return "Here are the event(s) you are enrolled in: \n"+getAttendeeEvents();
     }
 
-    public String getAttendeeEvents(){
+    private String getAttendeeEvents(){
         ArrayList<Event> sortedEvents = eventManager.eventSortTime();
         String result = "";
         for(int i = 1; i <= sortedEvents.size(); i++){

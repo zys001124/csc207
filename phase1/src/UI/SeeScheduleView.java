@@ -14,7 +14,6 @@ public class SeeScheduleView extends ConsoleView{
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
-        System.out.println(presenter.getAttendeeEvents());
 
         System.out.print(presenter.outro());
         inputScanner.nextLine();
