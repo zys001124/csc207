@@ -46,10 +46,21 @@ public class EventManager {
         return num == 6;
     }
 
+    /**
+     * removes an event in the given event list based on the index given for the list
+     * @param i the index of the event to be removed from the list
+     * @return the event that will be removed
+     */
     public Event removeEvent(int i){
         return events.remove(i);
     }
 
+    /**
+     * removes an event in the given event list where the event is given by its UUID
+     * returns null if event can't be found.
+     * @param id The UUID of the event to be found
+     * @return the event that is being removed or null if it can't be found.
+     */
     public Event removeEvent(UUID id){
         for(Event event: events){
             int index = events.indexOf(event);
@@ -70,6 +81,11 @@ public class EventManager {
         return null;
     }
 
+    /**
+     * gets the event in the event list and returns that event. Returns null if event can't be found
+     * @param event the string name of the event to be found in the list
+     * @return the event that corresponds to the given string name. reuturns null if it can't be fond.
+     */
     public Event getEvent(String event){
         for(Event e: events) {
             if(e.getEventTitle().equals(event)) {

@@ -37,6 +37,13 @@ public class UserManager {
         return null;
     }
 
+    /**
+     * finds a user in the list of users in the conference system and returns that user.
+     * throws a UserNotFoundException if that username can not be found in the list
+     * @param username String of the username that will be used to find the user in the System
+     * @return the User to the corresponding username
+     * @throws UserNotFoundException for when the user can not be found
+     */
     public User getUser(String username) throws UserNotFoundException{
         for(User u: users) {
             if(u.getUsername().equals(username))

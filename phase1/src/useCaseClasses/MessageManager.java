@@ -27,6 +27,10 @@ public class MessageManager {
         messages.add(new Message(message, sender, receiver, UUID.randomUUID()));
     }
 
+    /**
+     * gets a list of all the messages given in this conference system.
+     * @return a list of messages
+     */
     public List<Message> getMessages(){
         return messages;
     }
@@ -58,6 +62,12 @@ public class MessageManager {
         return false;
     }
 
+    /**
+     * gets an ordered list of the messages sent between two users and returns that list
+     * @param a1 the first user in the messaging exchange
+     * @param a2 the second user in the messaging exchange
+     * @return an ordered list of the messages sent between a1 and a2
+     */
     public List<Message> messagesBetweenTwo(User a1, User a2){
         //TODO: Returns an orderd list of the messages sent between a1 and a2.
         UUID a1id = a1.getId();
