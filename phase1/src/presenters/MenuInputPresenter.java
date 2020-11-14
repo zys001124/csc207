@@ -4,14 +4,29 @@ import controllers.InputProcessResult;
 import entities.User;
 import useCaseClasses.UserManager;
 
+/**
+ * The presenter meant to be used by the MenuInputView (main menu)
+ */
 public class MenuInputPresenter extends Presenter {
 
-
     private UserManager userManager;
+
+    /**
+     * Creates a MenuInputPresenter with the given UserManager
+     * @param manager - The UserManager this class will use
+     */
     public MenuInputPresenter(UserManager manager) {
         userManager = manager;
     }
 
+    /**
+     * Gets the text that should be printed before the user makes
+     * an input
+     *
+     * @return a String - the text that should be printed before
+     * the user makes an input
+     */
+    @Override
     public String getPreInputText() {
         User.UserType userType = userManager.getCurrentlyLoggedIn().getType();
         if(userType == User.UserType.ATTENDEE) {
@@ -22,6 +37,24 @@ public class MenuInputPresenter extends Presenter {
         }
         else{
             return getOrganizerOptions();
+        }
+    }
+
+    /**
+     * Gets the text that should be printed after the user has made an input
+     * @param result - the InputProcessResult that determines what the
+     *               response to the users input should be
+     * @return a String - The text that should be printed as a result of <result>
+     */
+    @Override
+    public String getInputResponseText(InputProcessResult result)
+    {
+        if(result == InputProcessResult.INVALID_INPUT)
+        {
+            return "Invalid input, please try again.";
+        }
+        else {
+            return "";
         }
     }
 
@@ -49,16 +82,4 @@ public class MenuInputPresenter extends Presenter {
                 "6. Create speaker account \n"+
                 "7. Log out";
     }
-
-    public String getInputResponseText(InputProcessResult result)
-    {
-        if(result == InputProcessResult.INVALID_INPUT)
-        {
-            return "Invalid input, please try again.";
-        }
-        else {
-            return "";
-        }
-    }
-
 }

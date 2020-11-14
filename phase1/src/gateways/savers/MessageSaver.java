@@ -19,6 +19,7 @@ public class MessageSaver extends Saver<Message> {
         output.append(parameterSeparationChar);
         output.append(message.getId().toString());
         output.append(parameterSeparationChar);
+        output.append(message.getTimeSent().toString());
         output.append('\n');
         output.flush();
     }

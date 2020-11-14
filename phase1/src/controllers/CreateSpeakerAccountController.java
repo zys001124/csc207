@@ -7,16 +7,28 @@ import useCaseClasses.UserManager;
 
 import java.util.UUID;
 
+/**
+ * A controller for handling input when an Organizer is
+ * creating a Speaker account
+ */
 public class CreateSpeakerAccountController {
 
     private UserManager userManager;
-    private CreateSpeakerAccountPresenter presenter;
 
-    public CreateSpeakerAccountController(UserManager um, CreateSpeakerAccountPresenter presenter) {
+    /**
+     * Creates a CreateSpeakerAccountController with the given UserManager
+     * @param um - The userManager this controller will use
+     */
+    public CreateSpeakerAccountController(UserManager um) {
         userManager = um;
-        this.presenter = presenter;
     }
 
+    /**
+     * Handles the input given by the user
+     * @param input the users input
+     * @return an InputProcessResult enum that details what happened
+     * as a result of the given input
+     */
     public InputProcessResult getNextScreen(String input) {
 
         if(input.equals("back")) {

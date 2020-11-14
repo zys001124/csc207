@@ -153,8 +153,7 @@ public class ConferenceSystem {
         loginController = new LoginController(userManager);
         menuInputController = new MenuInputController(userManager);
         messageUserController = new MessageUserController(messageManager, userManager);
-        createSpeakerAccountController = new CreateSpeakerAccountController(userManager,
-                createSpeakerAccountPresenter);
+        createSpeakerAccountController = new CreateSpeakerAccountController(userManager);
         eventEnrollController = new EventEnrollController(eventManager, userManager);
         eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
         eventCancelController = new EventCancelController(eventManager,eventCancelPresenter,userManager);

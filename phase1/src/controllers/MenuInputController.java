@@ -3,14 +3,26 @@ package controllers;
 import entities.User;
 import useCaseClasses.UserManager;
 
+/**
+ * A controller meant to be used to handle input from MenuInputView (main menu)
+ */
 public class MenuInputController {
 
     private UserManager userManager;
 
+    /**
+     * Creates a MenuInputController with the given UserManager
+     * @param um - The UserManager this object will use
+     */
     public MenuInputController(UserManager um) {
         userManager = um;
     }
 
+    /**
+     * Handles input from the MenuInputView (main menu)
+     * @param input - the users input from the main menu
+     * @return an InputProcessResult - the result of the input handling
+     */
     public InputProcessResult handleInput(String input) {
         User.UserType userType = userManager.getCurrentlyLoggedIn().getType();
 

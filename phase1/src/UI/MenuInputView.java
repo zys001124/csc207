@@ -8,17 +8,33 @@ import presenters.MenuInputPresenter;
 
 import java.util.Scanner;
 
+/**
+ * The main menu ConsoleView
+ */
 public class MenuInputView extends ConsoleView {
 
     private MenuInputController menuInputController;
     private MenuInputPresenter menuInputPresenter;
 
+    /**
+     * Creates a MenuInputView with the given MenuInputController and MenuInputPresenter
+     * @param menuInputController - The Controller this ConsoleView will use to handle input
+     * @param menuInputPresenter - The presenter this ConsoleView will use to get formatted
+     *                           Strings for output
+     */
     public MenuInputView(MenuInputController menuInputController, MenuInputPresenter menuInputPresenter)
     {
         this.menuInputController = menuInputController;
         this.menuInputPresenter = menuInputPresenter;
     }
 
+    /**
+     * Prints output for the ConsoleView and passes user input to <controller> for handling
+     * @param inputScanner the Scanner that can be used to collect
+     *                     input from the user
+     * @return a ConsoleViewType - specifies which kind of ConsoleView should be displayed
+     * next as a result of the users input
+     */
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
         System.out.println(menuInputPresenter.getPreInputText());
