@@ -8,8 +8,8 @@ public abstract class ConsoleView {
 
     // If your name is next to something make sure it works
     public enum ConsoleViewType {
-        LOGIN,
-        MAIN_MENU,
+        LOGIN, // Finished
+        MAIN_MENU, // Finisehd
         MESSAGE_USER, // Luka - Finished
         MESSAGE_ALL_ATTENDING_EVENT, // Jon - Finished
         MESSAGE_ALL_SPEAKERS, // Luka - Finished
