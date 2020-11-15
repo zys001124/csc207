@@ -71,7 +71,12 @@ public class EventManager {
         return null;
     }
 
-
+    /**
+     * find and return the event in the given event list whose own UUid matches the given UUID
+     * returns null if no such event is found
+     * @param id the UUID of the event wanted to be found
+     * @return the event wanted to be found or null if it does not exist
+     */
     public Event getEvent(UUID id) {
         for(Event event: events) {
             if(event.getId().equals(id)) {
@@ -95,14 +100,32 @@ public class EventManager {
         return null;
     }
 
+    /**
+     * get and return the list of all events that is in the event list
+     * @return the list of all events that is in the event list
+     */
     public List<Event> getEvents(){
         return events;
     }
 
+    /**
+     * Check whether the given user u is the organizer of the given event e
+     * return true if u is the organizer of e and false if u is not
+     * @param u the given user
+     * @param e the given event
+     * @return true if u is the organizer of e and false if u is not
+     */
     public boolean hasOrganizedEvent(User u, Event e){
         return e.getOrganizerId().equals(u.getId());
     }
 
+    /**
+     * Check whether the given user u is the speaker of the given event e
+     * return true if u is the speaker of e and false if u is not
+     * @param u the given user
+     * @param e the given event
+     * @return true if u is the speaker of e and false if u is not
+     */
     public boolean isSpeakerForEvent(User u, Event e) {
         return e.getSpeakerId() == u.getId();
     }

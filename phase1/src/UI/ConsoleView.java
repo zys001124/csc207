@@ -22,10 +22,10 @@ public abstract class ConsoleView {
     public enum ConsoleViewType {
         LOGIN, // Finished
         MAIN_MENU, // Finisehd
-        MESSAGE_USER, // Luka - Finished
+        MESSAGE_USER, // Luka
         MESSAGE_ALL_ATTENDING_EVENT, // Jon - Finished
-        MESSAGE_ALL_SPEAKERS, // Luka - Finished
-        MESSAGE_ALL_ATTENDEES, // Luka - Finished
+        MESSAGE_ALL_SPEAKERS, // Luka
+        MESSAGE_ALL_ATTENDEES, // Luka
         EVENT_SCHEDULE, // Kelvin - Finished
         CREATE_EVENT, // Jay - Finished
         CANCEL_EVENT, // Yaosheng - Finished
