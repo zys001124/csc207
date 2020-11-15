@@ -5,13 +5,28 @@ import controllers.InputProcessResult;
 import entities.Event;
 import useCaseClasses.EventManager;
 
+/**
+ * A presenter for generating strings that should be displayed
+ * on the console when an organizer wants to cancel an existing event
+ */
+
 public class EventCancelPresenter extends Presenter {
 
     private EventManager manager;
 
+    /**
+     * Creates an EventCancelPresenter with the given EventManager
+     * @param manager the EventManager this controller will use
+     */
+
     public EventCancelPresenter(EventManager manager){
         this.manager = manager;
     }
+
+    /**
+     * Generate the String that should be displayed before the users type in their input
+     * @return the String that should be displayed before the input is made
+     */
 
     @Override
     public String getPreInputText() {
@@ -20,6 +35,13 @@ public class EventCancelPresenter extends Presenter {
                 "Type \"back\" to return to the menu";
     }
 
+    /**
+     * Generate the String that contains the list of names of all the
+     * events in the given EventManager
+     * @return the String that contains the list of names of all the
+     * events in the given EventManager
+     */
+
     public String getAllEvents(){
         String events = "";
         for(Event e:manager.getEvents()){
@@ -27,6 +49,13 @@ public class EventCancelPresenter extends Presenter {
         }
         return events;
     }
+
+    /**
+     * Generate the String that should be displayed after the input is made
+     * @param result - the InputProcessResult that determines what the
+     *               response to the users input should be
+     * @return the String that should be displayed after the input is made
+     */
 
     public String getInputResponseText(InputProcessResult result) {
         if (result == InputProcessResult.BACK){

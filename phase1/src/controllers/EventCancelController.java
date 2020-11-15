@@ -8,12 +8,24 @@ import useCaseClasses.UserManager;
 
 import java.util.UUID;
 
+
+/**
+ * A controller for handling inputs when an organizer try
+ * to cancel an existing event
+ */
 public class EventCancelController {
 
     private EventManager Emanager;
     private EventCancelPresenter presenter;
     private UserManager Umanager;
 
+    /**
+     * Creates an EventCancelController with the given EventManager, EventCancelPresenter and UserManager
+     *
+     * @param Emanager the EventManager this controller will use
+     * @param presenter the EventCancelPresenter this controller will use
+     * @param Umanager the UserManager this controller will use
+     */
 
     public EventCancelController(EventManager Emanager, EventCancelPresenter presenter, UserManager Umanager){
         this.Emanager = Emanager;
@@ -21,19 +33,23 @@ public class EventCancelController {
         this.Umanager = Umanager;
     }
 
+    /**
+     * Handle the input given by the user and decides which screen menu to show given the input
+     * @param input - the input from user
+     * @return  an InputProcessResult enum that details what happened as a result of the given input
+     */
+
     public InputProcessResult getNextScreen(String input) {
 
         if (input.equals("back")) {
             return InputProcessResult.BACK;
         }
 
-        String eventName = input;
-
-        if (!presenter.getAllEvents().contains(eventName)) {
+        if (!presenter.getAllEvents().contains(input)) {
             return InputProcessResult.EVENT_DOES_NOT_EXIST;
         }
 
-          Event currentEvent = Emanager.getEvent(eventName);
+          Event currentEvent = Emanager.getEvent(input);
           User currentUser = Umanager.getCurrentlyLoggedIn();
 
         if (!Emanager.hasOrganizedEvent(currentUser,currentEvent)) {

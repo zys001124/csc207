@@ -24,7 +24,7 @@ public class CreateSpeakerAccountPresenter extends Presenter {
      * @param result - the InputProcessResult that determines what the
      *               response to the users input should be
      * @return the String that should be printed after the user has
-     *      * made an input
+     * made an input
      */
     @Override
     public String getInputResponseText(InputProcessResult result) {

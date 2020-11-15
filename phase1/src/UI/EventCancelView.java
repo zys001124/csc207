@@ -7,15 +7,35 @@ import presenters.EventCancelPresenter;
 import java.util.Scanner;
 import java.util.SortedMap;
 
+/**
+ * A ConsoleView that is responsible for displaying the information
+ * needed for an organizer to cancel an existing event.
+ */
+
 public class EventCancelView extends ConsoleView {
 
     private EventCancelPresenter presenter;
     private EventCancelController controller;
 
+    /**
+     * Creates an EventCancelView with the given EventCancelController and EventCancelPresenter
+     * @param controller The EventCancelController for handling inputs
+     * @param presenter The EventCancelPresenter for formatting the information
+     *                  that should be displayed on the screen
+     */
+
     public EventCancelView(EventCancelController controller, EventCancelPresenter presenter){
         this.presenter = presenter;
         this.controller = controller;
     }
+
+    /**
+     * Displays the menu of this ConsoleView and passes input to controller
+     * @param inputScanner the Scanner that can be used to collect
+     *                     input from the user
+     * @return a ConsoleViewType that represents what the next ConsoleView to
+     * display should be.
+     */
 
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner){
