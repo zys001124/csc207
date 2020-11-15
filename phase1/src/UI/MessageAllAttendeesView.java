@@ -6,12 +6,12 @@ import presenters.MessageAllAttendeesPresenter;
 
 import java.util.Scanner;
 
-public class MessageAllAttendeesView extends ConsoleView{
+public class MessageAllAttendeesView extends ConsoleView {
 
-    private MessageAllAttendeesController controller;
-    private MessageAllAttendeesPresenter presenter;
+    private final MessageAllAttendeesController controller;
+    private final MessageAllAttendeesPresenter presenter;
 
-    public MessageAllAttendeesView(MessageAllAttendeesController controller, MessageAllAttendeesPresenter presenter){
+    public MessageAllAttendeesView(MessageAllAttendeesController controller, MessageAllAttendeesPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
@@ -27,10 +27,9 @@ public class MessageAllAttendeesView extends ConsoleView{
     }
 
     private ConsoleViewType getNextScreen(InputProcessResult result) {
-        if(result.equals(InputProcessResult.SUCCESS) || result.equals(InputProcessResult.NAVIGATE_TO_MAIN_MENU)) {
+        if (result.equals(InputProcessResult.SUCCESS) || result.equals(InputProcessResult.NAVIGATE_TO_MAIN_MENU)) {
             return ConsoleViewType.MAIN_MENU;
-        }
-        else {
+        } else {
             return ConsoleViewType.MESSAGE_ALL_SPEAKERS;
         }
     }

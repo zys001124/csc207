@@ -4,26 +4,40 @@ import entities.User;
 
 import java.io.IOException;
 
+/**
+ * A Saver for User objects
+ */
 public class UserSaver extends Saver<User> {
 
+    /**
+     * Creates a UserSaver object that will save Users at the
+     * given filepath
+     *
+     * @param outputFileName - the filepath to save User objects
+     * @throws IOException if the file does not exist at the filepath
+     */
     public UserSaver(String outputFileName) throws IOException {
         super(outputFileName);
     }
 
-    public void save(User attendee) throws IOException {
-        output.append(attendee.getUsername());
+    /**
+     * Saves an individual User
+     *
+     * @param user - The User to be saved
+     * @throws IOException if the file does not exist at the filepath
+     */
+    public void save(User user) throws IOException {
+        output.append(user.getUsername());
         output.append(parameterSeparationChar);
-        output.append(attendee.getPassword());
+        output.append(user.getPassword());
         output.append(parameterSeparationChar);
-        output.append(attendee.getId().toString());
+        output.append(user.getId().toString());
         output.append(parameterSeparationChar);
-        if(attendee.getType() == User.UserType.ORGANIZER) {
+        if (user.getType() == User.UserType.ORGANIZER) {
             output.append("O");
-        }
-        else if(attendee.getType() == User.UserType.ATTENDEE) {
+        } else if (user.getType() == User.UserType.ATTENDEE) {
             output.append("A");
-        }
-        else {
+        } else {
             output.append("S");
         }
         output.append("\n");

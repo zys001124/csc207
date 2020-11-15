@@ -6,12 +6,21 @@ import exceptions.IncorrectNumberOfParametersException;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
+/**
+ * A Loader for Message objects
+ */
 public class MessageLoader extends Loader<Message> {
 
+    /**
+     * Creates a Message object with the given parameters
+     *
+     * @param parameters parameters for creating an object of type T as strings
+     * @return a Message object
+     */
     @Override
     public Message createInstance(String[] parameters) {
 
-        if(parameters.length != 5){
+        if (parameters.length != 5) {
             throw new IncorrectNumberOfParametersException();
         }
 

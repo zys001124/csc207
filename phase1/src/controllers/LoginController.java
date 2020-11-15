@@ -1,10 +1,7 @@
 package controllers;
 
-import entities.User;
 import exceptions.IncorrectPasswordException;
 import exceptions.UserNotFoundException;
-//import jdk.internal.util.xml.impl.Input;
-import presenters.LoginPresenter;
 import useCaseClasses.UserManager;
 
 
@@ -13,10 +10,11 @@ import useCaseClasses.UserManager;
  */
 public class LoginController {
 
-    private UserManager manager;
+    private final UserManager manager;
 
     /**
      * Creates a LoginController with the given UserManager
+     *
      * @param manager - The UserManager this class will use to
      *                pass login information to
      */
@@ -27,6 +25,7 @@ public class LoginController {
     /**
      * Logs the user into the system if the username and password passed
      * as input is a match for a User object in UserManager
+     *
      * @param username - The username passed as input
      * @param password - The password passed as input
      * @return an InputProcessResult - The result of the input handling

@@ -8,11 +8,11 @@ import java.util.Scanner;
 
 public class MessageUserView extends ConsoleView {
 
-    private MessageUserController controller;
-    private MessageUserPresenter presenter;
+    private final MessageUserController controller;
+    private final MessageUserPresenter presenter;
 
 
-    public MessageUserView(MessageUserController controller, MessageUserPresenter presenter){
+    public MessageUserView(MessageUserController controller, MessageUserPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
@@ -32,10 +32,9 @@ public class MessageUserView extends ConsoleView {
     }
 
     private ConsoleViewType getNextScreen(InputProcessResult result) {
-        if(result.equals(InputProcessResult.SUCCESS) || result.equals(InputProcessResult.NAVIGATE_TO_MAIN_MENU)) {
+        if (result.equals(InputProcessResult.SUCCESS) || result.equals(InputProcessResult.NAVIGATE_TO_MAIN_MENU)) {
             return ConsoleViewType.MAIN_MENU;
-        }
-        else {
+        } else {
             return ConsoleViewType.MESSAGE_USER;
         }
     }

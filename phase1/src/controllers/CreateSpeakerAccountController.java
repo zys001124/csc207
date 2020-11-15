@@ -2,10 +2,7 @@ package controllers;
 
 import entities.User;
 import exceptions.UsernameAlreadyExistsException;
-import presenters.CreateSpeakerAccountPresenter;
 import useCaseClasses.UserManager;
-
-import java.util.UUID;
 
 /**
  * A controller for handling input when an Organizer is
@@ -13,10 +10,11 @@ import java.util.UUID;
  */
 public class CreateSpeakerAccountController {
 
-    private UserManager userManager;
+    private final UserManager userManager;
 
     /**
      * Creates a CreateSpeakerAccountController with the given UserManager
+     *
      * @param um - The userManager this controller will use
      */
     public CreateSpeakerAccountController(UserManager um) {
@@ -25,20 +23,21 @@ public class CreateSpeakerAccountController {
 
     /**
      * Handles the input given by the user
+     *
      * @param input the users input
      * @return an InputProcessResult enum that details what happened
      * as a result of the given input
      */
     public InputProcessResult getNextScreen(String input) {
 
-        if(input.equals("back")) {
+        if (input.equals("back")) {
             return InputProcessResult.BACK;
         }
 
         String[] usernameAndPassword = input.split(" ");
 
         // Invalid input
-        if(usernameAndPassword.length != 2) {
+        if (usernameAndPassword.length != 2) {
             return InputProcessResult.INVALID_INPUT;
         }
 

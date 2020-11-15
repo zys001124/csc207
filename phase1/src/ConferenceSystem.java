@@ -1,19 +1,18 @@
-
 import UI.*;
 import controllers.*;
 import entities.Event;
 import entities.Message;
 import entities.User;
-import gateways.loaders.UserLoader;
 import gateways.loaders.EventLoader;
 import gateways.loaders.MessageLoader;
+import gateways.loaders.UserLoader;
 import gateways.savers.EventSaver;
 import gateways.savers.MessageSaver;
 import gateways.savers.UserSaver;
 import presenters.*;
-import useCaseClasses.UserManager;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
+import useCaseClasses.UserManager;
 
 import java.io.IOException;
 import java.util.List;
@@ -88,7 +87,7 @@ public class ConferenceSystem {
         ConsoleView.ConsoleViewType nextScreenType = ConsoleView.ConsoleViewType.LOGIN;
         ConsoleView view = getView(nextScreenType);
 
-        while(nextScreenType == ConsoleView.ConsoleViewType.LOGIN) {
+        while (nextScreenType == ConsoleView.ConsoleViewType.LOGIN) {
             // UI prints string for whatever option the user is on
             nextScreenType = view.runFlow(in);
         }
@@ -97,7 +96,7 @@ public class ConferenceSystem {
         initializeViews();
         view = menuInputView;
 
-        while(view != null) {
+        while (view != null) {
             // UI prints string for whatever option the user is on
             nextScreenType = view.runFlow(in);
             view = getView(nextScreenType);
@@ -119,7 +118,7 @@ public class ConferenceSystem {
         EventLoader eventLoader = new EventLoader();
 
         List<User> users;
-        List<Message> messages ;
+        List<Message> messages;
         List<Event> events;
 
         try {
@@ -148,8 +147,7 @@ public class ConferenceSystem {
             userSaver.saveAll(userManager.getUsers());
             messageSaver.saveAll(messageManager.getMessages());
             eventSaver.saveAll(eventManager.getEvents());
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
             System.exit(-1);
         }
@@ -162,7 +160,7 @@ public class ConferenceSystem {
         createSpeakerAccountController = new CreateSpeakerAccountController(userManager);
         eventEnrollController = new EventEnrollController(eventManager, userManager);
         eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
-        eventCancelController = new EventCancelController(eventManager,eventCancelPresenter,userManager);
+        eventCancelController = new EventCancelController(eventManager, eventCancelPresenter, userManager);
         eventCreationController = new EventCreationController(eventManager, userManager);
         messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
         messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
@@ -191,7 +189,7 @@ public class ConferenceSystem {
         createSpeakerAccountView = new CreateSpeakerAccountView(createSpeakerAccountController, createSpeakerAccountPresenter);
         eventEnrollView = new EventEnrollView(eventEnrollController, eventEnrollPresenter);
         eventUnEnrollView = new EventUnEnrollView(eventUnEnrollController, eventUnEnrollPresenter);
-        eventCancelView = new EventCancelView(eventCancelController,eventCancelPresenter);
+        eventCancelView = new EventCancelView(eventCancelController, eventCancelPresenter);
         eventCreationView = new EventCreationView(eventCreationController, eventCreationPresenter);
         messageAllAttendingEventView = new MessageAllAttendingEventView(messageAllAttendingEventController, messageAllAttendingEventPresenter);
         messageAllSpeakersView = new MessageAllSpeakersView(messageAllSpeakersController, messageAllSpeakersPresenter);
@@ -200,23 +198,36 @@ public class ConferenceSystem {
     }
 
     private ConsoleView getView(ConsoleView.ConsoleViewType type) {
-        if(type == null) {
+        if (type == null) {
             return null;
         }
         switch (type) {
-            case LOGIN: return loginView;
-            case MAIN_MENU: return menuInputView;
-            case MESSAGE_USER: return messageUserView;
-            case CREATE_SPEAKER_ACCOUNT: return createSpeakerAccountView;
-            case ENROLL_IN_EVENT: return eventEnrollView;
-            case UNENROLL_IN_EVENT: return eventUnEnrollView;
-            case EVENT_SCHEDULE: return seeScheduleView;
-            case CANCEL_EVENT: return eventCancelView;
-            case CREATE_EVENT: return eventCreationView;
-            case MESSAGE_ALL_ATTENDING_EVENT: return messageAllAttendingEventView;
-            case MESSAGE_ALL_SPEAKERS: return messageAllSpeakersView;
-            case MESSAGE_ALL_ATTENDEES: return messageAllAttendeesView;
-            default: return null;
+            case LOGIN:
+                return loginView;
+            case MAIN_MENU:
+                return menuInputView;
+            case MESSAGE_USER:
+                return messageUserView;
+            case CREATE_SPEAKER_ACCOUNT:
+                return createSpeakerAccountView;
+            case ENROLL_IN_EVENT:
+                return eventEnrollView;
+            case UNENROLL_IN_EVENT:
+                return eventUnEnrollView;
+            case EVENT_SCHEDULE:
+                return seeScheduleView;
+            case CANCEL_EVENT:
+                return eventCancelView;
+            case CREATE_EVENT:
+                return eventCreationView;
+            case MESSAGE_ALL_ATTENDING_EVENT:
+                return messageAllAttendingEventView;
+            case MESSAGE_ALL_SPEAKERS:
+                return messageAllSpeakersView;
+            case MESSAGE_ALL_ATTENDEES:
+                return messageAllAttendeesView;
+            default:
+                return null;
         }
     }
 }

@@ -7,6 +7,7 @@ package exceptions;
 public class IncorrectNumberOfParametersException extends RuntimeException {
     /**
      * Gets the exception message
+     *
      * @return a String - the exception message
      */
     @Override

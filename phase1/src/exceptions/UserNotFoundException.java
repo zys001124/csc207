@@ -8,9 +8,10 @@ public class UserNotFoundException extends Exception {
 
     /**
      * Creates a UserNotFoundException
+     *
      * @param username - The username that is being searched for
      */
     public UserNotFoundException(String username) {
-        super("User: "+username+" not found");
+        super("User: " + username + " not found");
     }
 }

@@ -13,14 +13,15 @@ import java.util.Scanner;
  */
 public class CreateSpeakerAccountView extends ConsoleView {
 
-    private CreateSpeakerAccountController controller;
-    private CreateSpeakerAccountPresenter presenter;
+    private final CreateSpeakerAccountController controller;
+    private final CreateSpeakerAccountPresenter presenter;
 
     /**
      * Creates a CreateSpeakerAccountView with the given controller and presenter
+     *
      * @param controller - The CreateSpeakerAccountController to be used for handling input
-     * @param presenter - The CreateSpeakerAccountPresenter to be used for formatting the
-     *                  strings that should be printed to the console
+     * @param presenter  - The CreateSpeakerAccountPresenter to be used for formatting the
+     *                   strings that should be printed to the console
      */
     public CreateSpeakerAccountView(CreateSpeakerAccountController controller, CreateSpeakerAccountPresenter presenter) {
         this.controller = controller;
@@ -29,6 +30,7 @@ public class CreateSpeakerAccountView extends ConsoleView {
 
     /**
      * Displays the interface of the ConsoleView and passes input to <controller>
+     *
      * @param inputScanner the Scanner that can be used to collect
      *                     input from the user
      * @return a ConsoleViewType that represents what the next ConsoleView to
@@ -38,7 +40,7 @@ public class CreateSpeakerAccountView extends ConsoleView {
     public ConsoleViewType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
-        
+
         InputProcessResult result = controller.getNextScreen(input);
 
         String CreateSpeakerOutput = presenter.getInputResponseText(result);
@@ -52,7 +54,8 @@ public class CreateSpeakerAccountView extends ConsoleView {
             case SUCCESS:
             case BACK:
                 return ConsoleViewType.MAIN_MENU;
-            default: return ConsoleViewType.CREATE_SPEAKER_ACCOUNT;
+            default:
+                return ConsoleViewType.CREATE_SPEAKER_ACCOUNT;
         }
     }
 }

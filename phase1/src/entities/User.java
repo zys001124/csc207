@@ -9,18 +9,18 @@ import java.util.UUID;
  */
 public class User implements Serializable {
 
-    private UUID id;
-    private String username;
-    private String password;
-    private UserType type;
+    private final UUID id;
+    private final String username;
+    private final String password;
+    private final UserType type;
 
     /**
      * Creates a user with the specified UserType, username, password, and UUID
      *
-     * @param type - the Users type
+     * @param type     - the Users type
      * @param username - the Users username
      * @param password - the Users password
-     * @param id - the Users UUID
+     * @param id       - the Users UUID
      */
     public User(UserType type, String username, String password, UUID id) {
         this.username = username;
@@ -31,25 +31,35 @@ public class User implements Serializable {
 
     /**
      * Gets the Users username
+     *
      * @return a string that is the Users username
      */
-    public final String getUsername(){return username;}
+    public final String getUsername() {
+        return username;
+    }
 
     /**
      * Gets the Users UUID
+     *
      * @return a UUID object - the users specific UUID
      */
-    public final UUID getId(){return id;}
+    public final UUID getId() {
+        return id;
+    }
 
     /**
      * Gets the users UserType
+     *
      * @return the UserType enum that is the Users type
      */
-    public final UserType getType() {return type;}
+    public final UserType getType() {
+        return type;
+    }
 
     /**
      * Verify's that the String passed in as a parameter is the same
      * as the Users password
+     *
      * @param pass the password that will be checked for correctness
      * @return a boolean value representing whether or not <pass> is
      * the correct password
@@ -62,9 +72,12 @@ public class User implements Serializable {
 
     /**
      * Gets the Users password
+     *
      * @return a String - the Users password
      */
-    public final String getPassword() {return password;}
+    public final String getPassword() {
+        return password;
+    }
 
     /**
      * This documents what kind of User the User is

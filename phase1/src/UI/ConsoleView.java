@@ -9,6 +9,7 @@ public abstract class ConsoleView {
 
     /**
      * Makes the flow visible on the screen and collects input
+     *
      * @param inputScanner the Scanner that can be used to collect
      *                     input from the user
      * @return a ConsoleViewType - this describes the next ConsoleView

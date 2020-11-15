@@ -6,12 +6,12 @@ import presenters.MessageAllSpeakersPresenter;
 
 import java.util.Scanner;
 
-public class MessageAllSpeakersView extends ConsoleView{
+public class MessageAllSpeakersView extends ConsoleView {
 
-    private MessageAllSpeakersController controller;
-    private MessageAllSpeakersPresenter presenter;
+    private final MessageAllSpeakersController controller;
+    private final MessageAllSpeakersPresenter presenter;
 
-    public MessageAllSpeakersView(MessageAllSpeakersController controller, MessageAllSpeakersPresenter presenter){
+    public MessageAllSpeakersView(MessageAllSpeakersController controller, MessageAllSpeakersPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
@@ -20,17 +20,16 @@ public class MessageAllSpeakersView extends ConsoleView{
     public ConsoleViewType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
         String message = inputScanner.nextLine();
-        
+
         InputProcessResult result = controller.sendMessage(message);
         System.out.println(presenter.getInputResponseText(result));
         return getNextScreen(result);
     }
 
     private ConsoleViewType getNextScreen(InputProcessResult result) {
-        if(result.equals(InputProcessResult.SUCCESS) || result.equals(InputProcessResult.NAVIGATE_TO_MAIN_MENU)) {
+        if (result.equals(InputProcessResult.SUCCESS) || result.equals(InputProcessResult.NAVIGATE_TO_MAIN_MENU)) {
             return ConsoleViewType.MAIN_MENU;
-        }
-        else {
+        } else {
             return ConsoleViewType.MESSAGE_ALL_SPEAKERS;
         }
     }

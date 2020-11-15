@@ -11,21 +11,22 @@ import java.util.UUID;
  */
 public class Message implements Serializable, Comparable<Message> {
 
-    private UUID messageId;
+    private final UUID messageId;
 
-    private String messageText;
-    private UUID senderId;
-    private UUID recipientId;
+    private final String messageText;
+    private final UUID senderId;
+    private final UUID recipientId;
 
-    private LocalDateTime timeSent;
+    private final LocalDateTime timeSent;
 
     /**
      * Creates a Message with the given message content, UUID of the sender,
      * UUID of the recipient, and UUID (of the message)
-     * @param message - the message text
-     * @param sender - the senders UUID
+     *
+     * @param message   - the message text
+     * @param sender    - the senders UUID
      * @param recipient - the recipitents UUID
-     * @param id - the messages UUID
+     * @param id        - the messages UUID
      */
     public Message(String message, UUID sender, UUID recipient, UUID id) {
         messageText = message;
@@ -40,11 +41,12 @@ public class Message implements Serializable, Comparable<Message> {
     /**
      * Creates a Message with the given message content, UUID of the sender,
      * UUID of the recipient, UUID (of the message), and time sent
-     * @param message - the message text
-     * @param sender - the senders UUID
+     *
+     * @param message   - the message text
+     * @param sender    - the senders UUID
      * @param recipient - the recipitents UUID
-     * @param id - the messages UUID
-     * @param timeSent - the time the message was sent
+     * @param id        - the messages UUID
+     * @param timeSent  - the time the message was sent
      */
     public Message(String message, UUID sender, UUID recipient, UUID id, LocalDateTime timeSent) {
         messageText = message;
@@ -56,36 +58,52 @@ public class Message implements Serializable, Comparable<Message> {
 
     /**
      * Gets the UUID of the User who sent the Message
+     *
      * @return a UUID - the UUID of the User who sent the Message
      */
-    public UUID getSenderId(){return senderId;}
+    public UUID getSenderId() {
+        return senderId;
+    }
 
     /**
      * Gets the UUID of the User who received the Message
+     *
      * @return a UUID - the UUID of the User who received the Message
      */
-    public UUID getRecipientId(){return recipientId;}
+    public UUID getRecipientId() {
+        return recipientId;
+    }
 
     /**
      * Gets the UUID of the Message
+     *
      * @return the UUID of the Message
      */
-    public UUID getId(){return messageId;}
+    public UUID getId() {
+        return messageId;
+    }
 
     /**
      * Gets the content of the message
+     *
      * @return a String - the text the sender sent to the recipient
      */
-    public String getMessageText() {return messageText;}
+    public String getMessageText() {
+        return messageText;
+    }
 
     /**
      * Gets the time this message was sent
+     *
      * @return a LocalDateTime - the time this message was sent
      */
-    public LocalDateTime getTimeSent() {return timeSent;}
+    public LocalDateTime getTimeSent() {
+        return timeSent;
+    }
 
     /**
      * This method is necessary to make Message's comparable by time
+     *
      * @param o the Message this Message is being compared to
      * @return an integer representing the difference between this and <o>
      */
