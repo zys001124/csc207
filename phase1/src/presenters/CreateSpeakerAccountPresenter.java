@@ -34,6 +34,6 @@ public class CreateSpeakerAccountPresenter extends Presenter {
             return "Speaker added successfully";
         }else if (result == InputProcessResult.USERNAME_TAKEN){
             return "Username taken. Try again.";
-        }else{return null;}
+        }else{return "";}
     }
 }

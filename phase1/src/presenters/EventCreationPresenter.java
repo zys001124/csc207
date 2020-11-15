@@ -21,7 +21,7 @@ public class EventCreationPresenter extends Presenter {
 
     public String getInputResponseText(InputProcessResult result) {
         if (result == InputProcessResult.BACK){
-            return null;
+            return "";
         }else if(result == InputProcessResult.USER_NOT_FOUND){
             return "The speaker user is not a register user";
         }else if (result == InputProcessResult.USER_NOT_SPEAKER){

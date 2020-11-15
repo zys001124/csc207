@@ -59,7 +59,7 @@ public class EventCancelPresenter extends Presenter {
 
     public String getInputResponseText(InputProcessResult result) {
         if (result == InputProcessResult.BACK){
-            return null;
+            return "";
         }else if(result == InputProcessResult.EVENT_DOES_NOT_EXIST){
             return "This event does not exist. Try again.\n";
         }else if(result == InputProcessResult.USER_DID_NOT_ORGANIZE_EVENT){
