@@ -1,0 +1,26 @@
+Hello and welcome to our program for the project phase 1.
+Here we simulate a Conference System where there are Attendees, Speakers, and Organizers
+
+In order to run the conference system you need to run the main method.
+In order to run the main method you must first make sure you have the correct working directory for our conference people.
+make sure at the end of the directory you put \resources in order to access the given eventData, messageData, and userData.
+For example, your directory should end in something along the following lines: group_0186\phase1\resources
+Also make sure the use classpath of the module is the file named "phase1"
+
+After all those settings are applied you are ready to run the program. Just go the the main method and press the run button.
+
+From here you will be prompted with a user login. We have provided some pre defined users for you to enter based on what
+menu options you want. The pre defined users are:
+
+(Username, Password, Role)
+lewis, lewis, Organizer
+jon, jon, Attendee
+luka, luka, Speaker
+jay, jay, Organizer
+simon, simon, Attendee
+kelvin, kelvin, Attendee
+yaosheng, yaosheng, Attendee
+billgates, billgates, Organizer
+Steve, Jobs, Speaker
+
+Usernames and Passwords are case sensitive so make sure you
