@@ -22,6 +22,12 @@ public class MessageManager {
         this.messages = messages;
     }
 
+    /**
+     * Adds a message to the list of messages
+     * @param sender the UUID of the sender of the message
+     * @param receiver the UUID of the recieves of the message
+     * @param message the message that is sent
+     */
     public void addMessage(UUID sender, UUID receiver, String message){
 
         messages.add(new Message(message, sender, receiver, UUID.randomUUID()));
@@ -52,6 +58,12 @@ public class MessageManager {
         throw new NoMessageException("No message exists in the system.");
     }
 
+    /**
+     * takes in two users and checks to see if a message was sent between the two
+     * @param sender UUID of the sender user
+     * @param receiver UUID of teh reciever user
+     * @return Boolean of if a message is sent between two senders
+     */
     public boolean messageSentBy(UUID sender, UUID receiver){
         for(Message message : messages){
             if(message.getSenderId().equals(sender) &&

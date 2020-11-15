@@ -26,6 +26,11 @@ public class UserManager {
         this.users = users;
     }
 
+    /**
+     * gets the user based on a gived UUID. returns null if not found
+     * @param id the UUID of the user to be found
+     * @return either the user that is found or null if user does not exist
+     */
     public User getUser(UUID id) {
         //TODO this method should be able to throw a UserNotFoundException but isn't supplied
         // a username, so this is impossible. It's not used at all so I'm not sure if we need it.
@@ -54,6 +59,10 @@ public class UserManager {
         throw new UserNotFoundException(username);
     }
 
+    /**
+     * helper method to see which user is currently logged in.
+     * @return user that is currently logged in
+     */
     public User getCurrentlyLoggedIn() {return currentlyLoggedIn;}
 
     public void addUser(User user) throws UsernameAlreadyExistsException {
@@ -63,6 +72,13 @@ public class UserManager {
         users.add(user);
     }
 
+    /**
+     * adds a user to the list of users
+     * @param type the role of the user to be added
+     * @param username the username of the user to be added
+     * @param password the password of the user to be added
+     * @throws UsernameAlreadyExistsException - if the username is already seen in the system
+     */
     public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException {
         if(doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: "+username+" is taken");
@@ -71,6 +87,12 @@ public class UserManager {
         users.add(user);
     }
 
+    /**
+     * helper method to check and see if the username exists
+     * called in addUser
+     * @param username the string of the username to see if it is found
+     * @return boolean on wether or not the user exists
+     */
     public boolean doesUserExist(String username) {
         for(User user: users) {
             if(user.getUsername().equals(username))
@@ -95,6 +117,13 @@ public class UserManager {
         return users;
     }
 
+    /**
+     * the user login for when a user wants to log in to the system
+     * @param username the username to be submitted
+     * @param password the password to be submitted
+     * @throws IncorrectPasswordException if the password is wrong for the correct username
+     * @throws UserNotFoundException if the username can not be found in the system
+     */
     public void userLogin(String username, String password) throws IncorrectPasswordException, UserNotFoundException {
         for(User user: users) {
             if(user.getUsername().equals(username)) {
