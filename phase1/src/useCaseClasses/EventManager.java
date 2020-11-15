@@ -154,6 +154,14 @@ public class EventManager {
         return e.getSpeakerId() == u.getId();
     }
 
+    /**
+     * Find the event in the list based on user input index and add this user to the event
+     * @param parsedInput The index of the event in the event list
+     * @param attendee The user(attendee) to be added to the event
+     * @throws EventNotFoundException if the entered index does not corresponds to a event
+     * @throws NumberFormatException if the input is not a number
+     * @throws UserAlreadyEnrolledException if the user(attendee) was already enrolled in the event
+     */
     public void addUserToEvent(int parsedInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserAlreadyEnrolledException {
         if (parsedInput <= events.size() && parsedInput > 0) {
@@ -167,6 +175,15 @@ public class EventManager {
         throw new EventNotFoundException(parsedInput);
     }
 
+    /**
+     * Find the event in the list based on user input index and remove this user from the event
+     * @param parsedInput The index of the event in the event list
+     * @param attendee The user(attendee) to be removed from the event
+     * @throws EventNotFoundException if the entered index does not corresponds to a event
+     * @throws NumberFormatException if the input is not a number
+     * @throws UserNotEnrolledInEventException if the user(attendee) was never enrolled in the event
+     * in the first place
+     */
     public void removeUserFromEvent(int parsedInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserNotEnrolledInEventException {
         if (parsedInput <= events.size() && parsedInput > 0) {
@@ -180,6 +197,10 @@ public class EventManager {
         throw new EventNotFoundException(parsedInput);
     }
 
+    /**
+     * This method sorts the event list in the order of date and time
+     * @return An arraylist with events sorts in order of datetime
+     */
     public ArrayList<Event> eventSortTime(){
         ArrayList<Event> result = new ArrayList<>(events);
 
@@ -196,7 +217,6 @@ public class EventManager {
 
         return result;
     }
-
 
     public List<String> listOfEventsHosting(User u) {
         //returns a list of the events a presenter is hosting

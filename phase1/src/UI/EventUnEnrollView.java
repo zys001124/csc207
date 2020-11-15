@@ -3,18 +3,34 @@ package UI;
 import controllers.InputProcessResult;
 import controllers.EventUnEnrollController;
 import presenters.EventUnEnrollPresenter;
-
 import java.util.Scanner;
 
+/**
+ * A ConsoleView that is responsible for displaying/collecting the
+ * information necessary for an Attendee to un-enroll in an Event
+ */
 public class EventUnEnrollView extends ConsoleView{
     private EventUnEnrollController controller;
     private EventUnEnrollPresenter presenter;
 
+    /**
+     * Create an EventUnEnrollView with the given EventUnEnrollController and EventUnEnrollPresenter
+     * @param controller The EventUnEnrollController to be used for handling input
+     * @param presenter The EventUnEnrollPresenter to be used for formatting the strings that
+     *                  should be printed to the console
+     */
     public EventUnEnrollView(EventUnEnrollController controller, EventUnEnrollPresenter presenter){
         this.controller = controller;
         this.presenter = presenter;
     }
 
+    /**
+     * Displays the interface of EventUnEnrollView and passes input to the controller
+     * @param inputScanner the Scanner that can be used to collect
+     *                     input from the user
+     * @return A ConsoleViewType that represents what the next ConsoleView to display
+     * should be.
+     */
     @Override
     public ConsoleViewType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
