@@ -65,13 +65,6 @@ public class UserManager {
      */
     public User getCurrentlyLoggedIn() {return currentlyLoggedIn;}
 
-    public void addUser(User user) throws UsernameAlreadyExistsException {
-        if(doesUserExist(user.getUsername())) {
-            throw new UsernameAlreadyExistsException("Username: "+user.getUsername()+" is taken");
-        }
-        users.add(user);
-    }
-
     /**
      * adds a user to the list of users
      * @param type the role of the user to be added
@@ -113,7 +106,7 @@ public class UserManager {
         return null;
     }
 
-    public List<User> getusers(){
+    public List<User> getUsers(){
         return users;
     }
 

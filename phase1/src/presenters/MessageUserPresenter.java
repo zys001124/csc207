@@ -1,7 +1,6 @@
 package presenters;
 
 import controllers.InputProcessResult;
-import entities.Message;
 import entities.User;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
@@ -39,7 +38,7 @@ public class MessageUserPresenter extends Presenter {
 
     private String getAttendeeUserList(){
         StringBuilder userList = new StringBuilder();
-        for(User user : userManager.getusers()) {
+        for(User user : userManager.getUsers()) {
             if(user.getType() == User.UserType.ATTENDEE || user.getType() == User.UserType.SPEAKER) {
                 userList.append(user.getUsername()).append("\n");
             }
@@ -49,7 +48,7 @@ public class MessageUserPresenter extends Presenter {
 
     private String getOrganizerUserList(){
         StringBuilder userList = new StringBuilder();
-        for(User user : userManager.getusers()) {
+        for(User user : userManager.getUsers()) {
             if(user.getType() == User.UserType.ATTENDEE || user.getType() == User.UserType.SPEAKER) {
                 userList.append(user.getUsername()).append("\n");
             }
@@ -59,7 +58,7 @@ public class MessageUserPresenter extends Presenter {
 
     private String getSpeakerUserList(){
         StringBuilder userList = new StringBuilder();
-        for(User user : userManager.getusers()) {
+        for(User user : userManager.getUsers()) {
             if(user.getType() == User.UserType.ATTENDEE &&
                     messageManager.messageSentBy(user.getId(), userManager.getCurrentlyLoggedIn().getId())) {
                 userList.append(user.getUsername()).append("\n");

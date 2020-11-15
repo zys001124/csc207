@@ -19,7 +19,7 @@ public class MessageAllSpeakersController {
             if(message.equals("q")){
                 throw new MessageCancelledException(userManager.getCurrentlyLoggedIn().getUsername(), "all speakers");
             }
-            for(User user : userManager.getusers()){
+            for(User user : userManager.getUsers()){
                 if(user.getType().equals(User.UserType.SPEAKER)){
                     messageManager.addMessage(userManager.getCurrentlyLoggedIn().getId(), user.getId(), message);
                 }

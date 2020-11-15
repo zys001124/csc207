@@ -48,16 +48,6 @@ public class MessageManager {
         }
     }
 
-    public Message findMessage(Message m) throws NoMessageException{
-
-        for(Message message : messages) {
-            if (message == m) {
-                return message;
-            }
-        }
-        throw new NoMessageException("No message exists in the system.");
-    }
-
     /**
      * takes in two users and checks to see if a message was sent between the two
      * @param sender UUID of the sender user

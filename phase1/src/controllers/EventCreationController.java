@@ -2,7 +2,6 @@ package controllers;
 
 import entities.Event;
 import entities.User;
-import presenters.EventCreationPresenter;
 import useCaseClasses.EventManager;
 import useCaseClasses.UserManager;
 
@@ -51,7 +50,7 @@ public class EventCreationController {
         for (Event e:Emanager.getEvents()){
             eID.add(e.getId());
             }
-        for (User u:uManager.getusers()){
+        for (User u:uManager.getUsers()){
             uID.add(u.getId());
             }
 
@@ -67,7 +66,7 @@ public class EventCreationController {
 
         boolean registeredUser = false;
         User speaker = uManager.getCurrentlyLoggedIn();
-        for (User choice:uManager.getusers()){
+        for (User choice:uManager.getUsers()){
             if (choice.getUsername().equals(parametersForEvent[2])){
                 registeredUser = true;
                 speaker = choice;

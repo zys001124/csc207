@@ -145,7 +145,7 @@ public class ConferenceSystem {
             MessageSaver messageSaver = new MessageSaver(MESSAGE_DATA_PATH);
             EventSaver eventSaver = new EventSaver(EVENT_DATA_PATH);
 
-            userSaver.saveAll(userManager.getusers());
+            userSaver.saveAll(userManager.getUsers());
             messageSaver.saveAll(messageManager.getMessages());
             eventSaver.saveAll(eventManager.getEvents());
         }

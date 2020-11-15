@@ -19,7 +19,7 @@ public class MessageAllAttendeesController {
             if(message.equals("q")){
                 throw new MessageCancelledException(userManager.getCurrentlyLoggedIn().getUsername(), "all attendees");
             }
-            for(User user : userManager.getusers()){
+            for(User user : userManager.getUsers()){
                 if(user.getType().equals(User.UserType.ATTENDEE)){
                     messageManager.addMessage(userManager.getCurrentlyLoggedIn().getId(), user.getId(), message);
                 }
