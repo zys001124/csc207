@@ -157,7 +157,7 @@ public class ConferenceSystem {
         eventEnrollController = new EventEnrollController(eventManager, userManager);
         eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
         eventCancelController = new EventCancelController(eventManager,eventCancelPresenter,userManager);
-        eventCreationController = new EventCreationController(eventManager, eventCreationPresenter, userManager);
+        eventCreationController = new EventCreationController(eventManager, userManager);
         messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
         messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
         messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);

@@ -13,19 +13,34 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+/**
+ * Represents an eventManager that can modify events of the conference
+ */
 public class EventManager {
 
     private List<Event> events;
 
+    /***
+     * Create an EventManager with given list of events
+     * @param events list of events
+     */
     public EventManager(List<Event> events) {
         this.events = events;
-
     }
+
+    /***
+     *add an given event if the conditions check out
+     * @param e the event that is check if it could be added.
+     * @return the boolean if the event is added to events.
+     */
     public boolean addEvent(Event e){
         LocalDateTime time = e.getEventTime();
+        LocalDateTime timeEnd = time.plusHours(1);
         for (Event temp: events){
             LocalDateTime timeGot = temp.getEventTime();
-            if (timeGot.equals(time)){
+            LocalDateTime timeAdded = timeGot.plusHours(1);
+            if ((timeGot.isBefore(time) && timeAdded.isAfter(time)) ||
+                    (timeGot.isBefore(timeEnd) && timeAdded.isAfter(timeEnd))){
                 if (temp.getEventRoom() == e.getEventRoom()){
                     return false;
                 }
@@ -35,15 +50,24 @@ public class EventManager {
         return true;
     }
 
+    /***
+     * checks the availability of rooms in the given time
+     * @param time the time to be check
+     * @return boolean if the
+     */
     public boolean availabilityInTime(LocalDateTime time){
         int num = 0;
+        LocalDateTime timeEnd = time.plusHours(1);
         for (Event temp: events) {
             LocalDateTime timeGot = temp.getEventTime();
-            if (timeGot.equals(time)) {
+            LocalDateTime timeAdded = timeGot.plusHours(1);
+            if (timeGot.isBefore(time) && timeAdded.isAfter(time)) {
+                num++;
+            }else if (timeGot.isBefore(timeEnd) && timeAdded.isAfter(timeEnd)){
                 num++;
             }
         }
-        return num == 6;
+        return num >= 6;
     }
 
     /**

@@ -11,19 +11,34 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/***
+ * A controller for handling input when an Organizer is
+ * creating an Event.
+ */
 public class EventCreationController {
 
     private EventManager Emanager;
-    private EventCreationPresenter presenter;
     private UserManager uManager;
 
-    public EventCreationController(EventManager manager, EventCreationPresenter presenter, UserManager uManager){
+    /**
+     * Creates a EventCreationController with the given UserManager and EventManager
+     * @param manager - The EventManager this controller will use
+     * @param uManager - The UserManager this controller will use
+     */
+    public EventCreationController(EventManager manager, UserManager uManager){
         Emanager = manager;
-        this.presenter = presenter;
         this.uManager = uManager;
     }
 
-
+    /**
+     * Handles the input given by the user
+     * @param input the users input of string that
+     *              include information of eventTitle, Date, speakerUsername, and RoomNum
+     * @return an InputProcessResult enum that details what happened
+     * as a result of the given input
+     *
+     *Precondition: the roomNum is between 0 to 5.
+     */
     public InputProcessResult createEvent(String input){
         if(input.equals("back")) {
             return InputProcessResult.BACK;
@@ -79,6 +94,13 @@ public class EventCreationController {
 
         if (Emanager.availabilityInTime(dateTime)){
             return InputProcessResult.TIMESLOT_FULL;
+        }
+        for (Event e:Emanager.getEvents()){
+            if (e.getEventTime().equals(dateTime)){
+                if(e.getSpeakerId() == speakerID){
+                    return InputProcessResult.SPEAKER_OCCUPIED;
+                }
+            }
         }
 
         Event eventCreated = new Event(parametersForEvent[0], dateTime, eventID, organizerID, speakerID,
