@@ -1,5 +1,9 @@
 package exceptions;
 
+/**
+ * An exception meant to be thrown when an incorrect password
+ * is entered for a given user at login
+ */
 public class IncorrectPasswordException extends Exception{
 
     /**

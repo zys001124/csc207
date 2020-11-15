@@ -1,5 +1,9 @@
 package exceptions;
 
+/**
+ * An exception meant to be thrown when a username
+ * for a user that doesnt exist is entered at login
+ */
 public class InvalidUsernameException extends Exception{
 
     /**

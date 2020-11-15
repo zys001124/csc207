@@ -19,6 +19,10 @@ import java.io.IOException;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * A conference system for managing the creation/modification/deletion
+ * of Users, Events, and Messages at a tech conference
+ */
 public class ConferenceSystem {
 
     // global final variables
@@ -72,7 +76,9 @@ public class ConferenceSystem {
     private MessageAllAttendeesView messageAllAttendeesView;
     private SeeScheduleView seeScheduleView;
 
-    // This will instantiate all relevant objects and then present the menu view
+    /**
+     * Loads all entiteis, runs the program, saves all entities
+     */
     public void run() {
         init();
         loginView = new LoginView(loginController, loginPresenter);
