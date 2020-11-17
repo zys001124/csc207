@@ -167,7 +167,7 @@ public class MessageUserPresenter extends Presenter {
             for (Message message : messageBetweenTwo) {
                 String messageSenderUsername = userManager.getUser(message.getSenderId()).getUsername();
                 String messageRecipientUsername = userManager.getUser(message.getRecipientId()).getUsername();
-                messageHistory.append("From: ").append(messageSenderUsername).append(", To: ").append(messageRecipientUsername).append(", Message: \n").append(message.getMessageText()).append("\n");
+                messageHistory.append("From: ").append(messageSenderUsername).append(", To: ").append(messageRecipientUsername).append(", Time: ").append(message.getTimeSent().toString()).append(", Message: \n").append(message.getMessageText()).append("\n");
             }
             return messageHistory.toString().trim();
         } catch (UserNotFoundException e){
