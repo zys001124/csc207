@@ -68,7 +68,6 @@ public class User implements Serializable {
         return pass.equals(password);
     }
 
-
     /**
      * Gets the Users password
      *
