@@ -10,30 +10,38 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-//TODO remove messages reference, polish up. Messages should be handled by MessageManager only
+/**
+ * A manager for managing all the users in the tech conference
+ */
 public class UserManager {
 
     private final List<User> users;
 
     private User currentlyLoggedIn;
 
+    /**
+     * Creates a UserManager with no users
+     */
     public UserManager() {
         users = new ArrayList<>();
     }
 
+    /**
+     * Creates a UserManager with the given list of users
+     * @param users - The list of users this UserManager will manage
+     */
     public UserManager(List<User> users) {
         this.users = users;
     }
 
     /**
-     * gets the user based on a gived UUID. returns null if not found
+     * gets the user based on a given UUID. returns null if not found
      *
      * @param id the UUID of the user to be found
      * @return either the user that is found or null if user does not exist
      */
     public User getUser(UUID id) {
-        //TODO this method should be able to throw a UserNotFoundException but isn't supplied
-        // a username, so this is impossible. It's not used at all so I'm not sure if we need it.
+
         for (User u : users) {
             if (u.getId().equals(id)) {
                 return u;
@@ -100,16 +108,10 @@ public class UserManager {
         return false;
     }
 
-    public User removeUser(UUID id) {
-        for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).getId().equals(id)) {
-                return users.remove(i);
-            }
-        }
-        // TODO maybe throw exception if the user doesnt exist.
-        return null;
-    }
-
+    /**
+     * Gets the list of users
+     * @return the list of users
+     */
     public List<User> getUsers() {
         return users;
     }

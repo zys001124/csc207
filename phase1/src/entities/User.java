@@ -68,7 +68,6 @@ public class User implements Serializable {
         return pass.equals(password);
     }
 
-    // TODO Remove this once we can serialize objects
 
     /**
      * Gets the Users password
