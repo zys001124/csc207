@@ -9,14 +9,23 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Represents an messageManager that can store/create messages sent by users of the conference
+ */
 public class MessageManager {
 
     private final List<Message> messages;
 
+    /**
+     * Create a new MessageManager with no messages stored
+     */
     public MessageManager() {
         messages = new ArrayList<>();
     }
 
+    /**
+     * Create a new MessageManager with all messages contained in <messages>
+     */
     public MessageManager(List<Message> messages) {
         this.messages = messages;
     }
