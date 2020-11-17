@@ -5,6 +5,7 @@ import entities.Message;
 import entities.User;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -73,28 +74,15 @@ public class MessageManager {
      * @return an ordered list of the messages sent between a1 and a2
      */
     public List<Message> messagesBetweenTwo(User a1, User a2) {
-        //TODO: Returns an orderd list of the messages sent between a1 and a2.
         List<Message> theMessages = new ArrayList<>();
 
         for (Message m : messages) {
-            if ((m.getSenderId() == a1.getId() && m.getRecipientId() == a2.getId()) || (m.getSenderId() == a2.getId() && m.getRecipientId()
-                    == a1.getId())) {
+            if ((m.getSenderId().equals(a1.getId()) && m.getRecipientId().equals(a2.getId())) || (m.getSenderId().equals(a2.getId()) && m.getRecipientId().equals(a1.getId()))) {
                 theMessages.add(m);
             }
         }
 
-        int len = theMessages.size();
-        for (int i = 0; i < len - 1; i++) {
-            for (int j = 1; j < len - i - 1; j++) {
-                //TODO im not sure if this actually works because the int could only be for years. Need to check up on this.
-                if (theMessages.get(j).getTimeSent().isAfter(theMessages.get(j + 1).getTimeSent())) {
-                    Message tempj = theMessages.get(j);
-                    Message tempjp1 = theMessages.get(j + 1);
-                    theMessages.set(j, tempjp1);
-                    theMessages.set(j + 1, tempj);
-                }
-            }
-        }
+        Collections.sort(theMessages);
         return theMessages;
     }
 }

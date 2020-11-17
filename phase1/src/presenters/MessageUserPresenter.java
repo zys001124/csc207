@@ -36,7 +36,7 @@ public class MessageUserPresenter extends Presenter {
      */
     @Override
     public String getPreInputText() {
-        return "Please type in the username of the account you wish to message. \n" +
+        return "Please type in the username you wish view conversation history with and/or to send a message.\n" +
                 "Type \"back\" in the message text prompt to return to the main menu if you simply wish to view your conversation history:";
     }
 
@@ -143,10 +143,20 @@ public class MessageUserPresenter extends Presenter {
         return "Please enter your message (type \"back\" to return to the main menu):";
     }
 
+    /**
+     * Intro before showing message history with <recipientUsername>
+     *
+     * @return a String - Message history with <recipientUsername>
+     */
     public String preMessageHistoryText(String recipientUsername){
         return "Conversation history with " + recipientUsername + ":";
     }
 
+    /**
+     * Finds all messages sent between the currently logged in user and <recipientUsername>
+     *
+     * @return a String - Message history with <recipientUsername>
+     */
     public String messageHistory(String recipientUsername){
         try {
             List<Message> messageBetweenTwo = messageManager.messagesBetweenTwo(userManager.getUser(recipientUsername), userManager.getCurrentlyLoggedIn());
