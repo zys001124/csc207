@@ -74,13 +74,11 @@ public class MessageManager {
      */
     public List<Message> messagesBetweenTwo(User a1, User a2) {
         //TODO: Returns an orderd list of the messages sent between a1 and a2.
-        UUID a1id = a1.getId();
-        UUID a2id = a2.getId();
         List<Message> theMessages = new ArrayList<>();
 
         for (Message m : messages) {
-            if ((m.getSenderId() == a1id && m.getRecipientId() == a2id) || (m.getSenderId() == a2id && m.getRecipientId()
-                    == a1id)) {
+            if ((m.getSenderId() == a1.getId() && m.getRecipientId() == a2.getId()) || (m.getSenderId() == a2.getId() && m.getRecipientId()
+                    == a1.getId())) {
                 theMessages.add(m);
             }
         }

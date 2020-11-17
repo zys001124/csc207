@@ -34,7 +34,7 @@ public class MessageUserController {
      */
     public InputProcessResult sendMessage(String username, String message) {
         try {
-            if (username.equals("q") && message.equals("q")) {
+            if (message.equals("back")) {
                 throw new MessageCancelledException(userManager.getCurrentlyLoggedIn().getUsername());
             }
 
