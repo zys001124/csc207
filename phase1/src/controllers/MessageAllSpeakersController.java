@@ -7,13 +7,13 @@ import useCaseClasses.UserManager;
 /**
  * A controller used to handle input for sending a message all speakers
  */
-public class MessageAllSpeakersController extends MessageAllUserTypeController{
+public class MessageAllSpeakersController extends MessageAllUserTypeController {
 
     /**
      * Creates a MessageAllSpeakersController with the given MessageManager and UserManager
      *
      * @param messageManager - The MessageManager this object will use
-     * @param userManager - The userManager this object will use
+     * @param userManager    - The userManager this object will use
      */
     public MessageAllSpeakersController(MessageManager messageManager, UserManager userManager) {
         super(messageManager, userManager);

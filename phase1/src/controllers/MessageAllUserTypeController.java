@@ -16,7 +16,7 @@ public abstract class MessageAllUserTypeController {
      * Creates a MessageAllUserTypeController with the given MessageManager and UserManager
      *
      * @param messageManager - The MessageManager this object will use
-     * @param userManager - The userManager this object will use
+     * @param userManager    - The userManager this object will use
      */
     public MessageAllUserTypeController(MessageManager messageManager, UserManager userManager) {
         this.messageManager = messageManager;

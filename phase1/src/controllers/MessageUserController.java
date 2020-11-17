@@ -18,7 +18,7 @@ public class MessageUserController {
      * Creates a MessageUserController with the given MessageManager and UserManager
      *
      * @param messageManager - The MessageManager this object will use
-     * @param userManager - The userManager this object will use
+     * @param userManager    - The userManager this object will use
      */
     public MessageUserController(MessageManager messageManager, UserManager userManager) {
         this.messageManager = messageManager;
@@ -29,7 +29,7 @@ public class MessageUserController {
      * Sends a message to a specific user
      *
      * @param username - The username of the recipient
-     * @param message - The message text to be sent
+     * @param message  - The message text to be sent
      * @return an InputProcessResult - The result from the given input
      */
     public InputProcessResult sendMessage(String username, String message) {
@@ -68,7 +68,7 @@ public class MessageUserController {
      * attendee can only message other attendees and speakers, otherwise throws an InvalidUsernameException exception
      *
      * @param message - The message to be sent to all specified user type(s)
-     * Precondition: Currently logged in user is an Attendee
+     *                Precondition: Currently logged in user is an Attendee
      */
     private void sendMessageAsAttendee(User recipient, String message) throws InvalidUsernameException {
         if (recipient.getType().equals(User.UserType.ORGANIZER)) {
@@ -82,7 +82,7 @@ public class MessageUserController {
      * organizer can only message other attendees and speakers, otherwise throws an InvalidUsernameException exception
      *
      * @param message - The message to be sent to all specified user type(s)
-     * Precondition: Currently logged in user is an Organizer
+     *                Precondition: Currently logged in user is an Organizer
      */
     private void sendMessageAsOrganizer(User recipient, String message) throws InvalidUsernameException {
         if (recipient.getType().equals(User.UserType.ORGANIZER)) {
@@ -96,7 +96,7 @@ public class MessageUserController {
      * speaker can only reply to attendees who have previously sent them messages, otherwise throws an InvalidUsernameException exception
      *
      * @param message - The message to be sent to all specified user type(s)
-     * Precondition: Currently logged in user is a Speaker
+     *                Precondition: Currently logged in user is a Speaker
      */
     private void sendMessageAsSpeaker(User recipient, String message) throws InvalidUsernameException {
         if (recipient.getType().equals(User.UserType.ORGANIZER) ||

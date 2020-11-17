@@ -20,7 +20,7 @@ public class MessageUserPresenter extends Presenter {
      * Creates a MessageUserPresenter with the given UserManager
      *
      * @param messageManager - The MessageManager this object will use
-     * @param userManager - The UserManager this object will use
+     * @param userManager    - The UserManager this object will use
      */
     public MessageUserPresenter(UserManager userManager, MessageManager messageManager) {
         this.userManager = userManager;
@@ -148,7 +148,7 @@ public class MessageUserPresenter extends Presenter {
      *
      * @return a String - Message history with <recipientUsername>
      */
-    public String preMessageHistoryText(String recipientUsername){
+    public String preMessageHistoryText(String recipientUsername) {
         return "Conversation history with " + recipientUsername + ":";
     }
 
@@ -157,7 +157,7 @@ public class MessageUserPresenter extends Presenter {
      *
      * @return a String - Message history with <recipientUsername>
      */
-    public String messageHistory(String recipientUsername){
+    public String messageHistory(String recipientUsername) {
         try {
             List<Message> messageBetweenTwo = messageManager.messagesBetweenTwo(userManager.getUser(recipientUsername), userManager.getCurrentlyLoggedIn());
             if (messageBetweenTwo.size() == 0) {
@@ -170,7 +170,7 @@ public class MessageUserPresenter extends Presenter {
                 messageHistory.append("From: ").append(messageSenderUsername).append(", To: ").append(messageRecipientUsername).append(", Time: ").append(message.getTimeSent().toString()).append(", Message: \n").append(message.getMessageText()).append("\n");
             }
             return messageHistory.toString().trim();
-        } catch (UserNotFoundException e){
+        } catch (UserNotFoundException e) {
             return "No conversation history found.";
         }
     }
