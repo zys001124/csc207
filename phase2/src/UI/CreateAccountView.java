@@ -1,8 +1,8 @@
 package UI;
 
-import controllers.CreateSpeakerAccountController;
+import controllers.CreateAccountController;
 import controllers.InputProcessResult;
-import presenters.CreateSpeakerAccountPresenter;
+import presenters.CreateAccountPresenter;
 
 import java.util.Scanner;
 
@@ -11,19 +11,19 @@ import java.util.Scanner;
  * the information necessary for an Organizer to create a
  * Speaker account
  */
-public class CreateSpeakerAccountView extends ConsoleView {
+public class CreateAccountView extends ConsoleView {
 
-    private final CreateSpeakerAccountController controller;
-    private final CreateSpeakerAccountPresenter presenter;
+    private final CreateAccountController controller;
+    private final CreateAccountPresenter presenter;
 
     /**
-     * Creates a CreateSpeakerAccountView with the given controller and presenter
+     * Creates a CreateAccountView with the given controller and presenter
      *
-     * @param controller - The CreateSpeakerAccountController to be used for handling input
-     * @param presenter  - The CreateSpeakerAccountPresenter to be used for formatting the
+     * @param controller - The CreateAccountController to be used for handling input
+     * @param presenter  - The CreateAccountPresenter to be used for formatting the
      *                   strings that should be printed to the console
      */
-    public CreateSpeakerAccountView(CreateSpeakerAccountController controller, CreateSpeakerAccountPresenter presenter) {
+    public CreateAccountView(CreateAccountController controller, CreateAccountPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
@@ -55,7 +55,7 @@ public class CreateSpeakerAccountView extends ConsoleView {
             case BACK:
                 return ConsoleViewType.MAIN_MENU;
             default:
-                return ConsoleViewType.CREATE_SPEAKER_ACCOUNT;
+                return ConsoleViewType.CREATE_ACCOUNT;
         }
     }
 }

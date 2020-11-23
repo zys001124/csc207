@@ -73,7 +73,7 @@ public class MenuInputView extends ConsoleView {
             case NAVIGATE_TO_UNENROLL_IN_EVENT:
                 return ConsoleViewType.UNENROLL_IN_EVENT;
             case NAVIGATE_TO_CREATE_SPEAKER_ACCOUNT:
-                return ConsoleViewType.CREATE_SPEAKER_ACCOUNT;
+                return ConsoleViewType.CREATE_ACCOUNT;
             default:
                 return ConsoleViewType.MAIN_MENU;
         }

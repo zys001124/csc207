@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.User;
+import exceptions.UserTypeDoesNotExistException;
 import exceptions.UsernameAlreadyExistsException;
 import useCaseClasses.UserManager;
 
@@ -8,16 +9,16 @@ import useCaseClasses.UserManager;
  * A controller for handling input when an Organizer is
  * creating a Speaker account
  */
-public class CreateSpeakerAccountController {
+public class CreateAccountController {
 
     private final UserManager userManager;
 
     /**
-     * Creates a CreateSpeakerAccountController with the given UserManager
+     * Creates a CreateAccountController with the given UserManager
      *
      * @param um - The userManager this controller will use
      */
-    public CreateSpeakerAccountController(UserManager um) {
+    public CreateAccountController(UserManager um) {
         userManager = um;
     }
 
@@ -34,21 +35,24 @@ public class CreateSpeakerAccountController {
             return InputProcessResult.BACK;
         }
 
-        String[] usernameAndPassword = input.split(" ");
+        String[] usernamePasswordAndType = input.split(" ");
 
         // Invalid input
-        if (usernameAndPassword.length != 2) {
+        if (usernamePasswordAndType.length != 3) {
             return InputProcessResult.INVALID_INPUT;
         }
 
-        String username = usernameAndPassword[0];
-        String password = usernameAndPassword[1];
+        String username = usernamePasswordAndType[0];
+        String password = usernamePasswordAndType[1];
 
         try {
-            userManager.addUser(User.UserType.SPEAKER, username, password);
+            User.UserType type = userManager.parseType(usernamePasswordAndType[2]);
+            userManager.addUser(type, username, password);
             return InputProcessResult.SUCCESS;
         } catch (UsernameAlreadyExistsException e) {
             return InputProcessResult.USERNAME_TAKEN;
+        } catch (UserTypeDoesNotExistException e) {
+            return InputProcessResult.INVALID_USER_TYPE;
         }
 
     }
