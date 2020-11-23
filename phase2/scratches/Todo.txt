@@ -1,0 +1,19 @@
+-EventManager needs a private helper method that checks if the event being added has a time scheduling issue
+-Make EventManager throw an exception for add event if we cant add event (Does this work with SOLID?)
+-Have a field that is currentEvent in event manager?
+-Add All Controller Classes - lewis skeleton code
+-Add All UI/Presenter classes - ignore for now
+-Need a login system (Controller and Presenter)
+-Creation of text file - Luka
+-Unittest Classes
+
+
+Roles:
+Jon - Use case classes
+Lewis - Gateways
+Luka - Presenters
+J - Finish Controllers
+Kelvin - UI
+Simon - Test classes
+Ysz - Help with presenters
+
