@@ -15,7 +15,7 @@ public class CreateAccountPresenter extends Presenter {
      */
     @Override
     public String getPreInputText() {
-        return "To create am account, type in the following: [username] [password] [type]\n" +
+        return "To create an account, type in the following: [username] [password] [type]\n" +
                 "Valid user types are: ATTENDEE, ORGANIZER, SPEAKER \n" +
                 "Type \"back\" to return to the menu";
     }

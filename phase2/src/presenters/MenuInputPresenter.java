@@ -76,7 +76,7 @@ public class MenuInputPresenter extends Presenter {
                 "3. Message User \n" +
                 "4. Message all speakers\n" +
                 "5. Message all attendees\n" +
-                "6. Create speaker account \n" +
+                "6. Create user account \n" +
                 "7. Log out";
     }
 }
