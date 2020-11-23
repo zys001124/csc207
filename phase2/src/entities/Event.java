@@ -16,6 +16,7 @@ public class Event implements Serializable, Iterable<UUID> {
     private final String eventTitle;
     private final Integer eventRoom;
     private final Integer eventCapacity;
+    private final String eventType;
 
     private final UUID organizerId;
     private final UUID speakerId;
@@ -33,14 +34,16 @@ public class Event implements Serializable, Iterable<UUID> {
      * @param speakerId   - the UUID of the Speaker of the Event
      * @param attendees   - a list of attendees UUID's for the Event
      * @param room        - the room number the Event will be hosted in
-     * //@param capaity     - the maximum number of Attendee of the Event
+     * @param capacity    - the maximum number of Attendee of the Event
+     * @param type    - the maximum number of Attendee of the Event
      */
     public Event(String title, LocalDateTime time, UUID id, UUID organizerId, UUID speakerId, List<UUID> attendees,
-                 int room) {
+                 int room, int capacity, String type) {
         eventTime = time;
         eventTitle = title;
         eventRoom = room;
-        eventCapacity = 2;  //Could be changed in the future
+        eventCapacity = capacity;
+        eventType = type;
 
         eventId = id;
         this.organizerId = organizerId;
@@ -57,9 +60,7 @@ public class Event implements Serializable, Iterable<UUID> {
      */
     public boolean hasAttendee(UUID uuid) {
         for (UUID attendeeId : attendees) {
-            if (attendeeId.equals(uuid)) {
-                return true;
-            }
+            if (attendeeId.equals(uuid)) return true;
         }
         return false;
     }
@@ -134,6 +135,24 @@ public class Event implements Serializable, Iterable<UUID> {
      */
     public int getEventCapacity() {
         return eventCapacity;
+    }
+
+    /**
+     * Gets number of attendees that currently enrolled in the event
+     *
+     * @return an integer - the number of attendees enrolled
+     */
+    public int getEventEnrolledNumber() {
+        return attendees.size();
+    }
+
+    /**
+     * Gets type of the event
+     *
+     * @return a string - the type of the event
+     */
+    public String getEventType() {
+        return eventType;
     }
 
     /**

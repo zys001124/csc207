@@ -1,6 +1,7 @@
 package presenters;
 
 import controllers.InputProcessResult;
+import entities.Event;
 import useCaseClasses.EventManager;
 
 import java.time.format.DateTimeFormatter;
@@ -40,19 +41,24 @@ public class EventEnrollPresenter extends Presenter {
     }
 
     /**
-     * Generates a list of all events available, in which contains the index
-     * of the event, the name of the event, the datetime of the event, and
-     * the location of the event for display
+     * Generates a list of all events available, in which contains the index, datetime,
+     * room number, capacity, number of attendees currently enrolled and type of the
+     * event.
      *
      * @return A string that contains all events available and each of their
      * detail information
      */
     public String getAllEvents() {
-        String result = "";
-        for (int i = 1; i <= manager.getEvents().size(); i++) {
-            result = result.concat(i + ". ").concat(manager.getEvents().get(i - 1).getEventTitle() + ", ")
-                    .concat(manager.getEvents().get(i - 1).getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ", ")
-                    .concat("Room " + manager.getEvents().get(i - 1).getEventRoom() + '\n');
+        String result;
+        result = "";
+        for (int i = 0; i < manager.getEvents().size(); i++) {
+            Event event = manager.getEvents().get(i);
+            result = result.concat(i + 1 + ". ").concat(event.getEventTitle() + " ")
+                    .concat(event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
+                    .concat("  Room " + event.getEventRoom())
+                    .concat("  Capacity " + event.getEventCapacity())
+                    .concat("  Currently Enrolled " + event.getEventEnrolledNumber())
+                    .concat("  Event Type " + event.getEventType() + "\n");
         }
         return result;
     }
@@ -69,6 +75,8 @@ public class EventEnrollPresenter extends Presenter {
             return "Enroll Successful!";
         } else if (result == InputProcessResult.EVENT_NOT_FOUND) {
             return "Event not found. Please try again.";
+        } else if (result == InputProcessResult.EVENT_IS_FULL){
+            return "Event is currently full. Please try another event.";
         } else if (result == InputProcessResult.USER_ALREADY_ENROLLED) {
             return "You are already enrolled in this event. Please try again.";
         } else {

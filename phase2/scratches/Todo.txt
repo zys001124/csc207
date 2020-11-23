@@ -1,19 +1,7 @@
--EventManager needs a private helper method that checks if the event being added has a time scheduling issue
--Make EventManager throw an exception for add event if we cant add event (Does this work with SOLID?)
--Have a field that is currentEvent in event manager?
--Add All Controller Classes - lewis skeleton code
--Add All UI/Presenter classes - ignore for now
--Need a login system (Controller and Presenter)
--Creation of text file - Luka
--Unittest Classes
-
-
-Roles:
-Jon - Use case classes
-Lewis - Gateways
-Luka - Presenters
-J - Finish Controllers
-Kelvin - UI
-Simon - Test classes
-Ysz - Help with presenters
+Mandatory Extensions:
+There will now be many types of events. A one-speaker event is the same as a "talk" from Phase 1. You can have multi-speaker events, like a panel discussion, and no-speaker events, like a party. Events can last as long as you want. You can measure the duration of an event in hours, or minutes. You get to decide. - Jay
+Events can be canceled by at least one organizer. - Yaosheng
+At least one more type of user will be included in your program. For example, an Admin user who can delete messages or events with no attendees, or a VIP user who can access VIP-only events. - Yaosheng
+Organizers can also create Speaker accounts, Attendee accounts, and any other type of user accounts that are in your program. - Lewis
+Each event has a maximum number of people who can attend it. This amount can be set when the event is created and also changed later, by an organizer. Your program should check the maximum capacity for the room where the event will be held, and prevent the number of attendees from going above the room's capacity. - Jay
 

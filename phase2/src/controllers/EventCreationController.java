@@ -91,8 +91,6 @@ public class EventCreationController {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         LocalDateTime dateTime = LocalDateTime.parse(time, formatter);
 
-        int roomNum = Integer.parseInt(parametersForEvent[3]);
-
         if (Emanager.availabilityInTime(dateTime)) {
             return InputProcessResult.TIMESLOT_FULL;
         }
@@ -104,8 +102,12 @@ public class EventCreationController {
             }
         }
 
+        int roomNum = Integer.parseInt(parametersForEvent[3]);
+        int capacity = Integer.parseInt(parametersForEvent[4]);
+        String type = parametersForEvent[5];
+
         Event eventCreated = new Event(parametersForEvent[0], dateTime, eventID, organizerID, speakerID,
-                new ArrayList<>(), roomNum);
+                new ArrayList<>(), roomNum, capacity, type);
 
         if (Emanager.addEvent(eventCreated)) {
             return InputProcessResult.SUCCESS;

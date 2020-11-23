@@ -46,7 +46,10 @@ public class SeeSchedulePresenter extends Presenter {
             if (e.hasAttendee(userManager.getCurrentlyLoggedIn().getId())) {
                 result = result.concat(e.getEventTitle() + ", ")
                         .concat(e.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")) + ", ")
-                        .concat("Room " + e.getEventRoom() + '\n');
+                        .concat("Room " + e.getEventRoom() + ", ")
+                        .concat("Capacity " + e.getEventCapacity() + ", ")
+                        .concat("Currently Enrolled " + e.getEventEnrolledNumber() + ", ")
+                        .concat("Type " + e.getEventType() + '\n');
             }
         }
         return result;

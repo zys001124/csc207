@@ -19,7 +19,7 @@ public class EventCreationPresenter extends Presenter {
         return "The event should be between 9am-5pm in November 10. There are 6 possible rooms for speeches.\n" +
                 "The room number is from 0-5. Every speech is one hour long and it must be schedule at exact hour\n" +
                 "To add an event, enter information in following way: " +
-                "title,time,speakerUsername,roomNumber \n" +
+                "title,time,speakerUsername,roomNumber,capacity,type \n" +
                 "Time should be written in this form yyyy-MM-dd HH:mm\n" +
                 "Type \"back\" to return to the menu";
     }

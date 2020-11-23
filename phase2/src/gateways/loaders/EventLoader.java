@@ -27,13 +27,18 @@ public class EventLoader extends Loader<Event> {
         }
 
         List<UUID> attendees = new ArrayList<>();
-        for (int i = 5; i < parameters.length - 1; i++) {
+        for (int i = 5; i < parameters.length - 3; i++) {
             attendees.add(UUID.fromString(parameters[i]));
         }
 
-        return new Event(parameters[0], LocalDateTime.parse(parameters[1]),
-                UUID.fromString(parameters[2]), UUID.fromString(parameters[3]),
-                UUID.fromString(parameters[4]), attendees,
-                Integer.parseInt(parameters[parameters.length - 1]));
+        return new Event(parameters[0],
+                LocalDateTime.parse(parameters[1]),
+                UUID.fromString(parameters[2]),
+                UUID.fromString(parameters[3]),
+                UUID.fromString(parameters[4]),
+                attendees,
+                Integer.parseInt(parameters[parameters.length - 3]),
+                Integer.parseInt(parameters[parameters.length - 2]),
+                parameters[parameters.length - 1]);
     }
 }
