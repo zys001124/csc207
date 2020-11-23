@@ -6,6 +6,9 @@ import presenters.MessageAllAttendingEventPresenter;
 
 import java.util.Scanner;
 
+/**
+ * User interface for the message all attending event option
+ */
 public class MessageAllAttendingEventView extends ConsoleView {
 
     private final MessageAllAttendingEventController controller;

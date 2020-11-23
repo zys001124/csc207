@@ -4,6 +4,9 @@ import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
+/**
+ * Controller for the message all attending event option
+ */
 public class MessageAllAttendingEventController {
 
     private final UserManager userManager;

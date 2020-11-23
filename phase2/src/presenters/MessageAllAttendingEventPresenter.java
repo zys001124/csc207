@@ -6,6 +6,9 @@ import useCaseClasses.UserManager;
 
 import java.util.List;
 
+/**
+ * Presenter for the for the output that presents the message all attending event
+ */
 public class MessageAllAttendingEventPresenter extends Presenter {
 
     private final EventManager eventManager;

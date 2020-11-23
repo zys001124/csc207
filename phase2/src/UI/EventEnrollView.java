@@ -53,7 +53,11 @@ public class EventEnrollView extends ConsoleView {
     private ConsoleViewType getNextScreen(InputProcessResult result) {
         if (result == InputProcessResult.SUCCESS) {
             return ConsoleViewType.MAIN_MENU;
-        } else {
+        }
+        else if(result == InputProcessResult.BACK){
+            return ConsoleViewType.MAIN_MENU;
+        }
+        else {
             return ConsoleViewType.ENROLL_IN_EVENT;
         }
     }

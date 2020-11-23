@@ -28,7 +28,8 @@ public class EventEnrollPresenter extends Presenter {
      * @return A string that is to be displayed right before any inputs are made
      */
     public String getPreInputText() {
-        return "Please Enter the event name that you want to enroll in.";
+        return "Please Enter the event name that you want to enroll in.\n Type 'back' to go back to the" +
+                "Main Menu";
     }
 
     /**
@@ -73,6 +74,8 @@ public class EventEnrollPresenter extends Presenter {
     public String getInputResponseText(InputProcessResult result) {
         if (result == InputProcessResult.SUCCESS) {
             return "Enroll Successful!";
+        } else if(result == InputProcessResult.BACK){
+            return "Returning back to Main Menu";
         } else if (result == InputProcessResult.EVENT_NOT_FOUND) {
             return "Event not found. Please try again.";
         } else if (result == InputProcessResult.EVENT_IS_FULL){

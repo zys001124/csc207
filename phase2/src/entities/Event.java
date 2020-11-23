@@ -71,7 +71,7 @@ public class Event implements Serializable, Iterable<UUID> {
      * @return a boolean value, True if number of Attendee reaches maximum capacity.
      */
     public boolean isFull() {
-    return attendees.size() == eventCapacity;
+    return attendees.size() >= eventCapacity;
     }
 
     /**

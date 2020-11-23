@@ -3,6 +3,7 @@ package controllers;
 import exceptions.EventFullException;
 import exceptions.EventNotFoundException;
 import exceptions.UserAlreadyEnrolledException;
+import jdk.internal.util.xml.impl.Input;
 import useCaseClasses.EventManager;
 import useCaseClasses.UserManager;
 
@@ -32,6 +33,9 @@ public class EventEnrollController {
      * @return An InputProcessResult enum that details what happened as a result of the given input
      */
     public InputProcessResult enrollEvent(String eventInput) {
+        if(eventInput.equals("back")){
+            return InputProcessResult.BACK;
+        }
         try {
             int parsedInput = Integer.parseInt(eventInput);
             eventManager.addUserToEvent(parsedInput, userManager.getCurrentlyLoggedIn());
