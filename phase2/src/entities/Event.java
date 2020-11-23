@@ -15,6 +15,7 @@ public class Event implements Serializable, Iterable<UUID> {
     private final UUID eventId;
     private final String eventTitle;
     private final Integer eventRoom;
+    private final Integer eventCapacity;
 
     private final UUID organizerId;
     private final UUID speakerId;
@@ -32,12 +33,14 @@ public class Event implements Serializable, Iterable<UUID> {
      * @param speakerId   - the UUID of the Speaker of the Event
      * @param attendees   - a list of attendees UUID's for the Event
      * @param room        - the room number the Event will be hosted in
+     * //@param capaity     - the maximum number of Attendee of the Event
      */
     public Event(String title, LocalDateTime time, UUID id, UUID organizerId, UUID speakerId, List<UUID> attendees,
                  int room) {
         eventTime = time;
         eventTitle = title;
         eventRoom = room;
+        eventCapacity = 2;  //Could be changed in the future
 
         eventId = id;
         this.organizerId = organizerId;
@@ -59,6 +62,15 @@ public class Event implements Serializable, Iterable<UUID> {
             }
         }
         return false;
+    }
+
+    /**
+     * Checks if this Event is full
+     *
+     * @return a boolean value, True if number of Attendee reaches maximum capacity.
+     */
+    public boolean isFull() {
+    return attendees.size() == eventCapacity;
     }
 
     /**
@@ -113,6 +125,15 @@ public class Event implements Serializable, Iterable<UUID> {
      */
     public int getEventRoom() {
         return eventRoom;
+    }
+
+    /**
+     * Gets maximum capacity of this event
+     *
+     * @return an integer - the room number of this event
+     */
+    public int getEventCapacity() {
+        return eventCapacity;
     }
 
     /**

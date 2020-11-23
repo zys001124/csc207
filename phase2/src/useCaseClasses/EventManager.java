@@ -2,6 +2,7 @@ package useCaseClasses;
 
 import entities.Event;
 import entities.User;
+import exceptions.EventFullException;
 import exceptions.EventNotFoundException;
 import exceptions.UserAlreadyEnrolledException;
 import exceptions.UserNotEnrolledInEventException;
@@ -169,9 +170,12 @@ public class EventManager {
      * @throws UserAlreadyEnrolledException if the user(attendee) was already enrolled in the event
      */
     public void addUserToEvent(int parsedInput, User attendee) throws EventNotFoundException,
-            NumberFormatException, UserAlreadyEnrolledException {
+            NumberFormatException, UserAlreadyEnrolledException, EventFullException {
         if (parsedInput <= events.size() && parsedInput > 0) {
             Event e = events.get(parsedInput - 1);
+            if (e.isFull()){
+                throw new EventFullException(parsedInput);
+            }
             if (e.hasAttendee(attendee.getId())) {
                 throw new UserAlreadyEnrolledException();
             }

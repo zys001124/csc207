@@ -1,5 +1,6 @@
 package controllers;
 
+import exceptions.EventFullException;
 import exceptions.EventNotFoundException;
 import exceptions.UserAlreadyEnrolledException;
 import useCaseClasses.EventManager;
@@ -36,6 +37,8 @@ public class EventEnrollController {
             eventManager.addUserToEvent(parsedInput, userManager.getCurrentlyLoggedIn());
         } catch (EventNotFoundException e) {
             return InputProcessResult.EVENT_NOT_FOUND;
+        } catch (EventFullException e) {
+            return InputProcessResult.EVENT_IS_FULL;
         } catch (NumberFormatException e) {
             return InputProcessResult.INVALID_INPUT;
         } catch (UserAlreadyEnrolledException e) {
