@@ -6,7 +6,7 @@ import controllers.InputProcessResult;
  * A presenter meant to be used for generating Strings to be printed
  * to the console when an Organizer is making a Speaker account
  */
-public class CreateSpeakerAccountPresenter extends Presenter {
+public class CreateAccountPresenter extends Presenter {
 
     /**
      * Gets the String that should be printed before a user makes an input
@@ -15,7 +15,8 @@ public class CreateSpeakerAccountPresenter extends Presenter {
      */
     @Override
     public String getPreInputText() {
-        return "To create a speaker account type in the following: [username] [password] \n" +
+        return "To create an account, type in the following: [username] [password] [type]\n" +
+                "Valid user types are: ATTENDEE, ORGANIZER, SPEAKER \n" +
                 "Type \"back\" to return to the menu";
     }
 
@@ -31,11 +32,13 @@ public class CreateSpeakerAccountPresenter extends Presenter {
     @Override
     public String getInputResponseText(InputProcessResult result) {
         if (result == InputProcessResult.INVALID_INPUT) {
-            return "Expecting two, and only two inputs. Try again.";
+            return "Expecting three, and only three inputs. Try again.";
         } else if (result == InputProcessResult.SUCCESS) {
-            return "Speaker added successfully";
+            return "Account added successfully";
         } else if (result == InputProcessResult.USERNAME_TAKEN) {
             return "Username taken. Try again.";
+        } else if(result == InputProcessResult.INVALID_USER_TYPE) {
+            return "Invalid user type given. Try again.";
         } else {
             return "";
         }

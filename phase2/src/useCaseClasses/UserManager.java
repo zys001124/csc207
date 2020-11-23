@@ -2,9 +2,7 @@ package useCaseClasses;
 
 
 import entities.User;
-import exceptions.IncorrectPasswordException;
-import exceptions.UserNotFoundException;
-import exceptions.UsernameAlreadyExistsException;
+import exceptions.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -137,5 +135,26 @@ public class UserManager {
         throw new UserNotFoundException(username);
     }
 
+    /**
+     * Determines a UserType from a String
+     *
+     * @param type - The type represented by a String
+     * @return a UserType - the corresponding UserType
+     * @throws UserTypeDoesNotExistException if the <type> is not descriptive of
+     * any UserType enum
+     */
+    public User.UserType parseType(String type) throws UserTypeDoesNotExistException {
+        type = type.toUpperCase();
 
+        switch (type) {
+            case "ATTENDEE":
+                return User.UserType.ATTENDEE;
+            case "SPEAKER":
+                return User.UserType.SPEAKER;
+            case "ORGANIZER":
+                return User.UserType.ORGANIZER;
+            default:
+                throw new UserTypeDoesNotExistException("User type: " + type + " is not a valid user type");
+        }
+    }
 }

@@ -38,7 +38,7 @@ public class ConferenceSystem {
     private LoginController loginController;
     private MenuInputController menuInputController;
     private MessageUserController messageUserController;
-    private CreateSpeakerAccountController createSpeakerAccountController;
+    private CreateAccountController createAccountController;
     private EventEnrollController eventEnrollController;
     private EventUnEnrollController eventUnEnrollController;
     private EventCancelController eventCancelController;
@@ -51,7 +51,7 @@ public class ConferenceSystem {
     private LoginPresenter loginPresenter;
     private MenuInputPresenter menuInputPresenter;
     private MessageUserPresenter messageUserPresenter;
-    private CreateSpeakerAccountPresenter createSpeakerAccountPresenter;
+    private CreateAccountPresenter createAccountPresenter;
     private EventEnrollPresenter eventEnrollPresenter;
     private EventUnEnrollPresenter eventUnEnrollPresenter;
     private EventCancelPresenter eventCancelPresenter;
@@ -65,7 +65,7 @@ public class ConferenceSystem {
     private LoginView loginView;
     private MenuInputView menuInputView;
     private MessageUserView messageUserView;
-    private CreateSpeakerAccountView createSpeakerAccountView;
+    private CreateAccountView createAccountView;
     private EventEnrollView eventEnrollView;
     private EventUnEnrollView eventUnEnrollView;
     private EventCancelView eventCancelView;
@@ -157,7 +157,7 @@ public class ConferenceSystem {
         loginController = new LoginController(userManager);
         menuInputController = new MenuInputController(userManager);
         messageUserController = new MessageUserController(messageManager, userManager);
-        createSpeakerAccountController = new CreateSpeakerAccountController(userManager);
+        createAccountController = new CreateAccountController(userManager);
         eventEnrollController = new EventEnrollController(eventManager, userManager);
         eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
         eventCancelController = new EventCancelController(eventManager, eventCancelPresenter, userManager);
@@ -172,7 +172,7 @@ public class ConferenceSystem {
         loginPresenter = new LoginPresenter();
         menuInputPresenter = new MenuInputPresenter(userManager);
         messageUserPresenter = new MessageUserPresenter(userManager, messageManager);
-        createSpeakerAccountPresenter = new CreateSpeakerAccountPresenter();
+        createAccountPresenter = new CreateAccountPresenter();
         eventEnrollPresenter = new EventEnrollPresenter(eventManager);
         eventUnEnrollPresenter = new EventUnEnrollPresenter(eventManager, userManager);
         eventCancelPresenter = new EventCancelPresenter(eventManager);
@@ -186,7 +186,7 @@ public class ConferenceSystem {
     private void initializeViews() {
         menuInputView = new MenuInputView(menuInputController, menuInputPresenter);
         messageUserView = new MessageUserView(messageUserController, messageUserPresenter);
-        createSpeakerAccountView = new CreateSpeakerAccountView(createSpeakerAccountController, createSpeakerAccountPresenter);
+        createAccountView = new CreateAccountView(createAccountController, createAccountPresenter);
         eventEnrollView = new EventEnrollView(eventEnrollController, eventEnrollPresenter);
         eventUnEnrollView = new EventUnEnrollView(eventUnEnrollController, eventUnEnrollPresenter);
         eventCancelView = new EventCancelView(eventCancelController, eventCancelPresenter);
@@ -208,8 +208,8 @@ public class ConferenceSystem {
                 return menuInputView;
             case MESSAGE_USER:
                 return messageUserView;
-            case CREATE_SPEAKER_ACCOUNT:
-                return createSpeakerAccountView;
+            case CREATE_ACCOUNT:
+                return createAccountView;
             case ENROLL_IN_EVENT:
                 return eventEnrollView;
             case UNENROLL_IN_EVENT:

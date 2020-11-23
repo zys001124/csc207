@@ -32,6 +32,6 @@ public abstract class ConsoleView {
         CANCEL_EVENT, // Yaosheng - Finished
         ENROLL_IN_EVENT, // Kelvin - Finished
         UNENROLL_IN_EVENT, // Kelvin - Finished
-        CREATE_SPEAKER_ACCOUNT, // Lewis - Finished
+        CREATE_ACCOUNT, // Lewis - Finished
     }
 }
