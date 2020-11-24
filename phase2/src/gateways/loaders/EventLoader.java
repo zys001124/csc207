@@ -31,14 +31,16 @@ public class EventLoader extends Loader<Event> {
             attendees.add(UUID.fromString(parameters[i]));
         }
 
+        ArrayList<UUID> speakers = new ArrayList<>();
+
         return new Event(parameters[0],
                 LocalDateTime.parse(parameters[1]),
-                UUID.fromString(parameters[2]),
+                LocalDateTime.parse(parameters[2]),
                 UUID.fromString(parameters[3]),
-                UUID.fromString(parameters[4]),
+                UUID.fromString(parameters[3]),
+                speakers,
                 attendees,
-                Integer.parseInt(parameters[parameters.length - 3]),
                 Integer.parseInt(parameters[parameters.length - 2]),
-                parameters[parameters.length - 1]);
+                Integer.parseInt(parameters[parameters.length - 1]));
     }
 }

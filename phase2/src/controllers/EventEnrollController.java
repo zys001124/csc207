@@ -3,7 +3,6 @@ package controllers;
 import exceptions.EventFullException;
 import exceptions.EventNotFoundException;
 import exceptions.UserAlreadyEnrolledException;
-import jdk.internal.util.xml.impl.Input;
 import useCaseClasses.EventManager;
 import useCaseClasses.UserManager;
 
