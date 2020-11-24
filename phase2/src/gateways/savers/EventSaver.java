@@ -32,12 +32,16 @@ public class EventSaver extends Saver<Event> {
         output.append(parameterSeparationChar);
         output.append(event.getEventTime().toString());
         output.append(parameterSeparationChar);
+        output.append(event.getEventETime().toString());
+        output.append(parameterSeparationChar);
         output.append(event.getId().toString());
         output.append(parameterSeparationChar);
         output.append(event.getOrganizerId().toString());
         output.append(parameterSeparationChar);
-        output.append(event.getSpeakerId().toString());
-        output.append(parameterSeparationChar);
+        for (UUID speakerID: event){
+            output.append(speakerID.toString());
+            output.append(parameterSeparationChar);
+        }
         for (UUID attendeeId : event) {
             output.append(attendeeId.toString());
             output.append(parameterSeparationChar);
@@ -46,7 +50,6 @@ public class EventSaver extends Saver<Event> {
         output.append(parameterSeparationChar);
         output.append(event.getEventCapacity() + "");
         output.append(parameterSeparationChar);
-        output.append(event.getEventType().toString());
         output.append("\n");
 
         output.flush();
