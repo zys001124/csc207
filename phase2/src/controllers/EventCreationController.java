@@ -17,7 +17,7 @@ import java.util.UUID;
  */
 public class EventCreationController {
 
-    private final EventManager Emanager;
+    private final EventManager eManager;
     private final UserManager uManager;
 
     /**
@@ -27,7 +27,7 @@ public class EventCreationController {
      * @param uManager - The UserManager this controller will use
      */
     public EventCreationController(EventManager manager, UserManager uManager) {
-        Emanager = manager;
+        eManager = manager;
         this.uManager = uManager;
     }
 
@@ -41,7 +41,7 @@ public class EventCreationController {
      * <p>
      * Precondition: the roomNum is between 0 to 5.
      */
-    public InputProcessResult createEvent(String input) throws UserNotFoundException {
+    public InputProcessResult createEvent(String input){
         if (input.equals("back")) {
             return InputProcessResult.BACK;
         }
@@ -51,17 +51,15 @@ public class EventCreationController {
         UUID eventID = getUuid();
 
         String[] speakersUserName = parametersForEvent[3].split(":");
+        ArrayList<User> speakers = new ArrayList<>();
 
         try{
             for (String speaker:speakersUserName){
                 uManager.getUser(speaker);
+                speakers.add(uManager.getUser(speaker));
             }
         }catch(UserNotFoundException e) {
             return InputProcessResult.USER_NOT_FOUND;
-        }
-        ArrayList<User> speakers = new ArrayList<>();
-        for (String speaker:speakersUserName){
-            speakers.add(uManager.getUser(speaker));
         }
 
         for (User speaker:speakers){
@@ -80,7 +78,7 @@ public class EventCreationController {
         String eTime = parametersForEvent[2];
         LocalDateTime eDateTime = LocalDateTime.parse(eTime, formatter);
 
-        ArrayList<Integer> occupiedRoom = Emanager.availabilityInTime(sDateTime, eDateTime);
+        ArrayList<Integer> occupiedRoom = eManager.availabilityInTime(sDateTime, eDateTime);
         if (6 == occupiedRoom.size()) {
             return InputProcessResult.TIMESLOT_FULL;
         }
@@ -101,14 +99,14 @@ public class EventCreationController {
                 new ArrayList<>(), roomNum, capacity);
 
 
-        Emanager.addEvent(eventCreated);
+        eManager.addEvent(eventCreated);
         return InputProcessResult.SUCCESS;
 
     }
 
     private boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {
-        for (String e : Emanager.listOfEventsHosting(speaker)) {
-            Event eventHosting = Emanager.getEvent(e);
+        for (String e : eManager.listOfEventsHosting(speaker)) {
+            Event eventHosting = eManager.getEvent(e);
             LocalDateTime startTime = eventHosting.getEventTime();
             LocalDateTime endTime = eventHosting.getEventETime();
 
@@ -125,7 +123,7 @@ public class EventCreationController {
     private UUID getUuid() {
         ArrayList<UUID> eID = new ArrayList<>();
         ArrayList<UUID> uID = new ArrayList<>();
-        for (Event e : Emanager.getEvents()) {
+        for (Event e : eManager.getEvents()) {
             eID.add(e.getId());
         }
         for (User u : uManager.getUsers()) {
