@@ -22,16 +22,28 @@ public class EventLoader extends Loader<Event> {
     @Override
     public Event createInstance(String[] parameters) {
 
-        if (parameters.length < 6 && parameters.length != 0) {
+        if (parameters.length < 8 && parameters.length != 0) {
             throw new IncorrectNumberOfParametersException();
         }
 
-        List<UUID> attendees = new ArrayList<>();
-        for (int i = 5; i < parameters.length - 3; i++) {
-            attendees.add(UUID.fromString(parameters[i]));
-        }
 
         ArrayList<UUID> speakers = new ArrayList<>();
+        int i = 5;
+
+
+        while(!parameters[i].equals("endSpeaker")) {
+            speakers.add(UUID.fromString(parameters[i]));
+            i++;
+        }
+
+        i++;
+
+        List<UUID> attendees = new ArrayList<>();
+        while(i < parameters.length - 2){
+            attendees.add(UUID.fromString(parameters[i]));
+            i++;
+        }
+
 
         return new Event(parameters[0],
                 LocalDateTime.parse(parameters[1]),
