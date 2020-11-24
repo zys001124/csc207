@@ -16,10 +16,11 @@ public class EventCreationPresenter extends Presenter {
      * @return the String that should be printed before an input is made
      */
     public String getPreInputText() {
-        return "The event should be between 9am-5pm in November 10. There are 6 possible rooms for speeches.\n" +
+        return "There are 6 possible rooms for speeches." +
                 "The room number is from 0-5. Every speech is one hour long and it must be schedule at exact hour\n" +
+                "if there is multiple speakers separate each speaker with ':' for no speaker leave it empty\n"+
                 "To add an event, enter information in following way: " +
-                "title,time,speakerUsername,roomNumber,capacity,type \n" +
+                "title,startTime,endTime,speakerUsernames,roomNumber,capacity \n" +
                 "Time should be written in this form yyyy-MM-dd HH:mm\n" +
                 "Type \"back\" to return to the menu";
     }

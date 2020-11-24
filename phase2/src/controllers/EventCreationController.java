@@ -2,6 +2,7 @@ package controllers;
 
 import entities.Event;
 import entities.User;
+import exceptions.UserNotFoundException;
 import useCaseClasses.EventManager;
 import useCaseClasses.UserManager;
 
@@ -40,13 +41,88 @@ public class EventCreationController {
      * <p>
      * Precondition: the roomNum is between 0 to 5.
      */
-    public InputProcessResult createEvent(String input) {
+    public InputProcessResult createEvent(String input) throws UserNotFoundException {
         if (input.equals("back")) {
             return InputProcessResult.BACK;
         }
 
         String[] parametersForEvent = input.split(",");
 
+        UUID eventID = getUuid();
+
+        String[] speakersUserName = parametersForEvent[3].split(":");
+
+        try{
+            for (String speaker:speakersUserName){
+                uManager.getUser(speaker);
+            }
+        }catch(UserNotFoundException e) {
+            return InputProcessResult.USER_NOT_FOUND;
+        }
+        ArrayList<User> speakers = new ArrayList<>();
+        for (String speaker:speakersUserName){
+            speakers.add(uManager.getUser(speaker));
+        }
+
+        for (User speaker:speakers){
+            if (!(speaker.getType().equals(User.UserType.SPEAKER))) {
+                return InputProcessResult.USER_NOT_SPEAKER;
+            }
+        }
+
+        ArrayList<UUID> speakersID = getSpeakersID(speakers);
+        UUID organizerID = uManager.getCurrentlyLoggedIn().getId();
+
+        String time = parametersForEvent[1];
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        LocalDateTime sDateTime = LocalDateTime.parse(time, formatter);
+
+        String eTime = parametersForEvent[2];
+        LocalDateTime eDateTime = LocalDateTime.parse(eTime, formatter);
+
+        ArrayList<Integer> occupiedRoom = Emanager.availabilityInTime(sDateTime, eDateTime);
+        if (6 == occupiedRoom.size()) {
+            return InputProcessResult.TIMESLOT_FULL;
+        }
+
+        for (User speaker:speakers){
+            boolean speakerOccupied = speakerOccupied(sDateTime, eDateTime, speaker);
+            if (speakerOccupied){
+                return InputProcessResult.SPEAKER_OCCUPIED;
+            }
+        }
+
+        int roomNum = Integer.parseInt(parametersForEvent[4]);
+
+        if (occupiedRoom.contains(roomNum)){return InputProcessResult.ROOM_FULL;}
+        int capacity = Integer.parseInt(parametersForEvent[5]);
+
+        Event eventCreated = new Event(parametersForEvent[0], sDateTime, eDateTime, eventID, organizerID, speakersID,
+                new ArrayList<>(), roomNum, capacity);
+
+
+        Emanager.addEvent(eventCreated);
+        return InputProcessResult.SUCCESS;
+
+    }
+
+    private boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {
+        for (String e : Emanager.listOfEventsHosting(speaker)) {
+            Event eventHosting = Emanager.getEvent(e);
+            LocalDateTime startTime = eventHosting.getEventTime();
+            LocalDateTime endTime = eventHosting.getEventETime();
+
+            if (sDateTime.isBefore(startTime) && eDateTime.isAfter(startTime)|
+                    (sDateTime.isBefore(endTime) && eDateTime.isAfter(endTime))|
+                    (sDateTime.isAfter(startTime) && eDateTime.isBefore(endTime))
+            ){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private UUID getUuid() {
         ArrayList<UUID> eID = new ArrayList<>();
         ArrayList<UUID> uID = new ArrayList<>();
         for (Event e : Emanager.getEvents()) {
@@ -65,55 +141,14 @@ public class EventCreationController {
                 eventID = UUID.randomUUID();
             }
         }
-
-        boolean registeredUser = false;
-        User speaker = uManager.getCurrentlyLoggedIn();
-        for (User choice : uManager.getUsers()) {
-            if (choice.getUsername().equals(parametersForEvent[2])) {
-                registeredUser = true;
-                speaker = choice;
-            }
-        }
-
-        if (!registeredUser) {
-            return InputProcessResult.USER_NOT_FOUND;
-        }
-
-        if (!(speaker.getType().equals(User.UserType.SPEAKER))) {
-            return InputProcessResult.USER_NOT_SPEAKER;
-        }
-
-
-        UUID speakerID = speaker.getId();
-        UUID organizerID = uManager.getCurrentlyLoggedIn().getId();
-
-        String time = parametersForEvent[1];
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        LocalDateTime dateTime = LocalDateTime.parse(time, formatter);
-
-        if (Emanager.availabilityInTime(dateTime)) {
-            return InputProcessResult.TIMESLOT_FULL;
-        }
-        for (Event e : Emanager.getEvents()) {
-            if (e.getEventTime().equals(dateTime)) {
-                if (e.getSpeakerId() == speakerID) {
-                    return InputProcessResult.SPEAKER_OCCUPIED;
-                }
-            }
-        }
-
-        int roomNum = Integer.parseInt(parametersForEvent[3]);
-        int capacity = Integer.parseInt(parametersForEvent[4]);
-        String type = parametersForEvent[5];
-
-        Event eventCreated = new Event(parametersForEvent[0], dateTime, eventID, organizerID, speakerID,
-                new ArrayList<>(), roomNum, capacity, type);
-
-        if (Emanager.addEvent(eventCreated)) {
-            return InputProcessResult.SUCCESS;
-        } else {
-            return InputProcessResult.ROOM_FULL;
-        }
+        return eventID;
     }
 
+    private ArrayList<UUID> getSpeakersID(ArrayList<User> speakers) {
+        ArrayList<UUID> speakersID = new ArrayList<>();
+        for (User speaker : speakers) {
+            speakersID.add(speaker.getId());
+        }
+        return speakersID;
+    }
 }

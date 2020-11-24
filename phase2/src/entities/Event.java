@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.UUID;
@@ -11,15 +12,16 @@ import java.util.UUID;
  */
 public class Event implements Serializable, Iterable<UUID> {
 
-    private final LocalDateTime eventTime;
+    private final LocalDateTime eventSTime;
+    private final LocalDateTime eventETime;
     private final UUID eventId;
     private final String eventTitle;
     private final Integer eventRoom;
     private final Integer eventCapacity;
-    private final String eventType;
+    private Type eventType;
 
     private final UUID organizerId;
-    private final UUID speakerId;
+    private final ArrayList<UUID> speakerId;
 
     private final List<UUID> attendees;
 
@@ -28,22 +30,23 @@ public class Event implements Serializable, Iterable<UUID> {
      * list of attendees, and room number
      *
      * @param title       - the Events title
-     * @param time        - the time the Event begins
+     * @param startTime   - the time the Event begins
+     * @param endTime     - the time the Event ends
      * @param id          - the UUID of the Event
      * @param organizerId - the UUID of the Organizer of the Event
      * @param speakerId   - the UUID of the Speaker of the Event
      * @param attendees   - a list of attendees UUID's for the Event
      * @param room        - the room number the Event will be hosted in
      * @param capacity    - the maximum number of Attendee of the Event
-     * @param type    - the maximum number of Attendee of the Event
      */
-    public Event(String title, LocalDateTime time, UUID id, UUID organizerId, UUID speakerId, List<UUID> attendees,
-                 int room, int capacity, String type) {
-        eventTime = time;
+    public Event(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, ArrayList<UUID> speakerId,
+                 List<UUID> attendees, int room, int capacity) {
+        eventSTime = startTime;
+        eventETime = endTime;
         eventTitle = title;
         eventRoom = room;
         eventCapacity = capacity;
-        eventType = type;
+        setEventType(speakerId);
 
         eventId = id;
         this.organizerId = organizerId;
@@ -63,6 +66,23 @@ public class Event implements Serializable, Iterable<UUID> {
             if (attendeeId.equals(uuid)) return true;
         }
         return false;
+    }
+
+    private void setEventType(ArrayList<UUID> speakerId){
+        int n = speakerId.size();
+        if (n ==0){
+            eventType = Type.PARTY;
+        }else if(n==1){
+            eventType = Type.TALK;
+        }else{eventType = Type.PANEL_Dis;}
+    }
+
+    /**
+     *
+     * @return the eventType based on size of list of speakers.
+     */
+    public Type getEventType(){
+        return eventType;
     }
 
     /**
@@ -106,7 +126,7 @@ public class Event implements Serializable, Iterable<UUID> {
      *
      * @return a UUId - the UUID of this Events speaker
      */
-    public UUID getSpeakerId() {
+    public ArrayList<UUID> getSpeakerId() {
         return speakerId;
     }
 
@@ -116,7 +136,11 @@ public class Event implements Serializable, Iterable<UUID> {
      * @return a LocalDateTime - the time that this Event begins
      */
     public LocalDateTime getEventTime() {
-        return eventTime;
+        return eventSTime;
+    }
+
+    public LocalDateTime getEventETime(){
+        return eventETime;
     }
 
     /**
@@ -146,14 +170,7 @@ public class Event implements Serializable, Iterable<UUID> {
         return attendees.size();
     }
 
-    /**
-     * Gets type of the event
-     *
-     * @return a string - the type of the event
-     */
-    public String getEventType() {
-        return eventType;
-    }
+
 
     /**
      * Adds an attendee to this Events list of Attendees
@@ -181,5 +198,14 @@ public class Event implements Serializable, Iterable<UUID> {
     @Override
     public Iterator<UUID> iterator() {
         return attendees.iterator();
+    }
+
+    /**
+     * the different types of event
+     */
+    public enum Type{
+        PARTY,
+        TALK,
+        PANEL_Dis,
     }
 }

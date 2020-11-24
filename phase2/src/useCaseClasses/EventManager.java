@@ -29,44 +29,35 @@ public class EventManager {
 
     /***
      *add an given event if the conditions check out
-     * @param e the event that is check if it could be added.
-     * @return the boolean if the event is added to events.
+     * @param e the event that is gonna be added
      */
-    public boolean addEvent(Event e) {
-        LocalDateTime time = e.getEventTime();
-        LocalDateTime timeEnd = time.plusHours(1);
-        for (Event temp : events) {
-            LocalDateTime timeGot = temp.getEventTime();
-            LocalDateTime timeAdded = timeGot.plusHours(1);
-            if ((timeGot.isBefore(time) && timeAdded.isAfter(time)) ||
-                    (timeGot.isBefore(timeEnd) && timeAdded.isAfter(timeEnd))) {
-                if (temp.getEventRoom() == e.getEventRoom()) {
-                    return false;
-                }
-            }
-        }
+    public void addEvent(Event e) {
         events.add(e);
-        return true;
     }
 
     /***
      * checks the availability of rooms in the given time
-     * @param time the time to be check
-     * @return boolean if the
+     * @param sTime the start time of the event to be checked
+     * @param eTime the end time of the event to be checked
+     * @return boolean if the room is available in the provided start and end time
      */
-    public boolean availabilityInTime(LocalDateTime time) {
-        int num = 0;
-        LocalDateTime timeEnd = time.plusHours(1);
+    public ArrayList<Integer> availabilityInTime(LocalDateTime sTime, LocalDateTime eTime) {
+        ArrayList<Integer> roomTaken= new ArrayList<>();
+
         for (Event temp : events) {
-            LocalDateTime timeGot = temp.getEventTime();
-            LocalDateTime timeAdded = timeGot.plusHours(1);
-            if (timeGot.isBefore(time) && timeAdded.isAfter(time)) {
-                num++;
-            } else if (timeGot.isBefore(timeEnd) && timeAdded.isAfter(timeEnd)) {
-                num++;
+            LocalDateTime timeStart = temp.getEventTime();
+            LocalDateTime timeEnd = temp.getEventETime();
+            Integer roomNum = temp.getEventRoom();
+            if (timeStart.isBefore(sTime) && timeEnd.isAfter(sTime)|
+                    (timeStart.isBefore(eTime) && timeEnd.isAfter(eTime))|
+                    (timeStart.isAfter(sTime) && timeEnd.isBefore((eTime)))
+            ) {
+                if (!roomTaken.contains(roomNum)){roomTaken.add(roomNum);}
             }
+            if (roomTaken.size() == 6){break;}
         }
-        return num >= 6;
+
+        return roomTaken;
     }
 
     /**
@@ -157,7 +148,7 @@ public class EventManager {
      * @return true if u is the speaker of e and false if u is not
      */
     public boolean isSpeakerForEvent(User u, Event e) {
-        return e.getSpeakerId() == u.getId();
+        return e.getSpeakerId().contains(u.getId());
     }
 
     /**
@@ -234,7 +225,7 @@ public class EventManager {
         //returns a list of the events a presenter is hosting
         List<String> theList = new ArrayList<>();
         for (Event e : events) {
-            if (e.getSpeakerId().equals(u.getId())) {
+            if (e.getSpeakerId().contains(u.getId())) {
                 theList.add(e.getEventTitle());
             }
         }
