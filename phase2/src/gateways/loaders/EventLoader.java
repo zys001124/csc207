@@ -37,7 +37,7 @@ public class EventLoader extends Loader<Event> {
                 LocalDateTime.parse(parameters[1]),
                 LocalDateTime.parse(parameters[2]),
                 UUID.fromString(parameters[3]),
-                UUID.fromString(parameters[3]),
+                UUID.fromString(parameters[4]),
                 speakers,
                 attendees,
                 Integer.parseInt(parameters[parameters.length - 2]),
