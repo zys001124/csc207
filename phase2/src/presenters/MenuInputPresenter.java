@@ -57,7 +57,7 @@ public class MenuInputPresenter extends Presenter {
 
     private String getAttendeeOptions() {
         return "1. Message User \n" +
-                "2. Enroll in an event \n" +
+                "2. Enroll in an event/View event list \n" +
                 "3. Unenroll in an event \n" +
                 "4. See event schedule \n" +
                 "5. Log out";
