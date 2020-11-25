@@ -41,7 +41,7 @@ public class CreateAccountView extends ConsoleView {
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
 
-        InputProcessResult result = controller.getNextScreen(input);
+        InputProcessResult result = controller.handleInput(input);
 
         String CreateSpeakerOutput = presenter.getInputResponseText(result);
         System.out.println(CreateSpeakerOutput);

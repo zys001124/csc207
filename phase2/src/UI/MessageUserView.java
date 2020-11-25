@@ -33,7 +33,7 @@ public class MessageUserView extends ConsoleView {
      * Will begin by outputting the initial intro, and then displaying a list of possible usernames to message. The user is
      * then expected to enter the username. Next, the user will be prompted to enter the message text. After the user has
      * entered the message text, <controller> will process the input and return an appropriate result to be handled by
-     * getNextScreen, will finally indicate the next ConsoleViewType to be used next.
+     * handleInput, will finally indicate the next ConsoleViewType to be used next.
      *
      * @param inputScanner - the Scanner that can be used to collect
      *                     input from the user

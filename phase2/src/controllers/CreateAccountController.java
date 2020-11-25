@@ -29,7 +29,7 @@ public class CreateAccountController {
      * @return an InputProcessResult enum that details what happened
      * as a result of the given input
      */
-    public InputProcessResult getNextScreen(String input) {
+    public InputProcessResult handleInput(String input) {
 
         if (input.equals("back")) {
             return InputProcessResult.BACK;
