@@ -51,7 +51,8 @@ public class EventCancelController {
         Event currentEvent = Emanager.getEvent(input);
         User currentUser = Umanager.getCurrentlyLoggedIn();
 
-        if (!Emanager.hasOrganizedEvent(currentUser, currentEvent)) {
+        if (!Emanager.hasOrganizedEvent(currentUser, currentEvent) &&
+                !Umanager.getCurrentlyLoggedIn().getType().equals(User.UserType.ADMIN)) {
             return InputProcessResult.USER_DID_NOT_ORGANIZE_EVENT;
         }
 
