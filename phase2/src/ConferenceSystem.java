@@ -4,12 +4,6 @@ import entities.Event;
 import entities.Message;
 import entities.User;
 import gateways.FirebaseGateway;
-import gateways.loaders.EventLoader;
-import gateways.loaders.MessageLoader;
-import gateways.loaders.UserLoader;
-import gateways.savers.EventSaver;
-import gateways.savers.MessageSaver;
-import gateways.savers.UserSaver;
 import presenters.*;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
@@ -120,48 +114,17 @@ public class ConferenceSystem {
     }
 
     private void initializeUseCases() {
-        UserLoader userLoader = new UserLoader();
-        MessageLoader messageLoader = new MessageLoader();
-        EventLoader eventLoader = new EventLoader();
 
-        List<User> users;
-        List<Message> messages;
-        List<Event> events;
 
-        try {
-
-            users = userLoader.loadAll(USER_DATA_PATH);
-            messages = messageLoader.loadAll(MESSAGE_DATA_PATH);
-            events = eventLoader.loadAll(EVENT_DATA_PATH);
-
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(-1);
-            return;
-        }
-
-        userManager = new UserManager(users);
-        messageManager = new MessageManager(messages);
-        eventManager = new EventManager(events);
+        userManager = new UserManager();
+        messageManager = new MessageManager();
+        eventManager = new EventManager();
 
         fbg = new FirebaseGateway(userManager, eventManager, messageManager);
         fbg.loadEntities();
     }
 
     private void saveEntities() {
-        try {
-            UserSaver userSaver = new UserSaver(USER_DATA_PATH);
-            MessageSaver messageSaver = new MessageSaver(MESSAGE_DATA_PATH);
-            EventSaver eventSaver = new EventSaver(EVENT_DATA_PATH);
-
-            userSaver.saveAll(userManager.getUsers());
-            messageSaver.saveAll(messageManager.getMessages());
-            eventSaver.saveAll(eventManager.getEvents());
-        } catch (IOException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
-
         fbg.pushUsers();
         fbg.pushEvents();
         fbg.pushMessages();

@@ -24,6 +24,10 @@ public class EventManager {
         this.events = events;
     }
 
+    public EventManager() {
+        this.events = new ArrayList<>();
+    }
+
     /***
      *add an given event if the conditions check out
      * @param e the event that is gonna be added

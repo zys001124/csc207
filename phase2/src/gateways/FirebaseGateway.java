@@ -93,7 +93,7 @@ public class FirebaseGateway {
 
     private void onUsersGotten(List<QueryDocumentSnapshot> documentSnapshotList) {
         for(int i = 0; i<documentSnapshotList.size(); i++) {
-            QueryDocumentSnapshot qds = documentSnapshotList.get(0);
+            QueryDocumentSnapshot qds = documentSnapshotList.get(i);
 
             User.UserType type = null;
             try {
@@ -109,8 +109,7 @@ public class FirebaseGateway {
             try {
                 userManager.createUser(type, username, password, uuid);
             } catch (UsernameAlreadyExistsException e)  {
-                //TODO handle this
-                // Ignore for now
+                System.out.println(username);
             }
         }
     }
@@ -122,7 +121,7 @@ public class FirebaseGateway {
 
     private void onEventsGotten(List<QueryDocumentSnapshot> documentSnapshotList) {
         for(int i = 0; i<documentSnapshotList.size(); i++) {
-            QueryDocumentSnapshot qds = documentSnapshotList.get(0);
+            QueryDocumentSnapshot qds = documentSnapshotList.get(i);
 
 
             String title = qds.get("title").toString();
@@ -153,7 +152,7 @@ public class FirebaseGateway {
 
     private void onMessagesGotten(List<QueryDocumentSnapshot> documentSnapshotList) {
         for(int i = 0; i<documentSnapshotList.size(); i++) {
-            QueryDocumentSnapshot qds = documentSnapshotList.get(0);
+            QueryDocumentSnapshot qds = documentSnapshotList.get(i);
 
             String messageText = qds.get("messageText").toString();
             UUID senderId = UUID.fromString(qds.get("senderId").toString());
@@ -173,9 +172,7 @@ public class FirebaseGateway {
 
     public Timestamp convertToTimestamp(LocalDateTime dateToConvert) {
 
-        Timestamp time = Timestamp.ofTimeSecondsAndNanos(dateToConvert.getSecond(), dateToConvert.getNano());
-
-        return time;
+        return Timestamp.ofTimeSecondsAndNanos(dateToConvert.getSecond(), dateToConvert.getNano());
     }
     
     public void pushUsers() {
@@ -188,7 +185,7 @@ public class FirebaseGateway {
             userData.put("uuid", user.getId().toString());
             userData.put("type", user.getType().toString());
 
-            usersRef.document(user.getUsername()).update(userData);
+            usersRef.document(user.getUsername()).set(userData);
         }
     }
 
@@ -218,7 +215,7 @@ public class FirebaseGateway {
             eventData.put("speakerIds", speakers);
             eventData.put("attendeeIds", attendees);
 
-            eventsRef.document(event.getEventTitle()).update(eventData);
+            eventsRef.document(event.getEventTitle()).set(eventData);
         }
     }
 
