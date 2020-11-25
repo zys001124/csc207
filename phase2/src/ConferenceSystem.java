@@ -26,9 +26,9 @@ import java.util.Scanner;
 public class ConferenceSystem {
 
     // global final variables
-    public static final String USER_DATA_PATH = "C:/Users/z1094/IdeaProjects/group_0186/phase2/resources/userData.txt";
-    public static final String MESSAGE_DATA_PATH = "C:/Users/z1094/IdeaProjects/group_0186/phase2/resources/messageData.txt";
-    public static final String EVENT_DATA_PATH = "C:/Users/z1094/IdeaProjects/group_0186/phase2/resources/eventData.txt";
+    public static final String USER_DATA_PATH = "userData.txt";
+    public static final String MESSAGE_DATA_PATH = "messageData.txt";
+    public static final String EVENT_DATA_PATH = "eventData.txt";
 
     // Managers
     private UserManager userManager;
