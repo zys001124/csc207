@@ -93,8 +93,8 @@ public class FirebaseGateway {
             try {
                 userManager.createUser(type, username, password, uuid);
             } catch (UsernameAlreadyExistsException e)  {
-                e.printStackTrace();
-                System.exit(-1);
+                //TODO handle this
+                // Ignore for now
             }
         }
     }
