@@ -84,7 +84,8 @@ public class User implements Serializable {
         ATTENDEE,
         ORGANIZER,
         SPEAKER,
-        VIP
+        VIP,
+        ADMIN
     }
 
 }

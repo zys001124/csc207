@@ -1,6 +1,7 @@
 package controllers;
 
 import entities.User;
+import exceptions.InvalidUserTypeException;
 import exceptions.UserTypeDoesNotExistException;
 import exceptions.UsernameAlreadyExistsException;
 import useCaseClasses.UserManager;
@@ -53,6 +54,8 @@ public class CreateAccountController {
             return InputProcessResult.USERNAME_TAKEN;
         } catch (UserTypeDoesNotExistException e) {
             return InputProcessResult.INVALID_USER_TYPE;
+        } catch (InvalidUserTypeException e) {
+            return InputProcessResult.UNQUALIFIED_USER;
         }
 
     }

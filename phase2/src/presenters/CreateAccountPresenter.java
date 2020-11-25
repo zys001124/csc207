@@ -16,7 +16,7 @@ public class CreateAccountPresenter extends Presenter {
     @Override
     public String getPreInputText() {
         return "To create an account, type in the following: [username] [password] [type]\n" +
-                "Valid user types are: ATTENDEE, ORGANIZER, SPEAKER, VIP \n" +
+                "Valid user types are: ATTENDEE, ORGANIZER, SPEAKER, VIP, ADMIN \n" +
                 "Type \"back\" to return to the menu";
     }
 
@@ -39,6 +39,8 @@ public class CreateAccountPresenter extends Presenter {
             return "Username taken. Try again.";
         } else if(result == InputProcessResult.INVALID_USER_TYPE) {
             return "Invalid user type given. Try again.";
+        } else if(result == InputProcessResult.UNQUALIFIED_USER) {
+            return "You are not qualified to create this type of user. Try again.";
         } else {
             return "";
         }

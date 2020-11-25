@@ -25,7 +25,9 @@ public class UserLoader extends Loader<User> {
                 return new User(User.UserType.ATTENDEE, parameters[0], parameters[1], UUID.fromString(parameters[2]));
             }else if (parameters[3].equals("V")) {
                     return new User(User.UserType.VIP, parameters[0], parameters[1], UUID.fromString(parameters[2]));
-            } else {
+            }else if (parameters[3].equals("D")) {
+                return new User(User.UserType.ADMIN, parameters[0], parameters[1], UUID.fromString(parameters[2]));
+            }else {
                 return new User(User.UserType.SPEAKER, parameters[0], parameters[1], UUID.fromString(parameters[2]));
             }
         } else {

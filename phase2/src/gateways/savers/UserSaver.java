@@ -39,6 +39,9 @@ public class UserSaver extends Saver<User> {
             output.append("A");
         }  else if (user.getType() == User.UserType.VIP) {
             output.append("V");
+        }
+        else if (user.getType() == User.UserType.ADMIN) {
+            output.append("D");
         } else {
             output.append("S");
         }

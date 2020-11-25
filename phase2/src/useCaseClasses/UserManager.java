@@ -82,15 +82,19 @@ public class UserManager {
      * @param password the password of the user to be added
      * @throws UsernameAlreadyExistsException - if the username is already seen in the system
      */
-    public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException {
+    public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException,
+            InvalidUserTypeException{
         if (doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
+        }
+        if(!currentlyLoggedIn.getType().equals(User.UserType.ADMIN) && type.equals(User.UserType.ADMIN)){
+            throw new InvalidUserTypeException(User.UserType.ADMIN, currentlyLoggedIn.getType());
         }
         User user = new User(type, username, password, UUID.randomUUID());
         users.add(user);
     }
 
-    public void createUser(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException {
+    public void createUser(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException{
         if (doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
         }
@@ -159,6 +163,8 @@ public class UserManager {
                 return User.UserType.ATTENDEE;
             case "VIP":
                 return User.UserType.VIP;
+            case "ADMIN":
+                return User.UserType.ADMIN;
             case "SPEAKER":
                 return User.UserType.SPEAKER;
             case "ORGANIZER":
