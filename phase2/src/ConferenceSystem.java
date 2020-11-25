@@ -3,6 +3,7 @@ import controllers.*;
 import entities.Event;
 import entities.Message;
 import entities.User;
+import gateways.FirebaseGateway;
 import gateways.loaders.EventLoader;
 import gateways.loaders.MessageLoader;
 import gateways.loaders.UserLoader;
@@ -136,6 +137,9 @@ public class ConferenceSystem {
         userManager = new UserManager(users);
         messageManager = new MessageManager(messages);
         eventManager = new EventManager(events);
+
+        FirebaseGateway fbg = new FirebaseGateway(userManager);
+        fbg.loadEntities();
     }
 
     private void saveEntities() {

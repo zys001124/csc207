@@ -90,6 +90,14 @@ public class UserManager {
         users.add(user);
     }
 
+    public void createUser(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException {
+        if (doesUserExist(username)) {
+            throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
+        }
+        User user = new User(type, username, password, id);
+        users.add(user);
+    }
+
     /**
      * helper method to check and see if the username exists
      * called in addUser
