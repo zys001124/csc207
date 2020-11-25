@@ -2,10 +2,7 @@ package useCaseClasses;
 
 import entities.Event;
 import entities.User;
-import exceptions.EventFullException;
-import exceptions.EventNotFoundException;
-import exceptions.UserAlreadyEnrolledException;
-import exceptions.UserNotEnrolledInEventException;
+import exceptions.*;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -36,9 +33,9 @@ public class EventManager {
     }
 
     public void addEvent(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
-                         List<UUID> attendees, int room, int capacity) {
+                         List<UUID> attendees, int room, int capacity, boolean VIPonly) {
         Event e = new Event(title, startTime, endTime, id, organizerId, speakerId,
-                attendees, room, capacity);
+                attendees, room, capacity, VIPonly);
         events.add(e);
     }
 
@@ -168,9 +165,12 @@ public class EventManager {
      * @throws UserAlreadyEnrolledException if the user(attendee) was already enrolled in the event
      */
     public void addUserToEvent(int parsedInput, User attendee) throws EventNotFoundException,
-            NumberFormatException, UserAlreadyEnrolledException, EventFullException {
+            NumberFormatException, UserAlreadyEnrolledException, EventFullException, InvalidUserTypeException {
         if (parsedInput <= events.size() && parsedInput > 0) {
             Event e = events.get(parsedInput - 1);
+            if(e.getViponly() && !attendee.getType().equals(User.UserType.VIP)){
+                throw new InvalidUserTypeException(User.UserType.VIP, attendee.getType());
+            }
             if (e.isFull()){
                 throw new EventFullException(parsedInput);
             }

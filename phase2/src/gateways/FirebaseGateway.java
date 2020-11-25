@@ -36,7 +36,7 @@ public class FirebaseGateway {
 
         try {
             FileInputStream serviceAccount =
-                    new FileInputStream("conference-system-group-0186-key.json");
+                    new FileInputStream("C:/Users/z1094/IdeaProjects/group_0186/phase2/resources/conference-system-group-0186-key.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -129,6 +129,7 @@ public class FirebaseGateway {
             UUID organizerId = UUID.fromString(qds.get("organizerId").toString());
             int room = Integer.parseInt(qds.get("room").toString());
             int capacity = Integer.parseInt(qds.get("capacity").toString());
+            boolean VIPonly = Boolean.parseBoolean(qds.get("viponly").toString());
 
             List<UUID> speakers = new ArrayList<>();
             for(String uuid : (List<String>) Objects.requireNonNull(qds.get("speakerIds"))) {
@@ -138,7 +139,7 @@ public class FirebaseGateway {
             for(String uuid : (List<String>) Objects.requireNonNull(qds.get("attendeeIds"))) {
                 attendees.add(UUID.fromString(uuid));
             }
-            eventManager.addEvent(title, startTime, endTime, eventId, organizerId, speakers, attendees, room, capacity);
+            eventManager.addEvent(title, startTime, endTime, eventId, organizerId, speakers, attendees, room, capacity, VIPonly);
         }
     }
 

@@ -37,6 +37,8 @@ public class UserSaver extends Saver<User> {
             output.append("O");
         } else if (user.getType() == User.UserType.ATTENDEE) {
             output.append("A");
+        }  else if (user.getType() == User.UserType.VIP) {
+            output.append("V");
         } else {
             output.append("S");
         }

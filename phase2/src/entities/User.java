@@ -83,7 +83,8 @@ public class User implements Serializable {
     public enum UserType {
         ATTENDEE,
         ORGANIZER,
-        SPEAKER
+        SPEAKER,
+        VIP
     }
 
 }

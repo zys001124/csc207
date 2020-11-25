@@ -40,6 +40,8 @@ public class MenuInputController {
                 return parseOrganizerInput(parsedInput);
             case SPEAKER:
                 return parseSpeakerInput(parsedInput);
+            case VIP:
+                return parseVIPInput(parsedInput);
             default:
                 return parseAttendeeInput(parsedInput);
         }
@@ -93,6 +95,25 @@ public class MenuInputController {
             case 6:
                 return InputProcessResult.NAVIGATE_TO_CREATE_SPEAKER_ACCOUNT;
             case 7:
+                return null;
+            default:
+                return InputProcessResult.INVALID_INPUT;
+        }
+    }
+
+    private InputProcessResult parseVIPInput(int input) {
+        switch (input) {
+            case 1:
+                return InputProcessResult.NAVIGATE_TO_MESSAGE_USER;
+            case 2:
+                return InputProcessResult.NAVIGATE_TO_ENROLL_IN_EVENT;
+            case 3:
+                return InputProcessResult.NAVIGATE_TO_UNENROLL_IN_EVENT;
+            case 4:
+                return InputProcessResult.NAVIGATE_TO_EVENT_SCHEDULE;
+            case 5:
+                return InputProcessResult.NAVIGATE_TO_CANCEL_EVENT;
+            case 6:
                 return null;
             default:
                 return InputProcessResult.INVALID_INPUT;

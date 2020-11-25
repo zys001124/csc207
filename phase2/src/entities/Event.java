@@ -19,6 +19,7 @@ public class Event implements Serializable, Iterable<UUID> {
     private final Integer eventRoom;
     private final Integer eventCapacity;
     private Type eventType;
+    private final boolean VIPonly;
 
     private final UUID organizerId;
     private final List<UUID> speakerId;
@@ -38,9 +39,10 @@ public class Event implements Serializable, Iterable<UUID> {
      * @param attendees   - a list of attendees UUID's for the Event
      * @param room        - the room number the Event will be hosted in
      * @param capacity    - the maximum number of Attendee of the Event
+     * @param VIPonly     - whether this event is for VIPs only
      */
     public Event(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
-                 List<UUID> attendees, int room, int capacity) {
+                 List<UUID> attendees, int room, int capacity, boolean VIPonly) {
         eventSTime = startTime;
         eventETime = endTime;
         eventTitle = title;
@@ -52,6 +54,7 @@ public class Event implements Serializable, Iterable<UUID> {
         this.organizerId = organizerId;
         this.speakerId = speakerId;
         this.attendees = attendees;
+        this.VIPonly = VIPonly;
     }
 
     /**
@@ -83,6 +86,14 @@ public class Event implements Serializable, Iterable<UUID> {
      */
     public Type getEventType(){
         return eventType;
+    }
+
+    /**
+     *
+     * @return check if the event is for VIPs only
+     */
+    public boolean getViponly(){
+        return VIPonly;
     }
 
     /**

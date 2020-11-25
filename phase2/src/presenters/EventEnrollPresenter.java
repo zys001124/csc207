@@ -59,7 +59,8 @@ public class EventEnrollPresenter extends Presenter {
                     .concat("  Room " + event.getEventRoom())
                     .concat("  Capacity " + event.getEventCapacity())
                     .concat("  Currently Enrolled " + event.getEventEnrolledNumber())
-                    .concat("  Event Type " + event.getEventType() + "\n");
+                    .concat("  Event Type " + event.getEventType())
+                    .concat("  VIP only: " + event.getViponly()+ "\n");
         }
         return result;
     }
@@ -78,6 +79,8 @@ public class EventEnrollPresenter extends Presenter {
             return "Returning back to Main Menu";
         } else if (result == InputProcessResult.EVENT_NOT_FOUND) {
             return "Event not found. Please try again.";
+        } else if (result == InputProcessResult.EVENT_FOR_VIPONLY) {
+            return "Event is for VIP only and you are not a VIP. Please try again.";
         } else if (result == InputProcessResult.EVENT_IS_FULL){
             return "Event is currently full. Please try another event.";
         } else if (result == InputProcessResult.USER_ALREADY_ENROLLED) {

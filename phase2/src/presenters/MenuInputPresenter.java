@@ -34,7 +34,10 @@ public class MenuInputPresenter extends Presenter {
             return getAttendeeOptions();
         } else if (userType == User.UserType.SPEAKER) {
             return getSpeakerOptions();
-        } else {
+        } else if (userType == User.UserType.VIP) {
+            return getVIPOptions();
+        }
+        else {
             return getOrganizerOptions();
         }
     }
@@ -78,5 +81,14 @@ public class MenuInputPresenter extends Presenter {
                 "5. Message all attendees\n" +
                 "6. Create user account \n" +
                 "7. Log out";
+    }
+
+    private String getVIPOptions() {
+        return "1. Message User \n" +
+                "2. Enroll in an event/View event list \n" +
+                "3. Unenroll in an event \n" +
+                "4. See event schedule \n" +
+                "5. Cancel Event \n" +
+                "6. Log out";
     }
 }

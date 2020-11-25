@@ -22,7 +22,7 @@ public class EventLoader extends Loader<Event> {
     @Override
     public Event createInstance(String[] parameters) {
 
-        if (parameters.length < 8 && parameters.length != 0) {
+        if (parameters.length < 9 && parameters.length != 0) {
             throw new IncorrectNumberOfParametersException();
         }
 
@@ -39,7 +39,7 @@ public class EventLoader extends Loader<Event> {
         i++;
 
         List<UUID> attendees = new ArrayList<>();
-        while(i < parameters.length - 2){
+        while(i < parameters.length - 3){
             attendees.add(UUID.fromString(parameters[i]));
             i++;
         }
@@ -52,7 +52,8 @@ public class EventLoader extends Loader<Event> {
                 UUID.fromString(parameters[4]),
                 speakers,
                 attendees,
+                Integer.parseInt(parameters[parameters.length - 3]),
                 Integer.parseInt(parameters[parameters.length - 2]),
-                Integer.parseInt(parameters[parameters.length - 1]));
+                Boolean.parseBoolean(parameters[parameters.length - 1]));
     }
 }

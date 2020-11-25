@@ -94,14 +94,24 @@ public class EventCreationController {
 
         if (occupiedRoom.contains(roomNum)){return InputProcessResult.ROOM_FULL;}
         int capacity = Integer.parseInt(parametersForEvent[5]);
+        if(VIPonlytypo(parametersForEvent[6])){
+            return InputProcessResult.INVALID_INPUT;
+        }
+        boolean VIPonly = Boolean.parseBoolean(parametersForEvent[6]);
 
         Event eventCreated = new Event(parametersForEvent[0], sDateTime, eDateTime, eventID, organizerID, speakersID,
-                new ArrayList<>(), roomNum, capacity);
+                new ArrayList<>(), roomNum, capacity, VIPonly);
 
 
         eManager.addEvent(eventCreated);
         return InputProcessResult.SUCCESS;
 
+    }
+
+    private boolean VIPonlytypo(String b){
+        if(b.equals("true")){return true;}
+        if(b.equals("false")){return true;}
+        return false;
     }
 
     private boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {

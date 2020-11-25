@@ -157,6 +157,8 @@ public class UserManager {
         switch (type) {
             case "ATTENDEE":
                 return User.UserType.ATTENDEE;
+            case "VIP":
+                return User.UserType.VIP;
             case "SPEAKER":
                 return User.UserType.SPEAKER;
             case "ORGANIZER":

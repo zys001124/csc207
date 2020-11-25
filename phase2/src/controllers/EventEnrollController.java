@@ -2,6 +2,7 @@ package controllers;
 
 import exceptions.EventFullException;
 import exceptions.EventNotFoundException;
+import exceptions.InvalidUserTypeException;
 import exceptions.UserAlreadyEnrolledException;
 import useCaseClasses.EventManager;
 import useCaseClasses.UserManager;
@@ -40,7 +41,9 @@ public class EventEnrollController {
             eventManager.addUserToEvent(parsedInput, userManager.getCurrentlyLoggedIn());
         } catch (EventNotFoundException e) {
             return InputProcessResult.EVENT_NOT_FOUND;
-        } catch (EventFullException e) {
+        }catch (InvalidUserTypeException e) {
+            return InputProcessResult.EVENT_FOR_VIPONLY;
+        }catch (EventFullException e) {
             return InputProcessResult.EVENT_IS_FULL;
         } catch (NumberFormatException e) {
             return InputProcessResult.INVALID_INPUT;

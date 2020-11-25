@@ -52,6 +52,8 @@ public class EventSaver extends Saver<Event> {
         output.append(parameterSeparationChar);
         output.append(event.getEventCapacity() + "");
         output.append(parameterSeparationChar);
+        output.append(event.getViponly()+"");
+        output.append(parameterSeparationChar);
         output.append("\n");
 
         output.flush();

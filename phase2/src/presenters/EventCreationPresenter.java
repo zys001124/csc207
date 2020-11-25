@@ -20,7 +20,8 @@ public class EventCreationPresenter extends Presenter {
                 "The room number is from 0-5. Every speech is one hour long and it must be schedule at exact hour\n" +
                 "if there is multiple speakers separate each speaker with ':' for no speaker leave it empty\n"+
                 "To add an event, enter information in following way: " +
-                "title,startTime,endTime,speakerUsernames,roomNumber,capacity \n" +
+                "title,startTime,endTime,speakerUsernames,roomNumber,capacity,Vip only \n" +
+                "Vip only should only be written as 'true' or 'false'\n" +
                 "Time should be written in this form yyyy-MM-dd HH:mm\n" +
                 "Type \"back\" to return to the menu";
     }
