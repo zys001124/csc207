@@ -21,7 +21,7 @@ public class Event implements Serializable, Iterable<UUID> {
     private Type eventType;
 
     private final UUID organizerId;
-    private final ArrayList<UUID> speakerId;
+    private final List<UUID> speakerId;
 
     private final List<UUID> attendees;
 
@@ -39,7 +39,7 @@ public class Event implements Serializable, Iterable<UUID> {
      * @param room        - the room number the Event will be hosted in
      * @param capacity    - the maximum number of Attendee of the Event
      */
-    public Event(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, ArrayList<UUID> speakerId,
+    public Event(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
                  List<UUID> attendees, int room, int capacity) {
         eventSTime = startTime;
         eventETime = endTime;
@@ -68,7 +68,7 @@ public class Event implements Serializable, Iterable<UUID> {
         return false;
     }
 
-    private void setEventType(ArrayList<UUID> speakerId){
+    private void setEventType(List<UUID> speakerId){
         int n = speakerId.size();
         if (n ==0){
             eventType = Type.PARTY;
@@ -126,7 +126,7 @@ public class Event implements Serializable, Iterable<UUID> {
      *
      * @return a UUId - the UUID of this Events speaker
      */
-    public ArrayList<UUID> getSpeakerId() {
+    public List<UUID> getSpeakerId() {
         return speakerId;
     }
 

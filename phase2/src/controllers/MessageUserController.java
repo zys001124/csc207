@@ -74,7 +74,7 @@ public class MessageUserController {
         if (recipient.getType().equals(User.UserType.ORGANIZER)) {
             throw new InvalidUsernameException(recipient.getUsername());
         }
-        messageManager.addMessage(userManager.getCurrentlyLoggedIn().getId(), recipient.getId(), message);
+        messageManager.sendMessage(userManager.getCurrentlyLoggedIn().getId(), recipient.getId(), message);
     }
 
     /**
@@ -88,7 +88,7 @@ public class MessageUserController {
         if (recipient.getType().equals(User.UserType.ORGANIZER)) {
             throw new InvalidUsernameException(recipient.getUsername());
         }
-        messageManager.addMessage(userManager.getCurrentlyLoggedIn().getId(), recipient.getId(), message);
+        messageManager.sendMessage(userManager.getCurrentlyLoggedIn().getId(), recipient.getId(), message);
     }
 
     /**
@@ -104,6 +104,6 @@ public class MessageUserController {
                 !messageManager.messageSentBy(recipient.getId(), userManager.getCurrentlyLoggedIn().getId())) {
             throw new InvalidUsernameException(recipient.getUsername());
         }
-        messageManager.addMessage(userManager.getCurrentlyLoggedIn().getId(), recipient.getId(), message);
+        messageManager.sendMessage(userManager.getCurrentlyLoggedIn().getId(), recipient.getId(), message);
     }
 }

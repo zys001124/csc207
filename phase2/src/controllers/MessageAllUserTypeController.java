@@ -36,7 +36,7 @@ public abstract class MessageAllUserTypeController {
             }
             for (User user : userManager.getUsers()) {
                 if (checkUserType(user)) {
-                    messageManager.addMessage(userManager.getCurrentlyLoggedIn().getId(), user.getId(), message);
+                    messageManager.sendMessage(userManager.getCurrentlyLoggedIn().getId(), user.getId(), message);
                 }
             }
         } catch (MessageCancelledException e) {

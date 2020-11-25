@@ -4,6 +4,7 @@ import entities.Event;
 import entities.Message;
 import entities.User;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -37,9 +38,14 @@ public class MessageManager {
      * @param receiver the UUID of the recieves of the message
      * @param message  the message that is sent
      */
-    public void addMessage(UUID sender, UUID receiver, String message) {
+    public void sendMessage(UUID sender, UUID receiver, String message) {
 
         messages.add(new Message(message, sender, receiver, UUID.randomUUID()));
+    }
+
+    public void addMessage(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
+
+        messages.add(new Message(message, sender, receiver, messageId, timeSent));
     }
 
     /**

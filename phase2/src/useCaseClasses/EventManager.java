@@ -35,6 +35,13 @@ public class EventManager {
         events.add(e);
     }
 
+    public void addEvent(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
+                         List<UUID> attendees, int room, int capacity) {
+        Event e = new Event(title, startTime, endTime, id, organizerId, speakerId,
+                attendees, room, capacity);
+        events.add(e);
+    }
+
     /***
      * checks the availability of rooms in the given time
      * @param sTime the start time of the event to be checked

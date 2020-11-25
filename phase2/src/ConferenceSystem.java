@@ -138,7 +138,7 @@ public class ConferenceSystem {
         messageManager = new MessageManager(messages);
         eventManager = new EventManager(events);
 
-        FirebaseGateway fbg = new FirebaseGateway(userManager);
+        FirebaseGateway fbg = new FirebaseGateway(userManager, eventManager, messageManager);
         fbg.loadEntities();
     }
 
