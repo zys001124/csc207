@@ -68,6 +68,8 @@ public class MenuInputView extends ConsoleView {
                 return ConsoleViewType.CREATE_EVENT;
             case NAVIGATE_TO_CANCEL_EVENT:
                 return ConsoleViewType.CANCEL_EVENT;
+            case NAVIGATE_TO_DELETE_USER_ACCOUNT:
+                return ConsoleViewType.DELETE_ACCOUNT;
             case NAVIGATE_TO_ENROLL_IN_EVENT:
                 return ConsoleViewType.ENROLL_IN_EVENT;
             case NAVIGATE_TO_UNENROLL_IN_EVENT:

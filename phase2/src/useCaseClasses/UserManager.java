@@ -33,6 +33,22 @@ public class UserManager {
     }
 
     /**
+     * finds a user in the list of users in the conference system and returns that user.
+     * returns its UUID or null if the user is not found.
+     *
+     * @param username String of the username that will be used to find the user in the System
+     * @return the User's UUID to the corresponding username or null if user does not exist
+     */
+    public UUID getUserID(String username){
+        for (User u : users) {
+            if (u.getUsername().equals(username)) {
+                return u.getId();
+            }
+        }
+        return null;
+    }
+
+    /**
      * gets the user based on a given UUID. returns null if not found
      *
      * @param id the UUID of the user to be found
@@ -63,6 +79,23 @@ public class UserManager {
             }
         }
         throw new UserNotFoundException(username);
+    }
+
+    /**
+     * removes an user in the given event list where the event is given by its UUID
+     * returns null if event can't be found.
+     *
+     * @param id he UUID of the user to be found
+     * @return the user that is being removed or null if it can't be found.
+     */
+    public User removeUser(UUID id){
+        for(User user: users){
+            int index = users.indexOf(user);
+            if(user.getId().equals(id)){
+                return users.remove(index);
+            }
+        }
+        return null;
     }
 
     /**

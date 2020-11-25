@@ -56,7 +56,6 @@ public class EventCancelView extends ConsoleView {
     private ConsoleViewType getScreen(InputProcessResult result) {
         switch (result) {
             case BACK:
-                return ConsoleViewType.MAIN_MENU;
             case SUCCESS:
                 return ConsoleViewType.MAIN_MENU;
             default:
