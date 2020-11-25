@@ -9,6 +9,9 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firestore.v1beta1.Document;
+import entities.Event;
+import entities.Message;
 import entities.User;
 import exceptions.UserTypeDoesNotExistException;
 import exceptions.UsernameAlreadyExistsException;
@@ -36,7 +39,7 @@ public class FirebaseGateway {
 
         try {
             FileInputStream serviceAccount =
-                    new FileInputStream("C:/Users/z1094/IdeaProjects/group_0186/phase2/resources/conference-system-group-0186-key.json");
+                    new FileInputStream("conference-system-group-0186-key.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
@@ -123,8 +126,8 @@ public class FirebaseGateway {
 
 
             String title = qds.get("title").toString();
-            LocalDateTime startTime = convertToLocalDateViaInstant(((Timestamp)qds.get("startTime")).toDate());
-            LocalDateTime endTime = convertToLocalDateViaInstant(((Timestamp)qds.get("endTime")).toDate());
+            LocalDateTime startTime = convertToLocalDateViaInstant(((Timestamp)qds.get("startTime")));
+            LocalDateTime endTime = convertToLocalDateViaInstant(((Timestamp)qds.get("endTime")));
             UUID eventId = UUID.fromString(qds.get("uuid").toString());
             UUID organizerId = UUID.fromString(qds.get("organizerId").toString());
             int room = Integer.parseInt(qds.get("room").toString());
@@ -156,17 +159,85 @@ public class FirebaseGateway {
             UUID senderId = UUID.fromString(qds.get("senderId").toString());
             UUID recipientId = UUID.fromString(qds.get("recipientId").toString());
             UUID messageId = UUID.fromString(qds.get("messageId").toString());
-            LocalDateTime timeSent = convertToLocalDateViaInstant(((Timestamp)qds.get("timeSent")).toDate());
+            LocalDateTime timeSent = convertToLocalDateViaInstant((Timestamp)qds.get("timeSent"));
 
             messageManager.addMessage(senderId, recipientId, messageText, timeSent, messageId);
         }
     }
 
-    public LocalDateTime convertToLocalDateViaInstant(Date dateToConvert) {
-        return dateToConvert.toInstant()
+    public LocalDateTime convertToLocalDateViaInstant(Timestamp dateToConvert) {
+        return dateToConvert.toDate().toInstant()
                 .atZone(ZoneId.systemDefault())
                 .toLocalDateTime();
     }
+
+    public Timestamp convertToTimestamp(LocalDateTime dateToConvert) {
+
+        Timestamp time = Timestamp.ofTimeSecondsAndNanos(dateToConvert.getSecond(), dateToConvert.getNano());
+
+        return time;
+    }
     
-    
+    public void pushUsers() {
+        CollectionReference usersRef = db.collection("Users");
+        for(User user : userManager.getUsers()) {
+            HashMap<String, Object> userData = new HashMap<>();
+
+            userData.put("username", user.getUsername());
+            userData.put("password", user.getPassword());
+            userData.put("uuid", user.getId().toString());
+            userData.put("type", user.getType().toString());
+
+            usersRef.document(user.getUsername()).update(userData);
+        }
+    }
+
+    public void pushEvents() {
+        CollectionReference eventsRef = db.collection("Events");
+        for(Event event : eventManager.getEvents()) {
+            HashMap<String, Object> eventData = new HashMap<>();
+
+            eventData.put("title", event.getEventTitle());
+            eventData.put("capacity", event.getEventCapacity());
+            eventData.put("room", event.getEventRoom());
+            eventData.put("uuid", event.getId().toString());
+            eventData.put("viponly", event.getViponly());
+            eventData.put("organizerId", event.getOrganizerId().toString());
+            eventData.put("startTime", convertToTimestamp(event.getEventTime()));
+            eventData.put("endTime", convertToTimestamp(event.getEventETime()));
+
+            List<String> speakers = new ArrayList<>();
+            for(UUID uuid : event.getSpeakerId()) {
+                speakers.add(uuid.toString());
+            }
+            List<String> attendees = new ArrayList<>();
+            for(UUID uuid : event) {
+                attendees.add(uuid.toString());
+            }
+
+            eventData.put("speakerIds", speakers);
+            eventData.put("attendeeIds", attendees);
+
+            eventsRef.document(event.getEventTitle()).update(eventData);
+        }
+    }
+
+    public void pushMessages() {
+        CollectionReference messagesRef = db.collection("Messages");
+        for(Message message : messageManager.getMessages()) {
+            HashMap<String, Object> messageData = new HashMap<>();
+
+            messageData.put("messageText", message.getMessageText());
+            messageData.put("messageId", message.getId().toString());
+            messageData.put("senderId", message.getSenderId().toString());
+            messageData.put("recipientId", message.getRecipientId().toString());
+            messageData.put("timeSent", convertToTimestamp(message.getTimeSent()));
+
+            DocumentReference messageDoc = messagesRef.document(message.getId().toString());
+
+            messageDoc.set(messageData);
+        }
+    }
+
+
 }

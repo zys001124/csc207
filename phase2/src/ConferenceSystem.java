@@ -47,7 +47,7 @@ public class ConferenceSystem {
     private MessageAllAttendingEventController messageAllAttendingEventController;
     private MessageAllSpeakersController messageAllSpeakersController;
     private MessageAllAttendeesController messageAllAttendeesController;
-    private DeleteAccountController deleteAccountController;
+  //  private DeleteAccountController deleteAccountController;
 
     // Presenters
     private LoginPresenter loginPresenter;
@@ -62,7 +62,7 @@ public class ConferenceSystem {
     private MessageAllSpeakersPresenter messageAllSpeakersPresenter;
     private MessageAllAttendeesPresenter messageAllAttendeesPresenter;
     private SeeSchedulePresenter seeSchedulePresenter;
-    private  DeleteAccountPresenter deleteAccountPresenter;
+  //  private  DeleteAccountPresenter deleteAccountPresenter;
 
     // Views
     private LoginView loginView;
@@ -77,7 +77,10 @@ public class ConferenceSystem {
     private MessageAllSpeakersView messageAllSpeakersView;
     private MessageAllAttendeesView messageAllAttendeesView;
     private SeeScheduleView seeScheduleView;
-    private DeleteAccountView deleteAccountView;
+  //  private DeleteAccountView deleteAccountView;
+
+
+    private FirebaseGateway fbg;
 
     /**
      * Loads all entiteis, runs the program, saves all entities
@@ -141,7 +144,7 @@ public class ConferenceSystem {
         messageManager = new MessageManager(messages);
         eventManager = new EventManager(events);
 
-        FirebaseGateway fbg = new FirebaseGateway(userManager, eventManager, messageManager);
+        fbg = new FirebaseGateway(userManager, eventManager, messageManager);
         fbg.loadEntities();
     }
 
@@ -158,6 +161,10 @@ public class ConferenceSystem {
             e.printStackTrace();
             System.exit(-1);
         }
+
+        fbg.pushUsers();
+        fbg.pushEvents();
+        fbg.pushMessages();
     }
 
     private void initializeControllers() {
@@ -172,7 +179,7 @@ public class ConferenceSystem {
         messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
         messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
         messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
-        deleteAccountController = new DeleteAccountController(userManager, deleteAccountPresenter);
+      //  deleteAccountController = new DeleteAccountController(userManager, deleteAccountPresenter);
 
     }
 
@@ -189,7 +196,7 @@ public class ConferenceSystem {
         messageAllSpeakersPresenter = new MessageAllSpeakersPresenter();
         messageAllAttendeesPresenter = new MessageAllAttendeesPresenter();
         seeSchedulePresenter = new SeeSchedulePresenter(eventManager, userManager);
-        deleteAccountPresenter = new DeleteAccountPresenter(userManager);
+      //  deleteAccountPresenter = new DeleteAccountPresenter(userManager);
     }
 
     private void initializeViews() {
@@ -204,7 +211,7 @@ public class ConferenceSystem {
         messageAllSpeakersView = new MessageAllSpeakersView(messageAllSpeakersController, messageAllSpeakersPresenter);
         messageAllAttendeesView = new MessageAllAttendeesView(messageAllAttendeesController, messageAllAttendeesPresenter);
         seeScheduleView = new SeeScheduleView(seeSchedulePresenter);
-        deleteAccountView = new DeleteAccountView(deleteAccountController, deleteAccountPresenter);
+     //   deleteAccountView = new DeleteAccountView(deleteAccountController, deleteAccountPresenter);
     }
 
     private ConsoleView getView(ConsoleView.ConsoleViewType type) {
@@ -230,8 +237,8 @@ public class ConferenceSystem {
                 return eventCancelView;
             case CREATE_EVENT:
                 return eventCreationView;
-            case DELETE_ACCOUNT:
-                return deleteAccountView;
+//            case DELETE_ACCOUNT:
+//                return deleteAccountView;
             case MESSAGE_ALL_ATTENDING_EVENT:
                 return messageAllAttendingEventView;
             case MESSAGE_ALL_SPEAKERS:
