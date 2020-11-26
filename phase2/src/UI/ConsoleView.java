@@ -34,5 +34,6 @@ public abstract class ConsoleView {
         UNENROLL_IN_EVENT, // Kelvin - Finished
         CREATE_ACCOUNT, // Lewis - Finished
         DELETE_ACCOUNT,
+        CHANGE_CAPACITY,
     }
 }

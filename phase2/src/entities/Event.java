@@ -17,7 +17,7 @@ public class Event implements Serializable, Iterable<UUID> {
     private final UUID eventId;
     private final String eventTitle;
     private final Integer eventRoom;
-    private final Integer eventCapacity;
+    private Integer eventCapacity;
     private Type eventType;
     private final boolean VIPonly;
 
@@ -123,6 +123,7 @@ public class Event implements Serializable, Iterable<UUID> {
         return eventId;
     }
 
+    public void setEventCapacity(Integer eventCapacity){this.eventCapacity = eventCapacity;}
     /**
      * Gets the organizer of this Events UUID
      *

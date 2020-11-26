@@ -15,6 +15,7 @@ public class ViewHandler {
     private MessageAllSpeakersView messageAllSpeakersView;
     private MessageAllAttendeesView messageAllAttendeesView;
     private SeeScheduleView seeScheduleView;
+    private NewEventCapacityView newEventCapacityView;
     //  private DeleteAccountView deleteAccountView;
 
     public ViewHandler(ControllerHandler ch, PresenterHandler ph) {
@@ -34,6 +35,7 @@ public class ViewHandler {
         messageAllSpeakersView = new MessageAllSpeakersView(ch.getMessageAllSpeakersController(), ph.getMessageAllSpeakersPresenter());
         messageAllAttendeesView = new MessageAllAttendeesView(ch.getMessageAllAttendeesController(), ph.getMessageAllAttendeesPresenter());
         seeScheduleView = new SeeScheduleView(ph.getSeeSchedulePresenter());
+        newEventCapacityView = new NewEventCapacityView(ch.getEventCreationController(),ph.getChangeEventCapacityPresenter());
         //   deleteAccountView = new DeleteAccountView(ch.getDeleteAccountController(), deleteAccountPresenter);
     }
 
@@ -68,6 +70,8 @@ public class ViewHandler {
                 return messageAllSpeakersView;
             case MESSAGE_ALL_ATTENDEES:
                 return messageAllAttendeesView;
+            case CHANGE_CAPACITY:
+                return newEventCapacityView;
             default:
                 return null;
         }
@@ -120,5 +124,7 @@ public class ViewHandler {
     public SeeScheduleView getSeeScheduleView() {
         return seeScheduleView;
     }
+
+    public NewEventCapacityView getNewEventCapacityView(){return newEventCapacityView;}
 
 }

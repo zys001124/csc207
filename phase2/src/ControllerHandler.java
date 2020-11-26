@@ -1,3 +1,4 @@
+import UI.NewEventCapacityView;
 import controllers.*;
 import entities.Event;
 import useCaseClasses.EventManager;

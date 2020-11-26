@@ -18,6 +18,7 @@ public class PresenterHandler {
     private MessageAllSpeakersPresenter messageAllSpeakersPresenter;
     private MessageAllAttendeesPresenter messageAllAttendeesPresenter;
     private SeeSchedulePresenter seeSchedulePresenter;
+    private ChangeEventCapacityPresenter changeEventCapacityPresenter;
     //  private  DeleteAccountPresenter deleteAccountPresenter;
 
     public PresenterHandler(UseCaseHandler useCaseHandler) {
@@ -42,6 +43,7 @@ public class PresenterHandler {
         messageAllSpeakersPresenter = new MessageAllSpeakersPresenter();
         messageAllAttendeesPresenter = new MessageAllAttendeesPresenter();
         seeSchedulePresenter = new SeeSchedulePresenter(eventManager, userManager);
+        changeEventCapacityPresenter = new ChangeEventCapacityPresenter();
         //  deleteAccountPresenter = new DeleteAccountPresenter(userManager);
     }
 
@@ -91,5 +93,9 @@ public class PresenterHandler {
 
     public SeeSchedulePresenter getSeeSchedulePresenter() {
         return seeSchedulePresenter;
+    }
+
+    public ChangeEventCapacityPresenter getChangeEventCapacityPresenter() {
+        return changeEventCapacityPresenter;
     }
 }

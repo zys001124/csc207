@@ -97,6 +97,8 @@ public class MenuInputController {
             case 6:
                 return InputProcessResult.NAVIGATE_TO_CREATE_SPEAKER_ACCOUNT;
             case 7:
+                return InputProcessResult.NAVIGATE_TO_CHANGE_CAPACITY;
+            case 8:
                 return null;
             default:
                 return InputProcessResult.INVALID_INPUT;
