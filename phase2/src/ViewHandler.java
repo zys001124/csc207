@@ -35,7 +35,7 @@ public class ViewHandler {
         messageAllSpeakersView = new MessageAllSpeakersView(ch.getMessageAllSpeakersController(), ph.getMessageAllSpeakersPresenter());
         messageAllAttendeesView = new MessageAllAttendeesView(ch.getMessageAllAttendeesController(), ph.getMessageAllAttendeesPresenter());
         seeScheduleView = new SeeScheduleView(ph.getSeeSchedulePresenter());
-        newEventCapacityView = new NewEventCapacityView(ch.getEventCreationController(),ph.getChangeEventCapacityPresenter());
+        newEventCapacityView = new NewEventCapacityView(ch.getChangeCapacityController(),ph.getChangeEventCapacityPresenter());
         deleteAccountView = new DeleteAccountView(ch.getDeleteAccountController(), ph.getDeleteAccountPresenter());
     }
 

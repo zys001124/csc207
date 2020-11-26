@@ -1,6 +1,6 @@
 package UI;
 
-import controllers.EventCreationController;
+import controllers.ChangeCapacityController;
 import controllers.InputProcessResult;
 import presenters.ChangeEventCapacityPresenter;
 
@@ -8,10 +8,10 @@ import java.util.Scanner;
 
 public class NewEventCapacityView extends ConsoleView{
 
-    private final EventCreationController controller;
+    private final ChangeCapacityController controller;
     private final ChangeEventCapacityPresenter presenter;
 
-    public NewEventCapacityView(EventCreationController controller, ChangeEventCapacityPresenter presenter) {
+    public NewEventCapacityView(ChangeCapacityController controller, ChangeEventCapacityPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
