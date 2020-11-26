@@ -38,6 +38,11 @@ public class FirebaseGateway {
     private CollectionReference eventsRef;
     private CollectionReference messagesRef;
 
+    public boolean allowWrite = false;
+    public boolean allowUsersRead = true;
+    public boolean allowEventsRead = false;
+    public boolean allowMessagesRead = false;
+
     public FirebaseGateway(UserManager um, EventManager em, MessageManager mm) {
         userManager = um;
         eventManager = em;
@@ -63,32 +68,38 @@ public class FirebaseGateway {
         eventsRef = db.collection("Events");
         messagesRef = db.collection("Messages");
 
-        getEvents();
-        getMessages();
-        getUsers();
-        addSnapShotListeners();
+        addSnapShotListenersAndLoadFromFirebase();
     }
 
-    private void addSnapShotListeners() {
-        usersRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
-            e.printStackTrace();
-            if(queryDocumentSnapshots != null){
-                onUsersGotten(queryDocumentSnapshots.getDocuments());
-            }
-        });
+    private void addSnapShotListenersAndLoadFromFirebase() {
+        if(allowUsersRead) {
+            getUsers();
+            usersRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+                e.printStackTrace();
+                if(queryDocumentSnapshots != null){
+                    onUsersGotten(queryDocumentSnapshots.getDocuments());
+                }
+            });
+        }
 
-        eventsRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
-            e.printStackTrace();
-            if(queryDocumentSnapshots != null){
-                onEventsGotten(queryDocumentSnapshots.getDocuments());
-            }
-        });
+        if(allowEventsRead) {
+            getEvents();
+            eventsRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+                e.printStackTrace();
+                if(queryDocumentSnapshots != null){
+                    onEventsGotten(queryDocumentSnapshots.getDocuments());
+                }
+            });
+        }
 
-        messagesRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
-            if(queryDocumentSnapshots != null){
-                onMessagesGotten(queryDocumentSnapshots.getDocuments());
-            }
-        });
+        if(allowMessagesRead) {
+            getMessages();
+            messagesRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+                if(queryDocumentSnapshots != null){
+                    onMessagesGotten(queryDocumentSnapshots.getDocuments());
+                }
+            });
+        }
     }
 
     private void addFutureCallbacks(ApiFuture<QuerySnapshot> future, String collectionName) {
@@ -214,13 +225,17 @@ public class FirebaseGateway {
             userData.put("uuid", user.getId().toString());
             userData.put("type", user.getType().toString());
 
-            usersRef.document(user.getUsername()).update(userData);
+            if(allowWrite) {
+                usersRef.document(user.getUsername()).set(userData);
+            }
         }
     }
 
     public void removeUsers(List<User> users) {
         for(User user: users) {
-            usersRef.document(user.getUsername()).delete();
+            if(allowWrite) {
+                usersRef.document(user.getUsername()).delete();
+            }
         }
     }
 
@@ -249,13 +264,17 @@ public class FirebaseGateway {
             eventData.put("speakerIds", speakers);
             eventData.put("attendeeIds", attendees);
 
-            eventsRef.document(event.getEventTitle()).update(eventData);
+            if(allowWrite) {
+                eventsRef.document(event.getEventTitle()).set(eventData);
+            }
         }
     }
 
     public void removeEvents(List<Event> events) {
         for(Event e: events) {
-            eventsRef.document(e.getEventTitle()).delete();
+            if(allowWrite) {
+                eventsRef.document(e.getEventTitle()).delete();
+            }
         }
     }
 
@@ -271,13 +290,17 @@ public class FirebaseGateway {
 
             DocumentReference messageDoc = messagesRef.document(message.getId().toString());
 
-            messageDoc.update(messageData);
+            if(allowWrite) {
+                messageDoc.set(messageData);
+            }
         }
     }
 
     public void removeMessages(List<Message> messages) {
         for(Message message : messages) {
-            messagesRef.document(message.getId().toString()).delete();
+            if(allowWrite) {
+                messagesRef.document(message.getId().toString()).delete();
+            }
         }
     }
 
