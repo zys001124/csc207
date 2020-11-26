@@ -60,7 +60,6 @@ public class ConferenceSystem {
             view = viewHandler.getView(nextScreenType);
         }
 
-        useCaseHandler.saveEntities();
     }
 
     private void init() {

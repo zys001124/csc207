@@ -45,11 +45,11 @@ public class FirebaseGateway {
 
         try {
             FileInputStream serviceAccount =
-                    new FileInputStream("conference-system-group-0186-key.json");
+                    new FileInputStream("conference-system-key.json");
 
             FirebaseOptions options = new FirebaseOptions.Builder()
                     .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://conference-system-group-0186.firebaseio.com")
+                    .setDatabaseUrl("https://conference-system-b48bf.firebaseio.com")
                     .build();
 
             FirebaseApp.initializeApp(options);
@@ -63,17 +63,22 @@ public class FirebaseGateway {
         eventsRef = db.collection("Events");
         messagesRef = db.collection("Messages");
 
+        getEvents();
+        getMessages();
+        getUsers();
         addSnapShotListeners();
     }
 
     private void addSnapShotListeners() {
         usersRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            e.printStackTrace();
             if(queryDocumentSnapshots != null){
                 onUsersGotten(queryDocumentSnapshots.getDocuments());
             }
         });
 
         eventsRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            e.printStackTrace();
             if(queryDocumentSnapshots != null){
                 onEventsGotten(queryDocumentSnapshots.getDocuments());
             }
@@ -134,7 +139,7 @@ public class FirebaseGateway {
         UUID uuid = UUID.fromString(qds.get("uuid").toString());
 
         try {
-            userManager.createUser(type, username, password, uuid);
+            userManager.createUserNoNotify(type, username, password, uuid);
         } catch (UsernameAlreadyExistsException e)  {
         }
     }
@@ -166,7 +171,8 @@ public class FirebaseGateway {
             for(String uuid : (List<String>) Objects.requireNonNull(qds.get("attendeeIds"))) {
                 attendees.add(UUID.fromString(uuid));
             }
-            eventManager.addEvent(title, startTime, endTime, eventId, organizerId, speakers, attendees, room, capacity, VIPonly);
+
+            eventManager.addEventNoNotify(title, startTime, endTime, eventId, organizerId, speakers, attendees, room, capacity, VIPonly);
         }
     }
 
@@ -185,7 +191,7 @@ public class FirebaseGateway {
             UUID messageId = UUID.fromString(qds.get("messageId").toString());
             LocalDateTime timeSent = convertToLocalDateViaInstant((Timestamp)qds.get("timeSent"));
 
-            messageManager.addMessage(senderId, recipientId, messageText, timeSent, messageId);
+            messageManager.addMessageNoNotify(senderId, recipientId, messageText, timeSent, messageId);
         }
     }
 
@@ -196,12 +202,11 @@ public class FirebaseGateway {
     }
 
     public Timestamp convertToTimestamp(LocalDateTime dateToConvert) {
-
-        return Timestamp.ofTimeSecondsAndNanos(dateToConvert.getSecond(), dateToConvert.getNano());
+        return Timestamp.parseTimestamp(dateToConvert.toString());
     }
     
-    public void pushUsers() {
-        for(User user : userManager.getUsers()) {
+    public void pushUsers(List<User> users) {
+        for(User user : users) {
             HashMap<String, Object> userData = new HashMap<>();
 
             userData.put("username", user.getUsername());
@@ -209,12 +214,18 @@ public class FirebaseGateway {
             userData.put("uuid", user.getId().toString());
             userData.put("type", user.getType().toString());
 
-            usersRef.document(user.getUsername()).set(userData);
+            usersRef.document(user.getUsername()).update(userData);
         }
     }
 
-    public void pushEvents() {
-        for(Event event : eventManager.getEvents()) {
+    public void removeUsers(List<User> users) {
+        for(User user: users) {
+            usersRef.document(user.getUsername()).delete();
+        }
+    }
+
+    public void pushEvents(List<Event> events) {
+        for(Event event : events) {
             HashMap<String, Object> eventData = new HashMap<>();
 
             eventData.put("title", event.getEventTitle());
@@ -238,12 +249,18 @@ public class FirebaseGateway {
             eventData.put("speakerIds", speakers);
             eventData.put("attendeeIds", attendees);
 
-            eventsRef.document(event.getEventTitle()).set(eventData);
+            eventsRef.document(event.getEventTitle()).update(eventData);
         }
     }
 
-    public void pushMessages() {
-        for(Message message : messageManager.getMessages()) {
+    public void removeEvents(List<Event> events) {
+        for(Event e: events) {
+            eventsRef.document(e.getEventTitle()).delete();
+        }
+    }
+
+    public void pushMessages(List<Message> messages) {
+        for(Message message : messages) {
             HashMap<String, Object> messageData = new HashMap<>();
 
             messageData.put("messageText", message.getMessageText());
@@ -254,9 +271,14 @@ public class FirebaseGateway {
 
             DocumentReference messageDoc = messagesRef.document(message.getId().toString());
 
-            messageDoc.set(messageData);
+            messageDoc.update(messageData);
         }
     }
 
+    public void removeMessages(List<Message> messages) {
+        for(Message message : messages) {
+            messagesRef.document(message.getId().toString()).delete();
+        }
+    }
 
 }

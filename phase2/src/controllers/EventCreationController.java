@@ -48,6 +48,9 @@ public class EventCreationController {
         }
 
         String[] parametersForEvent = input.split(",");
+        if(parametersForEvent.length !=7) {
+            return InputProcessResult.INVALID_INPUT;
+        }
 
         UUID eventID = getUuid();
 
@@ -115,9 +118,9 @@ public class EventCreationController {
     }
 
     private boolean VIPonlytypo(String b){
-        if(b.equals("true")){return true;}
-        if(b.equals("false")){return true;}
-        return false;
+        if(b.equals("true")){return false;}
+        if(b.equals("false")){return false;}
+        return true;
     }
 
     private boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {

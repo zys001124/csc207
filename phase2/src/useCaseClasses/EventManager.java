@@ -3,6 +3,7 @@ package useCaseClasses;
 import entities.Event;
 import entities.User;
 import exceptions.*;
+import observers.Observable;
 import org.threeten.bp.LocalDate;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.util.UUID;
 /**
  * Represents an eventManager that can modify events of the conference
  */
-public class EventManager {
+public class EventManager extends Observable {
 
     private final List<Event> events;
 
@@ -34,13 +35,27 @@ public class EventManager {
      * @param e the event that is gonna be added
      */
     public void addEvent(Event e) {
-        events.add(e);
+        List<Event> eventsToAdd = new ArrayList<>();
+        eventsToAdd.add(e);
+        events.addAll(eventsToAdd);
+        notifyObservers(eventsToAdd, true);
     }
 
     public void addEvent(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
                          List<UUID> attendees, int room, int capacity, boolean VIPonly) {
+
         Event e = new Event(title, startTime, endTime, id, organizerId, speakerId,
                 attendees, room, capacity, VIPonly);
+
+        addEvent(e);
+    }
+
+    public void addEventNoNotify(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
+                         List<UUID> attendees, int room, int capacity, boolean VIPonly) {
+
+        Event e = new Event(title, startTime, endTime, id, organizerId, speakerId,
+                attendees, room, capacity, VIPonly);
+
         events.add(e);
     }
 
@@ -76,7 +91,10 @@ public class EventManager {
      * @return the event that will be removed
      */
     public Event removeEvent(int i) {
-        return events.remove(i);
+        List<Event> eventsToRemove = new ArrayList<>();
+        eventsToRemove.add(events.remove(i));
+        notifyObservers(eventsToRemove, false);
+        return eventsToRemove.get(0);
     }
 
     /**
@@ -87,10 +105,13 @@ public class EventManager {
      * @return the event that is being removed or null if it can't be found.
      */
     public Event removeEvent(UUID id) {
+        List<Event> eventsToRemove = new ArrayList<>();
         for (Event event : events) {
             int index = events.indexOf(event);
             if (event.getId().equals(id)) {
-                return events.remove(index);
+                eventsToRemove.add(events.remove(index));
+                notifyObservers(eventsToRemove, false);
+                return eventsToRemove.get(0);
             }
         }
         return null;
@@ -182,7 +203,10 @@ public class EventManager {
             if (e.hasAttendee(attendee.getId())) {
                 throw new UserAlreadyEnrolledException();
             }
+            List<Event> eventsChanged = new ArrayList<>();
             e.addAttendee(attendee);
+            eventsChanged.add(e);
+            notifyObservers(eventsChanged, true);
             return;
         }
         throw new EventNotFoundException(parsedInput);
@@ -205,7 +229,11 @@ public class EventManager {
                 throw new UserNotEnrolledInEventException();
             }
 
-            events.get(parsedInput - 1).removeAttendee(attendee);
+            Event e = events.get(parsedInput - 1);
+            List<Event> eventsChanged = new ArrayList<>();
+            e.removeAttendee(attendee);
+            eventsChanged.add(e);
+            notifyObservers(eventsChanged, true);
             return;
         }
         throw new EventNotFoundException(parsedInput);

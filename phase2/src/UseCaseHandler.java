@@ -1,4 +1,7 @@
 import gateways.FirebaseGateway;
+import observers.EventManagerObserver;
+import observers.MessageManagerObserver;
+import observers.UserManagerObserver;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
@@ -10,6 +13,11 @@ public class UseCaseHandler {
     private MessageManager messageManager;
     private EventManager eventManager;
 
+    // Observers
+    private UserManagerObserver userManagerObserver;
+    private MessageManagerObserver messageManagerObserver;
+    private EventManagerObserver eventManagerObserver;
+
     private FirebaseGateway fbg;
 
     public UseCaseHandler() {
@@ -19,12 +27,14 @@ public class UseCaseHandler {
         eventManager = new EventManager();
 
         fbg = new FirebaseGateway(userManager, eventManager, messageManager);
-    }
 
-    public void saveEntities() {
-        fbg.pushUsers();
-        fbg.pushEvents();
-        fbg.pushMessages();
+        userManagerObserver = new UserManagerObserver(fbg);
+        messageManagerObserver = new MessageManagerObserver(fbg);
+        eventManagerObserver = new EventManagerObserver(fbg);
+
+        userManager.addObserver(userManagerObserver);
+        messageManager.addObserver(messageManagerObserver);
+        eventManager.addObserver(eventManagerObserver);
     }
 
     public UserManager getUserManager() {

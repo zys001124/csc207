@@ -3,6 +3,7 @@ package useCaseClasses;
 
 import entities.User;
 import exceptions.*;
+import observers.Observable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.UUID;
 /**
  * A manager for managing all the users in the tech conference
  */
-public class UserManager {
+public class UserManager extends Observable {
 
     private final List<User> users;
 
@@ -89,10 +90,13 @@ public class UserManager {
      * @return the user that is being removed or null if it can't be found.
      */
     public User removeUser(UUID id){
+        List<User> usersToRemove = new ArrayList<>();
         for(User user: users){
             int index = users.indexOf(user);
             if(user.getId().equals(id)){
-                return users.remove(index);
+                usersToRemove.add(users.remove(index));
+                notifyObservers(usersToRemove, false);
+                return usersToRemove.get(0);
             }
         }
         return null;
@@ -124,10 +128,24 @@ public class UserManager {
             throw new InvalidUserTypeException(User.UserType.ADMIN, currentlyLoggedIn.getType());
         }
         User user = new User(type, username, password, UUID.randomUUID());
-        users.add(user);
+        List<User> usersToAdd = new ArrayList<>();
+        usersToAdd.add(user);
+        users.addAll(usersToAdd);
+        notifyObservers(usersToAdd, true);
     }
 
     public void createUser(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException{
+        if (doesUserExist(username)) {
+            throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
+        }
+        User user = new User(type, username, password, id);
+        List<User> usersToAdd = new ArrayList<>();
+        usersToAdd.add(user);
+        users.addAll(usersToAdd);
+        notifyObservers(usersToAdd, true);
+    }
+
+    public void createUserNoNotify(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException{
         if (doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
         }
@@ -206,4 +224,5 @@ public class UserManager {
                 throw new UserTypeDoesNotExistException("User type: " + type + " is not a valid user type");
         }
     }
+
 }

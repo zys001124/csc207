@@ -3,6 +3,7 @@ package useCaseClasses;
 import entities.Event;
 import entities.Message;
 import entities.User;
+import observers.Observable;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.UUID;
 /**
  * Represents an messageManager that can store/create messages sent by users of the conference
  */
-public class MessageManager {
+public class MessageManager extends Observable {
 
     private final List<Message> messages;
 
@@ -39,12 +40,21 @@ public class MessageManager {
      * @param message  the message that is sent
      */
     public void sendMessage(UUID sender, UUID receiver, String message) {
-
-        messages.add(new Message(message, sender, receiver, UUID.randomUUID()));
+        List<Message> messagesToAdd = new ArrayList<>();
+        messagesToAdd.add(new Message(message, sender, receiver, UUID.randomUUID()));
+        messages.addAll(messagesToAdd);
+        notifyObservers(messagesToAdd, true);
     }
 
     public void addMessage(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
+        List<Message> messagesToAdd = new ArrayList<>();
+        messagesToAdd.add(new Message(message, sender, receiver, messageId, timeSent));
+        messages.addAll(messagesToAdd);
+        notifyObservers(messagesToAdd, true);
+    }
 
+    public void addMessageNoNotify(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
+        List<Message> messagesToAdd = new ArrayList<>();
         messages.add(new Message(message, sender, receiver, messageId, timeSent));
     }
 
@@ -58,10 +68,12 @@ public class MessageManager {
     }
 
     public void messageAllAttendingEvent(String message, Event e, UUID sender) {
-
+        List<Message> messagesToAdd = new ArrayList<>();
         for (UUID userId : e) {
-            messages.add(new Message(message, sender, userId, UUID.randomUUID()));
+            messagesToAdd.add(new Message(message, sender, userId, UUID.randomUUID()));
         }
+        messages.addAll(messagesToAdd);
+        notifyObservers(messagesToAdd, true);
     }
 
     /**
