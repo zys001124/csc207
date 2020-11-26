@@ -19,7 +19,7 @@ public class PresenterHandler {
     private MessageAllAttendeesPresenter messageAllAttendeesPresenter;
     private SeeSchedulePresenter seeSchedulePresenter;
     private ChangeEventCapacityPresenter changeEventCapacityPresenter;
-    //  private  DeleteAccountPresenter deleteAccountPresenter;
+    private  DeleteAccountPresenter deleteAccountPresenter;
 
     public PresenterHandler(UseCaseHandler useCaseHandler) {
         constructProgramPresenters(useCaseHandler);
@@ -44,7 +44,7 @@ public class PresenterHandler {
         messageAllAttendeesPresenter = new MessageAllAttendeesPresenter();
         seeSchedulePresenter = new SeeSchedulePresenter(eventManager, userManager);
         changeEventCapacityPresenter = new ChangeEventCapacityPresenter();
-        //  deleteAccountPresenter = new DeleteAccountPresenter(userManager);
+        deleteAccountPresenter = new DeleteAccountPresenter(userManager);
     }
 
     public LoginPresenter getLoginPresenter() {
@@ -77,6 +77,10 @@ public class PresenterHandler {
 
     public EventCreationPresenter getEventCreationPresenter() {
         return eventCreationPresenter;
+    }
+
+    public DeleteAccountPresenter getDeleteAccountPresenter() {
+        return deleteAccountPresenter;
     }
 
     public MessageAllAttendingEventPresenter getMessageAllAttendingEventPresenter() {

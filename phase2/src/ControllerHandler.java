@@ -18,7 +18,7 @@ public class ControllerHandler {
     private MessageAllAttendingEventController messageAllAttendingEventController;
     private MessageAllSpeakersController messageAllSpeakersController;
     private MessageAllAttendeesController messageAllAttendeesController;
-    //  private DeleteAccountController deleteAccountController;
+    private DeleteAccountController deleteAccountController;
 
     public ControllerHandler(UseCaseHandler useCaseHandler) {
         constructProgramControllers(useCaseHandler);
@@ -41,7 +41,7 @@ public class ControllerHandler {
         messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
         messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
         messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
-        //  deleteAccountController = new DeleteAccountController(userManager, deleteAccountPresenter);
+        deleteAccountController = new DeleteAccountController(userManager);
 
     }
 
@@ -64,6 +64,10 @@ public class ControllerHandler {
 
     public EventEnrollController getEventEnrollController() {
         return eventEnrollController;
+    }
+
+    public DeleteAccountController getDeleteAccountController() {
+        return deleteAccountController;
     }
 
     public EventUnEnrollController getEventUnEnrollController() {

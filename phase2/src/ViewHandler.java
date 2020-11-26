@@ -16,7 +16,7 @@ public class ViewHandler {
     private MessageAllAttendeesView messageAllAttendeesView;
     private SeeScheduleView seeScheduleView;
     private NewEventCapacityView newEventCapacityView;
-    //  private DeleteAccountView deleteAccountView;
+    private DeleteAccountView deleteAccountView;
 
     public ViewHandler(ControllerHandler ch, PresenterHandler ph) {
         constructProgramViews(ch, ph);
@@ -36,7 +36,7 @@ public class ViewHandler {
         messageAllAttendeesView = new MessageAllAttendeesView(ch.getMessageAllAttendeesController(), ph.getMessageAllAttendeesPresenter());
         seeScheduleView = new SeeScheduleView(ph.getSeeSchedulePresenter());
         newEventCapacityView = new NewEventCapacityView(ch.getEventCreationController(),ph.getChangeEventCapacityPresenter());
-        //   deleteAccountView = new DeleteAccountView(ch.getDeleteAccountController(), deleteAccountPresenter);
+        deleteAccountView = new DeleteAccountView(ch.getDeleteAccountController(), ph.getDeleteAccountPresenter());
     }
 
     public ConsoleView getView(ConsoleView.ConsoleViewType type) {
@@ -62,8 +62,8 @@ public class ViewHandler {
                 return eventCancelView;
             case CREATE_EVENT:
                 return eventCreationView;
-//            case DELETE_ACCOUNT:
-//                return deleteAccountView;
+            case DELETE_ACCOUNT:
+                return deleteAccountView;
             case MESSAGE_ALL_ATTENDING_EVENT:
                 return messageAllAttendingEventView;
             case MESSAGE_ALL_SPEAKERS:
@@ -95,6 +95,10 @@ public class ViewHandler {
 
     public EventEnrollView getEventEnrollView() {
         return eventEnrollView;
+    }
+
+    public DeleteAccountView getDeleteAccountView() {
+        return deleteAccountView;
     }
 
     public EventUnEnrollView getEventUnEnrollView() {

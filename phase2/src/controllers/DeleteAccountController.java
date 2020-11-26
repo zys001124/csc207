@@ -5,6 +5,7 @@ import exceptions.UserNotFoundException;
 import presenters.DeleteAccountPresenter;
 import useCaseClasses.UserManager;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -14,16 +15,14 @@ import java.util.UUID;
 public class DeleteAccountController {
 
     private final UserManager userManager;
-    private final DeleteAccountPresenter presenter;
 
     /**
      * Creates a CreateAccountController with the given UserManager
      *
      * @param um - The userManager this controller will use
      */
-    public DeleteAccountController(UserManager um, DeleteAccountPresenter deleteAccountPresenter){
+    public DeleteAccountController(UserManager um){
         userManager = um;
-        presenter = deleteAccountPresenter;
     }
 
     /**
@@ -39,14 +38,18 @@ public class DeleteAccountController {
             return InputProcessResult.BACK;
         }
 
-        if (!presenter.getAllUsers().contains(input)) {
-            return InputProcessResult.USER_NOT_FOUND;
+        List<User> users = userManager.getUsers();
+
+        for(User u : users){
+            if(u.getUsername().equals(input)){
+                UUID wanted_id = userManager.getUserID(input);
+                userManager.removeUser(wanted_id);
+                return InputProcessResult.SUCCESS;
+            }
         }
 
-        UUID wanted_id = userManager.getUserID(input);
-        userManager.removeUser(wanted_id);
+        return InputProcessResult.USER_NOT_FOUND;
 
-        return InputProcessResult.SUCCESS;
     }
 
 }
