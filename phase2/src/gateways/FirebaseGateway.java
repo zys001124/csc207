@@ -9,7 +9,6 @@ import com.google.cloud.firestore.*;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
-import com.google.firestore.v1beta1.Document;
 import entities.Event;
 import entities.Message;
 import entities.User;
@@ -51,8 +50,6 @@ public class FirebaseGateway {
             exception.printStackTrace();
             System.exit(-1);
         }
-
-       // FirebaseAuth auth = FirebaseAuth.getInstance();
 
         db = FirestoreClient.getFirestore();
     }

@@ -24,192 +24,51 @@ public class ConferenceSystem {
     public static final String MESSAGE_DATA_PATH = "messageData.txt";
     public static final String EVENT_DATA_PATH = "eventData.txt";
 
-    // Managers
-    private UserManager userManager;
-    private MessageManager messageManager;
-    private EventManager eventManager;
+    private UseCaseHandler useCaseHandler;
 
-    // Controllers
-    private LoginController loginController;
-    private MenuInputController menuInputController;
-    private MessageUserController messageUserController;
-    private CreateAccountController createAccountController;
-    private EventEnrollController eventEnrollController;
-    private EventUnEnrollController eventUnEnrollController;
-    private EventCancelController eventCancelController;
-    private EventCreationController eventCreationController;
-    private MessageAllAttendingEventController messageAllAttendingEventController;
-    private MessageAllSpeakersController messageAllSpeakersController;
-    private MessageAllAttendeesController messageAllAttendeesController;
-  //  private DeleteAccountController deleteAccountController;
+    private ControllerHandler controllerHandler;
 
-    // Presenters
-    private LoginPresenter loginPresenter;
-    private MenuInputPresenter menuInputPresenter;
-    private MessageUserPresenter messageUserPresenter;
-    private CreateAccountPresenter createAccountPresenter;
-    private EventEnrollPresenter eventEnrollPresenter;
-    private EventUnEnrollPresenter eventUnEnrollPresenter;
-    private EventCancelPresenter eventCancelPresenter;
-    private EventCreationPresenter eventCreationPresenter;
-    private MessageAllAttendingEventPresenter messageAllAttendingEventPresenter;
-    private MessageAllSpeakersPresenter messageAllSpeakersPresenter;
-    private MessageAllAttendeesPresenter messageAllAttendeesPresenter;
-    private SeeSchedulePresenter seeSchedulePresenter;
-  //  private  DeleteAccountPresenter deleteAccountPresenter;
+    private PresenterHandler presenterHandler;
 
-    // Views
-    private LoginView loginView;
-    private MenuInputView menuInputView;
-    private MessageUserView messageUserView;
-    private CreateAccountView createAccountView;
-    private EventEnrollView eventEnrollView;
-    private EventUnEnrollView eventUnEnrollView;
-    private EventCancelView eventCancelView;
-    private EventCreationView eventCreationView;
-    private MessageAllAttendingEventView messageAllAttendingEventView;
-    private MessageAllSpeakersView messageAllSpeakersView;
-    private MessageAllAttendeesView messageAllAttendeesView;
-    private SeeScheduleView seeScheduleView;
-  //  private DeleteAccountView deleteAccountView;
-
-
-    private FirebaseGateway fbg;
+    private ViewHandler viewHandler;
 
     /**
-     * Loads all entiteis, runs the program, saves all entities
+     * Loads all entities, runs the program, saves all entities
      */
-    public void run() {
+
+    public ConferenceSystem() {
         init();
-        loginView = new LoginView(loginController, loginPresenter);
-        // Program loop
+    }
+
+    public void run() {
+
         Scanner in = new Scanner(System.in);
 
         ConsoleView.ConsoleViewType nextScreenType = ConsoleView.ConsoleViewType.LOGIN;
-        ConsoleView view = getView(nextScreenType);
+        ConsoleView view = viewHandler.getView(nextScreenType);
 
         while (nextScreenType == ConsoleView.ConsoleViewType.LOGIN) {
             // UI prints string for whatever option the user is on
             nextScreenType = view.runFlow(in);
         }
 
-        // This depends on the type of user logged in
-        initializeViews();
-        view = menuInputView;
+        view = viewHandler.getMenuInputView();
 
         while (view != null) {
             // UI prints string for whatever option the user is on
             nextScreenType = view.runFlow(in);
-            view = getView(nextScreenType);
+            view = viewHandler.getView(nextScreenType);
         }
 
-        saveEntities();
-
+        useCaseHandler.saveEntities();
     }
 
     private void init() {
-        initializeUseCases();
-        initializePresenters();
-        initializeControllers();
+        useCaseHandler = new UseCaseHandler();
+        controllerHandler = new ControllerHandler(useCaseHandler);
+        presenterHandler = new PresenterHandler(useCaseHandler);
+
+        viewHandler = new ViewHandler(controllerHandler, presenterHandler);
     }
 
-    private void initializeUseCases() {
-
-
-        userManager = new UserManager();
-        messageManager = new MessageManager();
-        eventManager = new EventManager();
-
-        fbg = new FirebaseGateway(userManager, eventManager, messageManager);
-        fbg.loadEntities();
-    }
-
-    private void saveEntities() {
-        fbg.pushUsers();
-        fbg.pushEvents();
-        fbg.pushMessages();
-    }
-
-    private void initializeControllers() {
-        loginController = new LoginController(userManager);
-        menuInputController = new MenuInputController(userManager);
-        messageUserController = new MessageUserController(messageManager, userManager);
-        createAccountController = new CreateAccountController(userManager);
-        eventEnrollController = new EventEnrollController(eventManager, userManager);
-        eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
-        eventCancelController = new EventCancelController(eventManager, eventCancelPresenter, userManager);
-        eventCreationController = new EventCreationController(eventManager, userManager);
-        messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
-        messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
-        messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
-      //  deleteAccountController = new DeleteAccountController(userManager, deleteAccountPresenter);
-
-    }
-
-    private void initializePresenters() {
-        loginPresenter = new LoginPresenter();
-        menuInputPresenter = new MenuInputPresenter(userManager);
-        messageUserPresenter = new MessageUserPresenter(userManager, messageManager);
-        createAccountPresenter = new CreateAccountPresenter();
-        eventEnrollPresenter = new EventEnrollPresenter(eventManager);
-        eventUnEnrollPresenter = new EventUnEnrollPresenter(eventManager, userManager);
-        eventCancelPresenter = new EventCancelPresenter(eventManager);
-        eventCreationPresenter = new EventCreationPresenter();
-        messageAllAttendingEventPresenter = new MessageAllAttendingEventPresenter(userManager, eventManager);
-        messageAllSpeakersPresenter = new MessageAllSpeakersPresenter();
-        messageAllAttendeesPresenter = new MessageAllAttendeesPresenter();
-        seeSchedulePresenter = new SeeSchedulePresenter(eventManager, userManager);
-      //  deleteAccountPresenter = new DeleteAccountPresenter(userManager);
-    }
-
-    private void initializeViews() {
-        menuInputView = new MenuInputView(menuInputController, menuInputPresenter);
-        messageUserView = new MessageUserView(messageUserController, messageUserPresenter);
-        createAccountView = new CreateAccountView(createAccountController, createAccountPresenter);
-        eventEnrollView = new EventEnrollView(eventEnrollController, eventEnrollPresenter);
-        eventUnEnrollView = new EventUnEnrollView(eventUnEnrollController, eventUnEnrollPresenter);
-        eventCancelView = new EventCancelView(eventCancelController, eventCancelPresenter);
-        eventCreationView = new EventCreationView(eventCreationController, eventCreationPresenter);
-        messageAllAttendingEventView = new MessageAllAttendingEventView(messageAllAttendingEventController, messageAllAttendingEventPresenter);
-        messageAllSpeakersView = new MessageAllSpeakersView(messageAllSpeakersController, messageAllSpeakersPresenter);
-        messageAllAttendeesView = new MessageAllAttendeesView(messageAllAttendeesController, messageAllAttendeesPresenter);
-        seeScheduleView = new SeeScheduleView(seeSchedulePresenter);
-     //   deleteAccountView = new DeleteAccountView(deleteAccountController, deleteAccountPresenter);
-    }
-
-    private ConsoleView getView(ConsoleView.ConsoleViewType type) {
-        if (type == null) {
-            return null;
-        }
-        switch (type) {
-            case LOGIN:
-                return loginView;
-            case MAIN_MENU:
-                return menuInputView;
-            case MESSAGE_USER:
-                return messageUserView;
-            case CREATE_ACCOUNT:
-                return createAccountView;
-            case ENROLL_IN_EVENT:
-                return eventEnrollView;
-            case UNENROLL_IN_EVENT:
-                return eventUnEnrollView;
-            case EVENT_SCHEDULE:
-                return seeScheduleView;
-            case CANCEL_EVENT:
-                return eventCancelView;
-            case CREATE_EVENT:
-                return eventCreationView;
-//            case DELETE_ACCOUNT:
-//                return deleteAccountView;
-            case MESSAGE_ALL_ATTENDING_EVENT:
-                return messageAllAttendingEventView;
-            case MESSAGE_ALL_SPEAKERS:
-                return messageAllSpeakersView;
-            case MESSAGE_ALL_ATTENDEES:
-                return messageAllAttendeesView;
-            default:
-                return null;
-        }
-    }
 }

@@ -14,20 +14,17 @@ import useCaseClasses.UserManager;
 public class EventCancelController {
 
     private final EventManager Emanager;
-    private final EventCancelPresenter presenter;
     private final UserManager Umanager;
 
     /**
      * Creates an EventCancelController with the given EventManager, EventCancelPresenter and UserManager
      *
      * @param Emanager  the EventManager this controller will use
-     * @param presenter the EventCancelPresenter this controller will use
      * @param Umanager  the UserManager this controller will use
      */
 
-    public EventCancelController(EventManager Emanager, EventCancelPresenter presenter, UserManager Umanager) {
+    public EventCancelController(EventManager Emanager, UserManager Umanager) {
         this.Emanager = Emanager;
-        this.presenter = presenter;
         this.Umanager = Umanager;
     }
 
@@ -44,7 +41,7 @@ public class EventCancelController {
             return InputProcessResult.BACK;
         }
 
-        if (!presenter.getAllEvents().contains(input)) {
+        if (!Emanager.eventTitleExists(input)) {
             return InputProcessResult.EVENT_DOES_NOT_EXIST;
         }
 

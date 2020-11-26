@@ -243,5 +243,12 @@ public class EventManager {
         return theList;
     }
 
-
+    public boolean eventTitleExists(String title) {
+        for(Event e: events) {
+            if(e.getEventTitle().equals(title)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

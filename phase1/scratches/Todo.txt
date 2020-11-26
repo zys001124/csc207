@@ -12,7 +12,7 @@ Roles:
 Jon - Use case classes
 Lewis - Gateways
 Luka - Presenters
-J - Finish Controllers
+J - Finish ControllerHandler
 Kelvin - UI
 Simon - Test classes
 Ysz - Help with presenters
