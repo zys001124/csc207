@@ -86,7 +86,6 @@ public class FirebaseGateway {
         });
     }
 
-
     private void addFutureCallbacks(ApiFuture<QuerySnapshot> future, String collectionName) {
         ApiFutures.addCallback(future, new ApiFutureCallback<QuerySnapshot>() {
             @Override
