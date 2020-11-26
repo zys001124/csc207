@@ -6,9 +6,11 @@ import com.google.api.core.ApiFutures;
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.cloud.Timestamp;
 import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.EventListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.database.annotations.Nullable;
 import entities.Event;
 import entities.Message;
 import entities.User;
@@ -29,7 +31,12 @@ public class FirebaseGateway {
     private UserManager userManager;
     private EventManager eventManager;
     private MessageManager messageManager;
+
     private Firestore db;
+
+    private CollectionReference usersRef;
+    private CollectionReference eventsRef;
+    private CollectionReference messagesRef;
 
     public FirebaseGateway(UserManager um, EventManager em, MessageManager mm) {
         userManager = um;
@@ -52,13 +59,33 @@ public class FirebaseGateway {
         }
 
         db = FirestoreClient.getFirestore();
+        usersRef = db.collection("Users");
+        eventsRef = db.collection("Events");
+        messagesRef = db.collection("Messages");
+
+        addSnapShotListeners();
     }
 
-    public void loadEntities() {
-        getUsers();
-        getEvents();
-        getMessages();
+    private void addSnapShotListeners() {
+        usersRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            if(queryDocumentSnapshots != null){
+                onUsersGotten(queryDocumentSnapshots.getDocuments());
+            }
+        });
+
+        eventsRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            if(queryDocumentSnapshots != null){
+                onEventsGotten(queryDocumentSnapshots.getDocuments());
+            }
+        });
+
+        messagesRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
+            if(queryDocumentSnapshots != null){
+                onMessagesGotten(queryDocumentSnapshots.getDocuments());
+            }
+        });
     }
+
 
     private void addFutureCallbacks(ApiFuture<QuerySnapshot> future, String collectionName) {
         ApiFutures.addCallback(future, new ApiFutureCallback<QuerySnapshot>() {
@@ -84,35 +111,37 @@ public class FirebaseGateway {
     }
 
     private void getUsers() {
-        ApiFuture<QuerySnapshot> userFuture = db.collection("Users").get();
+        ApiFuture<QuerySnapshot> userFuture = usersRef.get();
         addFutureCallbacks(userFuture, "Users");
     }
 
     private void onUsersGotten(List<QueryDocumentSnapshot> documentSnapshotList) {
         for(int i = 0; i<documentSnapshotList.size(); i++) {
             QueryDocumentSnapshot qds = documentSnapshotList.get(i);
+            updateUserManager(qds);
+        }
+    }
 
-            User.UserType type = null;
-            try {
-                type = userManager.parseType(qds.get("type").toString());
-            } catch (UserTypeDoesNotExistException e) {
-                e.printStackTrace();
-                System.exit(-1);
-            }
-            String username = qds.get("username").toString();
-            String password = qds.get("password").toString();
-            UUID uuid = UUID.fromString(qds.get("uuid").toString());
+    private void updateUserManager(QueryDocumentSnapshot qds) {
+        User.UserType type = null;
+        try {
+            type = userManager.parseType(qds.get("type").toString());
+        } catch (UserTypeDoesNotExistException e) {
+            e.printStackTrace();
+            System.exit(-1);
+        }
+        String username = qds.get("username").toString();
+        String password = qds.get("password").toString();
+        UUID uuid = UUID.fromString(qds.get("uuid").toString());
 
-            try {
-                userManager.createUser(type, username, password, uuid);
-            } catch (UsernameAlreadyExistsException e)  {
-                System.out.println(username);
-            }
+        try {
+            userManager.createUser(type, username, password, uuid);
+        } catch (UsernameAlreadyExistsException e)  {
         }
     }
 
     private void getEvents() {
-        ApiFuture<QuerySnapshot> eventFuture = db.collection("Events").get();
+        ApiFuture<QuerySnapshot> eventFuture = eventsRef.get();
         addFutureCallbacks(eventFuture, "Events");
     }
 
@@ -143,7 +172,7 @@ public class FirebaseGateway {
     }
 
     private void getMessages() {
-        ApiFuture<QuerySnapshot> messageFuture = db.collection("Messages").get();
+        ApiFuture<QuerySnapshot> messageFuture = messagesRef.get();
         addFutureCallbacks(messageFuture, "Messages");
     }
 
@@ -173,7 +202,6 @@ public class FirebaseGateway {
     }
     
     public void pushUsers() {
-        CollectionReference usersRef = db.collection("Users");
         for(User user : userManager.getUsers()) {
             HashMap<String, Object> userData = new HashMap<>();
 
@@ -187,7 +215,6 @@ public class FirebaseGateway {
     }
 
     public void pushEvents() {
-        CollectionReference eventsRef = db.collection("Events");
         for(Event event : eventManager.getEvents()) {
             HashMap<String, Object> eventData = new HashMap<>();
 
@@ -217,7 +244,6 @@ public class FirebaseGateway {
     }
 
     public void pushMessages() {
-        CollectionReference messagesRef = db.collection("Messages");
         for(Message message : messageManager.getMessages()) {
             HashMap<String, Object> messageData = new HashMap<>();
 

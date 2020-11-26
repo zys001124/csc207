@@ -19,7 +19,6 @@ public class UseCaseHandler {
         eventManager = new EventManager();
 
         fbg = new FirebaseGateway(userManager, eventManager, messageManager);
-        fbg.loadEntities();
     }
 
     public void saveEntities() {
