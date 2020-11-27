@@ -33,6 +33,8 @@ public class DeleteAccountPresenter extends Presenter{
             return "";
         } else if (result == InputProcessResult.USER_NOT_FOUND) {
             return "This user does not exist. Try again.\n";
+        } else if (result == InputProcessResult.INVALID_USER_TYPE) {
+            return "This user can not be deleted. Try again.\n";
         } else {
             return "Account deleted successfully";
         }

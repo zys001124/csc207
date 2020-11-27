@@ -43,6 +43,9 @@ public class DeleteAccountController {
         for(User u : users){
             if(u.getUsername().equals(input)){
                 UUID wanted_id = userManager.getUserID(input);
+                if(userManager.getUser(wanted_id).getType().equals(User.UserType.ADMIN)){
+                    return InputProcessResult.INVALID_USER_TYPE;
+                }
                 userManager.removeUser(wanted_id);
                 return InputProcessResult.SUCCESS;
             }
