@@ -36,8 +36,8 @@ public class MessageUserPresenter extends Presenter {
      */
     @Override
     public String getPreInputText() {
-        return "Please type in the username you wish view conversation history with and/or to send a message.\n" +
-                "Type \"back\" in the message text prompt to return to the main menu if you simply wish to view your conversation history:";
+        return "Please type in the username you wish to send a message.\n" +
+                "Type \"back\" in the message text prompt to return to the main menu";
     }
 
     /**
@@ -143,35 +143,5 @@ public class MessageUserPresenter extends Presenter {
         return "Please enter your message (type \"back\" to return to the main menu):";
     }
 
-    /**
-     * Intro before showing message history with <recipientUsername>
-     *
-     * @return a String - Message history with <recipientUsername>
-     */
-    public String preMessageHistoryText(String recipientUsername) {
-        return "Conversation history with " + recipientUsername + ":";
-    }
 
-    /**
-     * Finds all messages sent between the currently logged in user and <recipientUsername>
-     *
-     * @return a String - Message history with <recipientUsername>
-     */
-    public String messageHistory(String recipientUsername) {
-        try {
-            List<Message> messageBetweenTwo = messageManager.messagesBetweenTwo(userManager.getUser(recipientUsername), userManager.getCurrentlyLoggedIn());
-            if (messageBetweenTwo.size() == 0) {
-                return "No conversation history found.";
-            }
-            StringBuilder messageHistory = new StringBuilder();
-            for (Message message : messageBetweenTwo) {
-                String messageSenderUsername = userManager.getUser(message.getSenderId()).getUsername();
-                String messageRecipientUsername = userManager.getUser(message.getRecipientId()).getUsername();
-                messageHistory.append("From: ").append(messageSenderUsername).append(", To: ").append(messageRecipientUsername).append(", Time: ").append(message.getTimeSent().toString()).append(", Message: \n").append(message.getMessageText()).append("\n");
-            }
-            return messageHistory.toString().trim();
-        } catch (UserNotFoundException e) {
-            return "No conversation history found.";
-        }
-    }
 }

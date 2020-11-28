@@ -46,8 +46,6 @@ public class MessageUserView extends ConsoleView {
         System.out.println(presenter.getPossibleUsers());
         String receiverUsername = inputScanner.nextLine();
 
-        System.out.println(presenter.preMessageHistoryText(receiverUsername));
-        System.out.println(presenter.messageHistory(receiverUsername));
         System.out.println(presenter.messagePrompt());
         String messageText = inputScanner.nextLine();
 
