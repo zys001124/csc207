@@ -17,6 +17,7 @@ public class ViewHandler {
     private SeeScheduleView seeScheduleView;
     private NewEventCapacityView newEventCapacityView;
     private DeleteAccountView deleteAccountView;
+    private ViewMessagesView viewMessagesView;
 
     public ViewHandler(ControllerHandler ch, PresenterHandler ph) {
         constructProgramViews(ch, ph);
@@ -37,6 +38,7 @@ public class ViewHandler {
         seeScheduleView = new SeeScheduleView(ph.getSeeSchedulePresenter());
         newEventCapacityView = new NewEventCapacityView(ch.getChangeCapacityController(),ph.getChangeEventCapacityPresenter());
         deleteAccountView = new DeleteAccountView(ch.getDeleteAccountController(), ph.getDeleteAccountPresenter());
+        viewMessagesView = new ViewMessagesView(ch.getViewMessagesController(), ph.getViewMessagesPresenter());
     }
 
     public ConsoleView getView(ConsoleView.ConsoleViewType type) {
@@ -72,6 +74,8 @@ public class ViewHandler {
                 return messageAllAttendeesView;
             case CHANGE_CAPACITY:
                 return newEventCapacityView;
+            case VIEW_MESSAGES:
+                return viewMessagesView;
             default:
                 return null;
         }
@@ -131,4 +135,5 @@ public class ViewHandler {
 
     public NewEventCapacityView getNewEventCapacityView(){return newEventCapacityView;}
 
+    public ViewMessagesView getViewMessagesView() { return viewMessagesView; }
 }

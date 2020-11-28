@@ -60,6 +60,8 @@ public class MenuInputController {
             case 4:
                 return InputProcessResult.NAVIGATE_TO_EVENT_SCHEDULE;
             case 5:
+                return InputProcessResult.NAVIGATE_TO_VIEW_MESSAGES;
+            case 6:
                 return null;
             default:
                 return InputProcessResult.INVALID_INPUT;
@@ -75,6 +77,8 @@ public class MenuInputController {
             case 3:
                 return InputProcessResult.NAVIGATE_TO_EVENT_SCHEDULE;
             case 4:
+                return InputProcessResult.NAVIGATE_TO_VIEW_MESSAGES;
+            case 5:
                 return null;
             default:
                 return InputProcessResult.INVALID_INPUT;
@@ -99,6 +103,8 @@ public class MenuInputController {
             case 7:
                 return InputProcessResult.NAVIGATE_TO_CHANGE_CAPACITY;
             case 8:
+                return InputProcessResult.NAVIGATE_TO_VIEW_MESSAGES;
+            case 9:
                 return null;
             default:
                 return InputProcessResult.INVALID_INPUT;
@@ -116,6 +122,8 @@ public class MenuInputController {
             case 4:
                 return InputProcessResult.NAVIGATE_TO_EVENT_SCHEDULE;
             case 5:
+                return InputProcessResult.NAVIGATE_TO_VIEW_MESSAGES;
+            case 6:
                 return null;
             default:
                 return InputProcessResult.INVALID_INPUT;
@@ -139,6 +147,8 @@ public class MenuInputController {
             case 7:
                 return InputProcessResult.NAVIGATE_TO_DELETE_USER_ACCOUNT;
             case 8:
+                return InputProcessResult.NAVIGATE_TO_VIEW_MESSAGES;
+            case 9:
                 return null;
             default:
                 return InputProcessResult.INVALID_INPUT;

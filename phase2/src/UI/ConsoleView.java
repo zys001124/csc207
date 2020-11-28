@@ -35,5 +35,6 @@ public abstract class ConsoleView {
         CREATE_ACCOUNT, // Lewis - Finished
         DELETE_ACCOUNT,
         CHANGE_CAPACITY,
+        VIEW_MESSAGES,
     }
 }

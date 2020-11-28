@@ -64,14 +64,16 @@ public class MenuInputPresenter extends Presenter {
                 "2. Enroll in an event/View event list \n" +
                 "3. Unenroll in an event \n" +
                 "4. See event schedule \n" +
-                "5. Log out";
+                "5. View Message History\n" +
+                "6. Log out";
     }
 
     private String getSpeakerOptions() {
         return "1. Message all Attendees of your event \n" +
                 "2. Message Attendee \n" +
                 "3. See event schedule \n" +
-                "4. Log out";
+                "4. View Message History\n" +
+                "5. Log out";
     }
 
     private String getOrganizerOptions() {
@@ -82,7 +84,8 @@ public class MenuInputPresenter extends Presenter {
                 "5. Message all attendees\n" +
                 "6. Create user account \n" +
                 "7. Change event capacity\n"+
-                "8. Log out";
+                "8. View Message History\n" +
+                "9. Log out";
     }
 
     private String getVIPOptions() {
@@ -90,7 +93,8 @@ public class MenuInputPresenter extends Presenter {
                 "2. Enroll in an event/View event list \n" +
                 "3. Unenroll in an event \n" +
                 "4. See event schedule \n" +
-                "5. Log out";
+                "5. View Message History\n" +
+                "6. Log out";
     }
     private String getAdminOptions() {
         return "1. Create event \n" +
@@ -100,6 +104,7 @@ public class MenuInputPresenter extends Presenter {
                 "5. Message all attendees\n" +
                 "6. Create user account \n" +
                 "7. Delete user account \n" +
-                "8. Log out";
+                "8. View Message History\n" +
+                "9. Log out";
     }
 }

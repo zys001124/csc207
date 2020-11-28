@@ -20,6 +20,7 @@ public class ControllerHandler {
     private MessageAllAttendeesController messageAllAttendeesController;
     private DeleteAccountController deleteAccountController;
     private ChangeCapacityController changeCapacityController;
+    private ViewMessagesController viewMessagesController;
 
     public ControllerHandler(UseCaseHandler useCaseHandler) {
         constructProgramControllers(useCaseHandler);
@@ -44,6 +45,7 @@ public class ControllerHandler {
         messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
         deleteAccountController = new DeleteAccountController(userManager);
         changeCapacityController = new ChangeCapacityController(eventManager);
+        viewMessagesController = new ViewMessagesController(messageManager, userManager);
 
     }
 
@@ -99,4 +101,6 @@ public class ControllerHandler {
     public ChangeCapacityController getChangeCapacityController(){
         return changeCapacityController;
     }
+
+    public ViewMessagesController getViewMessagesController(){ return viewMessagesController;}
 }

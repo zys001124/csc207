@@ -78,6 +78,8 @@ public class MenuInputView extends ConsoleView {
                 return ConsoleViewType.CREATE_ACCOUNT;
             case NAVIGATE_TO_CHANGE_CAPACITY:
                 return ConsoleViewType.CHANGE_CAPACITY;
+            case NAVIGATE_TO_VIEW_MESSAGES:
+                return ConsoleViewType.VIEW_MESSAGES;
             default:
                 return ConsoleViewType.MAIN_MENU;
         }
