@@ -38,10 +38,10 @@ public class FirebaseGateway {
     private CollectionReference eventsRef;
     private CollectionReference messagesRef;
 
-    public boolean allowWrite = false;
+    public boolean allowWrite = true;
     public boolean allowUsersRead = true;
-    public boolean allowEventsRead = false;
-    public boolean allowMessagesRead = false;
+    public boolean allowEventsRead = true;
+    public boolean allowMessagesRead = true;
 
     public FirebaseGateway(UserManager um, EventManager em, MessageManager mm) {
         userManager = um;

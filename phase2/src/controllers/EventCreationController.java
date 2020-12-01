@@ -8,6 +8,7 @@ import useCaseClasses.UserManager;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -114,6 +115,7 @@ public class EventCreationController {
 
     private LocalDateTime getLocalDateTime(String parameter) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        formatter = formatter.withZone(ZoneId.of("UTC-5"));
         return LocalDateTime.parse(parameter, formatter);
     }
 
