@@ -6,8 +6,8 @@ import exceptions.UserNotFoundException;
 import useCaseClasses.EventManager;
 import useCaseClasses.UserManager;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.UUID;
@@ -114,13 +114,12 @@ public class EventCreationController {
 
     private LocalDateTime getLocalDateTime(String parameter) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+        formatter = formatter.withZone(ZoneId.of("UTC-5"));
         return LocalDateTime.parse(parameter, formatter);
     }
 
     private boolean VIPonlytypo(String b){
-        if(b.equals("true")){return false;}
-        if(b.equals("false")){return false;}
-        return true;
+        return !b.equals("true") && !b.equals("false");
     }
 
     private boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {
