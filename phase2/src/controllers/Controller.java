@@ -1,7 +1,7 @@
 package controllers;
 
 import handlers.SceneNavigator;
-import handlers.SceneNavigator.SceneView;
+import handlers.SceneNavigator.SceneViewType;
 import javafx.fxml.FXML;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
@@ -34,8 +34,8 @@ public abstract class Controller {
         this.sceneNavigator = sceneNavigator;
     }
 
-    protected void setSceneView(SceneView sceneView) {
-        sceneNavigator.switchSceneView(sceneView);
+    protected void setSceneView(SceneViewType sceneViewType) {
+        sceneNavigator.switchSceneView(sceneViewType);
         // cases based on enum to switch scenes with scene navigator
     }
 }

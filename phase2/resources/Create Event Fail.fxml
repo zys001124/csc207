@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea layoutX="40.0" layoutY="89.0" prefHeight="182.0" prefWidth="520.0" text="Failed to create event. Please try again.&#10;There are 6 possible rooms for speeches.The room number is from 0-5. &#10;The event has to be between 9am-5pm&#10;if there is multiple speakers separate each speaker with ':' for no speaker leave it empty&#10;To add an event, enter information in following way: &#10;title,startTime,endTime,speakerUsernames,roomNumber,eventCapacity,Vip only &#10;Vip only should only be written as 'true' or 'false'&#10;Time should be written in this form yyyy-MM-dd HH:mm&#10;Type &quot;back&quot; to return to the menu" wrapText="true">
+         <font>
+            <Font size="13.0" />
+         </font>
+      </TextArea>
+      <TextField layoutX="78.0" layoutY="274.0" />
+      <Label layoutX="40.0" layoutY="278.0" text="Input:" />
+      <Label layoutX="230.0" layoutY="47.0" text="Create Event" underline="true">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
