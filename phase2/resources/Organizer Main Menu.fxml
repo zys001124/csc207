@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.OrganizerMainMenuController">
    <children>
       <Label layoutX="185.0" layoutY="42.0" text="Organizer Main Menu" underline="true">
          <font>
@@ -17,14 +17,14 @@
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
-      <Button layoutX="188.0" layoutY="102.0" mnemonicParsing="false" text="1. Create Event" />
-      <Button layoutX="185.0" layoutY="134.0" mnemonicParsing="false" text="2. Cancel Event" />
-      <Button layoutX="187.0" layoutY="164.0" mnemonicParsing="false" text="3. Message User" />
-      <Button layoutX="188.0" layoutY="195.0" mnemonicParsing="false" text="4. Message all speakers" />
-      <Button layoutX="188.0" layoutY="228.0" mnemonicParsing="false" text="5. Message all attendees" />
-      <Button layoutX="188.0" layoutY="259.0" mnemonicParsing="false" text="6. Create user account" />
-      <Button layoutX="188.0" layoutY="290.0" mnemonicParsing="false" text="7. Change event capacity" />
-      <Button layoutX="188.0" layoutY="322.0" mnemonicParsing="false" text="8. View Message History" />
-      <Button layoutX="188.0" layoutY="350.0" mnemonicParsing="false" text="9. Log out" />
+      <Button fx:id="createEventButton" layoutX="188.0" layoutY="102.0" mnemonicParsing="false" text="1. Create Event" />
+      <Button fx:id="cancelEventButton" layoutX="185.0" layoutY="134.0" mnemonicParsing="false" text="2. Cancel Event" />
+      <Button fx:id="messageUserButton" layoutX="187.0" layoutY="164.0" mnemonicParsing="false" text="3. Message User" />
+      <Button fx:id="messageSpeakersButton" layoutX="188.0" layoutY="195.0" mnemonicParsing="false" text="4. Message all speakers" />
+      <Button fx:id="messageAttendeesButton" layoutX="188.0" layoutY="228.0" mnemonicParsing="false" text="5. Message all attendees" />
+      <Button fx:id="createUserAccountButton" layoutX="188.0" layoutY="259.0" mnemonicParsing="false" text="6. Create user account" />
+      <Button fx:id="changeEventCapacityButton" layoutX="188.0" layoutY="290.0" mnemonicParsing="false" text="7. Change event capacity" />
+      <Button fx:id="viewMessageHistoryButton" layoutX="188.0" layoutY="322.0" mnemonicParsing="false" text="8. View Message History" />
+      <Button fx:id="logoutButton" layoutX="188.0" layoutY="350.0" mnemonicParsing="false" text="9. Log out" />
    </children>
 </AnchorPane>

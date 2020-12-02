@@ -55,7 +55,7 @@ public class LoginView extends GuiView {
 
     private SceneType getNextScreen(InputProcessResult result) {
         if (result == InputProcessResult.SUCCESS) {
-            sceneNavigator.getApplicationStage().setScene(sceneNavigator.getMenuInputScene());
+            sceneNavigator.getApplicationStage().setScene(sceneNavigator.getSpeakerMenuInputScene());
             return SceneType.MAIN_MENU;
         } else {
             return SceneType.LOGIN;

@@ -1,20 +1,7 @@
 package handlers;
 
-import controllers.Controller;
-import controllers.LoginController;
-import entities.Message;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import useCaseClasses.EventManager;
-import useCaseClasses.MessageManager;
-import useCaseClasses.UserManager;
-
-import java.io.File;
-import java.io.IOException;
-import java.net.URL;
 
 /**
  * Class which holds all possible scenes in the
@@ -29,7 +16,9 @@ public class SceneNavigator {
     private UseCaseHandler useCaseHandler;
 
     private Scene loginScene;
-    private Scene menuInputScene;
+    private Scene speakerMenuInputScene;
+    private Scene organizerMenuInputScene;
+    private Scene attendeeMenuInputScene;
     private Scene messageUserScene;
     private Scene createAccountScene;
     private Scene eventUnEnrollScene;
@@ -49,14 +38,22 @@ public class SceneNavigator {
         this.useCaseHandler = useCaseHandler;
     }
 
-    public void switchSceneView(SceneView sceneView){
-        switch(sceneView) {
+    public void switchSceneView(SceneViewType sceneViewType){
+        switch(sceneViewType) {
             case LOGIN: {
                 applicationStage.setScene(getLoginScene());
                 break;
             }
-            case MAIN_MENU: {
-                applicationStage.setScene(getMenuInputScene());
+            case SPEAKER_MAIN_MENU: {
+                applicationStage.setScene(getSpeakerMenuInputScene());
+                break;
+            }
+            case ORGANIZER_MAIN_MENU: {
+                applicationStage.setScene(getOrganizerMenuInputScene());
+                break;
+            }
+            case ATTENDEE_MAIN_MENU:_MAIN_MENU: {
+                applicationStage.setScene(getAttendeeMenuInputScene());
                 break;
             }
             case MESSAGE_USER: {
@@ -122,8 +119,16 @@ public class SceneNavigator {
         return loginScene;
     }
 
-    public Scene getMenuInputScene() {
-        return menuInputScene;
+    public Scene getSpeakerMenuInputScene() {
+        return speakerMenuInputScene;
+    }
+
+    public Scene getOrganizerMenuInputScene() {
+        return organizerMenuInputScene;
+    }
+
+    public Scene getAttendeeMenuInputScene() {
+        return attendeeMenuInputScene;
     }
 
     public Scene getMessageUserScene() {
@@ -182,8 +187,16 @@ public class SceneNavigator {
         this.loginScene = loginScene;
     }
 
-    public void setMenuInputScene(Scene menuInputScene) {
-        this.menuInputScene = menuInputScene;
+    public void setSpeakerMenuInputScene(Scene menuInputScene) {
+        this.speakerMenuInputScene = menuInputScene;
+    }
+
+    public void setOrganizerMenuInputScene(Scene menuInputScene) {
+        this.organizerMenuInputScene = menuInputScene;
+    }
+
+    public void setAttendeeMenuInputScene(Scene menuInputScene) {
+        this.attendeeMenuInputScene = menuInputScene;
     }
 
     public void setMessageUserScene(Scene messageUserScene) {
@@ -238,9 +251,13 @@ public class SceneNavigator {
         this.viewMessagesScene = viewMessagesScene;
     }
 
-    public enum SceneView {
+    public enum SceneViewType {
         LOGIN, // Finished
-        MAIN_MENU, // Finisehd
+        SPEAKER_MAIN_MENU, // Finisehd
+        ORGANIZER_MAIN_MENU, //Finished
+        ATTENDEE_MAIN_MENU,
+        ADMIN_MAIN_MENU,
+        VIP_MAIN_MENU,
         MESSAGE_USER, // Luka
         MESSAGE_ALL_ATTENDING_EVENT, // Jon - Finished
         MESSAGE_ALL_SPEAKERS, // Luka

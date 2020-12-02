@@ -55,8 +55,14 @@ public class ConferenceSystem {
         Scene loginScene = initializeScene("loginScene.fxml", sceneNavigator);
         sceneNavigator.setLoginScene(loginScene);
 
-        Scene menuInputScene = initializeScene("test.fxml", sceneNavigator);
-        sceneNavigator.setMenuInputScene(menuInputScene);
+        Scene speakerMenuInputScene = initializeScene("Speaker Main Menu.fxml", sceneNavigator);
+        sceneNavigator.setSpeakerMenuInputScene(speakerMenuInputScene);
+
+        Scene organizerMenuInputScene = initializeScene("Organizer Main Menu.fxml", sceneNavigator);
+        sceneNavigator.setOrganizerMenuInputScene(organizerMenuInputScene);
+
+        Scene attendeeMenuInputScene = initializeScene("Attendee Main Menu.fxml", sceneNavigator);
+        sceneNavigator.setAttendeeMenuInputScene(attendeeMenuInputScene);
 
         Scene messageUserScene = initializeScene("loginScene.fxml", sceneNavigator);
         sceneNavigator.setMessageUserScene(messageUserScene);
@@ -98,7 +104,7 @@ public class ConferenceSystem {
         sceneNavigator.setViewMessagesScene(viewMessagesScene);
 
         // Deafult to login scene
-        sceneNavigator.switchSceneView(SceneNavigator.SceneView.LOGIN);
+        sceneNavigator.switchSceneView(SceneNavigator.SceneViewType.LOGIN);
     }
 
     private Scene initializeScene(String fxmlPath, SceneNavigator sceneNavigator) {

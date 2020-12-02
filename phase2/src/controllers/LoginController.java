@@ -1,16 +1,17 @@
 package controllers;
 
+import entities.User;
 import exceptions.IncorrectPasswordException;
 import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.scene.control.Label;
-import useCaseClasses.UserManager;
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import handlers.SceneNavigator.SceneViewType.*;
 
 
 /**
@@ -61,7 +62,21 @@ public class LoginController extends Controller {
         }
         else{
             // change scene
-            setSceneView(SceneNavigator.SceneView.MAIN_MENU);
+            if(result == InputProcessResult.SUCCESSFUL_ATTENDEE_LOGIN) {
+                setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
+            }
+            else if(result == InputProcessResult.SUCCESSFUL_ORGANIZER_LOGIN) {
+                setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+            }
+            else if(result == InputProcessResult.SUCCESSFUL_SPEAKER_LOGIN) {
+                setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
+            }
+            else if(result == InputProcessResult.SUCCESSFUL_ADMIN_LOGIN) {
+                setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+            }
+            else if(result == InputProcessResult.SUCCESSFUL_VIP_LOGIN) {
+                setSceneView(SceneNavigator.SceneViewType.VIP_MAIN_MENU);
+            }
         }
 
         loginMessageLabel.setText(labelText);
@@ -84,7 +99,16 @@ public class LoginController extends Controller {
             return InputProcessResult.USER_NOT_FOUND;
         }
 
-        return InputProcessResult.SUCCESS;
+        User.UserType type = userManager.getCurrentlyLoggedIn().getType();
+
+        switch (type) {
+            case ATTENDEE: return InputProcessResult.SUCCESSFUL_ATTENDEE_LOGIN;
+            case ORGANIZER: return InputProcessResult.SUCCESSFUL_ORGANIZER_LOGIN;
+            case SPEAKER: return InputProcessResult.SUCCESSFUL_SPEAKER_LOGIN;
+            case ADMIN: return InputProcessResult.SUCCESSFUL_ADMIN_LOGIN;
+            case VIP: return InputProcessResult.SUCCESSFUL_VIP_LOGIN;
+            default: return InputProcessResult.INVALID_INPUT;
+        }
     }
 
 }
