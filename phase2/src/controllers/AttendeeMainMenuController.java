@@ -6,6 +6,9 @@ package controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import handlers.SceneNavigator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -44,5 +47,35 @@ public class AttendeeMainMenuController extends Controller {
         assert viewMessageHistoryButton != null : "fx:id=\"viewMessageHistoryButton\" was not injected: check your FXML file 'Attendee Main Menu.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'Attendee Main Menu.fxml'.";
 
+    }
+
+    @FXML
+    void onEnrollInEventButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.ENROLL_IN_EVENT);
+    }
+
+    @FXML
+    void onLogoutButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.LOGIN);
+    }
+
+    @FXML
+    void onMessageUserButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
+    }
+
+    @FXML
+    void onSeeEventScheduleButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.EVENT_SCHEDULE);
+    }
+
+    @FXML
+    void onUnenrollInEventButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.UNENROLL_IN_EVENT);
+    }
+
+    @FXML
+    void onViewMessageHistoryButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.VIEW_MESSAGES);
     }
 }

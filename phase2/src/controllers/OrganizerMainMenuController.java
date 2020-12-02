@@ -1,7 +1,10 @@
 package controllers;
 
+import javafx.event.ActionEvent;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import handlers.SceneNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -53,6 +56,51 @@ public class OrganizerMainMenuController extends Controller {
         assert viewMessageHistoryButton != null : "fx:id=\"viewMessageHistoryButton\" was not injected: check your FXML file 'Organizer Main Menu.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'Organizer Main Menu.fxml'.";
 
+    }
+
+    @FXML
+    void onCancelEventButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.CANCEL_EVENT);
+    }
+
+    @FXML
+    void onChangeEventCapacityButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.CHANGE_CAPACITY);
+    }
+
+    @FXML
+    void onCreateEventButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.CREATE_EVENT);
+    }
+
+    @FXML
+    void onCreateUserAccountButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.CREATE_ACCOUNT);
+    }
+
+    @FXML
+    void onLogoutButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.LOGIN);
+    }
+
+    @FXML
+    void onMessageAllAttendeesButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_ATTENDEES);
+    }
+
+    @FXML
+    void onMessageAllSpeakersButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_SPEAKERS);
+    }
+
+    @FXML
+    void onMessageUserButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
+    }
+
+    @FXML
+    void onViewMessageHistoryButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.VIEW_MESSAGES);
     }
 
 }

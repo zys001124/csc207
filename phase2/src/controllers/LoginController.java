@@ -51,7 +51,7 @@ public class LoginController extends Controller {
         String username = usernameField.getText();
         String password = passwordField.getText();
 
-        String labelText = "ERROR";
+        String labelText = "";
 
         InputProcessResult result = verifyLogin(username, password);
         if(result == InputProcessResult.INCORRECT_PASSWORD) {
@@ -76,6 +76,9 @@ public class LoginController extends Controller {
             }
             else if(result == InputProcessResult.SUCCESSFUL_VIP_LOGIN) {
                 setSceneView(SceneNavigator.SceneViewType.VIP_MAIN_MENU);
+            }
+            else {
+                labelText = "ERROR";
             }
         }
 

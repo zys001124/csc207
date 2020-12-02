@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AttendeeMainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.AdminMainMenuController">
     <children>
         <Label layoutX="185.0" layoutY="38.0" text="Admin Main Menu" underline="true">
             <font>
@@ -17,14 +17,14 @@
                 <Font name="Arial" size="20.0" />
             </font>
         </Label>
-        <Button fx:id="createEventButton" layoutX="188.0" layoutY="100.0" mnemonicParsing="false" text="1. Create Event" />
-        <Button fx:id="cancelEventButton" layoutX="188.0" layoutY="132.0" mnemonicParsing="false" text="2. Cancel Event" />
-        <Button fx:id="messageUserButton" layoutX="188.0" layoutY="164.0" mnemonicParsing="false" text="3. Message User" />
-        <Button fx:id="messageSpeakersButton" layoutX="188.0" layoutY="196.0" mnemonicParsing="false" text="4. Message all speakers" />
-        <Button fx:id="messageAttendeesButton" layoutX="188.0" layoutY="228.0" mnemonicParsing="false" text="5. Message all attendees" />
-        <Button fx:id="createUserAccountButton" layoutX="188.0" layoutY="260.0" mnemonicParsing="false" text="6. Create user account" />
-        <Button fx:id="deleteUserAccountButton" layoutX="188.0" layoutY="292.0" mnemonicParsing="false" text="7. Delete user account" />
-        <Button fx:id="viewMessageHistoryButton" layoutX="188.0" layoutY="324.0" mnemonicParsing="false" text="8. View Message History" />
-        <Button fx:id="logoutButton" layoutX="188.0" layoutY="356.0" mnemonicParsing="false" text="9. Log out" />
+        <Button fx:id="createEventButton" layoutX="188.0" layoutY="100.0" mnemonicParsing="false" onAction="#onCreateEventButtonClicked" text="1. Create Event" />
+        <Button fx:id="cancelEventButton" layoutX="188.0" layoutY="132.0" mnemonicParsing="false" onAction="#onCancelEventButtonClicked" text="2. Cancel Event" />
+        <Button fx:id="messageUserButton" layoutX="188.0" layoutY="164.0" mnemonicParsing="false" onAction="#onMessageUserButtonClicked" text="3. Message User" />
+        <Button fx:id="messageSpeakersButton" layoutX="188.0" layoutY="196.0" mnemonicParsing="false" onAction="#onMessageAllSpeakersButtonClicked" text="4. Message all speakers" />
+        <Button fx:id="messageAttendeesButton" layoutX="188.0" layoutY="228.0" mnemonicParsing="false" onAction="#onMessageAllAttendeesButtonClicked" text="5. Message all attendees" />
+        <Button fx:id="createUserAccountButton" layoutX="188.0" layoutY="260.0" mnemonicParsing="false" onAction="#onCreateUserAccountButtonClicked" text="6. Create user account" />
+        <Button fx:id="deleteUserAccountButton" layoutX="188.0" layoutY="292.0" mnemonicParsing="false" onAction="#onDeleteUserAccountButtonClicked" text="7. Delete user account" />
+        <Button fx:id="viewMessageHistoryButton" layoutX="188.0" layoutY="324.0" mnemonicParsing="false" onAction="#onViewMessageHistoryButtonClicked" text="8. View Message History" />
+        <Button fx:id="logoutButton" layoutX="188.0" layoutY="356.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" text="9. Log out" />
     </children>
 </AnchorPane>

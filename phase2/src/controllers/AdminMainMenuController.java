@@ -2,10 +2,13 @@ package controllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import handlers.SceneNavigator;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class AdminMainMenuController {
+public class AdminMainMenuController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -52,6 +55,51 @@ public class AdminMainMenuController {
         assert viewMessageHistoryButton != null : "fx:id=\"viewMessageHistoryButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
 
+    }
+
+    @FXML
+    void onCancelEventButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.CANCEL_EVENT);
+    }
+
+    @FXML
+    void onCreateEventButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.CREATE_EVENT);
+    }
+
+    @FXML
+    void onCreateUserAccountButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.CREATE_ACCOUNT);
+    }
+
+    @FXML
+    void onDeleteUserAccountButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.DELETE_ACCOUNT);
+    }
+
+    @FXML
+    void onLogoutButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.LOGIN);
+    }
+
+    @FXML
+    void onMessageAllAttendeesButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_ATTENDEES);
+    }
+
+    @FXML
+    void onMessageAllSpeakersButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_SPEAKERS);
+    }
+
+    @FXML
+    void onMessageUserButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
+    }
+
+    @FXML
+    void onViewMessageHistoryButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.VIEW_MESSAGES);
     }
 
 }
