@@ -19,6 +19,8 @@ public class SceneNavigator {
     private Scene speakerMenuInputScene;
     private Scene organizerMenuInputScene;
     private Scene attendeeMenuInputScene;
+    private Scene vipMenuInputScene;
+    private Scene adminMenuInputScene;
     private Scene messageUserScene;
     private Scene createAccountScene;
     private Scene eventUnEnrollScene;
@@ -54,6 +56,14 @@ public class SceneNavigator {
             }
             case ATTENDEE_MAIN_MENU:_MAIN_MENU: {
                 applicationStage.setScene(getAttendeeMenuInputScene());
+                break;
+            }
+            case VIP_MAIN_MENU: {
+                applicationStage.setScene(getVipMenuInputScene());
+                break;
+            }
+            case ADMIN_MAIN_MENU: {
+                applicationStage.setScene(getAdminMenuInputScene());
                 break;
             }
             case MESSAGE_USER: {
@@ -127,6 +137,10 @@ public class SceneNavigator {
         return organizerMenuInputScene;
     }
 
+    public Scene getVipMenuInputScene() { return vipMenuInputScene; }
+
+    public Scene getAdminMenuInputScene() { return adminMenuInputScene; }
+
     public Scene getAttendeeMenuInputScene() {
         return attendeeMenuInputScene;
     }
@@ -197,6 +211,14 @@ public class SceneNavigator {
 
     public void setAttendeeMenuInputScene(Scene menuInputScene) {
         this.attendeeMenuInputScene = menuInputScene;
+    }
+
+    public void setAdminMenuInputScene(Scene menuInputScene) {
+        this.adminMenuInputScene = menuInputScene;
+    }
+
+    public void setVipMenuInputScene(Scene menuInputScene) {
+        this.vipMenuInputScene = menuInputScene;
     }
 
     public void setMessageUserScene(Scene messageUserScene) {

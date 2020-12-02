@@ -64,6 +64,12 @@ public class ConferenceSystem {
         Scene attendeeMenuInputScene = initializeScene("Attendee Main Menu.fxml", sceneNavigator);
         sceneNavigator.setAttendeeMenuInputScene(attendeeMenuInputScene);
 
+        Scene vipMenuInputScene = initializeScene("Attendee Main Menu.fxml", sceneNavigator);
+        sceneNavigator.setVipMenuInputScene(vipMenuInputScene);
+
+        Scene adminMenuInputScene = initializeScene("Admin Main Menu.fxml", sceneNavigator);
+        sceneNavigator.setAdminMenuInputScene(adminMenuInputScene);
+
         Scene messageUserScene = initializeScene("loginScene.fxml", sceneNavigator);
         sceneNavigator.setMessageUserScene(messageUserScene);
 
