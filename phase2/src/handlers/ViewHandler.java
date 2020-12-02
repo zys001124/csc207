@@ -1,3 +1,5 @@
+package handlers;
+
 import UI.*;
 
 public class ViewHandler {
@@ -15,16 +17,16 @@ public class ViewHandler {
     private MessageAllSpeakersView messageAllSpeakersView;
     private MessageAllAttendeesView messageAllAttendeesView;
     private SeeScheduleView seeScheduleView;
-    private NewEventCapacityView newEventCapacityView;
+    private ChangeEventCapacityView changeEventCapacityView;
     private DeleteAccountView deleteAccountView;
     private ViewMessagesView viewMessagesView;
 
-    public ViewHandler(ControllerHandler ch, PresenterHandler ph) {
-        constructProgramViews(ch, ph);
+    public ViewHandler(ControllerHandler ch, PresenterHandler ph, SceneNavigator sn) {
+        constructProgramViews(ch, ph, sn);
     }
 
-    public void constructProgramViews(ControllerHandler ch, PresenterHandler ph) {
-        loginView = new LoginView(ch.getLoginController(), ph.getLoginPresenter());
+    public void constructProgramViews(ControllerHandler ch, PresenterHandler ph, SceneNavigator sceneNavigator) {
+        loginView = new LoginView(ph.getLoginPresenter(), sceneNavigator);
         menuInputView = new MenuInputView(ch.getMenuInputController(), ph.getMenuInputPresenter());
         messageUserView = new MessageUserView(ch.getMessageUserController(), ph.getMessageUserPresenter());
         createAccountView = new CreateAccountView(ch.getCreateAccountController(), ph.getCreateAccountPresenter());
@@ -36,12 +38,12 @@ public class ViewHandler {
         messageAllSpeakersView = new MessageAllSpeakersView(ch.getMessageAllSpeakersController(), ph.getMessageAllSpeakersPresenter());
         messageAllAttendeesView = new MessageAllAttendeesView(ch.getMessageAllAttendeesController(), ph.getMessageAllAttendeesPresenter());
         seeScheduleView = new SeeScheduleView(ph.getSeeSchedulePresenter());
-        newEventCapacityView = new NewEventCapacityView(ch.getChangeCapacityController(),ph.getChangeEventCapacityPresenter());
+        changeEventCapacityView = new ChangeEventCapacityView(ch.getChangeEventCapacityController(),ph.getChangeEventCapacityPresenter());
         deleteAccountView = new DeleteAccountView(ch.getDeleteAccountController(), ph.getDeleteAccountPresenter());
         viewMessagesView = new ViewMessagesView(ch.getViewMessagesController(), ph.getViewMessagesPresenter());
     }
 
-    public ConsoleView getView(ConsoleView.ConsoleViewType type) {
+    public GuiView getView(GuiView.SceneType type) {
         if (type == null) {
             return null;
         }
@@ -73,7 +75,7 @@ public class ViewHandler {
             case MESSAGE_ALL_ATTENDEES:
                 return messageAllAttendeesView;
             case CHANGE_CAPACITY:
-                return newEventCapacityView;
+                return changeEventCapacityView;
             case VIEW_MESSAGES:
                 return viewMessagesView;
             default:
@@ -133,7 +135,7 @@ public class ViewHandler {
         return seeScheduleView;
     }
 
-    public NewEventCapacityView getNewEventCapacityView(){return newEventCapacityView;}
+    public ChangeEventCapacityView getChangeEventCapacityView(){return changeEventCapacityView;}
 
     public ViewMessagesView getViewMessagesView() { return viewMessagesView; }
 }

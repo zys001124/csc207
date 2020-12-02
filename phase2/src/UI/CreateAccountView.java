@@ -11,7 +11,7 @@ import java.util.Scanner;
  * the information necessary for an Organizer to create a
  * Speaker account
  */
-public class CreateAccountView extends ConsoleView {
+public class CreateAccountView extends GuiView {
 
     private final CreateAccountController controller;
     private final CreateAccountPresenter presenter;
@@ -37,7 +37,7 @@ public class CreateAccountView extends ConsoleView {
      * display should be.
      */
     @Override
-    public ConsoleViewType runFlow(Scanner inputScanner) {
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
 
@@ -49,13 +49,13 @@ public class CreateAccountView extends ConsoleView {
         return getScreen(result);
     }
 
-    private ConsoleViewType getScreen(InputProcessResult result) {
+    private SceneType getScreen(InputProcessResult result) {
         switch (result) {
             case SUCCESS:
             case BACK:
-                return ConsoleViewType.MAIN_MENU;
+                return SceneType.MAIN_MENU;
             default:
-                return ConsoleViewType.CREATE_ACCOUNT;
+                return SceneType.CREATE_ACCOUNT;
         }
     }
 }

@@ -1,3 +1,5 @@
+package handlers;
+
 import presenters.*;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
@@ -22,17 +24,17 @@ public class PresenterHandler {
     private  DeleteAccountPresenter deleteAccountPresenter;
     private ViewMessagesPresenter viewMessagesPresenter;
 
-    public PresenterHandler(UseCaseHandler useCaseHandler) {
-        constructProgramPresenters(useCaseHandler);
+    public PresenterHandler(UseCaseHandler useCaseHandler, ControllerHandler controllerHandler, SceneNavigator sceneNavigator) {
+        constructProgramPresenters(useCaseHandler, controllerHandler, sceneNavigator);
     }
 
-    public void constructProgramPresenters(UseCaseHandler useCaseHandler) {
+    public void constructProgramPresenters(UseCaseHandler useCaseHandler, ControllerHandler controllerHandler, SceneNavigator sceneNavigator) {
 
         UserManager userManager = useCaseHandler.getUserManager();
         MessageManager messageManager = useCaseHandler.getMessageManager();
         EventManager eventManager = useCaseHandler.getEventManager();
 
-        loginPresenter = new LoginPresenter();
+        //loginPresenter = new LoginPresenter(controllerHandler.getLoginController(), sceneNavigator);
         menuInputPresenter = new MenuInputPresenter(userManager);
         messageUserPresenter = new MessageUserPresenter(userManager, messageManager);
         createAccountPresenter = new CreateAccountPresenter();

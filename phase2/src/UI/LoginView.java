@@ -1,7 +1,7 @@
 package UI;
 
 import controllers.InputProcessResult;
-import controllers.LoginController;
+import handlers.SceneNavigator;
 import presenters.LoginPresenter;
 
 import java.util.Scanner;
@@ -10,22 +10,20 @@ import java.util.Scanner;
  * A ConsoleView for what should be displayed/collected from the user
  * at the login screen
  */
-public class LoginView extends ConsoleView {
+public class LoginView extends GuiView {
 
     private final LoginPresenter presenter;
-    private final LoginController controller;
+    private final SceneNavigator sceneNavigator;
 
     /**
      * Creates a LoginView with the given LoginController and LoginPresenter
      *
-     * @param controller - The LoginController that this view will use to
-     *                   handle input on this view
      * @param presenter  - The LoginPresenter that this view will use to get
      *                   formatted output for this view to display
      */
-    public LoginView(LoginController controller, LoginPresenter presenter) {
-        this.controller = controller;
+    public LoginView(LoginPresenter presenter, SceneNavigator sceneNavigator) {
         this.presenter = presenter;
+        this.sceneNavigator = sceneNavigator;
     }
 
     /**
@@ -38,7 +36,7 @@ public class LoginView extends ConsoleView {
      * as a result of the users input
      */
     @Override
-    public ConsoleViewType runFlow(Scanner inputScanner) {
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
 
         System.out.print(presenter.getUsernameInputPrompt());
@@ -47,7 +45,7 @@ public class LoginView extends ConsoleView {
         System.out.print(presenter.getPasswordInputPrompt());
         String password = inputScanner.nextLine();
 
-        InputProcessResult result = controller.verifyLogin(username, password);
+        InputProcessResult result = presenter.verifyLogin(username, password);
 
         String loginResultOutput = presenter.getInputResponseText(result);
         System.out.println(loginResultOutput);
@@ -55,11 +53,12 @@ public class LoginView extends ConsoleView {
         return getNextScreen(result);
     }
 
-    private ConsoleViewType getNextScreen(InputProcessResult result) {
+    private SceneType getNextScreen(InputProcessResult result) {
         if (result == InputProcessResult.SUCCESS) {
-            return ConsoleViewType.MAIN_MENU;
+            sceneNavigator.getApplicationStage().setScene(sceneNavigator.getMenuInputScene());
+            return SceneType.MAIN_MENU;
         } else {
-            return ConsoleViewType.LOGIN;
+            return SceneType.LOGIN;
         }
     }
 }

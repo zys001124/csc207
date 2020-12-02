@@ -1,13 +1,13 @@
-import UI.NewEventCapacityView;
+package handlers;
+
 import controllers.*;
-import entities.Event;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
 public class ControllerHandler {
     // Controllers
-    private  LoginController loginController;
+    private LoginController loginController;
     private MenuInputController menuInputController;
     private MessageUserController messageUserController;
     private CreateAccountController createAccountController;
@@ -19,7 +19,7 @@ public class ControllerHandler {
     private MessageAllSpeakersController messageAllSpeakersController;
     private MessageAllAttendeesController messageAllAttendeesController;
     private DeleteAccountController deleteAccountController;
-    private ChangeCapacityController changeCapacityController;
+    private ChangeEventCapacityController changeEventCapacityController;
     private ViewMessagesController viewMessagesController;
 
     public ControllerHandler(UseCaseHandler useCaseHandler) {
@@ -32,7 +32,7 @@ public class ControllerHandler {
         MessageManager messageManager = useCaseHandler.getMessageManager();
         EventManager eventManager = useCaseHandler.getEventManager();
 
-        loginController = new LoginController(userManager);
+       // loginController = new LoginController(userManager);
         menuInputController = new MenuInputController(userManager);
         messageUserController = new MessageUserController(messageManager, userManager);
         createAccountController = new CreateAccountController(userManager);
@@ -44,7 +44,7 @@ public class ControllerHandler {
         messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
         messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
         deleteAccountController = new DeleteAccountController(userManager);
-        changeCapacityController = new ChangeCapacityController(eventManager);
+        changeEventCapacityController = new ChangeEventCapacityController(eventManager);
         viewMessagesController = new ViewMessagesController(messageManager, userManager);
 
     }
@@ -98,8 +98,8 @@ public class ControllerHandler {
         return messageAllAttendeesController;
     }
 
-    public ChangeCapacityController getChangeCapacityController(){
-        return changeCapacityController;
+    public ChangeEventCapacityController getChangeEventCapacityController(){
+        return changeEventCapacityController;
     }
 
     public ViewMessagesController getViewMessagesController(){ return viewMessagesController;}

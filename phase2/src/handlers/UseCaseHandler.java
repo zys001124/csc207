@@ -1,3 +1,5 @@
+package handlers;
+
 import gateways.FirebaseGateway;
 import observers.EventManagerObserver;
 import observers.MessageManagerObserver;

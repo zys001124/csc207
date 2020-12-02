@@ -11,7 +11,7 @@ import java.util.Scanner;
  * needed for an organizer to cancel an existing event.
  */
 
-public class EventCancelView extends ConsoleView {
+public class EventCancelView extends GuiView {
 
     private final EventCancelPresenter presenter;
     private final EventCancelController controller;
@@ -39,7 +39,7 @@ public class EventCancelView extends ConsoleView {
      */
 
     @Override
-    public ConsoleViewType runFlow(Scanner inputScanner) {
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getAllEvents());
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
@@ -53,13 +53,13 @@ public class EventCancelView extends ConsoleView {
         return getScreen(result);
     }
 
-    private ConsoleViewType getScreen(InputProcessResult result) {
+    private SceneType getScreen(InputProcessResult result) {
         switch (result) {
             case BACK:
             case SUCCESS:
-                return ConsoleViewType.MAIN_MENU;
+                return SceneType.MAIN_MENU;
             default:
-                return ConsoleViewType.CANCEL_EVENT;
+                return SceneType.CANCEL_EVENT;
         }
     }
 }

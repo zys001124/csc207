@@ -10,7 +10,7 @@ import java.util.Scanner;
  * A ConsoleView that is responsible for displaying and receiving the information
  * necessary for a user trying to message all speakers at the conference
  */
-public class MessageAllSpeakersView extends ConsoleView {
+public class MessageAllSpeakersView extends GuiView {
 
     private final MessageAllSpeakersController controller;
     private final MessageAllSpeakersPresenter presenter;
@@ -36,7 +36,7 @@ public class MessageAllSpeakersView extends ConsoleView {
      * next as a result of the users input
      */
     @Override
-    public ConsoleViewType runFlow(Scanner inputScanner) {
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
         String message = inputScanner.nextLine();
 
@@ -51,11 +51,11 @@ public class MessageAllSpeakersView extends ConsoleView {
      * @param result - The result from handling the user input
      * @return a ConsoleViewType = Specifies which kind of ConsoleView should be displayed next
      */
-    private ConsoleViewType getNextScreen(InputProcessResult result) {
+    private SceneType getNextScreen(InputProcessResult result) {
         if (result.equals(InputProcessResult.SUCCESS) || result.equals(InputProcessResult.NAVIGATE_TO_MAIN_MENU)) {
-            return ConsoleViewType.MAIN_MENU;
+            return SceneType.MAIN_MENU;
         } else {
-            return ConsoleViewType.MESSAGE_ALL_SPEAKERS;
+            return SceneType.MESSAGE_ALL_SPEAKERS;
         }
     }
 }

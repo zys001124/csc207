@@ -7,12 +7,12 @@ import useCaseClasses.UserManager;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-public class ChangeCapacityController {
+public class ChangeEventCapacityController {
 
     private final EventManager eManager;
 
 
-    public ChangeCapacityController(EventManager manager) {
+    public ChangeEventCapacityController(EventManager manager) {
         eManager = manager;
     }
 

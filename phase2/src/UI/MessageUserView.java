@@ -10,7 +10,7 @@ import java.util.Scanner;
  * A ConsoleView that is responsible for displaying and receiving the information
  * necessary for a user trying to message an individual user
  */
-public class MessageUserView extends ConsoleView {
+public class MessageUserView extends GuiView {
 
     private final MessageUserController controller;
     private final MessageUserPresenter presenter;
@@ -41,7 +41,7 @@ public class MessageUserView extends ConsoleView {
      * next as a result of the users input
      */
     @Override
-    public ConsoleViewType runFlow(Scanner inputScanner) {
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
         System.out.println(presenter.getPossibleUsers());
         String receiverUsername = inputScanner.nextLine();
@@ -60,11 +60,11 @@ public class MessageUserView extends ConsoleView {
      * @param result - The result from handling the user input
      * @return a ConsoleViewType = Specifies which kind of ConsoleView should be displayed next
      */
-    private ConsoleViewType getNextScreen(InputProcessResult result) {
+    private SceneType getNextScreen(InputProcessResult result) {
         if (result.equals(InputProcessResult.SUCCESS) || result.equals(InputProcessResult.NAVIGATE_TO_MAIN_MENU)) {
-            return ConsoleViewType.MAIN_MENU;
+            return SceneType.MAIN_MENU;
         } else {
-            return ConsoleViewType.MESSAGE_USER;
+            return SceneType.MESSAGE_USER;
         }
     }
 }

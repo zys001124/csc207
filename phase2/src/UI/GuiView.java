@@ -5,7 +5,7 @@ import java.util.Scanner;
 /**
  * Outlines what a view in the console should be able to do
  */
-public abstract class ConsoleView {
+public abstract class GuiView {
 
     /**
      * Makes the flow visible on the screen and collects input
@@ -15,12 +15,14 @@ public abstract class ConsoleView {
      * @return a ConsoleViewType - this describes the next ConsoleView
      * that should be displayed on screen
      */
-    public abstract ConsoleViewType runFlow(Scanner inputScanner);
+    public abstract SceneType runFlow(Scanner inputScanner);
+
+//    public abstract void initializeSceneLayout();
 
     /**
      * Represents a possible view that could be displayed to any user
      */
-    public enum ConsoleViewType {
+    public enum SceneType {
         LOGIN, // Finished
         MAIN_MENU, // Finisehd
         MESSAGE_USER, // Luka

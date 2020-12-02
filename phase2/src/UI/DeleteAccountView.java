@@ -2,12 +2,11 @@ package UI;
 
 import controllers.DeleteAccountController;
 import controllers.InputProcessResult;
-import exceptions.UserNotFoundException;
 import presenters.DeleteAccountPresenter;
 
 import java.util.Scanner;
 
-public class DeleteAccountView extends ConsoleView{
+public class DeleteAccountView extends GuiView {
 
     private final DeleteAccountController controller;
     private final DeleteAccountPresenter presenter;
@@ -17,7 +16,7 @@ public class DeleteAccountView extends ConsoleView{
         this.presenter = presenter;
     }
 
-    public ConsoleViewType runFlow(Scanner inputScanner){
+    public SceneType runFlow(Scanner inputScanner){
         System.out.println(presenter.getAllUsers());
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
@@ -31,13 +30,13 @@ public class DeleteAccountView extends ConsoleView{
         return getScreen(result);
     }
 
-    private ConsoleViewType getScreen(InputProcessResult result) {
+    private SceneType getScreen(InputProcessResult result) {
         switch (result) {
             case BACK:
             case SUCCESS:
-                return ConsoleViewType.MAIN_MENU;
+                return SceneType.MAIN_MENU;
             default:
-                return ConsoleViewType.DELETE_ACCOUNT;
+                return SceneType.DELETE_ACCOUNT;
         }
     }
 

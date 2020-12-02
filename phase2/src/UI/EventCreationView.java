@@ -10,7 +10,7 @@ import java.util.Scanner;
  * A ConsoleView that is responsible for displaying/collection
  * the information necessary for an Organizer to create an Event
  */
-public class EventCreationView extends ConsoleView {
+public class EventCreationView extends GuiView {
 
     private final EventCreationController controller;
     private final EventCreationPresenter presenter;
@@ -36,7 +36,7 @@ public class EventCreationView extends ConsoleView {
      * display should be.
      */
     @Override
-    public ConsoleViewType runFlow(Scanner inputScanner) {
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
 
@@ -48,14 +48,14 @@ public class EventCreationView extends ConsoleView {
         return getNextScreen(result);
     }
 
-    private ConsoleViewType getNextScreen(InputProcessResult result) {
+    private SceneType getNextScreen(InputProcessResult result) {
         switch (result) {
             case BACK:
-                return ConsoleViewType.MAIN_MENU;
+                return SceneType.MAIN_MENU;
             case SUCCESS:
-                return ConsoleViewType.MAIN_MENU;
+                return SceneType.MAIN_MENU;
             default:
-                return ConsoleViewType.CREATE_EVENT;
+                return SceneType.CREATE_EVENT;
         }
     }
 
