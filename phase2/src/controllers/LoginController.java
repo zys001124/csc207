@@ -2,24 +2,69 @@ package controllers;
 
 import exceptions.IncorrectPasswordException;
 import exceptions.UserNotFoundException;
+import handlers.SceneNavigator;
+import javafx.event.ActionEvent;
+import javafx.scene.control.Label;
 import useCaseClasses.UserManager;
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 
 
 /**
  * A controller for the login screen
  */
-public class LoginController {
+public class LoginController extends Controller {
 
-    private final UserManager manager;
+    @FXML
+    private ResourceBundle resources;
 
-    /**
-     * Creates a LoginController with the given UserManager
-     *
-     * @param manager - The UserManager this class will use to
-     *                pass login information to
-     */
-    public LoginController(UserManager manager) {
-        this.manager = manager;
+    @FXML
+    private URL location;
+
+    @FXML
+    private TextField usernameField;
+
+    @FXML
+    private TextField passwordField;
+
+    @FXML
+    private Button loginButton;
+
+    @FXML
+    private Label loginMessageLabel;
+
+
+    @FXML
+    void initialize() {
+        assert usernameField != null : "fx:id=\"usernameField\" was not injected: check your FXML file 'loginScene.fxml'.";
+        assert passwordField != null : "fx:id=\"passwordField\" was not injected: check your FXML file 'loginScene.fxml'.";
+        assert loginButton != null : "fx:id=\"loginButton\" was not injected: check your FXML file 'loginScene.fxml'.";
+
+    }
+
+    @FXML
+    void onLoginButtonClicked() {
+        String username = usernameField.getText();
+        String password = passwordField.getText();
+
+        String labelText = "ERROR";
+
+        InputProcessResult result = verifyLogin(username, password);
+        if(result == InputProcessResult.INCORRECT_PASSWORD) {
+            labelText = "Incorrect Password, please try again";
+        }
+        else if(result == InputProcessResult.USER_NOT_FOUND) {
+            labelText = "User not found, please try again";
+        }
+        else{
+            // change scene
+            setSceneView(SceneNavigator.SceneView.MAIN_MENU);
+        }
+
+        loginMessageLabel.setText(labelText);
     }
 
     /**
@@ -32,7 +77,7 @@ public class LoginController {
      */
     public InputProcessResult verifyLogin(String username, String password) {
         try {
-            manager.userLogin(username, password);
+            userManager.userLogin(username, password);
         } catch (IncorrectPasswordException e) {
             return InputProcessResult.INCORRECT_PASSWORD;
         } catch (UserNotFoundException e) {

@@ -1,17 +1,15 @@
-import com.google.cloud.Timestamp;
-import com.google.cloud.firestore.Firestore;
-import com.google.firebase.FirebaseApp;
-import gateways.FirebaseGateway;
-import org.threeten.bp.LocalDate;
+import javafx.application.Application;
+import javafx.stage.Stage;
 
-import java.time.LocalDateTime;
-
-
-public class Main {
+public class Main extends Application {
 
     public static void main(String[] args) {
-        ConferenceSystem system = new ConferenceSystem();
+        launch();
+    }
 
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        ConferenceSystem system = new ConferenceSystem(primaryStage);
         system.run();
     }
 }

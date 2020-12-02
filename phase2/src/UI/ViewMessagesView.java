@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  * User Interface for the message history between two users
  */
-public class ViewMessagesView extends ConsoleView{
+public class ViewMessagesView extends GuiView {
 
     private final ViewMessagesController controller;
     private final ViewMessagesPresenter presenter;
@@ -31,7 +31,7 @@ public class ViewMessagesView extends ConsoleView{
      *                     input from the user
      * @return The ConsoleView that will lead to the corresponding screen
      */
-    public ConsoleViewType runFlow(Scanner inputScanner){
+    public SceneType runFlow(Scanner inputScanner){
         System.out.println(presenter.getPreInputText());
         System.out.println(presenter.getUsernames());
         String receiveUsername = inputScanner.nextLine();
@@ -65,13 +65,13 @@ public class ViewMessagesView extends ConsoleView{
      * @param result the InputProcessResult that is called/processed from the runFlow
      * @return The ConsoleViewType for the next screen to be viewed.
      */
-    private ConsoleViewType getNextScreen(InputProcessResult result) {
+    private SceneType getNextScreen(InputProcessResult result) {
         if(result == InputProcessResult.BACK || result == InputProcessResult.SUCCESS
                 || result == InputProcessResult.NO_MESSAGE_HISTORY){
-            return ConsoleViewType.MAIN_MENU;
+            return SceneType.MAIN_MENU;
         }
         else{
-            return ConsoleViewType.VIEW_MESSAGES;
+            return SceneType.VIEW_MESSAGES;
         }
     }
 

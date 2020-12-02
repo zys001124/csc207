@@ -1,11 +1,21 @@
 package presenters;
 
 import controllers.InputProcessResult;
+import controllers.LoginController;
+import handlers.SceneNavigator;
 
 /**
  * A presenter for the login screen
  */
-public class LoginPresenter extends Presenter {
+public class LoginPresenter {
+
+    private SceneNavigator sceneNavigator;
+    private LoginController controller;
+
+    public LoginPresenter(LoginController loginController, SceneNavigator sceneNavigator){
+        this.sceneNavigator = sceneNavigator;
+        this.controller = loginController;
+    }
 
     /**
      * Gets the String that should be displayed on the login screen
@@ -52,5 +62,9 @@ public class LoginPresenter extends Presenter {
         } else {
             return "User not found. Please try again";
         }
+    }
+
+    public InputProcessResult verifyLogin(String username, String password){
+        return null; //controller.verifyLogin(username, password);
     }
 }

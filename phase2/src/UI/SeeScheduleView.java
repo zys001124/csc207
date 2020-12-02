@@ -8,7 +8,7 @@ import java.util.Scanner;
  * A ConsoleView that is responsible for displaying the information
  * necessary for an Attendee to see his/her event schedule
  */
-public class SeeScheduleView extends ConsoleView {
+public class SeeScheduleView extends GuiView {
     private final SeeSchedulePresenter presenter;
 
     /**
@@ -29,12 +29,12 @@ public class SeeScheduleView extends ConsoleView {
      * @return A ConsoleViewType -- MAIN.MENu
      */
     @Override
-    public ConsoleViewType runFlow(Scanner inputScanner) {
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
 
         System.out.print(presenter.outro());
         inputScanner.nextLine();
 
-        return ConsoleViewType.MAIN_MENU;
+        return SceneType.MAIN_MENU;
     }
 }

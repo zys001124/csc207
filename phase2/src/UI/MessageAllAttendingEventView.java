@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * User interface for the message all attending event option
  */
-public class MessageAllAttendingEventView extends ConsoleView {
+public class MessageAllAttendingEventView extends GuiView {
 
     private final MessageAllAttendingEventController controller;
     private final MessageAllAttendingEventPresenter presenter;
@@ -40,7 +40,7 @@ public class MessageAllAttendingEventView extends ConsoleView {
      * main menu, if they successfully put in their event and message, or if they don't succeed and need
      * to go back to the messageMenu.
      */
-    public ConsoleViewType runFlow(Scanner inputScanner) {
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
         String eventName = inputScanner.nextLine();
 
@@ -69,13 +69,13 @@ public class MessageAllAttendingEventView extends ConsoleView {
      *               is valid or not
      * @return A ConsoleViewType that takes the user to the specified menu option
      */
-    private ConsoleViewType getNextScreen(InputProcessResult result) {
+    private SceneType getNextScreen(InputProcessResult result) {
         if (result == InputProcessResult.SUCCESS) {
-            return ConsoleViewType.MAIN_MENU;
+            return SceneType.MAIN_MENU;
         } else if (result == InputProcessResult.BACK) {
-            return ConsoleViewType.MAIN_MENU;
+            return SceneType.MAIN_MENU;
         } else {
-            return ConsoleViewType.MESSAGE_ALL_ATTENDING_EVENT;
+            return SceneType.MESSAGE_ALL_ATTENDING_EVENT;
         }
     }
 }

@@ -9,7 +9,7 @@ import java.util.Scanner;
 /**
  * The main menu ConsoleView
  */
-public class MenuInputView extends ConsoleView {
+public class MenuInputView extends GuiView {
 
     private final MenuInputController menuInputController;
     private final MenuInputPresenter menuInputPresenter;
@@ -35,12 +35,12 @@ public class MenuInputView extends ConsoleView {
      * next as a result of the users input
      */
     @Override
-    public ConsoleViewType runFlow(Scanner inputScanner) {
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(menuInputPresenter.getPreInputText());
         String input = inputScanner.nextLine();
 
         InputProcessResult result = menuInputController.handleInput(input);
-        ConsoleViewType nextScreenType = getScreen(result);
+        SceneType nextScreenType = getScreen(result);
 
         if (result == InputProcessResult.INVALID_INPUT) {
             System.out.println(menuInputPresenter.getInputResponseText(result));
@@ -49,39 +49,39 @@ public class MenuInputView extends ConsoleView {
         return nextScreenType;
     }
 
-    private ConsoleViewType getScreen(InputProcessResult result) {
+    private SceneType getScreen(InputProcessResult result) {
         if (result == null) {
             return null;
         }
         switch (result) {
             case NAVIGATE_TO_MESSAGE_USER:
-                return ConsoleViewType.MESSAGE_USER;
+                return SceneType.MESSAGE_USER;
             case NAVIGATE_TO_MESSAGE_ALL_ATTENDING_EVENT:
-                return ConsoleViewType.MESSAGE_ALL_ATTENDING_EVENT;
+                return SceneType.MESSAGE_ALL_ATTENDING_EVENT;
             case NAVIGATE_TO_MESSAGE_ALL_SPEAKERS:
-                return ConsoleViewType.MESSAGE_ALL_SPEAKERS;
+                return SceneType.MESSAGE_ALL_SPEAKERS;
             case NAVIGATE_TO_MESSAGE_ALL_ATTENDEES:
-                return ConsoleViewType.MESSAGE_ALL_ATTENDEES;
+                return SceneType.MESSAGE_ALL_ATTENDEES;
             case NAVIGATE_TO_EVENT_SCHEDULE:
-                return ConsoleViewType.EVENT_SCHEDULE;
+                return SceneType.EVENT_SCHEDULE;
             case NAVIGATE_TO_CREATE_EVENT:
-                return ConsoleViewType.CREATE_EVENT;
+                return SceneType.CREATE_EVENT;
             case NAVIGATE_TO_CANCEL_EVENT:
-                return ConsoleViewType.CANCEL_EVENT;
+                return SceneType.CANCEL_EVENT;
             case NAVIGATE_TO_DELETE_USER_ACCOUNT:
-                return ConsoleViewType.DELETE_ACCOUNT;
+                return SceneType.DELETE_ACCOUNT;
             case NAVIGATE_TO_ENROLL_IN_EVENT:
-                return ConsoleViewType.ENROLL_IN_EVENT;
+                return SceneType.ENROLL_IN_EVENT;
             case NAVIGATE_TO_UNENROLL_IN_EVENT:
-                return ConsoleViewType.UNENROLL_IN_EVENT;
+                return SceneType.UNENROLL_IN_EVENT;
             case NAVIGATE_TO_CREATE_SPEAKER_ACCOUNT:
-                return ConsoleViewType.CREATE_ACCOUNT;
+                return SceneType.CREATE_ACCOUNT;
             case NAVIGATE_TO_CHANGE_CAPACITY:
-                return ConsoleViewType.CHANGE_CAPACITY;
+                return SceneType.CHANGE_CAPACITY;
             case NAVIGATE_TO_VIEW_MESSAGES:
-                return ConsoleViewType.VIEW_MESSAGES;
+                return SceneType.VIEW_MESSAGES;
             default:
-                return ConsoleViewType.MAIN_MENU;
+                return SceneType.MAIN_MENU;
         }
     }
 }

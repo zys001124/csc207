@@ -10,7 +10,7 @@ import java.util.Scanner;
  * A ConsoleView that is responsible for displaying/collecting the
  * information necessary for an Attendee to enroll in an Event
  */
-public class EventEnrollView extends ConsoleView {
+public class EventEnrollView extends GuiView {
     private final EventEnrollPresenter presenter;
     private final EventEnrollController controller;
 
@@ -35,7 +35,7 @@ public class EventEnrollView extends ConsoleView {
      * should be.
      */
     @Override
-    public ConsoleViewType runFlow(Scanner inputScanner) {
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
         System.out.println(presenter.getAllEvents());
 
@@ -50,15 +50,15 @@ public class EventEnrollView extends ConsoleView {
         return getNextScreen(result);
     }
 
-    private ConsoleViewType getNextScreen(InputProcessResult result) {
+    private SceneType getNextScreen(InputProcessResult result) {
         if (result == InputProcessResult.SUCCESS) {
-            return ConsoleViewType.MAIN_MENU;
+            return SceneType.MAIN_MENU;
         }
         else if(result == InputProcessResult.BACK){
-            return ConsoleViewType.MAIN_MENU;
+            return SceneType.MAIN_MENU;
         }
         else {
-            return ConsoleViewType.ENROLL_IN_EVENT;
+            return SceneType.ENROLL_IN_EVENT;
         }
     }
 }
