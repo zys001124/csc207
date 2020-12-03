@@ -44,7 +44,6 @@ public class MessageManager extends Observable {
         messagesToAdd.add(new Message(message, sender, receiver, UUID.randomUUID()));
         messages.addAll(messagesToAdd);
         notifyObservers(messagesToAdd, true);
-      //  System.out.println(messages.size());
     }
 
     public void addMessage(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
@@ -52,13 +51,11 @@ public class MessageManager extends Observable {
         messagesToAdd.add(new Message(message, sender, receiver, messageId, timeSent));
         messages.addAll(messagesToAdd);
         notifyObservers(messagesToAdd, true);
-       // System.out.println(messages.size());
     }
 
     public void addMessageNoNotify(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
-
+        List<Message> messagesToAdd = new ArrayList<>();
         messages.add(new Message(message, sender, receiver, messageId, timeSent));
-        System.out.println(messages.size());
     }
 
     /**
@@ -107,7 +104,8 @@ public class MessageManager extends Observable {
         List<Message> theMessages = new ArrayList<>();
 
         for (Message m : messages) {
-            if ((m.getSenderId().equals(a1.getId()) && m.getRecipientId().equals(a2.getId()))) {
+            if ((m.getSenderId().equals(a1.getId()) && m.getRecipientId().equals(a2.getId())) ||
+                    (m.getSenderId().equals(a2.getId()) && m.getRecipientId().equals(a1.getId()))) {
                 theMessages.add(m);
             }
         }
