@@ -1,24 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.CreateAccountController">
    <children>
-      <TextArea layoutX="40.0" layoutY="156.0" prefHeight="69.0" prefWidth="520.0" text="To create an account, type in the following: [username] [password] [type]&#10;Valid user types are: ATTENDEE, ORGANIZER, SPEAKER, VIP, ADMIN &#10;Type &quot;back&quot; to return to the menu" wrapText="true">
-         <font>
-            <Font size="13.0" />
-         </font>
-      </TextArea>
-      <TextField layoutX="81.0" layoutY="241.0" />
-      <Label layoutX="40.0" layoutY="245.0" text="Input:" />
-      <Label layoutX="189.0" layoutY="63.0" text="Create User Account" textAlignment="CENTER" underline="true">
+      <TextField fx:id="usernameField" layoutX="108.0" layoutY="164.0" />
+      <Label layoutX="40.0" layoutY="168.0" text="Username:" />
+      <Label layoutX="189.0" layoutY="50.0" text="Create User Account" textAlignment="CENTER" underline="true">
          <font>
             <Font name="Arial" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="40.0" layoutY="206.0" text="Password:" />
+      <TextField fx:id="passwordField" layoutX="108.0" layoutY="202.0" />
+      <Label layoutX="40.0" layoutY="246.0" text="User Type:" />
+      <TextField fx:id="userTypeField" layoutX="108.0" layoutY="242.0" />
+      <Button fx:id="backButton" layoutX="40.0" layoutY="314.0" mnemonicParsing="false" onAction="#onBackButtonClicked" text="Back" />
+      <Label fx:id="invalidInputMessage" layoutX="40.0" layoutY="140.0" prefHeight="17.0" prefWidth="205.0">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font></Label>
+      <Button fx:id="createButton" layoutX="41.0" layoutY="277.0" mnemonicParsing="false" onAction="#onCreateButtonClicked" text="Create" />
+      <Label layoutX="30.0" layoutY="101.0" text="Valid user types are: ATTENDEE, ORGANIZER, SPEAKER, VIP, ADMIN ">
+         <font>
+            <Font size="18.0" />
          </font>
       </Label>
    </children>

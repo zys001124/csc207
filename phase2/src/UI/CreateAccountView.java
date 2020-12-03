@@ -41,12 +41,13 @@ public class CreateAccountView extends GuiView {
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
 
-        InputProcessResult result = controller.handleInput(input);
+        //InputProcessResult result = controller.handleInput(input);
 
-        String CreateSpeakerOutput = presenter.getInputResponseText(result);
-        System.out.println(CreateSpeakerOutput);
+        //String CreateSpeakerOutput = presenter.getInputResponseText(result);
+        //System.out.println(CreateSpeakerOutput);
 
-        return getScreen(result);
+        //return getScreen(result);
+        return null;
     }
 
     private SceneType getScreen(InputProcessResult result) {

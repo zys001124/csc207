@@ -40,12 +40,13 @@ public class EventCreationView extends GuiView {
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
 
-        InputProcessResult result = controller.createEvent(input);
+        //InputProcessResult result = controller.createEvent(input);
 
-        String CreateEventOutput = presenter.getInputResponseText(result);
-        System.out.println(CreateEventOutput);
+        //String CreateEventOutput = presenter.getInputResponseText(result);
+        //System.out.println(CreateEventOutput);
 
-        return getNextScreen(result);
+        //return getNextScreen(result);
+        return null;
     }
 
     private SceneType getNextScreen(InputProcessResult result) {
