@@ -2,10 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Represents an event at the tech conference
@@ -219,5 +216,77 @@ public class Event implements Serializable, Iterable<UUID> {
         PARTY,
         TALK,
         PANEL_Dis,
+    }
+
+    public EventData getEventData() {
+        EventData data = new EventData();
+
+        data.eventSTime = eventSTime.toString();
+        data.eventETime = eventETime.toString();
+        data.eventId = eventId.toString();
+        data.eventTitle = eventTitle;
+        data.eventRoom = eventRoom.toString();
+        data.eventCapacity = eventCapacity.toString();
+        data.VIPonly = Boolean.toString(VIPonly);
+        data.organizerId = organizerId.toString();
+
+        List<String> speakerIds = new ArrayList<>();
+
+        for(UUID id: speakerId) {
+            speakerIds.add(id.toString());
+        }
+        data.speakerIds = speakerIds;
+
+        List<String> attendeeIds = new ArrayList<>();
+
+        for(UUID id: attendees) {
+            attendeeIds.add(id.toString());
+        }
+        data.attendees = attendeeIds;
+
+
+        return data;
+    }
+
+    public static Event fromEventData(EventData data) {
+
+        List<UUID> speakerIds = new ArrayList<>();
+
+        for(String id: data.speakerIds) {
+            speakerIds.add(UUID.fromString(id));
+        }
+
+        List<UUID> attendeeIds = new ArrayList<>();
+
+        for(String id: data.attendees) {
+            attendeeIds.add(UUID.fromString(id));
+        }
+
+        return new Event(data.eventTitle,
+                LocalDateTime.parse(data.eventSTime),
+                LocalDateTime.parse(data.eventETime),
+                UUID.fromString(data.eventId),
+                UUID.fromString(data.organizerId),
+                speakerIds,
+                attendeeIds,
+                Integer.parseInt(data.eventRoom),
+                Integer.parseInt(data.eventCapacity),
+                Boolean.parseBoolean(data.VIPonly));
+    }
+
+    public static class EventData {
+        public String eventSTime;
+        public String eventETime;
+        public String eventId;
+        public String eventTitle;
+        public String eventRoom;
+        public String eventCapacity;
+        public String VIPonly;
+
+        public String organizerId;
+
+        public Collection<String> speakerIds;
+
+        public Collection<String> attendees;
     }
 }

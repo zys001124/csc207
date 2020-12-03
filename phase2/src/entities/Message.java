@@ -34,7 +34,7 @@ public class Message implements Serializable, Comparable<Message> {
         senderId = sender;
         recipientId = recipient;
         messageId = id;
-
+        System.out.println("bro");
         Instant now = Instant.ofEpochMilli(System.currentTimeMillis());
         timeSent = LocalDateTime.ofInstant(now, ZoneId.of("America/New_York")); //Toronto time
     }
@@ -55,6 +55,7 @@ public class Message implements Serializable, Comparable<Message> {
         recipientId = recipient;
         messageId = id;
         this.timeSent = timeSent;
+        System.out.println("bro");
     }
 
     /**
@@ -133,5 +134,31 @@ public class Message implements Serializable, Comparable<Message> {
     @Override
     public int hashCode() {
         return Objects.hash(messageId, messageText, senderId, recipientId, timeSent);
+    }
+
+    public MessageData getMessageData() {
+        MessageData data = new MessageData();
+        data.messageId = messageId.toString();
+        data.messageText = messageText;
+        data.senderId = senderId.toString();
+        data.recipientId = recipientId.toString();
+        data.timeSent = timeSent.toString();
+        return data;
+    }
+
+    public static Message fromMessageData(MessageData data) {
+        return new Message(data.messageText, UUID.fromString(data.senderId),
+                UUID.fromString(data.recipientId), UUID.fromString(data.messageId),
+                LocalDateTime.parse(data.timeSent));
+    }
+
+    public static class MessageData {
+        public String messageId;
+
+        public String messageText;
+        public String senderId;
+        public String recipientId;
+
+        public String timeSent;
     }
 }

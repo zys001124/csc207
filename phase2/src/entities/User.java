@@ -88,4 +88,27 @@ public class User implements Serializable {
         ADMIN
     }
 
+    public static User fromUserData(UserData data) {
+        return new User(UserType.valueOf(data.type), data.username,
+                data.password, UUID.fromString(data.uuid));
+    }
+
+    public UserData getUserData() {
+        UserData data = new UserData();
+
+        data.uuid = id.toString();
+        data.password = password;
+        data.username = username;
+        data.type = type.toString();
+
+        return data;
+    }
+
+    public static class UserData {
+        public String uuid;
+        public String username;
+        public String password;
+        public String type;
+    }
+
 }

@@ -90,13 +90,13 @@ public class UserManager extends Observable {
      * @param id he UUID of the user to be found
      * @return the user that is being removed or null if it can't be found.
      */
-    public User removeUser(UUID id){
+    public User removeUser(UUID id, boolean fromDatabase){
         List<User> usersToRemove = new ArrayList<>();
         for(User user: users){
             int index = users.indexOf(user);
             if(user.getId().equals(id)){
                 usersToRemove.add(users.remove(index));
-                notifyObservers(usersToRemove, false, false);
+                notifyObservers(usersToRemove, false, fromDatabase);
                 return usersToRemove.get(0);
             }
         }
@@ -136,13 +136,21 @@ public class UserManager extends Observable {
     }
 
 
-    public void addUserFromDatabase(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException{
-        if (doesUserExist(username)) {
-            throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
-        }
-        User user = new User(type, username, password, id);
+    public void addUserFromDatabase(User.UserData data) {
+        User user = User.fromUserData(data);
+
         List<User> usersToAdd = new ArrayList<>();
         usersToAdd.add(user);
+        users.addAll(usersToAdd);
+        notifyObservers(usersToAdd, true, true);
+    }
+
+    public void changeUserFromDatabase(User.UserData data) {
+        User user = User.fromUserData(data);
+
+        List<User> usersToAdd = new ArrayList<>();
+        usersToAdd.add(user);
+        removeUser(user.getId(), true);
         users.addAll(usersToAdd);
         notifyObservers(usersToAdd, true, true);
     }

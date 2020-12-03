@@ -41,6 +41,7 @@ public class MessageManager extends Observable {
      */
     public void sendMessage(UUID sender, UUID receiver, String message) {
         List<Message> messagesToAdd = new ArrayList<>();
+
         messagesToAdd.add(new Message(message, sender, receiver, UUID.randomUUID()));
         messages.addAll(messagesToAdd);
         notifyObservers(messagesToAdd, true, false);
@@ -53,11 +54,14 @@ public class MessageManager extends Observable {
         notifyObservers(messagesToAdd, true, false);
     }
 
-    public void addMessageFromDatabase(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
-        List<Message> messagesToAdd = new ArrayList<>();
-        messagesToAdd.add(new Message(message, sender, receiver, messageId, timeSent));
-        messages.addAll(messagesToAdd);
-        notifyObservers(messagesToAdd, true, true);
+    public void addMessageFromDatabase(Message.MessageData data) {
+
+        if(!messageExists(UUID.fromString(data.messageId))) {
+            List<Message> messagesToAdd = new ArrayList<>();
+            messagesToAdd.add(Message.fromMessageData(data));
+            messages.addAll(messagesToAdd);
+            notifyObservers(messagesToAdd, true, true);
+        }
     }
 
     /**
@@ -89,6 +93,15 @@ public class MessageManager extends Observable {
         for (Message message : messages) {
             if (message.getSenderId().equals(sender) &&
                     message.getRecipientId().equals(receiver)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean messageExists(UUID messageID) {
+        for(Message m: messages) {
+            if(m.getId().equals(messageID)) {
                 return true;
             }
         }

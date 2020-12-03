@@ -50,12 +50,10 @@ public class EventManager extends Observable {
         addEvent(e);
     }
 
-    public void addEventFromDatabase(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
-                         List<UUID> attendees, int room, int capacity, boolean VIPonly) {
+    public void addEventFromDatabase(Event.EventData data) {
 
         List<Event> eventsToAdd = new ArrayList<>();
-        Event e = new Event(title, startTime, endTime, id, organizerId, speakerId,
-                attendees, room, capacity, VIPonly);
+        Event e = Event.fromEventData(data);
 
         eventsToAdd.add(e);
         events.addAll(eventsToAdd);

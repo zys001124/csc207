@@ -10,6 +10,7 @@ import com.google.cloud.firestore.EventListener;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.cloud.FirestoreClient;
+import com.google.firebase.database.*;
 import com.google.firebase.database.annotations.Nullable;
 import entities.Event;
 import entities.Message;
@@ -21,6 +22,7 @@ import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
+import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -33,11 +35,11 @@ public class FirebaseGateway {
     private EventManager eventManager;
     private MessageManager messageManager;
 
-    private Firestore db;
+    private FirebaseDatabase db;
 
-    private CollectionReference usersRef;
-    private CollectionReference eventsRef;
-    private CollectionReference messagesRef;
+    private DatabaseReference usersRef;
+    private DatabaseReference eventsRef;
+    private DatabaseReference messagesRef;
 
     public boolean allowWrite = true;
     public boolean allowUsersRead = true;
@@ -64,10 +66,10 @@ public class FirebaseGateway {
             System.exit(-1);
         }
 
-        db = FirestoreClient.getFirestore();
-        usersRef = db.collection("Users");
-        eventsRef = db.collection("Events");
-        messagesRef = db.collection("Messages");
+        db = FirebaseDatabase.getInstance();
+        usersRef = db.getReference().child("Users");
+        eventsRef = db.getReference().child("Events");
+        messagesRef = db.getReference().child("Messages");
 
         addSnapShotListenersAndLoadFromFirebase();
     }
@@ -76,207 +78,145 @@ public class FirebaseGateway {
         if(allowUsersRead) {
             getUsers();
         }
-
-        if(allowEventsRead) {
-            getEvents();
-
-        }
-
         if(allowMessagesRead) {
             getMessages();
         }
+        if(allowEventsRead) {
+            getEvents();
+        }
+
     }
 
-    private void addFutureCallbacks(ApiFuture<QuerySnapshot> future, String collectionName) {
-        ApiFutures.addCallback(future, new ApiFutureCallback<QuerySnapshot>() {
+    private void getUsers() {
+        usersRef.addChildEventListener(new ChildEventListener() {
             @Override
-            public void onSuccess(QuerySnapshot result) {
-               // System.out.println("Operation completed with result: " + s);
-                if(collectionName.equals("Users")) {
-                    onUsersGotten(result.getDocuments());
-                }
-                else if (collectionName.equals("Events")) {
-                    onEventsGotten(result.getDocuments());
-                }
-                else if(collectionName.equals("Messages")) {
-                    onMessagesGotten(result.getDocuments());
-                }
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                User.UserData userData = dataSnapshot.getValue(User.UserData.class);
+                userManager.addUserFromDatabase(userData);
             }
 
             @Override
-            public void onFailure(Throwable t) {
-                //System.out.println("Operation failed with error: " + t);
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                User.UserData userData = dataSnapshot.getValue(User.UserData.class);
+                userManager.changeUserFromDatabase(userData);
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                User.UserData userData = dataSnapshot.getValue(User.UserData.class);
+                userManager.removeUser(UUID.fromString(userData.uuid), true);
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
             }
         });
     }
 
-    private void getUsers() {
-        ApiFuture<QuerySnapshot> userFuture = usersRef.get();
-        addFutureCallbacks(userFuture, "Users");
-    }
-
-    private void onUsersGotten(List<QueryDocumentSnapshot> documentSnapshotList) {
-        for(int i = 0; i<documentSnapshotList.size(); i++) {
-            QueryDocumentSnapshot qds = documentSnapshotList.get(i);
-            updateUserManager(qds);
-        }
-    }
-
-    private void updateUserManager(QueryDocumentSnapshot qds) {
-        User.UserType type = null;
-        try {
-            type = userManager.parseType(qds.get("type").toString());
-        } catch (UserTypeDoesNotExistException e) {
-            e.printStackTrace();
-            System.exit(-1);
-        }
-        String username = qds.get("username").toString();
-        String password = qds.get("password").toString();
-        UUID uuid = UUID.fromString(qds.get("uuid").toString());
-
-        try {
-            userManager.addUserFromDatabase(type, username, password, uuid);
-        } catch (UsernameAlreadyExistsException e)  {
-        }
-    }
-
-    private void getEvents() {
-        ApiFuture<QuerySnapshot> eventFuture = eventsRef.get();
-        addFutureCallbacks(eventFuture, "Events");
-    }
-
-    private void onEventsGotten(List<QueryDocumentSnapshot> documentSnapshotList) {
-        for(int i = 0; i<documentSnapshotList.size(); i++) {
-            QueryDocumentSnapshot qds = documentSnapshotList.get(i);
-
-
-            String title = qds.get("title").toString();
-            LocalDateTime startTime = LocalDateTime.parse(qds.get("startTime").toString());
-            LocalDateTime endTime = LocalDateTime.parse(qds.get("endTime").toString());
-            UUID eventId = UUID.fromString(qds.get("uuid").toString());
-            UUID organizerId = UUID.fromString(qds.get("organizerId").toString());
-            int room = Integer.parseInt(qds.get("room").toString());
-            int capacity = Integer.parseInt(qds.get("capacity").toString());
-            boolean VIPonly = Boolean.parseBoolean(qds.get("viponly").toString());
-
-            List<UUID> speakers = new ArrayList<>();
-            for(String uuid : (List<String>) Objects.requireNonNull(qds.get("speakerIds"))) {
-                speakers.add(UUID.fromString(uuid));
-            }
-            List<UUID> attendees = new ArrayList<>();
-            for(String uuid : (List<String>) Objects.requireNonNull(qds.get("attendeeIds"))) {
-                attendees.add(UUID.fromString(uuid));
-            }
-
-            eventManager.addEventFromDatabase(title, startTime, endTime, eventId, organizerId, speakers, attendees, room, capacity, VIPonly);
-        }
-    }
 
     private void getMessages() {
-        ApiFuture<QuerySnapshot> messageFuture = messagesRef.get();
-        addFutureCallbacks(messageFuture, "Messages");
+        messagesRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Message.MessageData mData = dataSnapshot.getValue(Message.MessageData.class);
+                messageManager.addMessageFromDatabase(mData);
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
+    
+    private void getEvents() {
+        eventsRef.addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                Event.EventData eventData = dataSnapshot.getValue(Event.EventData.class);
+                eventManager.addEventFromDatabase(eventData);
+            }
 
-    private void onMessagesGotten(List<QueryDocumentSnapshot> documentSnapshotList) {
-        for(int i = 0; i<documentSnapshotList.size(); i++) {
-            QueryDocumentSnapshot qds = documentSnapshotList.get(i);
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
 
-            String messageText = qds.get("messageText").toString();
-            UUID senderId = UUID.fromString(qds.get("senderId").toString());
-            UUID recipientId = UUID.fromString(qds.get("recipientId").toString());
-            UUID messageId = UUID.fromString(qds.get("messageId").toString());
-            LocalDateTime timeSent = LocalDateTime.parse(qds.get("timeSent").toString());
+            }
 
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+                Event.EventData data = dataSnapshot.getValue(Event.EventData.class);
+                eventManager.removeEventFromDataBase(UUID.fromString(data.eventId));
+            }
 
-            messageManager.addMessageFromDatabase(senderId, recipientId, messageText, timeSent, messageId);
-        }
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
     
     public void pushUsers(List<User> users) {
-        for(User user : users) {
-            HashMap<String, Object> userData = new HashMap<>();
-
-            userData.put("username", user.getUsername());
-            userData.put("password", user.getPassword());
-            userData.put("uuid", user.getId().toString());
-            userData.put("type", user.getType().toString());
-
-            if(allowWrite) {
-                usersRef.document(user.getUsername()).set(userData);
-            }
+        for(User user: users) {
+            usersRef.child(user.getUsername()).setValueAsync(user.getUserData());
         }
     }
 
     public void removeUsers(List<User> users) {
         for(User user: users) {
-            if(allowWrite) {
-                usersRef.document(user.getUsername()).delete();
-            }
-        }
-    }
-
-    public void pushEvents(List<Event> events) {
-        for(Event event : events) {
-            HashMap<String, Object> eventData = new HashMap<>();
-
-            eventData.put("title", event.getEventTitle());
-            eventData.put("capacity", event.getEventCapacity());
-            eventData.put("room", event.getEventRoom());
-            eventData.put("uuid", event.getId().toString());
-            eventData.put("viponly", event.getViponly());
-            eventData.put("organizerId", event.getOrganizerId().toString());
-            eventData.put("startTime", event.getEventTime().toString());
-            eventData.put("endTime", event.getEventETime().toString());
-
-            List<String> speakers = new ArrayList<>();
-            for(UUID uuid : event.getSpeakerId()) {
-                speakers.add(uuid.toString());
-            }
-            List<String> attendees = new ArrayList<>();
-            for(UUID uuid : event) {
-                attendees.add(uuid.toString());
-            }
-
-            eventData.put("speakerIds", speakers);
-            eventData.put("attendeeIds", attendees);
-
-            if(allowWrite) {
-                eventsRef.document(event.getEventTitle()).set(eventData);
-            }
-        }
-    }
-
-    public void removeEvents(List<Event> events) {
-        for(Event e: events) {
-            if(allowWrite) {
-                eventsRef.document(e.getEventTitle()).delete();
-            }
+            usersRef.child(user.getUsername()).removeValueAsync();
         }
     }
 
     public void pushMessages(List<Message> messages) {
-        for(Message message : messages) {
-            HashMap<String, Object> messageData = new HashMap<>();
-
-            messageData.put("messageText", message.getMessageText());
-            messageData.put("messageId", message.getId().toString());
-            messageData.put("senderId", message.getSenderId().toString());
-            messageData.put("recipientId", message.getRecipientId().toString());
-            messageData.put("timeSent", message.getTimeSent().toString());
-
-            DocumentReference messageDoc = messagesRef.document(message.getId().toString());
-
-            if(allowWrite) {
-                messageDoc.set(messageData);
-            }
+        for(Message message: messages) {
+            messagesRef.child(message.getId().toString()).setValueAsync(message.getMessageData());
+        }
+    }
+    
+    public void removeMessages(List<Message> messages) {
+        for(Message message: messages) {
+            messagesRef.child(message.getId().toString()).removeValueAsync();
         }
     }
 
-    public void removeMessages(List<Message> messages) {
-        for(Message message : messages) {
-            if(allowWrite) {
-                messagesRef.document(message.getId().toString()).delete();
-            }
+    public void pushEvents(List<Event> events) {
+        for(Event event: events) {
+            Event.EventData eventData = event.getEventData();
+            eventsRef.child(event.getId().toString()).setValueAsync(eventData);
+            eventsRef.child(event.getId().toString()).child("attendees").setValueAsync(eventData.attendees);
+            eventsRef.child(event.getId().toString()).child("speakerIds").setValueAsync(eventData.speakerIds);
+        }
+    }
+
+    public void removeEvents(List<Event> events) {
+        for(Event event: events) {
+            eventsRef.child(event.getId().toString()).removeValueAsync();
         }
     }
 
