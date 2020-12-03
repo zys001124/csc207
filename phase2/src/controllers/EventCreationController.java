@@ -101,7 +101,7 @@ public class EventCreationController extends Controller{
             label = "That room is full.";
         }
         else{
-            setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+            label = "Event created successfully.";
         }
 
         createMessageLabel.setText(label);
@@ -110,7 +110,7 @@ public class EventCreationController extends Controller{
     @FXML
     void onVipOnlyCheck(ActionEvent event) {
         if(vipOnlyCheck.isSelected()) {
-            createMessageLabel.setText(startTimeField.toString());
+            createMessageLabel.setText("Vip only selected.");
         }
         else{
             createMessageLabel.setText("Vip only de-selected.");
