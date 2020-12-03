@@ -22,7 +22,7 @@ public class DeleteAccountController extends Controller{
     private URL location;
 
     @FXML // fx:id="userListField"
-    private ListView userListField; // Value injected by FXMLLoader
+    private ListView<Label> userListField; // Value injected by FXMLLoader
 
     @FXML // fx:id="userNameField"
     private TextField userNameField; // Value injected by FXMLLoader

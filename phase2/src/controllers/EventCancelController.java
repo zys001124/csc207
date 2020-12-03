@@ -2,11 +2,8 @@ package controllers;
 
 import entities.Event;
 import entities.User;
-import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
-import presenters.EventCancelPresenter;
 import useCaseClasses.EventManager;
-import useCaseClasses.UserManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,7 +22,7 @@ public class EventCancelController extends Controller{
     private URL location;
 
     @FXML // fx:id="eventListField"
-    private ListView eventListField; // Value injected by FXMLLoader
+    private ListView<Label> eventListField; // Value injected by FXMLLoader
 
     @FXML // fx:id="eventNameField"
     private TextField eventNameField; // Value injected by FXMLLoader
@@ -97,13 +94,8 @@ public class EventCancelController extends Controller{
     }
 
     private boolean checkUserType(){
-        try{
-            if(userManager.checkAdmin(userManager.getCurrentlyLoggedIn().getUsername())){
-                return true; //Admin
-            }
-        } catch(UserNotFoundException e){
-        }
-        return false; //Organizer
+        User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
+        return currentUserType == User.UserType.ADMIN; //True if Admin, False if Organizer
     }
 
     @Override
