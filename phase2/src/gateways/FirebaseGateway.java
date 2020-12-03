@@ -74,31 +74,15 @@ public class FirebaseGateway {
     private void addSnapShotListenersAndLoadFromFirebase() {
         if(allowUsersRead) {
             getUsers();
-            usersRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
-                e.printStackTrace();
-                if(queryDocumentSnapshots != null){
-                    onUsersGotten(queryDocumentSnapshots.getDocuments());
-                }
-            });
         }
 
         if(allowEventsRead) {
             getEvents();
-            eventsRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
-                e.printStackTrace();
-                if(queryDocumentSnapshots != null){
-                    onEventsGotten(queryDocumentSnapshots.getDocuments());
-                }
-            });
+
         }
 
         if(allowMessagesRead) {
             getMessages();
-            messagesRef.addSnapshotListener((queryDocumentSnapshots, e) -> {
-                if(queryDocumentSnapshots != null){
-                    onMessagesGotten(queryDocumentSnapshots.getDocuments());
-                }
-            });
         }
     }
 
@@ -166,8 +150,8 @@ public class FirebaseGateway {
 
 
             String title = qds.get("title").toString();
-            LocalDateTime startTime = convertToLocalDateViaInstant(((Timestamp)qds.get("startTime")));
-            LocalDateTime endTime = convertToLocalDateViaInstant(((Timestamp)qds.get("endTime")));
+            LocalDateTime startTime = LocalDateTime.parse(qds.get("startTime").toString());
+            LocalDateTime endTime = LocalDateTime.parse(qds.get("endTime").toString());
             UUID eventId = UUID.fromString(qds.get("uuid").toString());
             UUID organizerId = UUID.fromString(qds.get("organizerId").toString());
             int room = Integer.parseInt(qds.get("room").toString());
@@ -200,20 +184,11 @@ public class FirebaseGateway {
             UUID senderId = UUID.fromString(qds.get("senderId").toString());
             UUID recipientId = UUID.fromString(qds.get("recipientId").toString());
             UUID messageId = UUID.fromString(qds.get("messageId").toString());
-            LocalDateTime timeSent = convertToLocalDateViaInstant((Timestamp)qds.get("timeSent"));
+            LocalDateTime timeSent = LocalDateTime.parse(qds.get("timeSent").toString());
 
+            System.out.println("here");
             messageManager.addMessageNoNotify(senderId, recipientId, messageText, timeSent, messageId);
         }
-    }
-
-    public LocalDateTime convertToLocalDateViaInstant(Timestamp dateToConvert) {
-        return dateToConvert.toDate().toInstant()
-                .atZone(ZoneId.systemDefault())
-                .toLocalDateTime();
-    }
-
-    public Timestamp convertToTimestamp(LocalDateTime dateToConvert) {
-        return Timestamp.parseTimestamp(dateToConvert.toString());
     }
     
     public void pushUsers(List<User> users) {
@@ -249,8 +224,8 @@ public class FirebaseGateway {
             eventData.put("uuid", event.getId().toString());
             eventData.put("viponly", event.getViponly());
             eventData.put("organizerId", event.getOrganizerId().toString());
-            eventData.put("startTime", convertToTimestamp(event.getEventTime()));
-            eventData.put("endTime", convertToTimestamp(event.getEventETime()));
+            eventData.put("startTime", event.getEventTime().toString());
+            eventData.put("endTime", event.getEventETime().toString());
 
             List<String> speakers = new ArrayList<>();
             for(UUID uuid : event.getSpeakerId()) {
@@ -286,7 +261,7 @@ public class FirebaseGateway {
             messageData.put("messageId", message.getId().toString());
             messageData.put("senderId", message.getSenderId().toString());
             messageData.put("recipientId", message.getRecipientId().toString());
-            messageData.put("timeSent", convertToTimestamp(message.getTimeSent()));
+            messageData.put("timeSent", message.getTimeSent().toString());
 
             DocumentReference messageDoc = messagesRef.document(message.getId().toString());
 

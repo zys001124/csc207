@@ -1,4 +1,6 @@
 import controllers.Controller;
+import controllers.LoginController;
+import controllers.LoginListener;
 import handlers.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -36,7 +38,13 @@ public class ConferenceSystem {
     }
 
     public void run() {
-        initializeScenes();
+
+        Scene loginScene = initializeLoginScene("loginScene.fxml", sceneNavigator,
+                this::initializeScenes);
+        sceneNavigator.setLoginScene(loginScene);
+
+        // Default to login scene
+        sceneNavigator.switchSceneView(SceneNavigator.SceneViewType.LOGIN);
         sceneNavigator.getApplicationStage().show();
     }
 
@@ -51,9 +59,6 @@ public class ConferenceSystem {
     }
 
     private void initializeScenes() {
-
-        Scene loginScene = initializeScene("loginScene.fxml", sceneNavigator);
-        sceneNavigator.setLoginScene(loginScene);
 
         Scene speakerMenuInputScene = initializeScene("Speaker Main Menu.fxml", sceneNavigator);
         sceneNavigator.setSpeakerMenuInputScene(speakerMenuInputScene);
@@ -70,7 +75,7 @@ public class ConferenceSystem {
         Scene adminMenuInputScene = initializeScene("Admin Main Menu.fxml", sceneNavigator);
         sceneNavigator.setAdminMenuInputScene(adminMenuInputScene);
 
-        Scene messageUserScene = initializeScene("loginScene.fxml", sceneNavigator);
+        Scene messageUserScene = initializeScene("Message User.fxml", sceneNavigator);
         sceneNavigator.setMessageUserScene(messageUserScene);
 
         Scene createAccountScene = initializeScene("Create User Account.fxml", sceneNavigator);
@@ -108,9 +113,6 @@ public class ConferenceSystem {
 
         Scene viewMessagesScene = initializeScene("loginScene.fxml", sceneNavigator);
         sceneNavigator.setViewMessagesScene(viewMessagesScene);
-
-        // Deafult to login scene
-        sceneNavigator.switchSceneView(SceneNavigator.SceneViewType.LOGIN);
     }
 
     private Scene initializeScene(String fxmlPath, SceneNavigator sceneNavigator) {
@@ -124,6 +126,24 @@ public class ConferenceSystem {
             controller.setMessageManager(useCaseHandler.getMessageManager());
             controller.setEventManager(useCaseHandler.getEventManager());
             controller.setSceneNavigator(sceneNavigator);
+        } catch (IOException e) {
+            scene = new Scene(new VBox(), 800, 600);
+        }
+        return scene;
+    }
+
+    private Scene initializeLoginScene(String fxmlPath, SceneNavigator sceneNavigator, LoginListener listener) {
+        Scene scene;
+        try{
+            URL url = new File(fxmlPath).toURI().toURL();
+            FXMLLoader loader = new FXMLLoader(url);
+            scene = new Scene(loader.load());
+            LoginController controller = loader.getController();
+            controller.setUserManager(useCaseHandler.getUserManager());
+            controller.setMessageManager(useCaseHandler.getMessageManager());
+            controller.setEventManager(useCaseHandler.getEventManager());
+            controller.setSceneNavigator(sceneNavigator);
+            controller.addLoginListener(listener);
         } catch (IOException e) {
             scene = new Scene(new VBox(), 800, 600);
         }

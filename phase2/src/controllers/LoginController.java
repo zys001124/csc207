@@ -37,6 +37,7 @@ public class LoginController extends Controller {
     @FXML
     private Label loginMessageLabel;
 
+    private LoginListener listener;
 
     @FXML
     void initialize() {
@@ -63,18 +64,23 @@ public class LoginController extends Controller {
         else{
             // change scene
             if(result == InputProcessResult.SUCCESSFUL_ATTENDEE_LOGIN) {
+                listener.onSuccessfulLogin();
                 setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
             }
             else if(result == InputProcessResult.SUCCESSFUL_ORGANIZER_LOGIN) {
+                listener.onSuccessfulLogin();
                 setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
             }
             else if(result == InputProcessResult.SUCCESSFUL_SPEAKER_LOGIN) {
+                listener.onSuccessfulLogin();
                 setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
             }
             else if(result == InputProcessResult.SUCCESSFUL_ADMIN_LOGIN) {
+                listener.onSuccessfulLogin();
                 setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
             }
             else if(result == InputProcessResult.SUCCESSFUL_VIP_LOGIN) {
+                listener.onSuccessfulLogin();
                 setSceneView(SceneNavigator.SceneViewType.VIP_MAIN_MENU);
             }
             else {
@@ -112,6 +118,10 @@ public class LoginController extends Controller {
             case VIP: return InputProcessResult.SUCCESSFUL_VIP_LOGIN;
             default: return InputProcessResult.INVALID_INPUT;
         }
+    }
+
+    public void addLoginListener(LoginListener listener) {
+        this.listener = listener;
     }
 
 }

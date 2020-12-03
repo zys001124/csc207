@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Objects;
 import java.util.UUID;
 
 /**
@@ -110,5 +111,27 @@ public class Message implements Serializable, Comparable<Message> {
     @Override
     public int compareTo(Message o) {
         return timeSent.compareTo(o.timeSent);
+    }
+
+    @Override
+    public String toString() {
+        return messageText;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Message message = (Message) o;
+        return Objects.equals(messageId, message.messageId) &&
+                Objects.equals(messageText, message.messageText) &&
+                Objects.equals(senderId, message.senderId) &&
+                Objects.equals(recipientId, message.recipientId) &&
+                Objects.equals(timeSent, message.timeSent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(messageId, messageText, senderId, recipientId, timeSent);
     }
 }
