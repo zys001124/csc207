@@ -34,7 +34,6 @@ public class Message implements Serializable, Comparable<Message> {
         senderId = sender;
         recipientId = recipient;
         messageId = id;
-        System.out.println("bro");
         Instant now = Instant.ofEpochMilli(System.currentTimeMillis());
         timeSent = LocalDateTime.ofInstant(now, ZoneId.of("America/New_York")); //Toronto time
     }
@@ -55,7 +54,6 @@ public class Message implements Serializable, Comparable<Message> {
         recipientId = recipient;
         messageId = id;
         this.timeSent = timeSent;
-        System.out.println("bro");
     }
 
     /**
