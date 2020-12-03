@@ -6,6 +6,7 @@ import exceptions.*;
 import observers.Observable;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -95,7 +96,7 @@ public class UserManager extends Observable {
             int index = users.indexOf(user);
             if(user.getId().equals(id)){
                 usersToRemove.add(users.remove(index));
-                notifyObservers(usersToRemove, false);
+                notifyObservers(usersToRemove, false, false);
                 return usersToRemove.get(0);
             }
         }
@@ -131,10 +132,11 @@ public class UserManager extends Observable {
         List<User> usersToAdd = new ArrayList<>();
         usersToAdd.add(user);
         users.addAll(usersToAdd);
-        notifyObservers(usersToAdd, true);
+        notifyObservers(usersToAdd, true, false);
     }
 
-    public void createUser(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException{
+
+    public void addUserFromDatabase(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException{
         if (doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
         }
@@ -142,15 +144,7 @@ public class UserManager extends Observable {
         List<User> usersToAdd = new ArrayList<>();
         usersToAdd.add(user);
         users.addAll(usersToAdd);
-        notifyObservers(usersToAdd, true);
-    }
-
-    public void createUserNoNotify(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException{
-        if (doesUserExist(username)) {
-            throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
-        }
-        User user = new User(type, username, password, id);
-        users.add(user);
+        notifyObservers(usersToAdd, true, true);
     }
 
     /**
@@ -207,6 +201,56 @@ public class UserManager extends Observable {
             }
         }
         throw new UserNotFoundException(username);
+    }
+    
+    public List<User> getAttendees() {
+        ArrayList<User> attendees = new ArrayList<>();
+        for(User user: users) {
+            if(user.getType() == User.UserType.ATTENDEE) {
+                attendees.add(user);
+            }
+        }
+        return attendees;
+    }
+
+    public List<User> getOrganizers() {
+        ArrayList<User> organizers = new ArrayList<>();
+        for(User user: users) {
+            if(user.getType() == User.UserType.ORGANIZER) {
+                organizers.add(user);
+            }
+        }
+        return organizers;
+    }
+
+    public List<User> getVips() {
+        ArrayList<User> vips = new ArrayList<>();
+        for(User user: users) {
+            if(user.getType() == User.UserType.VIP) {
+                vips.add(user);
+            }
+        }
+        return vips;
+    }
+
+    public List<User> getAdmins() {
+        ArrayList<User> admins = new ArrayList<>();
+        for(User user: users) {
+            if(user.getType() == User.UserType.ADMIN) {
+                admins.add(user);
+            }
+        }
+        return admins;
+    }
+
+    public List<User> getSpeakers() {
+        ArrayList<User> speakers = new ArrayList<>();
+        for(User user: users) {
+            if(user.getType() == User.UserType.SPEAKER) {
+                speakers.add(user);
+            }
+        }
+        return speakers;
     }
 
     /**

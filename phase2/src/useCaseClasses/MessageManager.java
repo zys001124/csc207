@@ -43,19 +43,21 @@ public class MessageManager extends Observable {
         List<Message> messagesToAdd = new ArrayList<>();
         messagesToAdd.add(new Message(message, sender, receiver, UUID.randomUUID()));
         messages.addAll(messagesToAdd);
-        notifyObservers(messagesToAdd, true);
+        notifyObservers(messagesToAdd, true, false);
     }
 
     public void addMessage(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
         List<Message> messagesToAdd = new ArrayList<>();
         messagesToAdd.add(new Message(message, sender, receiver, messageId, timeSent));
         messages.addAll(messagesToAdd);
-        notifyObservers(messagesToAdd, true);
+        notifyObservers(messagesToAdd, true, false);
     }
 
-    public void addMessageNoNotify(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
+    public void addMessageFromDatabase(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
         List<Message> messagesToAdd = new ArrayList<>();
-        messages.add(new Message(message, sender, receiver, messageId, timeSent));
+        messagesToAdd.add(new Message(message, sender, receiver, messageId, timeSent));
+        messages.addAll(messagesToAdd);
+        notifyObservers(messagesToAdd, true, true);
     }
 
     /**
@@ -73,7 +75,7 @@ public class MessageManager extends Observable {
             messagesToAdd.add(new Message(message, sender, userId, UUID.randomUUID()));
         }
         messages.addAll(messagesToAdd);
-        notifyObservers(messagesToAdd, true);
+        notifyObservers(messagesToAdd, true, false);
     }
 
     /**
@@ -104,11 +106,11 @@ public class MessageManager extends Observable {
         List<Message> theMessages = new ArrayList<>();
 
         for (Message m : messages) {
-            if ((m.getSenderId().equals(a1.getId()) && m.getRecipientId().equals(a2.getId())) || (m.getSenderId().equals(a2.getId()) && m.getRecipientId().equals(a1.getId()))) {
+            if ((m.getSenderId().equals(a1.getId()) && m.getRecipientId().equals(a2.getId())) ||
+                    (m.getSenderId().equals(a2.getId()) && m.getRecipientId().equals(a1.getId()))) {
                 theMessages.add(m);
             }
         }
-
         Collections.sort(theMessages);
         return theMessages;
     }

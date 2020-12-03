@@ -1,11 +1,14 @@
 package controllers;
 
+import entities.User;
 import handlers.SceneNavigator;
 import handlers.SceneNavigator.SceneViewType;
 import javafx.fxml.FXML;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
+
+import java.lang.ref.Reference;
 
 public abstract class Controller {
 

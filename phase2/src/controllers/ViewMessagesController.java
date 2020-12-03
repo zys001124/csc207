@@ -5,6 +5,7 @@ import exceptions.UserNotFoundException;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -39,7 +40,7 @@ public class ViewMessagesController {
             return InputProcessResult.BACK;
         }
         try {
-            List<Message> messageBetweenTwo = messageManager.messagesBetweenTwo(userManager.getUser(username), userManager.getCurrentlyLoggedIn());
+            Collection<Message> messageBetweenTwo = messageManager.messagesBetweenTwo(userManager.getUser(username), userManager.getCurrentlyLoggedIn());
             if(messageBetweenTwo.size() == 0){
                 return InputProcessResult.NO_MESSAGE_HISTORY;
             }

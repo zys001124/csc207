@@ -38,7 +38,7 @@ public class EventManager extends Observable {
         List<Event> eventsToAdd = new ArrayList<>();
         eventsToAdd.add(e);
         events.addAll(eventsToAdd);
-        notifyObservers(eventsToAdd, true);
+        notifyObservers(eventsToAdd, true, false);
     }
 
     public void addEvent(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
@@ -50,13 +50,16 @@ public class EventManager extends Observable {
         addEvent(e);
     }
 
-    public void addEventNoNotify(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
+    public void addEventFromDatabase(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
                          List<UUID> attendees, int room, int capacity, boolean VIPonly) {
 
+        List<Event> eventsToAdd = new ArrayList<>();
         Event e = new Event(title, startTime, endTime, id, organizerId, speakerId,
                 attendees, room, capacity, VIPonly);
 
-        events.add(e);
+        eventsToAdd.add(e);
+        events.addAll(eventsToAdd);
+        notifyObservers(eventsToAdd, true, true);
     }
 
     /***
@@ -85,19 +88,6 @@ public class EventManager extends Observable {
     }
 
     /**
-     * removes an event in the given event list based on the index given for the list
-     *
-     * @param i the index of the event to be removed from the list
-     * @return the event that will be removed
-     */
-    public Event removeEvent(int i) {
-        List<Event> eventsToRemove = new ArrayList<>();
-        eventsToRemove.add(events.remove(i));
-        notifyObservers(eventsToRemove, false);
-        return eventsToRemove.get(0);
-    }
-
-    /**
      * removes an event in the given event list where the event is given by its UUID
      * returns null if event can't be found.
      *
@@ -110,7 +100,20 @@ public class EventManager extends Observable {
             int index = events.indexOf(event);
             if (event.getId().equals(id)) {
                 eventsToRemove.add(events.remove(index));
-                notifyObservers(eventsToRemove, false);
+                notifyObservers(eventsToRemove, false, false);
+                return eventsToRemove.get(0);
+            }
+        }
+        return null;
+    }
+
+    public Event removeEventFromDataBase(UUID id) {
+        List<Event> eventsToRemove = new ArrayList<>();
+        for (Event event : events) {
+            int index = events.indexOf(event);
+            if (event.getId().equals(id)) {
+                eventsToRemove.add(events.remove(index));
+                notifyObservers(eventsToRemove, false, true);
                 return eventsToRemove.get(0);
             }
         }
@@ -206,7 +209,29 @@ public class EventManager extends Observable {
             List<Event> eventsChanged = new ArrayList<>();
             e.addAttendee(attendee);
             eventsChanged.add(e);
-            notifyObservers(eventsChanged, true);
+            notifyObservers(eventsChanged, true, false);
+            return;
+        }
+        throw new EventNotFoundException(parsedInput);
+    }
+
+    public void addUserToEventFromDataBase(int parsedInput, User attendee) throws EventNotFoundException,
+            NumberFormatException, UserAlreadyEnrolledException, EventFullException, InvalidUserTypeException {
+        if (parsedInput <= events.size() && parsedInput > 0) {
+            Event e = events.get(parsedInput - 1);
+            if(e.getViponly() && !attendee.getType().equals(User.UserType.VIP)){
+                throw new InvalidUserTypeException(User.UserType.VIP, attendee.getType());
+            }
+            if (e.isFull()){
+                throw new EventFullException(parsedInput);
+            }
+            if (e.hasAttendee(attendee.getId())) {
+                throw new UserAlreadyEnrolledException();
+            }
+            List<Event> eventsChanged = new ArrayList<>();
+            e.addAttendee(attendee);
+            eventsChanged.add(e);
+            notifyObservers(eventsChanged, true, true);
             return;
         }
         throw new EventNotFoundException(parsedInput);
@@ -233,7 +258,24 @@ public class EventManager extends Observable {
             List<Event> eventsChanged = new ArrayList<>();
             e.removeAttendee(attendee);
             eventsChanged.add(e);
-            notifyObservers(eventsChanged, true);
+            notifyObservers(eventsChanged, true, false);
+            return;
+        }
+        throw new EventNotFoundException(parsedInput);
+    }
+
+    public void removeUserFromEventFromDatabase(int parsedInput, User attendee) throws EventNotFoundException,
+            NumberFormatException, UserNotEnrolledInEventException {
+        if (parsedInput <= events.size() && parsedInput > 0) {
+            if (!events.get(parsedInput - 1).hasAttendee(attendee.getId())) {
+                throw new UserNotEnrolledInEventException();
+            }
+
+            Event e = events.get(parsedInput - 1);
+            List<Event> eventsChanged = new ArrayList<>();
+            e.removeAttendee(attendee);
+            eventsChanged.add(e);
+            notifyObservers(eventsChanged, true, true);
             return;
         }
         throw new EventNotFoundException(parsedInput);

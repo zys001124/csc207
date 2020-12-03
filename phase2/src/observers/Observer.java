@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface Observer {
 
-    public void update(Observable o, List<?> changes, boolean addedOrChanged) throws IncorrectObjectTypeException;
+    public void update(Observable o, List<?> changes, boolean addedOrChanged, boolean retrievedFromDatabase) throws IncorrectObjectTypeException;
 }

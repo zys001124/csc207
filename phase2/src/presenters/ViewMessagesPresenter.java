@@ -7,6 +7,7 @@ import exceptions.UserNotFoundException;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -70,7 +71,7 @@ public class ViewMessagesPresenter extends Presenter{
      */
     public String messageHistory(String recipientUsername) {
         try {
-            List<Message> messageBetweenTwo = messageManager.messagesBetweenTwo(userManager.getUser(recipientUsername), userManager.getCurrentlyLoggedIn());
+            Collection<Message> messageBetweenTwo = messageManager.messagesBetweenTwo(userManager.getUser(recipientUsername), userManager.getCurrentlyLoggedIn());
             if (messageBetweenTwo.size() == 0) {
                 return "No conversation history found.";
             }
