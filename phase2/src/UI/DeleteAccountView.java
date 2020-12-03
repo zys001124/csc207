@@ -21,13 +21,14 @@ public class DeleteAccountView extends GuiView {
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
 
-        InputProcessResult result = controller.getNextScreen(input);
+//        InputProcessResult result = controller.getNextScreen(input);
+//
+//        String DeleteAccountOutput = presenter.getInputResponseText(result);
+//
+//        System.out.println(DeleteAccountOutput);
 
-        String DeleteAccountOutput = presenter.getInputResponseText(result);
-
-        System.out.println(DeleteAccountOutput);
-
-        return getScreen(result);
+        //return getScreen(result);
+        return null;
     }
 
     private SceneType getScreen(InputProcessResult result) {

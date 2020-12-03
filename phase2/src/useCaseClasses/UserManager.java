@@ -170,6 +170,17 @@ public class UserManager extends Observable {
     }
 
     /**
+     * helper method to check and see if this user is
+     * an Admin user
+     *
+     * @param username the string of the username to see if it is found
+     * @return boolean on whether or not the user is an Admin user
+     */
+    public boolean checkAdmin(String username) throws UserNotFoundException {
+        return this.getUser(username).getType().equals(User.UserType.ADMIN);
+    }
+
+    /**
      * Gets the list of users
      * @return the list of users
      */

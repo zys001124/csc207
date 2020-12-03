@@ -79,7 +79,7 @@ public class ConferenceSystem {
         Scene eventUnEnrollScene = initializeScene("loginScene.fxml", sceneNavigator);
         sceneNavigator.setEventEnrollScene(eventUnEnrollScene);
 
-        Scene eventCancelScene = initializeScene("loginScene.fxml", sceneNavigator);
+        Scene eventCancelScene = initializeScene("Cancel Event.fxml", sceneNavigator);
         sceneNavigator.setEventCancelScene(eventCancelScene);
 
         Scene eventCreationScene = initializeScene("Create Event.fxml", sceneNavigator);
@@ -103,7 +103,7 @@ public class ConferenceSystem {
         Scene changeEventCapacityScene = initializeScene("loginScene.fxml", sceneNavigator);
         sceneNavigator.setChangeEventCapacityScene(changeEventCapacityScene);
 
-        Scene deleteAccountScene = initializeScene("loginScene.fxml", sceneNavigator);
+        Scene deleteAccountScene = initializeScene("Delete User Account.fxml", sceneNavigator);
         sceneNavigator.setDeleteAccountScene(deleteAccountScene);
 
         Scene viewMessagesScene = initializeScene("loginScene.fxml", sceneNavigator);

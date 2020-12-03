@@ -44,13 +44,14 @@ public class EventCancelView extends GuiView {
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();
 
-        InputProcessResult result = controller.getNextScreen(input);
-
-        String CancelEventOutput = presenter.getInputResponseText(result);
-
-        System.out.println(CancelEventOutput);
-
-        return getScreen(result);
+//        InputProcessResult result = controller.getNextScreen(input);
+//
+//        String CancelEventOutput = presenter.getInputResponseText(result);
+//
+//        System.out.println(CancelEventOutput);
+//
+//        return getScreen(result);
+        return null;
     }
 
     private SceneType getScreen(InputProcessResult result) {

@@ -38,12 +38,12 @@ public class ControllerHandler {
         //createAccountController = new CreateAccountController(userManager);
         eventEnrollController = new EventEnrollController(eventManager, userManager);
         eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
-        eventCancelController = new EventCancelController(eventManager, userManager);
+        //eventCancelController = new EventCancelController(eventManager, userManager);
         //eventCreationController = new EventCreationController(eventManager, userManager);
         messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
         messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
         messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
-        deleteAccountController = new DeleteAccountController(userManager);
+        //deleteAccountController = new DeleteAccountController(userManager);
         changeEventCapacityController = new ChangeEventCapacityController(eventManager);
         viewMessagesController = new ViewMessagesController(messageManager, userManager);
 
