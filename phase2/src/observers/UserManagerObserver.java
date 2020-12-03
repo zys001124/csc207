@@ -16,8 +16,8 @@ public class UserManagerObserver implements Observer {
     }
 
     @Override
-    public void update(Observable o, List<?> changes, boolean addedOrChanged) throws IncorrectObjectTypeException {
-
+    public void update(Observable o, List<?> changes, boolean addedOrChanged, boolean retrievedFromDataBase) throws IncorrectObjectTypeException {
+        if(retrievedFromDataBase){return;}
         try {
             if(addedOrChanged){
                 fbg.pushUsers((List<User>) changes);

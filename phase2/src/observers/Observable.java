@@ -24,11 +24,11 @@ public abstract class Observable {
         observers.removeAll(observers);
     }
 
-    public void notifyObservers(List<?> changes, boolean addedOrChanged) {
+    public void notifyObservers(List<?> changes, boolean addedOrChanged, boolean retrievedFromDataBase) {
 
         try {
             for(Observer o: observers) {
-                o.update(this, changes, addedOrChanged);
+                o.update(this, changes, addedOrChanged, retrievedFromDataBase);
             }
         } catch (IncorrectObjectTypeException e) {
             e.printStackTrace();

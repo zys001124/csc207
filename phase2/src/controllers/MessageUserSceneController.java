@@ -72,7 +72,7 @@ public class MessageUserSceneController extends Controller {
 
         messageManager.addObserver(new Observer() {
             @Override
-            public void update(Observable o, List<?> changes, boolean addedOrChanged) throws IncorrectObjectTypeException {
+            public void update(Observable o, List<?> changes, boolean addedOrChanged, boolean retrievedFromDataBase) throws IncorrectObjectTypeException {
                 //Using set so no duplicates are made
                 Set<Message> newMessages = new TreeSet<>();
                 UUID currentUserID = userManager.getCurrentlyLoggedIn().getId();

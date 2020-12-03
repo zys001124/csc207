@@ -96,7 +96,7 @@ public class UserManager extends Observable {
             int index = users.indexOf(user);
             if(user.getId().equals(id)){
                 usersToRemove.add(users.remove(index));
-                notifyObservers(usersToRemove, false);
+                notifyObservers(usersToRemove, false, false);
                 return usersToRemove.get(0);
             }
         }
@@ -132,10 +132,11 @@ public class UserManager extends Observable {
         List<User> usersToAdd = new ArrayList<>();
         usersToAdd.add(user);
         users.addAll(usersToAdd);
-        notifyObservers(usersToAdd, true);
+        notifyObservers(usersToAdd, true, false);
     }
 
-    public void createUser(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException{
+
+    public void addUserFromDatabase(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException{
         if (doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
         }
@@ -143,15 +144,7 @@ public class UserManager extends Observable {
         List<User> usersToAdd = new ArrayList<>();
         usersToAdd.add(user);
         users.addAll(usersToAdd);
-        notifyObservers(usersToAdd, true);
-    }
-
-    public void createUserNoNotify(User.UserType type, String username, String password, UUID id) throws UsernameAlreadyExistsException{
-        if (doesUserExist(username)) {
-            throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
-        }
-        User user = new User(type, username, password, id);
-        users.add(user);
+        notifyObservers(usersToAdd, true, true);
     }
 
     /**

@@ -14,6 +14,7 @@ import com.google.firebase.database.annotations.Nullable;
 import entities.Event;
 import entities.Message;
 import entities.User;
+import exceptions.InvalidUserTypeException;
 import exceptions.UserTypeDoesNotExistException;
 import exceptions.UsernameAlreadyExistsException;
 import useCaseClasses.EventManager;
@@ -134,7 +135,7 @@ public class FirebaseGateway {
         UUID uuid = UUID.fromString(qds.get("uuid").toString());
 
         try {
-            userManager.createUserNoNotify(type, username, password, uuid);
+            userManager.addUserFromDatabase(type, username, password, uuid);
         } catch (UsernameAlreadyExistsException e)  {
         }
     }
@@ -167,7 +168,7 @@ public class FirebaseGateway {
                 attendees.add(UUID.fromString(uuid));
             }
 
-            eventManager.addEventNoNotify(title, startTime, endTime, eventId, organizerId, speakers, attendees, room, capacity, VIPonly);
+            eventManager.addEventFromDatabase(title, startTime, endTime, eventId, organizerId, speakers, attendees, room, capacity, VIPonly);
         }
     }
 
@@ -186,8 +187,8 @@ public class FirebaseGateway {
             UUID messageId = UUID.fromString(qds.get("messageId").toString());
             LocalDateTime timeSent = LocalDateTime.parse(qds.get("timeSent").toString());
 
-            System.out.println("here");
-            messageManager.addMessageNoNotify(senderId, recipientId, messageText, timeSent, messageId);
+
+            messageManager.addMessageFromDatabase(senderId, recipientId, messageText, timeSent, messageId);
         }
     }
     
