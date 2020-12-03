@@ -6,13 +6,11 @@ import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import useCaseClasses.UserManager;
 
 
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.SortedMap;
-import java.util.UUID;
+import java.util.*;
 
 
 public class DeleteAccountController extends Controller{
@@ -24,7 +22,7 @@ public class DeleteAccountController extends Controller{
     private URL location;
 
     @FXML // fx:id="userListField"
-    private TextArea userListField; // Value injected by FXMLLoader
+    private ListView userListField; // Value injected by FXMLLoader
 
     @FXML // fx:id="userNameField"
     private TextField userNameField; // Value injected by FXMLLoader
@@ -51,8 +49,7 @@ public class DeleteAccountController extends Controller{
         InputProcessResult result = deleteAccount(userName);
 
         if (result == InputProcessResult.SUCCESS){
-            label = "Account deleted successfully";
-            setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+            label = "Account deleted successfully.";
         } else if (result == InputProcessResult.USER_NOT_FOUND) {
             label = "This user does not exist. Try again.";
         } else if (result == InputProcessResult.INVALID_USER_TYPE) {
@@ -69,7 +66,6 @@ public class DeleteAccountController extends Controller{
         assert deleteButton != null : "fx:id=\"deleteButton\" was not injected: check your FXML file 'Delete User Account.fxml'.";
         assert createMessageLabel != null : "fx:id=\"createMessageLabel\" was not injected: check your FXML file 'Delete User Account.fxml'.";
         assert userListField != null : "fx:id=\"userListField\" was not injected: check your FXML file 'Delete User Account.fxml'.";
-        userListField.setText(getUsers());
     }
 
     private InputProcessResult deleteAccount(String userName) {
@@ -92,15 +88,23 @@ public class DeleteAccountController extends Controller{
         return InputProcessResult.SUCCESS;
     }
 
-    private String getUsers(){
-        String result = "";
-        List<User> users = userManager.getUsers();
-        for(User u: users){
-            result+= u.getUsername();
-        }
-        String l = result.toString();
+    @Override
+    public void setUserManager(UserManager userManager) {
+        super.setUserManager(userManager);
 
-        return result;
+        setUserList();
+    }
+
+    private List<Label> getUserLabels(Collection<User> users) {
+        ArrayList<Label> labels = new ArrayList<>();
+        for(User user: users) {
+            labels.add(new Label(user.getUsername()+": "+user.getType()));
+        }
+        return labels;
+    }
+
+    private void setUserList(){
+        userListField.getItems().addAll(getUserLabels(userManager.getUsers()));
     }
 
 }

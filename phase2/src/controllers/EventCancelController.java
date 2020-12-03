@@ -14,10 +14,7 @@ import javafx.scene.control.*;
 
 
 import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
-import java.util.SortedMap;
-import java.util.UUID;
+import java.util.*;
 
 public class EventCancelController extends Controller{
 
@@ -28,7 +25,7 @@ public class EventCancelController extends Controller{
     private URL location;
 
     @FXML // fx:id="eventListField"
-    private TextArea eventListField; // Value injected by FXMLLoader
+    private ListView eventListField; // Value injected by FXMLLoader
 
     @FXML // fx:id="eventNameField"
     private TextField eventNameField; // Value injected by FXMLLoader
@@ -62,13 +59,7 @@ public class EventCancelController extends Controller{
         InputProcessResult result = cancelEvent(eventname);
 
         if (result == InputProcessResult.SUCCESS){
-            label = "Event canceled successfully";
-            if(checkUserType()){
-                setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
-            }
-            if(!checkUserType()){
-                setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
-            }
+            label = "Event canceled successfully.";
         } else if (result == InputProcessResult.EVENT_DOES_NOT_EXIST) {
             label = "This event does not exist. Try again.";
         } else if (result == InputProcessResult.USER_DID_NOT_ORGANIZE_EVENT) {
@@ -113,6 +104,25 @@ public class EventCancelController extends Controller{
         } catch(UserNotFoundException e){
         }
         return false; //Organizer
+    }
+
+    @Override
+    public void setEventManager(EventManager eventManager) {
+        super.setEventManager(eventManager);
+
+        setEventList();
+    }
+
+    private List<Label> getEventLabels(Collection<Event> events) {
+        ArrayList<Label> labels = new ArrayList<>();
+        for(Event event: events) {
+            labels.add(new Label(event.getEventTitle()));
+        }
+        return labels;
+    }
+
+    private void setEventList(){
+        eventListField.getItems().addAll(getEventLabels(eventManager.getEvents()));
     }
 
 
