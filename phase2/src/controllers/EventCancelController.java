@@ -125,6 +125,7 @@ public class EventCancelController extends Controller{
                     }
 
                     for(Label label: labelsToRemove) {
+                        System.out.println("hererre");
                         eventListView.getSelectionModel().select(label);
                         labels.remove(label);
                     }

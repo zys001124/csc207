@@ -124,6 +124,7 @@ public class EventManager extends Observable {
                 notifyObservers(eventsToRemove, false, true);
             }
         }
+
     }
 
     /**
