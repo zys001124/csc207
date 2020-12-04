@@ -17,13 +17,11 @@ import javafx.scene.control.*;
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+
 
 public class EventCancelController extends Controller{
 
