@@ -118,12 +118,12 @@ public class EventManager extends Observable {
 
         List<Event> eventsToRemove = new ArrayList<>();
         for (Event event : events) {
+            int index = events.indexOf(event);
             if (event.getId().equals(id)) {
-                eventsToRemove.add(event);
-                removeEvent(id);
+                eventsToRemove.add(events.remove(index));
+                notifyObservers(eventsToRemove, false, true);
             }
         }
-        notifyObservers(eventsToRemove, false, true);
     }
 
     /**
