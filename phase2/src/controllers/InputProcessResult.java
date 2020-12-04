@@ -50,4 +50,5 @@ public enum InputProcessResult {
     NAVIGATE_TO_VIEW_MESSAGES,
     INVALID_USER_TYPE,
     NO_MESSAGE_HISTORY,
+    NO_MESSAGE_DETECTED,
 }

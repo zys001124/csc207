@@ -1,8 +1,12 @@
 package controllers;
 
 import entities.Event;
+import entities.Message;
 import entities.User;
+import exceptions.IncorrectObjectTypeException;
 import handlers.SceneNavigator;
+import observers.Observable;
+import observers.Observer;
 import useCaseClasses.EventManager;
 
 import javafx.event.ActionEvent;
@@ -11,7 +15,13 @@ import javafx.scene.control.*;
 
 
 import java.net.URL;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
+import java.util.ResourceBundle;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+
 
 public class EventCancelController extends Controller{
 
@@ -21,11 +31,8 @@ public class EventCancelController extends Controller{
     @FXML // URL location of the FXML file that was given to the FXMLLoader
     private URL location;
 
-    @FXML // fx:id="eventListField"
-    private ListView<Label> eventListField; // Value injected by FXMLLoader
-
-    @FXML // fx:id="eventNameField"
-    private TextField eventNameField; // Value injected by FXMLLoader
+    @FXML // fx:id="eventListView"
+    private ListView<Label> eventListView; // Value injected by FXMLLoader
 
     @FXML // fx:id="backButton"
     private Button backButton; // Value injected by FXMLLoader
@@ -35,6 +42,15 @@ public class EventCancelController extends Controller{
 
     @FXML // fx:id="createMessageLabel"
     private Label createMessageLabel; // Value injected by FXMLLoader
+
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        assert eventListView != null : "fx:id=\"eventListView\" was not injected: check your FXML file 'Cancel Event.fxml'.";
+        assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Cancel Event.fxml'.";
+        assert cancelButton != null : "fx:id=\"cancelButton\" was not injected: check your FXML file 'Cancel Event.fxml'.";
+        assert createMessageLabel != null : "fx:id=\"createMessageLabel\" was not injected: check your FXML file 'Cancel Event.fxml'.";
+
+    }
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
@@ -51,7 +67,7 @@ public class EventCancelController extends Controller{
 
         String label = "";
 
-        String eventname = eventNameField.getText();
+        String eventname = eventListView.getSelectionModel().getSelectedItem().getText().split(" on")[0];
 
         InputProcessResult result = cancelEvent(eventname);
 
@@ -63,17 +79,6 @@ public class EventCancelController extends Controller{
             label = "This event is not organized by you. Try again.";
         }
         createMessageLabel.setText(label);
-    }
-
-
-    @FXML
-        // This method is called by the FXMLLoader when initialization is complete
-    void initialize() {
-        assert eventNameField != null : "fx:id=\"eventNameField\" was not injected: check your FXML file 'Cancel Event.fxml'.";
-        assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Cancel Event.fxml'.";
-        assert cancelButton != null : "fx:id=\"cancelButton\" was not injected: check your FXML file 'Cancel Event.fxml'.";
-        assert createMessageLabel != null : "fx:id=\"createMessageLabel\" was not injected: check your FXML file 'Cancel Event.fxml'.";
-        assert eventListField != null : "fx:id=\"eventListField\" was not injected: check your FXML file 'Cancel Event.fxml'.";
     }
 
     private InputProcessResult cancelEvent(String eventName){
@@ -103,73 +108,38 @@ public class EventCancelController extends Controller{
         super.setEventManager(eventManager);
 
         setEventList();
+        eventManager.addObserver(new Observer() {
+            @Override
+            public void update(Observable o, List<?> changes, boolean addedOrChanged, boolean retrievedFromDatabase) throws IncorrectObjectTypeException {
+                setEventList();
+            }
+        });
     }
 
     private List<Label> getEventLabels(Collection<Event> events) {
         ArrayList<Label> labels = new ArrayList<>();
         for(Event event: events) {
-            labels.add(new Label(event.getEventTitle()));
+            String labelText = event.getEventTitle() +" on "+event.getEventTime().format(DateTimeFormatter.ofPattern("MMMM dd, HH:mm"))+".";
+            if(event.getSpeakerId().size() > 0) {
+                labelText = labelText + " Hosted by";
+                for(int i = 0; i<event.getSpeakerId().size(); i++) {
+                    UUID speakerId = event.getSpeakerId().get(i);
+                    labelText = labelText + " " + userManager.getUser(speakerId).getUsername();
+                    if(i != event.getSpeakerId().size()-1) {
+                        labelText = labelText + ",";
+                    }
+                }
+            }
+            Label eventLabel = new Label(labelText);
+            labels.add(eventLabel);
         }
         return labels;
     }
 
     private void setEventList(){
-        eventListField.getItems().addAll(getEventLabels(eventManager.getEvents()));
+        eventListView.getItems().setAll(getEventLabels(eventManager.getEvents()));
     }
 
 
 }
 
-
-///**
-// * A controller for handling inputs when an organizer try
-// * to cancel an existing event
-// */
-//public class EventCancelController {
-//
-//    private final EventManager Emanager;
-//    private final UserManager Umanager;
-//
-//    /**
-//     * Creates an EventCancelController with the given EventManager, EventCancelPresenter and UserManager
-//     *
-//     * @param Emanager  the EventManager this controller will use
-//     * @param Umanager  the UserManager this controller will use
-//     */
-//
-//    public EventCancelController(EventManager Emanager, UserManager Umanager) {
-//        this.Emanager = Emanager;
-//        this.Umanager = Umanager;
-//    }
-//
-//    /**
-//     * Handle the input given by the user and decides which screen menu to show given the input
-//     *
-//     * @param input - the input from user
-//     * @return an InputProcessResult enum that details what happened as a result of the given input
-//     */
-//
-//    public InputProcessResult getNextScreen(String input) {
-//
-//        if (input.equals("back")) {
-//            return InputProcessResult.BACK;
-//        }
-//
-//        if (!Emanager.eventTitleExists(input)) {
-//            return InputProcessResult.EVENT_DOES_NOT_EXIST;
-//        }
-//
-//        Event currentEvent = Emanager.getEvent(input);
-//        User currentUser = Umanager.getCurrentlyLoggedIn();
-//
-//        if (!Emanager.hasOrganizedEvent(currentUser, currentEvent) &&
-//                !Umanager.getCurrentlyLoggedIn().getType().equals(User.UserType.ADMIN)) {
-//            return InputProcessResult.USER_DID_NOT_ORGANIZE_EVENT;
-//        }
-//
-//        Emanager.removeEvent(currentEvent.getId());
-//
-//        return InputProcessResult.SUCCESS;
-//    }
-//
-//}

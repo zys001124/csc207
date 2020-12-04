@@ -69,7 +69,7 @@ public class ConferenceSystem {
         Scene attendeeMenuInputScene = initializeScene("Attendee Main Menu.fxml", sceneNavigator);
         sceneNavigator.setAttendeeMenuInputScene(attendeeMenuInputScene);
 
-        Scene vipMenuInputScene = initializeScene("Attendee Main Menu.fxml", sceneNavigator);
+        Scene vipMenuInputScene = initializeScene("VIP Main Menu.fxml", sceneNavigator);
         sceneNavigator.setVipMenuInputScene(vipMenuInputScene);
 
         Scene adminMenuInputScene = initializeScene("Admin Main Menu.fxml", sceneNavigator);
@@ -96,10 +96,10 @@ public class ConferenceSystem {
         Scene messageAllAttendingEventScene = initializeScene("loginScene.fxml", sceneNavigator);
         sceneNavigator.setMessageAllAttendingEventScene(messageAllAttendingEventScene);
 
-        Scene messageAllSpeakersScene = initializeScene("loginScene.fxml", sceneNavigator);
+        Scene messageAllSpeakersScene = initializeScene("Message All Speakers.fxml", sceneNavigator);
         sceneNavigator.setMessageAllSpeakersScene(messageAllSpeakersScene);
 
-        Scene messageAllAttendeesScene = initializeScene("loginScene.fxml", sceneNavigator);
+        Scene messageAllAttendeesScene = initializeScene("Message All Attendees.fxml", sceneNavigator);
         sceneNavigator.setMessageAllAttendeesScene(messageAllAttendeesScene);
 
         Scene seeScheduleScene = initializeScene("loginScene.fxml", sceneNavigator);

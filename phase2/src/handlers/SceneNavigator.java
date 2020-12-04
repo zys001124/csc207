@@ -275,23 +275,23 @@ public class SceneNavigator {
 
     public enum SceneViewType {
         LOGIN, // Finished
-        SPEAKER_MAIN_MENU, // Finisehd
+        SPEAKER_MAIN_MENU, // Finished
         ORGANIZER_MAIN_MENU, //Finished
-        ATTENDEE_MAIN_MENU,
-        ADMIN_MAIN_MENU,
-        VIP_MAIN_MENU,
-        MESSAGE_USER, // Luka
-        MESSAGE_ALL_ATTENDING_EVENT, // Jon - Finished
-        MESSAGE_ALL_SPEAKERS, // Luka
-        MESSAGE_ALL_ATTENDEES, // Luka
-        EVENT_SCHEDULE, // Kelvin - Finished
-        CREATE_EVENT, // Jay - Finished
-        CANCEL_EVENT, // Yaosheng - Finished
-        ENROLL_IN_EVENT, // Kelvin - Finished
-        UNENROLL_IN_EVENT, // Kelvin - Finished
-        CREATE_ACCOUNT, // Lewis - Finished
-        DELETE_ACCOUNT,
-        CHANGE_CAPACITY,
-        VIEW_MESSAGES,
+        ATTENDEE_MAIN_MENU, //Finished
+        ADMIN_MAIN_MENU, //Finished
+        VIP_MAIN_MENU, //Finished
+        MESSAGE_USER, //Finished
+        MESSAGE_ALL_ATTENDING_EVENT, //Jay
+        MESSAGE_ALL_SPEAKERS, //Finished
+        MESSAGE_ALL_ATTENDEES, //Finished
+        EVENT_SCHEDULE, //Kelvin
+        CREATE_EVENT, //Finished
+        CANCEL_EVENT, //Finished
+        ENROLL_IN_EVENT, // Kelvin
+        UNENROLL_IN_EVENT, // Kelvin
+        CREATE_ACCOUNT, //Finished
+        DELETE_ACCOUNT, //Finished? -Yaosheng
+        CHANGE_CAPACITY, //Yaosheng
+        VIEW_MESSAGES, //Deleting?
     }
 }

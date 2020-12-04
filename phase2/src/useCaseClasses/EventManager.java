@@ -4,7 +4,6 @@ import entities.Event;
 import entities.User;
 import exceptions.*;
 import observers.Observable;
-import org.threeten.bp.LocalDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -52,12 +51,22 @@ public class EventManager extends Observable {
 
     public void addEventFromDatabase(Event.EventData data) {
 
-        List<Event> eventsToAdd = new ArrayList<>();
-        Event e = Event.fromEventData(data);
+        if(!eventExists(UUID.fromString(data.eventId))) {
+            List<Event> eventsToAdd = new ArrayList<>();
+            Event e = Event.fromEventData(data);
+            eventsToAdd.add(e);
+            events.addAll(eventsToAdd);
+            notifyObservers(eventsToAdd, true, true);
+        }
+    }
 
-        eventsToAdd.add(e);
-        events.addAll(eventsToAdd);
-        notifyObservers(eventsToAdd, true, true);
+    private boolean eventExists(UUID eventId) {
+        for(Event event: events) {
+            if(eventId.equals(event.getId())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /***
@@ -105,17 +114,15 @@ public class EventManager extends Observable {
         return null;
     }
 
-    public Event removeEventFromDataBase(UUID id) {
+    public void removeEventFromDataBase(UUID id) {
         List<Event> eventsToRemove = new ArrayList<>();
         for (Event event : events) {
             int index = events.indexOf(event);
             if (event.getId().equals(id)) {
                 eventsToRemove.add(events.remove(index));
-                notifyObservers(eventsToRemove, false, true);
-                return eventsToRemove.get(0);
             }
         }
-        return null;
+        notifyObservers(eventsToRemove, false, true);
     }
 
     /**

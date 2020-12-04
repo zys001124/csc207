@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.VIPMainMenuController">
+   <children>
+      <Label layoutX="218.0" layoutY="68.0" text="VIP Main Menu" underline="true">
+         <font>
+            <Font name="Arial" size="24.0" />
+         </font>
+      </Label>
+      <Label layoutX="212.0" layoutY="113.0" text="Select an option:">
+         <font>
+            <Font name="Arial" size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="messageUserButton" layoutX="213.0" layoutY="147.0" mnemonicParsing="false" onAction="#onMessageUserButtonClicked" text="1. Message User" />
+      <Button fx:id="enrollInEventButton" layoutX="212.0" layoutY="181.0" mnemonicParsing="false" onAction="#onEnrollInEventButtonClicked" text="2. Enroll in an event/View event list " />
+      <Button fx:id="unenrollInEventButton" layoutX="212.0" layoutY="216.0" mnemonicParsing="false" onAction="#onUnenrollInEventButtonClicked" text="3. Unenroll in an Event" />
+      <Button fx:id="seeEventSchedueButton" layoutX="212.0" layoutY="254.0" mnemonicParsing="false" onAction="#onSeeEventScheduleButtonClicked" text="4. See Event Schedule" />
+      <Button fx:id="viewMessageHistoryButton" layoutX="213.0" layoutY="288.0" mnemonicParsing="false" onAction="#onViewMessageHistoryButtonClicked" text="5. View Message History" />
+      <Button fx:id="logoutButton" layoutX="213.0" layoutY="324.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" text="6. Logout" />
+   </children>
+</AnchorPane>
