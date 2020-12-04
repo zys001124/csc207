@@ -41,8 +41,8 @@ public class ControllerHandler {
         //eventCancelController = new EventCancelController(eventManager, userManager);
         //eventCreationController = new EventCreationController(eventManager, userManager);
         messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
-        messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
-        messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
+        //messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
+        //messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
         //deleteAccountController = new DeleteAccountController(userManager);
         changeEventCapacityController = new ChangeEventCapacityController(eventManager);
         viewMessagesController = new ViewMessagesController(messageManager, userManager);
