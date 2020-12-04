@@ -122,7 +122,6 @@ public class EventManager extends Observable {
                 eventsToRemove.add(events.remove(index));
             }
         }
-        events.removeAll(eventsToRemove);
         notifyObservers(eventsToRemove, false, true);
     }
 
