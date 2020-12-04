@@ -17,10 +17,10 @@
             <Font name="Arial" size="14.0" />
          </font>
       </Label>
-      <Button fx:id="messageAllAttendeesOfEventButton" layoutX="213.0" layoutY="147.0" mnemonicParsing="false" text="1. Message all Attendees of your event" />
-      <Button fx:id="messageAttendeeButton" layoutX="212.0" layoutY="181.0" mnemonicParsing="false" text="2. Message Attendee" />
-      <Button fx:id="seeEventScheduleButton" layoutX="212.0" layoutY="216.0" mnemonicParsing="false" text="3. See event schedule" />
-      <Button fx:id="viewMessageHistoryButton" layoutX="212.0" layoutY="254.0" mnemonicParsing="false" text="4. View Message History" />
-      <Button fx:id="logoutButton" layoutX="213.0" layoutY="288.0" mnemonicParsing="false" text="5. Logout" />
+      <Button fx:id="messageAllAttendeesOfEventButton" layoutX="213.0" layoutY="147.0" mnemonicParsing="false" onAction="#onMessageAllAttendeesClicked" text="1. Message all Attendees of your event" />
+      <Button fx:id="messageAttendeeButton" layoutX="212.0" layoutY="181.0" mnemonicParsing="false" onAction="#onMessageAttendeeClicked" text="2. Message Attendee" />
+      <Button fx:id="seeEventScheduleButton" layoutX="212.0" layoutY="216.0" mnemonicParsing="false" onAction="#onSeeEventScheduleClicked" text="3. See event schedule" />
+      <Button fx:id="viewMessageHistoryButton" layoutX="212.0" layoutY="254.0" mnemonicParsing="false" onAction="#onViewMessageHistoryClicked" text="4. View Message History" />
+      <Button fx:id="logoutButton" layoutX="213.0" layoutY="288.0" mnemonicParsing="false" onAction="#onLogoutClicked" text="5. Logout" />
    </children>
 </AnchorPane>
