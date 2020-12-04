@@ -7,7 +7,7 @@ import java.util.*;
 /**
  * Represents an event at the tech conference
  */
-public class Event implements Serializable, Iterable<UUID> {
+public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
     private final LocalDateTime eventSTime;
     private final LocalDateTime eventETime;
@@ -207,6 +207,11 @@ public class Event implements Serializable, Iterable<UUID> {
     @Override
     public Iterator<UUID> iterator() {
         return attendees.iterator();
+    }
+
+    @Override
+    public int compareTo(Event o) {
+        return eventId.compareTo(o.eventId);
     }
 
     /**

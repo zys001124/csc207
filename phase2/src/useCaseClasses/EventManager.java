@@ -52,12 +52,22 @@ public class EventManager extends Observable {
 
     public void addEventFromDatabase(Event.EventData data) {
 
-        List<Event> eventsToAdd = new ArrayList<>();
-        Event e = Event.fromEventData(data);
+        if(!eventExists(UUID.fromString(data.eventId))) {
+            List<Event> eventsToAdd = new ArrayList<>();
+            Event e = Event.fromEventData(data);
+            eventsToAdd.add(e);
+            events.addAll(eventsToAdd);
+            notifyObservers(eventsToAdd, true, true);
+        }
+    }
 
-        eventsToAdd.add(e);
-        events.addAll(eventsToAdd);
-        notifyObservers(eventsToAdd, true, true);
+    private boolean eventExists(UUID eventId) {
+        for(Event event: events) {
+            if(eventId.equals(event.getId())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /***
