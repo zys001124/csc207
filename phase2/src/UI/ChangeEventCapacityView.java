@@ -20,12 +20,13 @@ public class ChangeEventCapacityView extends GuiView {
         System.out.println(presenter.getPreInputText());
         String event = inputScanner.nextLine();
 
-        InputProcessResult result = controller.eventCapacityChange(event);
-
-        String loginResultOutput = presenter.getInputResponseText(result);
-        System.out.println(loginResultOutput);
-
-        return getNextScreen(result);
+//        InputProcessResult result = controller.eventCapacityChange(event);
+//
+//        String loginResultOutput = presenter.getInputResponseText(result);
+//        System.out.println(loginResultOutput);
+//
+//        return getNextScreen(result);
+        return null;
     }
 
     private SceneType getNextScreen(InputProcessResult result){

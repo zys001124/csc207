@@ -44,7 +44,7 @@ public class ControllerHandler {
         messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
         messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
         //deleteAccountController = new DeleteAccountController(userManager);
-        changeEventCapacityController = new ChangeEventCapacityController(eventManager);
+        //changeEventCapacityController = new ChangeEventCapacityController(eventManager);
         viewMessagesController = new ViewMessagesController(messageManager, userManager);
 
     }

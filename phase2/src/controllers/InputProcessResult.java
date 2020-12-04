@@ -23,6 +23,8 @@ public enum InputProcessResult {
     TIMESLOT_FULL,
     CAPACITY_OVER,
     ROOM_FULL,
+    WRONG_ROOM,
+    INVALID_TIME,
     USER_NOT_SPEAKER,
     EVENT_NOT_FOUND,
     EVENT_IS_FULL,

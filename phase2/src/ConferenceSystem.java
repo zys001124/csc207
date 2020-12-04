@@ -105,7 +105,7 @@ public class ConferenceSystem {
         Scene seeScheduleScene = initializeScene("loginScene.fxml", sceneNavigator);
         sceneNavigator.setSeeScheduleScene(seeScheduleScene);
 
-        Scene changeEventCapacityScene = initializeScene("loginScene.fxml", sceneNavigator);
+        Scene changeEventCapacityScene = initializeScene("Change Event Capacity.fxml", sceneNavigator);
         sceneNavigator.setChangeEventCapacityScene(changeEventCapacityScene);
 
         Scene deleteAccountScene = initializeScene("Delete User Account.fxml", sceneNavigator);
