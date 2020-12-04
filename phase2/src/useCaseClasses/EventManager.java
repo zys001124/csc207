@@ -4,7 +4,6 @@ import entities.Event;
 import entities.User;
 import exceptions.*;
 import observers.Observable;
-import org.threeten.bp.LocalDate;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -115,17 +114,15 @@ public class EventManager extends Observable {
         return null;
     }
 
-    public Event removeEventFromDataBase(UUID id) {
+    public void removeEventFromDataBase(UUID id) {
         List<Event> eventsToRemove = new ArrayList<>();
         for (Event event : events) {
             int index = events.indexOf(event);
             if (event.getId().equals(id)) {
                 eventsToRemove.add(events.remove(index));
-                notifyObservers(eventsToRemove, false, true);
-                return eventsToRemove.get(0);
             }
         }
-        return null;
+        notifyObservers(eventsToRemove, false, true);
     }
 
     /**

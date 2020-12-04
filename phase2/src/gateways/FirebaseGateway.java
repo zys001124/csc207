@@ -154,36 +154,8 @@ public class FirebaseGateway {
         eventsRef.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                try {
-                    Map eventMap= (Map<String, Object>) dataSnapshot.getValue();
-                    Event.EventData eventData = new Event.EventData();
-                    if(eventMap.containsKey("attendees")) {
-                        eventData.attendees = (Collection<String>)eventMap.get("attendees");
-                    }
-                    else {
-                        eventData.attendees = new ArrayList<>();
-                    }
-
-                    if(eventMap.containsKey("speakerIds")) {
-                        eventData.speakerIds = (Collection<String>)eventMap.get("speakerIds");
-                    }
-                    else {
-                        eventData.speakerIds = new ArrayList<>();
-                    }
-                    eventData.eventSTime = (String) eventMap.get("eventSTime");
-                    eventData.eventETime = (String) eventMap.get("eventETime");
-                    eventData.organizerId = (String) eventMap.get("organizerId");
-                    eventData.VIPonly = (String) eventMap.get("VIPonly");
-                    eventData.eventCapacity = (String) eventMap.get("eventCapacity");
-                    eventData.eventRoom = (String) eventMap.get("eventRoom");
-                    eventData.eventId = (String) eventMap.get("eventId");
-                    eventData.eventTitle = (String) eventMap.get("eventTitle");
-
-                    eventManager.addEventFromDatabase(eventData);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
+                Event.EventData data = eventDataFromDataSnapshot(dataSnapshot);
+                eventManager.addEventFromDatabase(data);
             }
 
             @Override
@@ -193,7 +165,7 @@ public class FirebaseGateway {
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Event.EventData data = dataSnapshot.getValue(Event.EventData.class);
+                Event.EventData data = eventDataFromDataSnapshot(dataSnapshot);
                 eventManager.removeEventFromDataBase(UUID.fromString(data.eventId));
             }
 
@@ -246,6 +218,36 @@ public class FirebaseGateway {
         for(Event event: events) {
             eventsRef.child(event.getId().toString()).removeValueAsync();
         }
+    }
+
+    private Event.EventData eventDataFromDataSnapshot(DataSnapshot dataSnapshot) {
+
+        Map eventMap= (Map<String, Object>) dataSnapshot.getValue();
+        Event.EventData eventData = new Event.EventData();
+        if(eventMap.containsKey("attendees")) {
+            eventData.attendees = (Collection<String>)eventMap.get("attendees");
+        }
+        else {
+            eventData.attendees = new ArrayList<>();
+        }
+
+        if(eventMap.containsKey("speakerIds")) {
+            eventData.speakerIds = (Collection<String>)eventMap.get("speakerIds");
+        }
+        else {
+            eventData.speakerIds = new ArrayList<>();
+        }
+        eventData.eventSTime = (String) eventMap.get("eventSTime");
+        eventData.eventETime = (String) eventMap.get("eventETime");
+        eventData.organizerId = (String) eventMap.get("organizerId");
+        eventData.VIPonly = (String) eventMap.get("VIPonly");
+        eventData.eventCapacity = (String) eventMap.get("eventCapacity");
+        eventData.eventRoom = (String) eventMap.get("eventRoom");
+        eventData.eventId = (String) eventMap.get("eventId");
+        eventData.eventTitle = (String) eventMap.get("eventTitle");
+
+        return eventData;
+
     }
 
 }
