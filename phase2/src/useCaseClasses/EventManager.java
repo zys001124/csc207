@@ -73,7 +73,7 @@ public class EventManager extends Observable {
      * checks the availability of rooms in the given time
      * @param sTime the start time of the event to be checked
      * @param eTime the end time of the event to be checked
-     * @return boolean if the room is available in the provided start and end time
+     * @return ArrayList<Integer> rooms occupied at some point on the interval [sTime, eTime]
      */
     public ArrayList<Integer> availabilityInTime(LocalDateTime sTime, LocalDateTime eTime) {
         ArrayList<Integer> roomTaken= new ArrayList<>();
@@ -82,8 +82,8 @@ public class EventManager extends Observable {
             LocalDateTime timeStart = temp.getEventTime();
             LocalDateTime timeEnd = temp.getEventETime();
             Integer roomNum = temp.getEventRoom();
-            if (timeStart.isBefore(sTime) && timeEnd.isAfter(sTime)|
-                    (timeStart.isBefore(eTime) && timeEnd.isAfter(eTime))|
+            if (timeStart.isBefore(sTime) && timeEnd.isAfter(sTime)||
+                    (timeStart.isBefore(eTime) && timeEnd.isAfter(eTime))||
                     (timeStart.isAfter(sTime) && timeEnd.isBefore((eTime)))
             ) {
                 if (!roomTaken.contains(roomNum)){roomTaken.add(roomNum);}
@@ -115,11 +115,12 @@ public class EventManager extends Observable {
     }
 
     public void removeEventFromDataBase(UUID id) {
+
         List<Event> eventsToRemove = new ArrayList<>();
         for (Event event : events) {
-            int index = events.indexOf(event);
             if (event.getId().equals(id)) {
-                eventsToRemove.add(events.remove(index));
+                eventsToRemove.add(event);
+                removeEvent(id);
             }
         }
         notifyObservers(eventsToRemove, false, true);
