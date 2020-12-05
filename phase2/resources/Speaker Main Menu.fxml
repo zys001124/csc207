@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SpeakerMainMenuController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SpeakerMainMenuController">
    <children>
       <Label layoutX="212.0" layoutY="57.0" text="Speaker Main Menu" underline="true">
          <font>
@@ -20,7 +19,6 @@
       <Button fx:id="messageAllAttendeesOfEventButton" layoutX="213.0" layoutY="147.0" mnemonicParsing="false" onAction="#onMessageAllAttendeesClicked" text="1. Message all Attendees of your event" />
       <Button fx:id="messageAttendeeButton" layoutX="212.0" layoutY="181.0" mnemonicParsing="false" onAction="#onMessageAttendeeClicked" text="2. Message Attendee" />
       <Button fx:id="seeEventScheduleButton" layoutX="212.0" layoutY="216.0" mnemonicParsing="false" onAction="#onSeeEventScheduleClicked" text="3. See event schedule" />
-      <Button fx:id="viewMessageHistoryButton" layoutX="212.0" layoutY="254.0" mnemonicParsing="false" onAction="#onViewMessageHistoryClicked" text="4. View Message History" />
-      <Button fx:id="logoutButton" layoutX="213.0" layoutY="288.0" mnemonicParsing="false" onAction="#onLogoutClicked" text="5. Logout" />
+      <Button fx:id="logoutButton" layoutX="212.0" layoutY="251.0" mnemonicParsing="false" onAction="#onLogoutClicked" text="4. Logout" />
    </children>
 </AnchorPane>

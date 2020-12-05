@@ -37,9 +37,6 @@ public class AdminMainMenuController extends Controller {
     @FXML // fx:id="deleteUserAccountButton"
     private Button deleteUserAccountButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="viewMessageHistoryButton"
-    private Button viewMessageHistoryButton; // Value injected by FXMLLoader
-
     @FXML // fx:id="logoutButton"
     private Button logoutButton; // Value injected by FXMLLoader
 
@@ -52,7 +49,6 @@ public class AdminMainMenuController extends Controller {
         assert messageAttendeesButton != null : "fx:id=\"messageAttendeesButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
         assert createUserAccountButton != null : "fx:id=\"createUserAccountButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
         assert deleteUserAccountButton != null : "fx:id=\"deleteUserAccountButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
-        assert viewMessageHistoryButton != null : "fx:id=\"viewMessageHistoryButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
 
     }
@@ -97,9 +93,5 @@ public class AdminMainMenuController extends Controller {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
     }
 
-    @FXML
-    void onViewMessageHistoryButtonClicked(ActionEvent event) {
-        setSceneView(SceneNavigator.SceneViewType.VIEW_MESSAGES);
-    }
 
 }

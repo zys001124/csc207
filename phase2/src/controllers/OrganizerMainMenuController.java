@@ -38,9 +38,6 @@ public class OrganizerMainMenuController extends Controller {
     @FXML // fx:id="changeEventCapacityButton"
     private Button changeEventCapacityButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="viewMessageHistoryButton"
-    private Button viewMessageHistoryButton; // Value injected by FXMLLoader
-
     @FXML // fx:id="logoutButton"
     private Button logoutButton; // Value injected by FXMLLoader
 
@@ -53,7 +50,6 @@ public class OrganizerMainMenuController extends Controller {
         assert messageAttendeesButton != null : "fx:id=\"messageAttendeesButton\" was not injected: check your FXML file 'Organizer Main Menu.fxml'.";
         assert createUserAccountButton != null : "fx:id=\"createUserAccountButton\" was not injected: check your FXML file 'Organizer Main Menu.fxml'.";
         assert changeEventCapacityButton != null : "fx:id=\"changeEventCapacityButton\" was not injected: check your FXML file 'Organizer Main Menu.fxml'.";
-        assert viewMessageHistoryButton != null : "fx:id=\"viewMessageHistoryButton\" was not injected: check your FXML file 'Organizer Main Menu.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'Organizer Main Menu.fxml'.";
 
     }
@@ -98,9 +94,5 @@ public class OrganizerMainMenuController extends Controller {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
     }
 
-    @FXML
-    void onViewMessageHistoryButtonClicked(ActionEvent event) {
-        setSceneView(SceneNavigator.SceneViewType.VIEW_MESSAGES);
-    }
 
 }

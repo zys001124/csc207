@@ -32,9 +32,6 @@ public class VIPMainMenuController extends Controller {
     @FXML // fx:id="seeEventSchedueButton"
     private Button seeEventSchedueButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="viewMessageHistoryButton"
-    private Button viewMessageHistoryButton; // Value injected by FXMLLoader
-
     @FXML // fx:id="logoutButton"
     private Button logoutButton; // Value injected by FXMLLoader
 
@@ -63,10 +60,6 @@ public class VIPMainMenuController extends Controller {
         setSceneView(SceneNavigator.SceneViewType.UNENROLL_IN_EVENT);
     }
 
-    @FXML
-    void onViewMessageHistoryButtonClicked(ActionEvent event) {
-        setSceneView(SceneNavigator.SceneViewType.VIEW_MESSAGES);
-    }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -74,7 +67,6 @@ public class VIPMainMenuController extends Controller {
         assert enrollInEventButton != null : "fx:id=\"enrollInEventButton\" was not injected: check your FXML file 'VIP Main Menu.fxml'.";
         assert unenrollInEventButton != null : "fx:id=\"unenrollInEventButton\" was not injected: check your FXML file 'VIP Main Menu.fxml'.";
         assert seeEventSchedueButton != null : "fx:id=\"seeEventSchedueButton\" was not injected: check your FXML file 'VIP Main Menu.fxml'.";
-        assert viewMessageHistoryButton != null : "fx:id=\"viewMessageHistoryButton\" was not injected: check your FXML file 'VIP Main Menu.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'VIP Main Menu.fxml'.";
 
     }

@@ -24,7 +24,6 @@
         <Button fx:id="messageAttendeesButton" layoutX="188.0" layoutY="228.0" mnemonicParsing="false" onAction="#onMessageAllAttendeesButtonClicked" text="5. Message all attendees" />
         <Button fx:id="createUserAccountButton" layoutX="188.0" layoutY="260.0" mnemonicParsing="false" onAction="#onCreateUserAccountButtonClicked" text="6. Create user account" />
         <Button fx:id="deleteUserAccountButton" layoutX="188.0" layoutY="292.0" mnemonicParsing="false" onAction="#onDeleteUserAccountButtonClicked" text="7. Delete user account" />
-        <Button fx:id="viewMessageHistoryButton" layoutX="188.0" layoutY="324.0" mnemonicParsing="false" onAction="#onViewMessageHistoryButtonClicked" text="8. View Message History" />
-        <Button fx:id="logoutButton" layoutX="188.0" layoutY="356.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" text="9. Log out" />
+        <Button fx:id="logoutButton" layoutX="188.0" layoutY="327.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" text="8. Log out" />
     </children>
 </AnchorPane>

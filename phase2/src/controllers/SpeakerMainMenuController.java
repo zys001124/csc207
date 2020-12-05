@@ -29,9 +29,6 @@ public class SpeakerMainMenuController extends Controller{
     @FXML // fx:id="seeEventScheduleButton"
     private Button seeEventScheduleButton; // Value injected by FXMLLoader
 
-    @FXML // fx:id="viewMessageHistoryButton"
-    private Button viewMessageHistoryButton; // Value injected by FXMLLoader
-
     @FXML // fx:id="logoutButton"
     private Button logoutButton; // Value injected by FXMLLoader
 
@@ -55,17 +52,12 @@ public class SpeakerMainMenuController extends Controller{
         setSceneView(SceneNavigator.SceneViewType.EVENT_SCHEDULE);
     }
 
-    @FXML
-    void onViewMessageHistoryClicked(ActionEvent event) {
-        setSceneView(SceneNavigator.SceneViewType.VIEW_MESSAGES);
-    }
 
     @FXML // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert messageAllAttendeesOfEventButton != null : "fx:id=\"messageAllAttendeesOfEventButton\" was not injected: check your FXML file 'Speaker Main Menu.fxml'.";
         assert messageAttendeeButton != null : "fx:id=\"messageAttendeeButton\" was not injected: check your FXML file 'Speaker Main Menu.fxml'.";
         assert seeEventScheduleButton != null : "fx:id=\"seeEventScheduleButton\" was not injected: check your FXML file 'Speaker Main Menu.fxml'.";
-        assert viewMessageHistoryButton != null : "fx:id=\"viewMessageHistoryButton\" was not injected: check your FXML file 'Speaker Main Menu.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'Speaker Main Menu.fxml'.";
 
     }

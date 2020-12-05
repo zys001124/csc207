@@ -114,10 +114,6 @@ public class SceneNavigator {
                 applicationStage.setScene(getChangeEventCapacityScene());
                 break;
             }
-            case VIEW_MESSAGES: {
-                applicationStage.setScene(getViewMessagesScene());
-                break;
-            }
         }
     }
 
@@ -193,10 +189,6 @@ public class SceneNavigator {
         return deleteAccountScene;
     }
 
-    public Scene getViewMessagesScene() {
-        return viewMessagesScene;
-    }
-
     public void setLoginScene(Scene loginScene) {
         this.loginScene = loginScene;
     }
@@ -269,9 +261,6 @@ public class SceneNavigator {
         this.deleteAccountScene = deleteAccountScene;
     }
 
-    public void setViewMessagesScene(Scene viewMessagesScene) {
-        this.viewMessagesScene = viewMessagesScene;
-    }
 
     public enum SceneViewType {
         LOGIN, // Finished
@@ -290,8 +279,7 @@ public class SceneNavigator {
         ENROLL_IN_EVENT, // Finished
         UNENROLL_IN_EVENT, // Kelvin
         CREATE_ACCOUNT, //Finished
-        DELETE_ACCOUNT, //Finished? -Yaosheng
-        CHANGE_CAPACITY, //Yaosheng
-        VIEW_MESSAGES, //Deleting?
+        DELETE_ACCOUNT, //Finished
+        CHANGE_CAPACITY, //Yaosheng - NEEDS FIX
     }
 }

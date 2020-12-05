@@ -111,8 +111,6 @@ public class ConferenceSystem {
         Scene deleteAccountScene = initializeScene("Delete User Account.fxml", sceneNavigator);
         sceneNavigator.setDeleteAccountScene(deleteAccountScene);
 
-        Scene viewMessagesScene = initializeScene("loginScene.fxml", sceneNavigator);
-        sceneNavigator.setViewMessagesScene(viewMessagesScene);
     }
 
     private Scene initializeScene(String fxmlPath, SceneNavigator sceneNavigator) {
