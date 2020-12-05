@@ -41,24 +41,25 @@ public class MessageAllAttendingEventView extends GuiView {
      * to go back to the messageMenu.
      */
     public SceneType runFlow(Scanner inputScanner) {
-        System.out.println(presenter.getPreInputText());
-        String eventName = inputScanner.nextLine();
-
-        InputProcessResult findBack = controller.findBack(eventName);
-        if (findBack == InputProcessResult.BACK) {
-            return getNextScreen(findBack);
-        } else {
-
-            System.out.println(presenter.getMessage());
-            String message = inputScanner.nextLine();
-
-            InputProcessResult result = controller.handleInput(eventName, message);
-
-            String resultOutput = presenter.getInputResponseText(result);
-            System.out.println(resultOutput);
-
-            return getNextScreen(result);
-        }
+//        System.out.println(presenter.getPreInputText());
+//        String eventName = inputScanner.nextLine();
+//
+//        InputProcessResult findBack = controller.findBack(eventName);
+//        if (findBack == InputProcessResult.BACK) {
+//            return getNextScreen(findBack);
+//        } else {
+//
+//            System.out.println(presenter.getMessage());
+//            String message = inputScanner.nextLine();
+//
+//            InputProcessResult result = controller.handleInput(eventName, message);
+//
+//            String resultOutput = presenter.getInputResponseText(result);
+//            System.out.println(resultOutput);
+//
+//            return getNextScreen(result);
+//        }
+        return null;
     }
 
     /**

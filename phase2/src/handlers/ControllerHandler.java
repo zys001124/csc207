@@ -40,7 +40,7 @@ public class ControllerHandler {
         eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
         //eventCancelController = new EventCancelController(eventManager, userManager);
         //eventCreationController = new EventCreationController(eventManager, userManager);
-        messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
+        //messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
         //messageAllSpeakersController = new MessageAllSpeakersController(messageManager, userManager);
         //messageAllAttendeesController = new MessageAllAttendeesController(messageManager, userManager);
         //deleteAccountController = new DeleteAccountController(userManager);
