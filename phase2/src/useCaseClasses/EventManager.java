@@ -213,14 +213,18 @@ public class EventManager extends Observable {
                 if (event.hasAttendee(attendee.getId())) {
                     throw new UserAlreadyEnrolledException();
                 }
-                List<Event> eventsChanged = new ArrayList<>();
-                event.addAttendee(attendee);
-                eventsChanged.add(event);
-                notifyObservers(eventsChanged, true, false);
+                addingUser(attendee, event);
                 return;
             }
         }
         throw new EventNotFoundException(eventInput);
+    }
+
+    private void addingUser(User attendee, Event event) {
+        List<Event> eventsChanged = new ArrayList<>();
+        event.addAttendee(attendee);
+        eventsChanged.add(event);
+        notifyObservers(eventsChanged, true, false);
     }
 
     public void addUserToEventFromDataBase(String eventInput, User attendee) throws EventNotFoundException,
@@ -236,10 +240,7 @@ public class EventManager extends Observable {
                 if (event.hasAttendee(attendee.getId())) {
                     throw new UserAlreadyEnrolledException();
                 }
-                List<Event> eventsChanged = new ArrayList<>();
-                event.addAttendee(attendee);
-                eventsChanged.add(event);
-                notifyObservers(eventsChanged, true, false);
+                addingUser(attendee, event);
                 return;
             }
         }
@@ -264,13 +265,17 @@ public class EventManager extends Observable {
                     throw new UserNotEnrolledInEventException();
                 }
             }
-            List<Event> eventsChanged = new ArrayList<>();
-            event.removeAttendee(attendee);
-            eventsChanged.add(event);
-            notifyObservers(eventsChanged, true, true);
+            removingUser(attendee, event);
             return;
         }
         throw new EventNotFoundException(eventInput);
+    }
+
+    private void removingUser(User attendee, Event event) {
+        List<Event> eventsChanged = new ArrayList<>();
+        event.removeAttendee(attendee);
+        eventsChanged.add(event);
+        notifyObservers(eventsChanged, true, true);
     }
 
     public void removeUserFromEventFromDatabase(String eventInput, User attendee) throws EventNotFoundException,
@@ -281,10 +286,7 @@ public class EventManager extends Observable {
                     throw new UserNotEnrolledInEventException();
                 }
             }
-            List<Event> eventsChanged = new ArrayList<>();
-            event.removeAttendee(attendee);
-            eventsChanged.add(event);
-            notifyObservers(eventsChanged, true, true);
+            removingUser(attendee, event);
             return;
         }
         throw new EventNotFoundException(eventInput);
@@ -297,8 +299,11 @@ public class EventManager extends Observable {
      */
     public ArrayList<Event> eventSortTime() {
         ArrayList<Event> result = new ArrayList<>(events);
+        insertionSortEvents(result);
+        return result;
+    }
 
-        //Insertion Sort
+    private void insertionSortEvents(ArrayList<Event> result) {
         for (int i = 1; i < result.size(); i++) {
             Event cur = result.get(i);
             int j = i - 1;
@@ -308,8 +313,6 @@ public class EventManager extends Observable {
             }
             result.set(j + 1, cur);
         }
-
-        return result;
     }
 
     public List<String> listOfEventsHosting(User u) {
