@@ -194,98 +194,100 @@ public class EventManager extends Observable {
     /**
      * Find the event in the list based on user input index and add this user to the event
      *
-     * @param parsedInput The index of the event in the event list
+     * @param eventInput The name of the event in the event list
      * @param attendee    The user(attendee) to be added to the event
      * @throws EventNotFoundException       if the entered index does not corresponds to a event
      * @throws NumberFormatException        if the input is not a number
      * @throws UserAlreadyEnrolledException if the user(attendee) was already enrolled in the event
      */
-    public void addUserToEvent(int parsedInput, User attendee) throws EventNotFoundException,
+    public void addUserToEvent(String eventInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserAlreadyEnrolledException, EventFullException, InvalidUserTypeException {
-        if (parsedInput <= events.size() && parsedInput > 0) {
-            Event e = events.get(parsedInput - 1);
-            if(e.getViponly() && !attendee.getType().equals(User.UserType.VIP)){
-                throw new InvalidUserTypeException(User.UserType.VIP, attendee.getType());
+        for(Event event: events){
+            if(event.getEventTitle().equals(eventInput)){
+                if(event.getViponly() && !attendee.getType().equals(User.UserType.VIP)){
+                    throw new InvalidUserTypeException(User.UserType.VIP, attendee.getType());
+                }
+                if (event.isFull()){
+                    throw new EventFullException(eventInput);
+                }
+                if (event.hasAttendee(attendee.getId())) {
+                    throw new UserAlreadyEnrolledException();
+                }
+                List<Event> eventsChanged = new ArrayList<>();
+                event.addAttendee(attendee);
+                eventsChanged.add(event);
+                notifyObservers(eventsChanged, true, false);
+                return;
             }
-            if (e.isFull()){
-                throw new EventFullException(parsedInput);
-            }
-            if (e.hasAttendee(attendee.getId())) {
-                throw new UserAlreadyEnrolledException();
-            }
-            List<Event> eventsChanged = new ArrayList<>();
-            e.addAttendee(attendee);
-            eventsChanged.add(e);
-            notifyObservers(eventsChanged, true, false);
-            return;
         }
-        throw new EventNotFoundException(parsedInput);
+        throw new EventNotFoundException(eventInput);
     }
 
-    public void addUserToEventFromDataBase(int parsedInput, User attendee) throws EventNotFoundException,
+    public void addUserToEventFromDataBase(String eventInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserAlreadyEnrolledException, EventFullException, InvalidUserTypeException {
-        if (parsedInput <= events.size() && parsedInput > 0) {
-            Event e = events.get(parsedInput - 1);
-            if(e.getViponly() && !attendee.getType().equals(User.UserType.VIP)){
-                throw new InvalidUserTypeException(User.UserType.VIP, attendee.getType());
+        for(Event event: events){
+            if(event.getEventTitle().equals(eventInput)){
+                if(event.getViponly() && !attendee.getType().equals(User.UserType.VIP)){
+                    throw new InvalidUserTypeException(User.UserType.VIP, attendee.getType());
+                }
+                if (event.isFull()){
+                    throw new EventFullException(eventInput);
+                }
+                if (event.hasAttendee(attendee.getId())) {
+                    throw new UserAlreadyEnrolledException();
+                }
+                List<Event> eventsChanged = new ArrayList<>();
+                event.addAttendee(attendee);
+                eventsChanged.add(event);
+                notifyObservers(eventsChanged, true, false);
+                return;
             }
-            if (e.isFull()){
-                throw new EventFullException(parsedInput);
-            }
-            if (e.hasAttendee(attendee.getId())) {
-                throw new UserAlreadyEnrolledException();
-            }
-            List<Event> eventsChanged = new ArrayList<>();
-            e.addAttendee(attendee);
-            eventsChanged.add(e);
-            notifyObservers(eventsChanged, true, true);
-            return;
         }
-        throw new EventNotFoundException(parsedInput);
+        throw new EventNotFoundException(eventInput);
     }
 
     /**
      * Find the event in the list based on user input index and remove this user from the event
      *
-     * @param parsedInput The index of the event in the event list
+     * @param eventInput The name of the event in the event list
      * @param attendee    The user(attendee) to be removed from the event
      * @throws EventNotFoundException          if the entered index does not corresponds to a event
      * @throws NumberFormatException           if the input is not a number
      * @throws UserNotEnrolledInEventException if the user(attendee) was never enrolled in the event
      *                                         in the first place
      */
-    public void removeUserFromEvent(int parsedInput, User attendee) throws EventNotFoundException,
+    public void removeUserFromEvent(String eventInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserNotEnrolledInEventException {
-        if (parsedInput <= events.size() && parsedInput > 0) {
-            if (!events.get(parsedInput - 1).hasAttendee(attendee.getId())) {
-                throw new UserNotEnrolledInEventException();
+        for(Event event: events){
+            if(event.getEventTitle().equals(eventInput)){
+                if(!event.hasAttendee(attendee.getId())){
+                    throw new UserNotEnrolledInEventException();
+                }
             }
-
-            Event e = events.get(parsedInput - 1);
             List<Event> eventsChanged = new ArrayList<>();
-            e.removeAttendee(attendee);
-            eventsChanged.add(e);
-            notifyObservers(eventsChanged, true, false);
-            return;
-        }
-        throw new EventNotFoundException(parsedInput);
-    }
-
-    public void removeUserFromEventFromDatabase(int parsedInput, User attendee) throws EventNotFoundException,
-            NumberFormatException, UserNotEnrolledInEventException {
-        if (parsedInput <= events.size() && parsedInput > 0) {
-            if (!events.get(parsedInput - 1).hasAttendee(attendee.getId())) {
-                throw new UserNotEnrolledInEventException();
-            }
-
-            Event e = events.get(parsedInput - 1);
-            List<Event> eventsChanged = new ArrayList<>();
-            e.removeAttendee(attendee);
-            eventsChanged.add(e);
+            event.removeAttendee(attendee);
+            eventsChanged.add(event);
             notifyObservers(eventsChanged, true, true);
             return;
         }
-        throw new EventNotFoundException(parsedInput);
+        throw new EventNotFoundException(eventInput);
+    }
+
+    public void removeUserFromEventFromDatabase(String eventInput, User attendee) throws EventNotFoundException,
+            NumberFormatException, UserNotEnrolledInEventException {
+        for(Event event: events){
+            if(event.getEventTitle().equals(eventInput)){
+                if(!event.hasAttendee(attendee.getId())){
+                    throw new UserNotEnrolledInEventException();
+                }
+            }
+            List<Event> eventsChanged = new ArrayList<>();
+            event.removeAttendee(attendee);
+            eventsChanged.add(event);
+            notifyObservers(eventsChanged, true, true);
+            return;
+        }
+        throw new EventNotFoundException(eventInput);
     }
 
     /**

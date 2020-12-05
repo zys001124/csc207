@@ -36,7 +36,7 @@ public class ControllerHandler {
         menuInputController = new MenuInputController(userManager);
         messageUserController = new MessageUserController(messageManager, userManager);
         //createAccountController = new CreateAccountController(userManager);
-        eventEnrollController = new EventEnrollController(eventManager, userManager);
+        //eventEnrollController = new EventEnrollController(eventManager, userManager);
         eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
         //eventCancelController = new EventCancelController(eventManager, userManager);
         //eventCreationController = new EventCreationController(eventManager, userManager);

@@ -32,8 +32,8 @@ public class EventUnEnrollController {
      */
     public InputProcessResult unEnrollEvent(String eventInput) {
         try {
-            int parsedInt = Integer.parseInt(eventInput);
-            eventManager.removeUserFromEvent(parsedInt, userManager.getCurrentlyLoggedIn());
+            //int parsedInt = Integer.parseInt(eventInput);
+            eventManager.removeUserFromEvent(eventInput, userManager.getCurrentlyLoggedIn());
         } catch (EventNotFoundException e) {
             return InputProcessResult.EVENT_NOT_FOUND;
         } catch (NumberFormatException | UserNotEnrolledInEventException e) {

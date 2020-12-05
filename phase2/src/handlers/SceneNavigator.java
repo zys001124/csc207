@@ -23,10 +23,10 @@ public class SceneNavigator {
     private Scene adminMenuInputScene;
     private Scene messageUserScene;
     private Scene createAccountScene;
+    private Scene eventEnrollScene;
     private Scene eventUnEnrollScene;
     private Scene eventCancelScene;
     private Scene eventCreationScene;
-    private Scene eventEnrollScene;
     private Scene messageAllAttendingEventScene;
     private Scene messageAllSpeakersScene;
     private Scene messageAllAttendeesScene;
@@ -54,7 +54,7 @@ public class SceneNavigator {
                 applicationStage.setScene(getOrganizerMenuInputScene());
                 break;
             }
-            case ATTENDEE_MAIN_MENU:_MAIN_MENU: {
+            case ATTENDEE_MAIN_MENU: {
                 applicationStage.setScene(getAttendeeMenuInputScene());
                 break;
             }
@@ -153,6 +153,10 @@ public class SceneNavigator {
         return createAccountScene;
     }
 
+    public Scene getEventEnrollScene() {
+        return eventEnrollScene;
+    }
+
     public Scene getEventUnEnrollScene() {
         return eventUnEnrollScene;
     }
@@ -163,10 +167,6 @@ public class SceneNavigator {
 
     public Scene getEventCreationScene() {
         return eventCreationScene;
-    }
-
-    public Scene getEventEnrollScene() {
-        return eventEnrollScene;
     }
 
     public Scene getMessageAllAttendingEventScene() {
@@ -287,7 +287,7 @@ public class SceneNavigator {
         EVENT_SCHEDULE, //Kelvin
         CREATE_EVENT, //Finished
         CANCEL_EVENT, //Finished
-        ENROLL_IN_EVENT, // Kelvin
+        ENROLL_IN_EVENT, // Finished
         UNENROLL_IN_EVENT, // Kelvin
         CREATE_ACCOUNT, //Finished
         DELETE_ACCOUNT, //Finished? -Yaosheng

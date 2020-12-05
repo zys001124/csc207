@@ -8,9 +8,9 @@ public class EventFullException extends Exception {
     /**
      * Exception constructor for when a Event is currently full
      *
-     * @param eventNumber The user input index
+     * @param eventInput The user input event name
      */
-    public EventFullException(int eventNumber) {
-        super("Event " + eventNumber + " is full");
+    public EventFullException(String eventInput) {
+        super("Event " + eventInput + " is full");
     }
 }
