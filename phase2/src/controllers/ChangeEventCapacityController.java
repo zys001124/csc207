@@ -50,7 +50,13 @@ public class ChangeEventCapacityController extends Controller {
     void onChangeButtonClicked(ActionEvent event) {
 
         String label = "";
-        String inter = eventListField.getSelectionModel().getSelectedItem().getText().split("             Room")[0];
+        Label eventLabel = eventListField.getSelectionModel().getSelectedItem();
+        if(eventLabel == null) {
+            label = "No event selected. Try again";
+            createMessageLabel.setText(label);
+            return;
+        }
+        String inter = eventLabel.getText().split("             Room")[0];
         String eventname = inter.split(": ")[1];
         String capacity = capacityField.getText();
 
@@ -109,7 +115,9 @@ public class ChangeEventCapacityController extends Controller {
         super.setEventManager(eventManager);
 
         setEventList();
-        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventList());
+        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) ->{
+            setEventList();
+        });
     }
 
     private List<Label> getEventLabels(Collection<Event> events) {
@@ -118,13 +126,16 @@ public class ChangeEventCapacityController extends Controller {
             int room = event.getEventRoom();
             int capacity = event.getEventCapacity();
             labels.add(new Label("Event: " + event.getEventTitle()+"             Room: "
-                    + Integer.toString(room) + "             Current Capacity: " + Integer.toString(capacity)));
+                    + room + "             Current Capacity: " + capacity));
         }
         return labels;
     }
 
     private void setEventList() {
+        eventListField.getItems().clear();
+        eventListField.refresh();
         eventListField.getItems().setAll(getEventLabels(eventManager.getEvents()));
+        eventListField.refresh();
     }
 }
 

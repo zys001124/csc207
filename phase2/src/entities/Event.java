@@ -254,27 +254,31 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
     }
 
     public void set(EventData data) {
-        eventId = UUID.fromString(data.eventId);
-        eventTitle = data.eventTitle;
-        eventCapacity = Integer.parseInt(data.eventCapacity);
-        eventRoom = Integer.parseInt(data.eventRoom);
-        eventSTime = LocalDateTime.parse(data.eventSTime);
-        eventETime = LocalDateTime.parse(data.eventETime);
+        try {
+            eventId = UUID.fromString(data.eventId);
+            eventTitle = data.eventTitle;
+            eventCapacity = Integer.parseInt(data.eventCapacity);
+            eventRoom = Integer.parseInt(data.eventRoom);
+            eventSTime = LocalDateTime.parse(data.eventSTime);
+            eventETime = LocalDateTime.parse(data.eventETime);
 
-        List<UUID> speakerIds = new ArrayList<>();
-        for(String id: data.speakerIds) {
-            speakerIds.add(UUID.fromString(id));
-        }
-        speakerId = speakerIds;
-        List<UUID> attendeeIds = new ArrayList<>();
-        for(String id: data.attendees) {
-            attendeeIds.add(UUID.fromString(id));
-        }
-        attendees = attendeeIds;
+            List<UUID> speakerIds = new ArrayList<>();
+            for(String id: data.speakerIds) {
+                speakerIds.add(UUID.fromString(id));
+            }
+            speakerId = speakerIds;
+            List<UUID> attendeeIds = new ArrayList<>();
+            for(String id: data.attendees) {
+                attendeeIds.add(UUID.fromString(id));
+            }
+            attendees = attendeeIds;
 
-        setEventType(speakerId);
-        organizerId = UUID.fromString(data.organizerId);
-        VIPonly = Boolean.parseBoolean(data.VIPonly);
+            setEventType(speakerId);
+            organizerId = UUID.fromString(data.organizerId);
+            VIPonly = Boolean.parseBoolean(data.VIPonly);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static Event fromEventData(EventData data) {

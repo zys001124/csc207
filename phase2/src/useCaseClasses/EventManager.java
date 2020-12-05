@@ -257,8 +257,11 @@ public class EventManager extends Observable {
 
     public void updateEventFromDatabase(Event.EventData data) {
         // Find event
-        Event eventToChange = getEvent(data.eventId);
+        Event eventToChange = getEvent(UUID.fromString(data.eventId));
         eventToChange.set(data);
+        List<Event> eventsToChange = new ArrayList<>();
+        eventsToChange.add(eventToChange);
+        notifyObservers(eventsToChange, true, true);
     }
 
     /**
