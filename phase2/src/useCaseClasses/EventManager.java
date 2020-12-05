@@ -115,16 +115,16 @@ public class EventManager extends Observable {
     }
 
     public void removeEventFromDataBase(UUID id) {
-
-        List<Event> eventsToRemove = new ArrayList<>();
-        for (Event event : events) {
-            int index = events.indexOf(event);
-            if (event.getId().equals(id)) {
-                eventsToRemove.add(events.remove(index));
-                notifyObservers(eventsToRemove, false, true);
-            }
-        }
-
+        removeEvent(id);
+//        List<Event> eventsToRemove = new ArrayList<>();
+//        for (Event event : events) {
+//            int index = events.indexOf(event);
+//            if (event.getId().equals(id)) {
+//                eventsToRemove.add(events.remove(index));
+//                notifyObservers(eventsToRemove, false, false);
+//                return;
+//            }
+//        }
     }
 
     /**
@@ -227,6 +227,14 @@ public class EventManager extends Observable {
         notifyObservers(eventsChanged, true, false);
     }
 
+    public void changeEventCapacity(String eventTitle, int newCapacity, boolean changeFromDatabase) {
+        List<Event> eventsToChange = new ArrayList<>();
+        Event event = getEvent(eventTitle);
+        event.setEventCapacity(newCapacity);
+        eventsToChange.add(event);
+        notifyObservers(eventsToChange, true, changeFromDatabase);
+    }
+
     public void addUserToEventFromDataBase(String eventInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserAlreadyEnrolledException, EventFullException, InvalidUserTypeException {
         for(Event event: events){
@@ -245,6 +253,12 @@ public class EventManager extends Observable {
             }
         }
         throw new EventNotFoundException(eventInput);
+    }
+
+    public void updateEventFromDatabase(Event.EventData data) {
+        // Find event
+        Event eventToChange = getEvent(data.eventId);
+        eventToChange.set(data);
     }
 
     /**

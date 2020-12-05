@@ -160,7 +160,8 @@ public class FirebaseGateway {
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
+                Event.EventData data = eventDataFromDataSnapshot(dataSnapshot);
+                eventManager.updateEventFromDatabase(data);
             }
 
             @Override

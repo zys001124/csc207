@@ -108,33 +108,7 @@ public class EventCancelController extends Controller{
         super.setEventManager(eventManager);
 
         setEventList();
-        eventManager.addObserver(new Observer() {
-            @Override
-            public void update(Observable o, List<?> changes, boolean addedOrChanged, boolean retrievedFromDatabase) throws IncorrectObjectTypeException {
-                if(!addedOrChanged) {
-                    List<Event> events = (List<Event>) changes;
-                    Collection<Label> labels = eventListView.getItems();
-                    Collection<Label> labelsToRemove = new ArrayList();
-                    for(Label label: labels) {
-                        String eventname = label.getText().split(" on")[0];
-                        for(Event e: events) {
-                            if(e.getEventTitle().equals(eventname)){
-                                labelsToRemove.add(label);
-                            }
-                        }
-                    }
-
-                    for(Label label: labelsToRemove) {
-                        System.out.println("hererre");
-                        eventListView.getSelectionModel().select(label);
-                        labels.remove(label);
-                    }
-                }
-                else {
-                    eventListView.getItems().addAll(getEventLabels((List<Event>) changes));
-                }
-            }
-        });
+        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventList());
     }
 
     private List<Label> getEventLabels(Collection<Event> events) {
@@ -160,7 +134,5 @@ public class EventCancelController extends Controller{
     private void setEventList(){
         eventListView.getItems().setAll(getEventLabels(eventManager.getEvents()));
     }
-
-
 }
 

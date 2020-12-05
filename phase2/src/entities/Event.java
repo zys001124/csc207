@@ -9,19 +9,19 @@ import java.util.*;
  */
 public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
-    private final LocalDateTime eventSTime;
-    private final LocalDateTime eventETime;
-    private final UUID eventId;
-    private final String eventTitle;
-    private final Integer eventRoom;
+    private LocalDateTime eventSTime;
+    private LocalDateTime eventETime;
+    private  UUID eventId;
+    private String eventTitle;
+    private Integer eventRoom;
     private Integer eventCapacity;
     private Type eventType;
-    private final boolean VIPonly;
+    private boolean VIPonly;
 
-    private final UUID organizerId;
-    private final List<UUID> speakerId;
+    private UUID organizerId;
+    private List<UUID> speakerId;
 
-    private final List<UUID> attendees;
+    private List<UUID> attendees;
 
     /**
      * Creates an Event with the given title, time, UUID, organizer UUID, speaker UUID,
@@ -251,6 +251,30 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
 
         return data;
+    }
+
+    public void set(EventData data) {
+        eventId = UUID.fromString(data.eventId);
+        eventTitle = data.eventTitle;
+        eventCapacity = Integer.parseInt(data.eventCapacity);
+        eventRoom = Integer.parseInt(data.eventRoom);
+        eventSTime = LocalDateTime.parse(data.eventSTime);
+        eventETime = LocalDateTime.parse(data.eventETime);
+
+        List<UUID> speakerIds = new ArrayList<>();
+        for(String id: data.speakerIds) {
+            speakerIds.add(UUID.fromString(id));
+        }
+        speakerId = speakerIds;
+        List<UUID> attendeeIds = new ArrayList<>();
+        for(String id: data.attendees) {
+            attendeeIds.add(UUID.fromString(id));
+        }
+        attendees = attendeeIds;
+
+        setEventType(speakerId);
+        organizerId = UUID.fromString(data.organizerId);
+        VIPonly = Boolean.parseBoolean(data.VIPonly);
     }
 
     public static Event fromEventData(EventData data) {

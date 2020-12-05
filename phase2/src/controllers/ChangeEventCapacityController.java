@@ -1,7 +1,10 @@
 package controllers;
 
 import entities.Event;
+import exceptions.IncorrectObjectTypeException;
 import handlers.SceneNavigator;
+import observers.Observable;
+import observers.Observer;
 import useCaseClasses.EventManager;
 
 import javafx.event.ActionEvent;
@@ -87,9 +90,7 @@ public class ChangeEventCapacityController extends Controller {
         if(!eventManager.eventTitleExists(event)){
             return InputProcessResult.EVENT_DOES_NOT_EXIST;
         }
-        Event currentEvent = eventManager.getEvent(event);
-
-        currentEvent.setEventCapacity(capacity);
+        eventManager.changeEventCapacity(event, capacity, false);
         return InputProcessResult.SUCCESS;
     }
 
@@ -108,6 +109,7 @@ public class ChangeEventCapacityController extends Controller {
         super.setEventManager(eventManager);
 
         setEventList();
+        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventList());
     }
 
     private List<Label> getEventLabels(Collection<Event> events) {
@@ -122,7 +124,7 @@ public class ChangeEventCapacityController extends Controller {
     }
 
     private void setEventList() {
-        eventListField.getItems().addAll(getEventLabels(eventManager.getEvents()));
+        eventListField.getItems().setAll(getEventLabels(eventManager.getEvents()));
     }
 }
 
