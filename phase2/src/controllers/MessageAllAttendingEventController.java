@@ -1,31 +1,68 @@
 package controllers;
 
+
+import handlers.SceneNavigator;
+import javafx.scene.control.*;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
+import java.net.URL;
+import java.util.ResourceBundle;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+
 /**
- * Controller for the message all attending event option
+ * A controller for the MessageAllAttendingEvent
  */
-public class MessageAllAttendingEventController {
+public class MessageAllAttendingEventController extends Controller{
 
-    private final UserManager userManager;
-    private final MessageManager messageManager;
-    private final EventManager eventManager;
+    @FXML // ResourceBundle that was given to the FXMLLoader
+    private ResourceBundle resources;
 
+    @FXML // URL location of the FXML file that was given to the FXMLLoader
+    private URL location;
 
-    /**
-     * Sets all of the proper use case classes for the given system to run.
-     *
-     * @param am the corresponding UserManager class that will run for the program
-     * @param mm the corresponding MessageManager class that will run for the program
-     * @param em the corresponding EventManager class that will run for the program
-     */
-    public MessageAllAttendingEventController(UserManager am, MessageManager mm, EventManager em) {//, UUID eventId, MessageAllAttendingEventPresenter presenter, User user) {
-        userManager = am;
-        messageManager = mm;
-        eventManager = em;
+    @FXML // fx:id="eventList"
+    private ListView<Label> eventList; // Value injected by FXMLLoader
 
+    @FXML // fx:id="messageField"
+    private TextField messageField; // Value injected by FXMLLoader
+
+    @FXML // fx:id="sendButton"
+    private Button sendButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="backButton"
+    private Button backButton; // Value injected by FXMLLoader
+
+    @FXML // fx:id="createMessageLabel"
+    private Label createMessageLabel; // Value injected by FXMLLoader
+
+    @FXML
+    void onBackButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+    }
+
+    @FXML
+    void onSendButtonClicked(ActionEvent event) {
+
+        String label = "Message successfully sent. \nReturning to Main Menu";
+
+        String text = messageField.getText();
+
+        String eventName = eventList.getSelectionModel().getSelectedItem().getText().split(" on")[0];
+
+        sendMessage(text,eventName);
+
+        createMessageLabel.setText(label);
+    }
+
+    @FXML // This method is called by the FXMLLoader when initialization is complete
+    void initialize() {
+        assert eventList != null : "fx:id=\"eventList\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
+        assert messageField != null : "fx:id=\"messageField\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
+        assert sendButton != null : "fx:id=\"sendButton\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
+        assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
 
     }
 
@@ -108,5 +145,7 @@ public class MessageAllAttendingEventController {
         FAIL
     }
 
-
 }
+
+
+
