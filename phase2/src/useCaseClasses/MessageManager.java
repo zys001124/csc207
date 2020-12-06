@@ -4,14 +4,13 @@ import com.google.firebase.database.DataSnapshot;
 import entities.Event;
 import entities.Message;
 import entities.User;
+import exceptions.InvalidUserTypeException;
+import exceptions.NoMessageException;
 import gateways.DataSnapshotReader;
 import observers.Observable;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Represents an messageManager that can store/create messages sent by users of the conference
@@ -41,7 +40,36 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
      * @param receiver the UUID of the recieves of the message
      * @param message  the message that is sent
      */
-    public void sendMessage(UUID sender, UUID receiver, String message) {
+    public void sendIndividualMessage(User.UserType senderType, UUID sender, User.UserType receiverType, UUID receiver, String message) throws InvalidUserTypeException, NoMessageException {
+        switch(senderType) {
+            case ATTENDEE: {
+                if(receiverType.equals(User.UserType.ORGANIZER) || receiverType.equals(User.UserType.VIP) || receiverType.equals(User.UserType.ADMIN)){
+                    throw new InvalidUserTypeException(receiverType);
+                }
+                break;
+            }
+            case ORGANIZER: {
+                if(receiverType.equals(User.UserType.ADMIN)){
+                    throw new InvalidUserTypeException(receiverType);
+                }
+                break;
+            }
+            case SPEAKER: {
+                if(receiverType.equals(User.UserType.ADMIN)){
+                    throw new InvalidUserTypeException(receiverType);
+                }
+                else if(receiverType.equals(User.UserType.ATTENDEE) && !messageSentBy(receiver, sender)){
+                    throw new NoMessageException();
+                }
+                break;
+            }
+            case VIP: {
+                if(receiverType.equals(User.UserType.ADMIN)){
+                    throw new InvalidUserTypeException(receiverType);
+                }
+            }
+        }
+
         List<Message> messagesToAdd = new ArrayList<>();
 
         messagesToAdd.add(new Message(message, sender, receiver, UUID.randomUUID()));
@@ -53,6 +81,15 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         List<Message> messagesToAdd = new ArrayList<>();
         messagesToAdd.add(new Message(message, sender, receiver, messageId, timeSent));
         messages.addAll(messagesToAdd);
+        notifyObservers(messagesToAdd, true, false);
+    }
+
+    public void sendMessageToGroup(UUID sender, Collection<UUID> receivers, String message){
+        List<Message> messagesToAdd = new ArrayList<>();
+        for(UUID receiverId: receivers){
+            messagesToAdd.add(new Message(message, sender, receiverId, UUID.randomUUID()));
+            messages.addAll(messagesToAdd);
+        }
         notifyObservers(messagesToAdd, true, false);
     }
 

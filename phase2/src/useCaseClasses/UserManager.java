@@ -148,7 +148,6 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         notifyObservers(usersToAdd, true, false);
     }
 
-
     public void addUserFromDataSnapshot(DataSnapshot dataSnapshot) {
         User user = getFromDataSnapshot(dataSnapshot);
         List<User> usersToAdd = new ArrayList<>();
@@ -200,6 +199,45 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
      */
     public List<User> getUsers() {
         return users;
+    }
+
+    public List<User> getUsersSorted() {
+
+        List<User> usersSorted = new ArrayList<>();
+
+        List<User> attendees = new ArrayList<>();
+        List<User> organizers = new ArrayList<>();
+        List<User> speakers = new ArrayList<>();
+        List<User> vips = new ArrayList<>();
+        List<User> admins = new ArrayList<>();
+
+        for(User user: users){
+            switch(user.getType()){
+                case ATTENDEE:{
+                    attendees.add(user);
+                    break;
+                } case ORGANIZER:{
+                    organizers.add(user);
+                    break;
+                } case SPEAKER:{
+                    speakers.add(user);
+                    break;
+                } case VIP:{
+                    vips.add(user);
+                    break;
+                } case ADMIN:{
+                    admins.add(user);
+                }
+            }
+        }
+
+        usersSorted.addAll(attendees);
+        usersSorted.addAll(organizers);
+        usersSorted.addAll(speakers);
+        usersSorted.addAll(vips);
+        usersSorted.addAll(admins);
+
+        return usersSorted;
     }
 
     /**

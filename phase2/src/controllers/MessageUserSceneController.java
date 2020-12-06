@@ -3,6 +3,8 @@ package controllers;
 import entities.Message;
 import entities.User;
 import exceptions.IncorrectObjectTypeException;
+import exceptions.InvalidUserTypeException;
+import exceptions.NoMessageException;
 import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
@@ -59,7 +61,7 @@ public class MessageUserSceneController extends Controller {
     public void setUserManager(UserManager userManager) {
         super.setUserManager(userManager);
 
-        setUserList();
+        userListView.getItems().setAll(getUserLabels(userManager.getUsersSorted()));
     }
 
     @Override
@@ -129,7 +131,13 @@ public class MessageUserSceneController extends Controller {
         UUID recipient = userManager.getUserID(recipientUsername);
         UUID sender = userManager.getCurrentlyLoggedIn().getId();
 
-        messageManager.sendMessage(sender, recipient, text);
+        try {
+            messageManager.sendIndividualMessage(userManager.getCurrentlyLoggedIn().getType(), sender, userManager.getUser(recipient).getType(), recipient, text);
+        } catch(InvalidUserTypeException e){
+            //TODO change label and mention user type cannot be messaged
+        } catch(NoMessageException e){
+            //TODO mention that no message history exists (for speakers sending to attendees) so a message cannot be sent
+        }
     }
 
     @FXML
@@ -145,21 +153,6 @@ public class MessageUserSceneController extends Controller {
             setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
         } else if (currentUserType == User.UserType.VIP) {
             setSceneView(SceneNavigator.SceneViewType.VIP_MAIN_MENU);
-        }
-    }
-
-    private void setUserList() {
-        User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
-        if (currentUserType == User.UserType.ORGANIZER) {
-            userListView.getItems().setAll(getUserLabels(userManager.getUsers()));
-        } else if (currentUserType == User.UserType.ATTENDEE) {
-            userListView.getItems().setAll(getUserLabels(userManager.getAttendees()));
-            userListView.getItems().addAll(getUserLabels(userManager.getSpeakers()));
-        } else if (currentUserType == User.UserType.SPEAKER) {
-            userListView.getItems().setAll(getUserLabels(userManager.getAttendees()));
-            userListView.getItems().addAll(getUserLabels(userManager.getSpeakers()));
-        } else {
-            userListView.getItems().setAll(getUserLabels(userManager.getUsers()));
         }
     }
 
