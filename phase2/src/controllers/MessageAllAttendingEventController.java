@@ -52,14 +52,18 @@ public class MessageAllAttendingEventController extends Controller {
     @FXML
     void onSendButtonClicked(ActionEvent event) {
 
-        String label = "Message successfully sent. \nReturning to Main Menu";
+        String label = "";
 
         String text = messageField.getText();
 
         String eventName = eventList.getSelectionModel().getSelectedItem().getText().split(" on")[0];
 
-        sendMessage(text, eventName);
-
+        InputProcessResult result = handleInput(eventName, text);
+        if (result == InputProcessResult.SUCCESS) {
+            label = "Message successfully sent. \nReturning to Main Menu";
+        } else if (result == InputProcessResult.INVALID_INPUT) {
+            label = "Could Not understand your input. Staying on this screen";
+        }
         createMessageLabel.setText(label);
     }
 
