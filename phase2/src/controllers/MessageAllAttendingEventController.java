@@ -1,6 +1,8 @@
 package controllers;
 
 
+import entities.Event;
+import exceptions.IncorrectObjectTypeException;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,9 +10,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import observers.Observable;
+import observers.Observer;
+import useCaseClasses.EventManager;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 /**
  * A controller for the MessageAllAttendingEvent
@@ -65,6 +71,19 @@ public class MessageAllAttendingEventController extends Controller {
         assert sendButton != null : "fx:id=\"sendButton\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
 
+    }
+
+    @Override
+    public void setEventManager(EventManager eventManager) {
+        super.setEventManager(eventManager);
+
+        setEventList();
+        messageManager.addObserver(new Observer() {
+            @Override
+            public void update(Observable o, List changes, boolean addedOrChanged, boolean retrievedFromDatabase) throws IncorrectObjectTypeException {
+                setEventList();
+            }
+        });
     }
 
     /**
@@ -135,6 +154,20 @@ public class MessageAllAttendingEventController extends Controller {
         } else {
             return FindEvent.FAIL;
         }
+    }
+
+    private List<Label> getEventLabels(Collection<Event> events) {
+        ArrayList<Label> labels = new ArrayList<>();
+        for (Event event : events) {
+            String labelText = event.getEventTitle() + " on " + event.getEventTime().format(DateTimeFormatter.ofPattern("MMMM dd, HH:mm")) + ".";
+            Label eventLabel = new Label(labelText);
+            labels.add(eventLabel);
+        }
+        return labels;
+    }
+
+    private void setEventList() {
+        eventList.getItems().setAll(getEventLabels(eventManager.getEvents()));
     }
 
     /**

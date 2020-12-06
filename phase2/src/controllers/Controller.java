@@ -38,4 +38,5 @@ public abstract class Controller {
         sceneNavigator.switchSceneView(sceneViewType);
         // cases based on enum to switch scenes with scene navigator
     }
+
 }
