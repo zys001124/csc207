@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.Event;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -118,66 +117,20 @@ public class ChangeEventCapacityController extends Controller {
         });
     }
 
-    private List<Label> getEventLabels(Collection<Event> events) {
-        ArrayList<Label> labels = new ArrayList<>();
-        for (Event event : events) {
-            int room = event.getEventRoom();
-            int capacity = event.getEventCapacity();
-            labels.add(new Label("Event: " + event.getEventTitle() + "             Room: "
-                    + room + "             Current Capacity: " + capacity));
+    private List<Label> getEventLabels() {
+        List<String> labels = eventManager.getEventCapacityLabels();
+        ArrayList<Label> result = new ArrayList<>();
+        for (String label : labels) {
+            result.add(new Label(label));
         }
-        return labels;
+        return result;
     }
 
     private void setEventList() {
         eventListField.getItems().clear();
         eventListField.refresh();
-        eventListField.getItems().setAll(getEventLabels(eventManager.getEvents()));
+        eventListField.getItems().setAll(getEventLabels());
         eventListField.refresh();
     }
 }
 
-
-//public class ChangeEventCapacityController {
-//
-//    private final EventManager eManager;
-//
-//
-//    public ChangeEventCapacityController(EventManager manager) {
-//        eManager = manager;
-//    }
-//
-//    public InputProcessResult eventCapacityChange(String input){
-//        if (input.equals("back")) {
-//            return InputProcessResult.BACK;
-//        }
-//        String[] parameters = input.split(",");
-//
-//
-//        int newCapacity = Integer.parseInt(parameters[2]);
-//        if (newCapacity > 60){
-//            return InputProcessResult.CAPACITY_OVER;
-//        }
-//
-//        LocalDateTime sDateTime = getLocalDateTime(parameters[0]);
-//
-//        int roomNum = Integer.parseInt(parameters[1]);
-//
-//        for (Event event:eManager.getEvents()){
-//            if (event.getEventRoom() == roomNum){
-//                if (event.getEventTime().equals(sDateTime)){
-//                    event.setEventCapacity(newCapacity);
-//                    return InputProcessResult.SUCCESS;
-//                }
-//            }
-//        }
-//
-//        return InputProcessResult.EVENT_DOES_NOT_EXIST;
-//
-//    }
-//
-//    private LocalDateTime getLocalDateTime(String parameter) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//        return LocalDateTime.parse(parameter, formatter);
-//    }
-//}
