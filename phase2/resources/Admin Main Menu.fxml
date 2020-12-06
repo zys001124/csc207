@@ -25,6 +25,6 @@
         <Button fx:id="createUserAccountButton" layoutX="188.0" layoutY="260.0" mnemonicParsing="false" onAction="#onCreateUserAccountButtonClicked" text="6. Create user account" />
         <Button fx:id="deleteUserAccountButton" layoutX="188.0" layoutY="292.0" mnemonicParsing="false" onAction="#onDeleteUserAccountButtonClicked" text="7. Delete user account" />
         <Button fx:id="logoutButton" layoutX="188.0" layoutY="361.0" mnemonicParsing="false" onAction="#onLogoutButtonClicked" text="9. Log out" />
-      <Button fx:id="changeCapacity" layoutX="188.0" layoutY="324.0" mnemonicParsing="false" onAction="#onChangeCapacityClicked" text="8. Change Capacity" />
+      <Button fx:id="changeCapacity" layoutX="188.0" layoutY="324.0" mnemonicParsing="false" onAction="#onChangeCapacityClicked" text="8. Change Event Capacity" />
     </children>
 </AnchorPane>
