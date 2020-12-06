@@ -106,7 +106,7 @@ public class ConferenceSystem {
         Scene eventEnrollScene = initializeScene("Enroll Event.fxml", sceneNavigator);
         sceneNavigator.setEventEnrollScene(eventEnrollScene);
 
-        Scene eventUnEnrollScene = initializeScene("loginScene.fxml", sceneNavigator);
+        Scene eventUnEnrollScene = initializeScene("Unenroll Event.fxml", sceneNavigator);
         sceneNavigator.setEventUnEnrollScene(eventUnEnrollScene);
 
         Scene eventCancelScene = initializeScene("Cancel Event.fxml", sceneNavigator);

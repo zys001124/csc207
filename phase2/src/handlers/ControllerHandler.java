@@ -36,7 +36,7 @@ public class ControllerHandler {
         messageUserController = new MessageUserController(messageManager, userManager);
         //createAccountController = new CreateAccountController(userManager);
         //eventEnrollController = new EventEnrollController(eventManager, userManager);
-        eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
+        //eventUnEnrollController = new EventUnEnrollController(eventManager, userManager);
         //eventCancelController = new EventCancelController(eventManager, userManager);
         //eventCreationController = new EventCreationController(eventManager, userManager);
         //messageAllAttendingEventController = new MessageAllAttendingEventController(userManager, messageManager, eventManager);
@@ -64,12 +64,12 @@ public class ControllerHandler {
         return createAccountController;
     }
 
-    public EventEnrollController getEventEnrollController() {
-        return eventEnrollController;
-    }
-
     public DeleteAccountController getDeleteAccountController() {
         return deleteAccountController;
+    }
+
+    public EventEnrollController getEventEnrollController() {
+        return eventEnrollController;
     }
 
     public EventUnEnrollController getEventUnEnrollController() {

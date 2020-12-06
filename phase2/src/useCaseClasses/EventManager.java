@@ -232,14 +232,6 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         notifyObservers(eventsChanged, true, false);
     }
 
-    public void changeEventCapacity(String eventTitle, int newCapacity, boolean changeFromDatabase) {
-        List<Event> eventsToChange = new ArrayList<>();
-        Event event = getEvent(eventTitle);
-        event.setEventCapacity(newCapacity);
-        eventsToChange.add(event);
-        notifyObservers(eventsToChange, true, changeFromDatabase);
-    }
-
     public void addUserToEventFromDataBase(String eventInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserAlreadyEnrolledException, EventFullException, InvalidUserTypeException {
         for (Event event : events) {
@@ -286,28 +278,18 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
                 if (!event.hasAttendee(attendee.getId())) {
                     throw new UserNotEnrolledInEventException();
                 }
+                removingUser(attendee, event);
+                return;
             }
-            removingUser(attendee, event);
-            return;
         }
         throw new EventNotFoundException(eventInput);
-    }
-
-    public List<Event> getEventsWithSpeaker(UUID speakerId) {
-        List<Event> speakerEvents = new ArrayList<>();
-        for(Event e: events) {
-            if(e.getSpeakerId().contains(speakerId)) {
-                speakerEvents.add(e);
-            }
-        }
-        return speakerEvents;
     }
 
     private void removingUser(User attendee, Event event) {
         List<Event> eventsChanged = new ArrayList<>();
         event.removeAttendee(attendee);
         eventsChanged.add(event);
-        notifyObservers(eventsChanged, true, true);
+        notifyObservers(eventsChanged, true, false);
     }
 
     public void removeUserFromEventFromDatabase(String eventInput, User attendee) throws EventNotFoundException,
@@ -317,9 +299,9 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
                 if (!event.hasAttendee(attendee.getId())) {
                     throw new UserNotEnrolledInEventException();
                 }
+                removingUser(attendee, event);
+                return;
             }
-            removingUser(attendee, event);
-            return;
         }
         throw new EventNotFoundException(eventInput);
     }
@@ -345,6 +327,24 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
             }
             result.set(j + 1, cur);
         }
+    }
+
+    public List<Event> getEventsWithSpeaker(UUID speakerId) {
+        List<Event> speakerEvents = new ArrayList<>();
+        for(Event e: events) {
+            if(e.getSpeakerId().contains(speakerId)) {
+                speakerEvents.add(e);
+            }
+        }
+        return speakerEvents;
+    }
+
+    public void changeEventCapacity(String eventTitle, int newCapacity, boolean changeFromDatabase) {
+        List<Event> eventsToChange = new ArrayList<>();
+        Event event = getEvent(eventTitle);
+        event.setEventCapacity(newCapacity);
+        eventsToChange.add(event);
+        notifyObservers(eventsToChange, true, changeFromDatabase);
     }
 
     public List<String> listOfEventsHosting(User u) {
