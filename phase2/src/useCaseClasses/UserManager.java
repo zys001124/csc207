@@ -120,13 +120,9 @@ public class UserManager extends Observable {
      * @param password the password of the user to be added
      * @throws UsernameAlreadyExistsException - if the username is already seen in the system
      */
-    public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException,
-            InvalidUserTypeException {
+    public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException{
         if (doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
-        }
-        if (!currentlyLoggedIn.getType().equals(User.UserType.ADMIN) && type.equals(User.UserType.ADMIN)) {
-            throw new InvalidUserTypeException(User.UserType.ADMIN, currentlyLoggedIn.getType());
         }
         User user = new User(type, username, password, UUID.randomUUID());
         List<User> usersToAdd = new ArrayList<>();

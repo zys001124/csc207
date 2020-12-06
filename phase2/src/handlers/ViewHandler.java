@@ -19,7 +19,7 @@ public class ViewHandler {
     private SeeScheduleView seeScheduleView;
     private ChangeEventCapacityView changeEventCapacityView;
     private DeleteAccountView deleteAccountView;
-    private ViewMessagesView viewMessagesView;
+
 
     public ViewHandler(ControllerHandler ch, PresenterHandler ph, SceneNavigator sn) {
         constructProgramViews(ch, ph, sn);
@@ -40,7 +40,6 @@ public class ViewHandler {
         seeScheduleView = new SeeScheduleView(ph.getSeeSchedulePresenter());
         changeEventCapacityView = new ChangeEventCapacityView(ch.getChangeEventCapacityController(), ph.getChangeEventCapacityPresenter());
         deleteAccountView = new DeleteAccountView(ch.getDeleteAccountController(), ph.getDeleteAccountPresenter());
-        viewMessagesView = new ViewMessagesView(ch.getViewMessagesController(), ph.getViewMessagesPresenter());
     }
 
     public GuiView getView(GuiView.SceneType type) {
@@ -76,8 +75,6 @@ public class ViewHandler {
                 return messageAllAttendeesView;
             case CHANGE_CAPACITY:
                 return changeEventCapacityView;
-            case VIEW_MESSAGES:
-                return viewMessagesView;
             default:
                 return null;
         }
@@ -139,7 +136,4 @@ public class ViewHandler {
         return changeEventCapacityView;
     }
 
-    public ViewMessagesView getViewMessagesView() {
-        return viewMessagesView;
-    }
 }

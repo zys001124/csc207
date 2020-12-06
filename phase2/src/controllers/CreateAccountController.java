@@ -63,8 +63,6 @@ public class CreateAccountController extends Controller {
             labelText = "Username already taken. Try again.";
         } else if (result == InputProcessResult.INVALID_USER_TYPE) {
             labelText = "Please enter a valid user type.";
-        } else if (result == InputProcessResult.UNQUALIFIED_USER) {
-            labelText = "This user is unqualified.";
         } else {
             //labelText = "Success";
             labelText = "Account created successfully.";
@@ -94,8 +92,6 @@ public class CreateAccountController extends Controller {
             return InputProcessResult.USERNAME_TAKEN;
         } catch (UserTypeDoesNotExistException e) {
             return InputProcessResult.INVALID_USER_TYPE;
-        } catch (InvalidUserTypeException e) {
-            return InputProcessResult.UNQUALIFIED_USER;
         }
     }
 }

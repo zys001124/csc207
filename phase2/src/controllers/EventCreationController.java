@@ -75,7 +75,13 @@ public class EventCreationController extends Controller {
         String eventTitle = eventTitleField.getText();
         LocalDateTime sDateTime = getLocalDateTime(startTimeField.getText());
         LocalDateTime eDateTime = getLocalDateTime(endTimeField.getText());
-        String[] speakersUserName = speakerUsernamesField.getText().split(":");
+        String[] speakersUserName;
+        if(!speakerUsernamesField.getText().equals("")){
+            speakersUserName = speakerUsernamesField.getText().split(":");
+        }
+        else{
+            speakersUserName = new String[0];
+        }
         int roomNum = Integer.parseInt(roomNumberField.getText());
         int capacity = Integer.parseInt(eventCapacityField.getText());
         Boolean vipSelected = vipOnlyCheck.isSelected();

@@ -108,7 +108,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         } else if (n == 1) {
             eventType = Type.TALK;
         } else {
-            eventType = Type.PANEL_Dis;
+            eventType = Type.PANEL;
         }
     }
 
@@ -305,7 +305,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
     public enum Type {
         PARTY,
         TALK,
-        PANEL_Dis,
+        PANEL,
     }
 
     public static class EventData {
