@@ -1,19 +1,19 @@
 package useCaseClasses;
 
+import com.google.firebase.database.DataSnapshot;
 import entities.Event;
 import entities.User;
 import exceptions.*;
+import gateways.DataSnapshotReader;
 import observers.Observable;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Represents an eventManager that can modify events of the conference
  */
-public class EventManager extends Observable {
+public class EventManager extends Observable implements DataSnapshotReader<Event> {
 
     private final List<Event> events;
 
@@ -49,12 +49,12 @@ public class EventManager extends Observable {
         addEvent(e);
     }
 
-    public void addEventFromDatabase(Event.EventData data) {
+    public void addEventFromDataSnapshot(DataSnapshot dataSnapshot) {
 
-        if (!eventExists(UUID.fromString(data.eventId))) {
+        Event event = getFromDataSnapshot(dataSnapshot);
+        if (!eventExists(event.getId())) {
             List<Event> eventsToAdd = new ArrayList<>();
-            Event e = Event.fromEventData(data);
-            eventsToAdd.add(e);
+            eventsToAdd.add(event);
             events.addAll(eventsToAdd);
             notifyObservers(eventsToAdd, true, true);
         }
@@ -118,8 +118,9 @@ public class EventManager extends Observable {
         return null;
     }
 
-    public void removeEventFromDataBase(UUID id) {
-        removeEvent(id);
+    public void removeEventFromDataSnapshot(DataSnapshot dataSnapshot) {
+        Event event = getFromDataSnapshot(dataSnapshot);
+        removeEvent(event.getId());
 //        List<Event> eventsToRemove = new ArrayList<>();
 //        for (Event event : events) {
 //            int index = events.indexOf(event);
@@ -259,12 +260,12 @@ public class EventManager extends Observable {
         throw new EventNotFoundException(eventInput);
     }
 
-    public void updateEventFromDatabase(Event.EventData data) {
+    public void updateEventFromDataSnapshot(DataSnapshot dataSnapshot) {
+        Event event = getFromDataSnapshot(dataSnapshot);
+
         // Find event
-        Event eventToChange = getEvent(UUID.fromString(data.eventId));
-        eventToChange.set(data);
         List<Event> eventsToChange = new ArrayList<>();
-        eventsToChange.add(eventToChange);
+        eventsToChange.add(event);
         notifyObservers(eventsToChange, true, true);
     }
 
@@ -364,5 +365,39 @@ public class EventManager extends Observable {
             }
         }
         return false;
+    }
+
+    @Override
+    public Event getFromDataSnapshot(DataSnapshot dataSnapshot) {
+        Event.EventData data = eventDataFromDataSnapshot(dataSnapshot);
+        return Event.fromEventData(data);
+    }
+
+    private Event.EventData eventDataFromDataSnapshot(DataSnapshot dataSnapshot) {
+
+        Map eventMap = (Map<String, Object>) dataSnapshot.getValue();
+        Event.EventData eventData = new Event.EventData();
+        if (eventMap.containsKey("attendees")) {
+            eventData.attendees = (Collection<String>) eventMap.get("attendees");
+        } else {
+            eventData.attendees = new ArrayList<>();
+        }
+
+        if (eventMap.containsKey("speakerIds")) {
+            eventData.speakerIds = (Collection<String>) eventMap.get("speakerIds");
+        } else {
+            eventData.speakerIds = new ArrayList<>();
+        }
+        eventData.eventSTime = (String) eventMap.get("eventSTime");
+        eventData.eventETime = (String) eventMap.get("eventETime");
+        eventData.organizerId = (String) eventMap.get("organizerId");
+        eventData.VIPonly = (String) eventMap.get("VIPonly");
+        eventData.eventCapacity = (String) eventMap.get("eventCapacity");
+        eventData.eventRoom = (String) eventMap.get("eventRoom");
+        eventData.eventId = (String) eventMap.get("eventId");
+        eventData.eventTitle = (String) eventMap.get("eventTitle");
+
+        return eventData;
+
     }
 }

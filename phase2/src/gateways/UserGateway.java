@@ -6,7 +6,6 @@ import entities.User;
 import useCaseClasses.UserManager;
 
 import java.util.List;
-import java.util.UUID;
 
 public class UserGateway extends FirebaseGateway<User> {
 
@@ -33,20 +32,17 @@ public class UserGateway extends FirebaseGateway<User> {
 
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-        User.UserData userData = dataSnapshot.getValue(User.UserData.class);
-        userManager.addUserFromDatabase(userData);
+        userManager.addUserFromDataSnapshot(dataSnapshot);
     }
 
     @Override
     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-        User.UserData userData = dataSnapshot.getValue(User.UserData.class);
-        userManager.changeUserFromDatabase(userData);
+        userManager.changeUserFromDataSnapshot(dataSnapshot);
     }
 
     @Override
     public void onChildRemoved(DataSnapshot dataSnapshot) {
-        User.UserData userData = dataSnapshot.getValue(User.UserData.class);
-        userManager.removeUser(UUID.fromString(userData.uuid), true);
+        userManager.removeUserFromDataSnapshot(dataSnapshot);
     }
 
     @Override

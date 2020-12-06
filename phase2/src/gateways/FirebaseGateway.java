@@ -9,9 +9,9 @@ public abstract class FirebaseGateway<T> {
     protected DatabaseReference databaseReference;
     private final FirebaseDatabase database;
 
-    protected FirebaseGateway(String refrencePath) {
+    protected FirebaseGateway(String referencePath) {
         database = FirebaseDatabase.getInstance();
-        databaseReference = database.getReference().child(refrencePath);
+        databaseReference = database.getReference().child(referencePath);
         addListeners();
     }
 

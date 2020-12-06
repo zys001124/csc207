@@ -1,8 +1,10 @@
 package useCaseClasses;
 
 
+import com.google.firebase.database.DataSnapshot;
 import entities.User;
 import exceptions.*;
+import gateways.DataSnapshotReader;
 import observers.Observable;
 
 import java.util.ArrayList;
@@ -12,7 +14,7 @@ import java.util.UUID;
 /**
  * A manager for managing all the users in the tech conference
  */
-public class UserManager extends Observable {
+public class UserManager extends Observable implements DataSnapshotReader<User> {
 
     private final List<User> users;
 
@@ -90,17 +92,30 @@ public class UserManager extends Observable {
      * @param id he UUID of the user to be found
      * @return the user that is being removed or null if it can't be found.
      */
-    public User removeUser(UUID id, boolean fromDatabase) {
+    public User removeUser(UUID id) {
         List<User> usersToRemove = new ArrayList<>();
         for (User user : users) {
             int index = users.indexOf(user);
             if (user.getId().equals(id)) {
                 usersToRemove.add(users.remove(index));
-                notifyObservers(usersToRemove, false, fromDatabase);
+                notifyObservers(usersToRemove, false, false);
                 return usersToRemove.get(0);
             }
         }
         return null;
+    }
+
+    public void removeUserFromDataSnapshot(DataSnapshot dataSnapshot) {
+        UUID id = getFromDataSnapshot(dataSnapshot).getId();
+
+        List<User> usersToRemove = new ArrayList<>();
+        for (User user : users) {
+            int index = users.indexOf(user);
+            if (user.getId().equals(id)) {
+                usersToRemove.add(users.remove(index));
+                notifyObservers(usersToRemove, false, true);
+            }
+        }
     }
 
     /**
@@ -132,21 +147,19 @@ public class UserManager extends Observable {
     }
 
 
-    public void addUserFromDatabase(User.UserData data) {
-        User user = User.fromUserData(data);
-
+    public void addUserFromDataSnapshot(DataSnapshot dataSnapshot) {
+        User user = getFromDataSnapshot(dataSnapshot);
         List<User> usersToAdd = new ArrayList<>();
         usersToAdd.add(user);
         users.addAll(usersToAdd);
         notifyObservers(usersToAdd, true, true);
     }
 
-    public void changeUserFromDatabase(User.UserData data) {
-        User user = User.fromUserData(data);
-
+    public void changeUserFromDataSnapshot(DataSnapshot dataSnapshot) {
+        User user = getFromDataSnapshot(dataSnapshot);
         List<User> usersToAdd = new ArrayList<>();
         usersToAdd.add(user);
-        removeUser(user.getId(), true);
+        removeUserFromDataSnapshot(dataSnapshot);
         users.addAll(usersToAdd);
         notifyObservers(usersToAdd, true, true);
     }
@@ -285,4 +298,9 @@ public class UserManager extends Observable {
         }
     }
 
+    @Override
+    public User getFromDataSnapshot(DataSnapshot dataSnapshot) {
+        User.UserData userData = dataSnapshot.getValue(User.UserData.class);
+        return User.fromUserData(userData);
+    }
 }

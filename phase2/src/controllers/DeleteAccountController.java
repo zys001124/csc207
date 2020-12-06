@@ -88,7 +88,7 @@ public class DeleteAccountController extends Controller {
 
         UUID id = userManager.getUserID(userName);
 
-        userManager.removeUser(id, false);
+        userManager.removeUser(id);
         return InputProcessResult.SUCCESS;
     }
 

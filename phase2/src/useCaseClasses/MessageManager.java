@@ -1,8 +1,10 @@
 package useCaseClasses;
 
+import com.google.firebase.database.DataSnapshot;
 import entities.Event;
 import entities.Message;
 import entities.User;
+import gateways.DataSnapshotReader;
 import observers.Observable;
 
 import java.time.LocalDateTime;
@@ -14,7 +16,7 @@ import java.util.UUID;
 /**
  * Represents an messageManager that can store/create messages sent by users of the conference
  */
-public class MessageManager extends Observable {
+public class MessageManager extends Observable implements DataSnapshotReader<Message> {
 
     private final List<Message> messages;
 
@@ -54,11 +56,12 @@ public class MessageManager extends Observable {
         notifyObservers(messagesToAdd, true, false);
     }
 
-    public void addMessageFromDatabase(Message.MessageData data) {
+    public void addMessageFromDataSnapshot(DataSnapshot dataSnapshot) {
+        Message message = getFromDataSnapshot(dataSnapshot);
 
-        if (!messageExists(UUID.fromString(data.messageId))) {
+        if (!messageExists(message.getId())) {
             List<Message> messagesToAdd = new ArrayList<>();
-            messagesToAdd.add(Message.fromMessageData(data));
+            messagesToAdd.add(message);
             messages.addAll(messagesToAdd);
             notifyObservers(messagesToAdd, true, true);
         }
@@ -126,5 +129,11 @@ public class MessageManager extends Observable {
         }
         Collections.sort(theMessages);
         return theMessages;
+    }
+
+    @Override
+    public Message getFromDataSnapshot(DataSnapshot dataSnapshot) {
+        Message.MessageData mData = dataSnapshot.getValue(Message.MessageData.class);
+        return Message.fromMessageData(mData);
     }
 }

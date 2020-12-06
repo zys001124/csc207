@@ -32,8 +32,7 @@ public class MessageGateway extends FirebaseGateway<Message> {
 
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-        Message.MessageData mData = dataSnapshot.getValue(Message.MessageData.class);
-        messageManager.addMessageFromDatabase(mData);
+        messageManager.addMessageFromDataSnapshot(dataSnapshot);
     }
 
     @Override
