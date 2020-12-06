@@ -93,12 +93,16 @@ public class EventCreationController extends Controller {
             label = "At least one of the speakers could not be found.";
         } else if (result == InputProcessResult.USER_NOT_SPEAKER) {
             label = "At least one of the speakers is not a speaker.";
+        } else if(result == InputProcessResult.EVENT_NAME_TAKEN){
+            label = "That event name is taken.";
         } else if (result == InputProcessResult.TIMESLOT_FULL) {
-            label = "Timeslot full.";
+            label = "This room is occupied at this time.";
         } else if (result == InputProcessResult.SPEAKER_OCCUPIED) {
             label = "At least one of the speakers is occupied.";
         } else if (result == InputProcessResult.ROOM_FULL) {
             label = "That room is full.";
+        } else if (result == InputProcessResult.CAPACITY_OVER){
+            label = "The capacity can't be over 60.";
         } else {
             label = "Event created successfully.";
         }
@@ -155,12 +159,18 @@ public class EventCreationController extends Controller {
             }
         }
 
+        for(Event event : eventManager.getEvents()){
+            if(event.getEventTitle().equals(eventTitle)){
+                return InputProcessResult.EVENT_NAME_TAKEN;
+            }
+        }
+
         ArrayList<UUID> speakersID = getSpeakersID(speakers);
         UUID organizerID = userManager.getCurrentlyLoggedIn().getId();
 
 
-        ArrayList<Integer> occupiedRoom = eventManager.availabilityInTime(startTime, endTime);
-        if (6 == occupiedRoom.size()) {
+        Boolean occupiedRoom = eventManager.availabilityInTime(startTime, endTime, roomNum);
+        if (occupiedRoom) {
             return InputProcessResult.TIMESLOT_FULL;
         }
 
@@ -171,10 +181,13 @@ public class EventCreationController extends Controller {
             }
         }
 
-        if (occupiedRoom.contains(roomNum)) {
-            return InputProcessResult.ROOM_FULL;
-        }
+//        if (occupiedRoom.contains(roomNum)) {
+//            return InputProcessResult.ROOM_FULL;
+//        }
 
+        if(roomCapacity > 60){
+            return InputProcessResult.CAPACITY_OVER;
+        }
 
         Event eventCreated = new Event(eventTitle, startTime, endTime, eventID, organizerID, speakersID,
                 new ArrayList<>(), roomNum, roomCapacity, vip);

@@ -77,27 +77,24 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
      * @param eTime the end time of the event to be checked
      * @return ArrayList<Integer> rooms occupied at some point on the interval [sTime, eTime]
      */
-    public ArrayList<Integer> availabilityInTime(LocalDateTime sTime, LocalDateTime eTime) {
-        ArrayList<Integer> roomTaken = new ArrayList<>();
+    public Boolean availabilityInTime(LocalDateTime sTime, LocalDateTime eTime, int roomNumber) {
 
         for (Event temp : events) {
             LocalDateTime timeStart = temp.getEventTime();
             LocalDateTime timeEnd = temp.getEventETime();
             Integer roomNum = temp.getEventRoom();
-            if (timeStart.isBefore(sTime) && timeEnd.isAfter(sTime) ||
+            if ((timeStart.isBefore(sTime) && timeEnd.isAfter(sTime)) ||
                     (timeStart.isBefore(eTime) && timeEnd.isAfter(eTime)) ||
-                    (timeStart.isAfter(sTime) && timeEnd.isBefore((eTime)))
+                    (timeStart.isAfter(sTime) && timeEnd.isBefore((eTime))) ||
+                    (timeStart.isEqual(sTime))
             ) {
-                if (!roomTaken.contains(roomNum)) {
-                    roomTaken.add(roomNum);
+                if (roomNum.equals(roomNumber)) {
+                    return true;
                 }
-            }
-            if (roomTaken.size() == 6) {
-                break;
             }
         }
 
-        return roomTaken;
+        return false;
     }
 
     /**

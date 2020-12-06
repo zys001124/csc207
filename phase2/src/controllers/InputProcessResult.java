@@ -52,4 +52,5 @@ public enum InputProcessResult {
     INVALID_USER_TYPE,
     NO_MESSAGE_HISTORY,
     NO_MESSAGE_DETECTED,
+    EVENT_NAME_TAKEN,
 }

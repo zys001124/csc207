@@ -45,6 +45,9 @@ public class MessageUserSceneController extends Controller {
     @FXML
     private Button sendMessageButton;
 
+    @FXML // fx:id="cantSendToUserMessage"
+    private Label cantSendToUserMessage; // Value injected by FXMLLoader
+
     private DateTimeFormatter dateTimeFormatter;
 
     @FXML
@@ -52,6 +55,7 @@ public class MessageUserSceneController extends Controller {
     void initialize() {
         assert userListView != null : "fx:id=\"userListView\" was not injected: check your FXML file 'Message User.fxml'.";
         dateTimeFormatter = DateTimeFormatter.RFC_1123_DATE_TIME;
+        assert cantSendToUserMessage != null : "fx:id=\"cantSendToUserMessage\" was not injected: check your FXML file 'Message User.fxml'.";
 
         userListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> setMessageList());
@@ -117,6 +121,8 @@ public class MessageUserSceneController extends Controller {
 
     @FXML
     void onSendMessageButtonClicked(ActionEvent event) {
+        String label = "";
+
         String text = messageField.getText();
 
         if (text.equals("")) {
@@ -134,10 +140,11 @@ public class MessageUserSceneController extends Controller {
         try {
             messageManager.sendIndividualMessage(userManager.getCurrentlyLoggedIn().getType(), sender, userManager.getUser(recipient).getType(), recipient, text);
         } catch(InvalidUserTypeException e){
-            //TODO change label and mention user type cannot be messaged
+            label = "You can't message this user.";
         } catch(NoMessageException e){
-            //TODO mention that no message history exists (for speakers sending to attendees) so a message cannot be sent
+            label = "You can't send a message to this attendee right now.";
         }
+        cantSendToUserMessage.setText(label);
     }
 
     @FXML

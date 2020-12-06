@@ -1,0 +1,18 @@
+List of features we implemented for Phase2:
+
+1. Mandatory Extensions:
+    -Organizers can only cancel events they created
+    -Both Admin and VIP accounts have been created. Admins can do everything speakers can do and more. They can
+    delete accounts except other Admin accounts, and they can cancel any event they want. VIP accounts can do anything
+    regular Attendee accounts can do but more. They can enroll in VIP only events and they can message whoever they want.
+    -The event capacity for our program is 60. No event can be initialized with more than 60 attendees.
+
+2. Optional Extensions: (Group of 6)
+    -Used firebase to store all information from our program to a database. Used gateways in order to keep with functionality
+    -Created a GUI using SceneBuilder and FXML files for all menu options
+
+3. Create Your Own Features:
+    -Used Googles database system (firebase) in order to store information from our Conference System. (We asked our TA Sami
+    and he said that firebase can count as both an Optional extension under database and as a create your own feature)
+    -Messaging system updates live between two users logged in at the same time.
+    -GUI automatically updates any changes to the conference system like changing the capacity, and deleting a event.
