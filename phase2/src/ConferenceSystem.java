@@ -115,7 +115,7 @@ public class ConferenceSystem {
         Scene eventCreationScene = initializeScene("Create Event.fxml", sceneNavigator);
         sceneNavigator.setEventCreationScene(eventCreationScene);
 
-        Scene messageAllAttendingEventScene = initializeScene("loginScene.fxml", sceneNavigator);
+        Scene messageAllAttendingEventScene = initializeScene("Message All Event Attendees.fxml", sceneNavigator);
         sceneNavigator.setMessageAllAttendingEventScene(messageAllAttendingEventScene);
 
         Scene messageAllSpeakersScene = initializeScene("Message All Speakers.fxml", sceneNavigator);
