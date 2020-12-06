@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.Event;
 import useCaseClasses.EventManager;
 import exceptions.EventFullException;
 import exceptions.EventNotFoundException;
@@ -14,9 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -85,19 +82,19 @@ public class EventEnrollController extends Controller {
     }
 
     private void setEventListField() {
-        eventListView.getItems().addAll(getEventLabels(eventManager.getEvents()));
+        eventListView.getItems().addAll(getEventLabels());
     }
 
-    private List<Label> getEventLabels(Collection<Event> events) {
+    private List<Label> getEventLabels() {
         ArrayList<Label> labels = new ArrayList<>();
-        for (Event event : events) {
-            String labelText = event.getEventTitle()
-                    + "  Time: " + event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                    + "  Room: " + event.getEventRoom()
-                    + "  Capacity: " + event.getEventCapacity()
-                    + "  Currently Enrolled: " + event.getEventEnrolledNumber()
-                    + "  Event Type: " + event.getEventType()
-                    + "  VIP only: " + event.getViponly();
+        for (int i = 0; i < eventManager.getEvents().size(); i++) {
+            String labelText = eventManager.getEventAttribute(i, eventManager.getEvents(),"Title")
+                             + "  Time: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"Time")
+                             + "  Room: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"Room")
+                             + "  Capacity: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"Capacity")
+                             + "  Currently Enrolled: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"Enrolled Number")
+                             + "  Event Type: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"Type")
+                             + "  VIP only: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"VIP");
             Label label = new Label(labelText);
             labels.add(label);
         }

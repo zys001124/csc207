@@ -9,6 +9,7 @@ import javafx.scene.control.Label;
 import observers.Observable;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -246,7 +247,10 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
                 if (event.hasAttendee(attendee.getId())) {
                     throw new UserAlreadyEnrolledException();
                 }
-                addingUser(attendee, event);
+                List<Event> eventsChanged = new ArrayList<>();
+                event.addAttendee(attendee);
+                eventsChanged.add(event);
+                notifyObservers(eventsChanged, true, true);
                 return;
             }
         }
@@ -300,7 +304,10 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
                 if (!event.hasAttendee(attendee.getId())) {
                     throw new UserNotEnrolledInEventException();
                 }
-                removingUser(attendee, event);
+                List<Event> eventsChanged = new ArrayList<>();
+                event.removeAttendee(attendee);
+                eventsChanged.add(event);
+                notifyObservers(eventsChanged, true, true);
                 return;
             }
         }
@@ -337,6 +344,33 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
                 j = j - 1;
             }
             result.set(j + 1, cur);
+        }
+    }
+
+    public ArrayList<Event> sortedEventsWithAttendees(User user){
+        return eventSortTime(getEventsWithAttendee(user));
+    }
+
+    public String getEventAttribute(int eventNumber, List<Event> eventList, String attribute) {
+        //This method is intended for formatting list of events in different scenes
+        Event event = eventList.get(eventNumber);
+        switch (attribute){
+            case "Title":
+                return event.getEventTitle();
+            case "Time":
+                return event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+            case "Room":
+                return String.valueOf(event.getEventRoom());
+            case "Capacity":
+                return String.valueOf(event.getEventCapacity());
+            case "Enrolled Number":
+                return String.valueOf(event.getEventEnrolledNumber());
+            case "Type":
+                return String.valueOf(event.getEventType().toString());
+            case "VIP":
+                return String.valueOf(event.getViponly());
+            default:
+                return null;
         }
     }
 

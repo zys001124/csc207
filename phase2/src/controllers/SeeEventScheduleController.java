@@ -1,16 +1,14 @@
 package controllers;
 
-import entities.Event;
+import useCaseClasses.EventManager;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import useCaseClasses.EventManager;
 
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -46,19 +44,20 @@ public class SeeEventScheduleController extends Controller{
     }
 
     private void setEventListField() {
-        eventListView.getItems().addAll(getEventLabels(eventManager.getEventsWithAttendee(userManager.getCurrentlyLoggedIn())));
+        eventListView.getItems().addAll(getEventLabels());
     }
 
-    private List<Label> getEventLabels(ArrayList<Event> events) {
+    private List<Label> getEventLabels() {
         ArrayList<Label> labels = new ArrayList<>();
-        for (Event event : eventManager.eventSortTime(events)) {
-            String labelText = event.getEventTitle()
-                    + "  Time: " + event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                    + "  Room: " + event.getEventRoom()
-                    + "  Capacity: " + event.getEventCapacity()
-                    + "  Currently Enrolled: " + event.getEventEnrolledNumber()
-                    + "  Event Type: " + event.getEventType()
-                    + "  VIP only: " + event.getViponly();
+        for(int i=0; i<eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()).size(); i++){
+            String labelText = eventManager.getEventAttribute(i,
+                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()), "Title")
+                    + "  Time: " + eventManager.getEventAttribute(i,
+                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Time")
+                    + "  Room: " + eventManager.getEventAttribute(i,
+                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Room")
+                    + "  Event Type: " + eventManager.getEventAttribute(i,
+                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Type");
             Label label = new Label(labelText);
             labels.add(label);
         }
