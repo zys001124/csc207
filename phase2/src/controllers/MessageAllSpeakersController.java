@@ -13,7 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 public class MessageAllSpeakersController extends Controller {
 
@@ -68,11 +71,15 @@ public class MessageAllSpeakersController extends Controller {
         if (message.equals("")) {
             return InputProcessResult.NO_MESSAGE_DETECTED;
         }
+
+        List<UUID> usersToMessage = new ArrayList<>();
         for (User user : userManager.getUsers()) {
             if (user.getType().equals(User.UserType.SPEAKER)) {
-                messageManager.sendMessage(userManager.getCurrentlyLoggedIn().getId(), user.getId(), message);
+                usersToMessage.add(user.getId());
             }
         }
+
+        messageManager.sendMessageToGroup(userManager.getCurrentlyLoggedIn().getId(), usersToMessage, message);
         return InputProcessResult.SUCCESS;
     }
 }

@@ -210,7 +210,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         for (Event event : events) {
             if (event.getEventTitle().equals(eventInput)) {
                 if (event.getViponly() && !attendee.getType().equals(User.UserType.VIP)) {
-                    throw new InvalidUserTypeException(User.UserType.VIP, attendee.getType());
+                    throw new InvalidUserTypeException(attendee.getType());
                 }
                 if (event.isFull()) {
                     throw new EventFullException(eventInput);
@@ -237,7 +237,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         for (Event event : events) {
             if (event.getEventTitle().equals(eventInput)) {
                 if (event.getViponly() && !attendee.getType().equals(User.UserType.VIP)) {
-                    throw new InvalidUserTypeException(User.UserType.VIP, attendee.getType());
+                    throw new InvalidUserTypeException(attendee.getType());
                 }
                 if (event.isFull()) {
                     throw new EventFullException(eventInput);
