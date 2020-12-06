@@ -57,9 +57,9 @@ public class MessageAllAttendingEventController extends Controller {
         String text = messageField.getText();
 
         Label selectedItem  = eventList.getSelectionModel().getSelectedItem();
-
+        String eventName = null;
         if(selectedItem != null) {
-            String eventName = selectedItem.getText().split(" on")[0];
+            eventName = selectedItem.getText().split(" on")[0];
 
             sendMessage(text, eventName);
         }
