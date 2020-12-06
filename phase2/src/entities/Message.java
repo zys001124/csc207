@@ -56,6 +56,12 @@ public class Message implements Serializable, Comparable<Message> {
         this.timeSent = timeSent;
     }
 
+    public static Message fromMessageData(MessageData data) {
+        return new Message(data.messageText, UUID.fromString(data.senderId),
+                UUID.fromString(data.recipientId), UUID.fromString(data.messageId),
+                LocalDateTime.parse(data.timeSent));
+    }
+
     /**
      * Gets the UUID of the User who sent the Message
      *
@@ -142,12 +148,6 @@ public class Message implements Serializable, Comparable<Message> {
         data.recipientId = recipientId.toString();
         data.timeSent = timeSent.toString();
         return data;
-    }
-
-    public static Message fromMessageData(MessageData data) {
-        return new Message(data.messageText, UUID.fromString(data.senderId),
-                UUID.fromString(data.recipientId), UUID.fromString(data.messageId),
-                LocalDateTime.parse(data.timeSent));
     }
 
     public static class MessageData {

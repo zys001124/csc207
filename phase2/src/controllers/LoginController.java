@@ -54,35 +54,28 @@ public class LoginController extends Controller {
         String labelText = "";
 
         InputProcessResult result = verifyLogin(username, password);
-        if(result == InputProcessResult.INCORRECT_PASSWORD) {
+        if (result == InputProcessResult.INCORRECT_PASSWORD) {
             labelText = "Incorrect Password, please try again";
-        }
-        else if(result == InputProcessResult.USER_NOT_FOUND) {
+        } else if (result == InputProcessResult.USER_NOT_FOUND) {
             labelText = "User not found, please try again";
-        }
-        else{
+        } else {
             // change scene
-            if(result == InputProcessResult.SUCCESSFUL_ATTENDEE_LOGIN) {
+            if (result == InputProcessResult.SUCCESSFUL_ATTENDEE_LOGIN) {
                 listener.onSuccessfulLogin();
                 setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
-            }
-            else if(result == InputProcessResult.SUCCESSFUL_ORGANIZER_LOGIN) {
+            } else if (result == InputProcessResult.SUCCESSFUL_ORGANIZER_LOGIN) {
                 listener.onSuccessfulLogin();
                 setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
-            }
-            else if(result == InputProcessResult.SUCCESSFUL_SPEAKER_LOGIN) {
+            } else if (result == InputProcessResult.SUCCESSFUL_SPEAKER_LOGIN) {
                 listener.onSuccessfulLogin();
                 setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
-            }
-            else if(result == InputProcessResult.SUCCESSFUL_ADMIN_LOGIN) {
+            } else if (result == InputProcessResult.SUCCESSFUL_ADMIN_LOGIN) {
                 listener.onSuccessfulLogin();
                 setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
-            }
-            else if(result == InputProcessResult.SUCCESSFUL_VIP_LOGIN) {
+            } else if (result == InputProcessResult.SUCCESSFUL_VIP_LOGIN) {
                 listener.onSuccessfulLogin();
                 setSceneView(SceneNavigator.SceneViewType.VIP_MAIN_MENU);
-            }
-            else {
+            } else {
                 labelText = "ERROR";
             }
         }
@@ -110,12 +103,18 @@ public class LoginController extends Controller {
         User.UserType type = userManager.getCurrentlyLoggedIn().getType();
 
         switch (type) {
-            case ATTENDEE: return InputProcessResult.SUCCESSFUL_ATTENDEE_LOGIN;
-            case ORGANIZER: return InputProcessResult.SUCCESSFUL_ORGANIZER_LOGIN;
-            case SPEAKER: return InputProcessResult.SUCCESSFUL_SPEAKER_LOGIN;
-            case ADMIN: return InputProcessResult.SUCCESSFUL_ADMIN_LOGIN;
-            case VIP: return InputProcessResult.SUCCESSFUL_VIP_LOGIN;
-            default: return InputProcessResult.INVALID_INPUT;
+            case ATTENDEE:
+                return InputProcessResult.SUCCESSFUL_ATTENDEE_LOGIN;
+            case ORGANIZER:
+                return InputProcessResult.SUCCESSFUL_ORGANIZER_LOGIN;
+            case SPEAKER:
+                return InputProcessResult.SUCCESSFUL_SPEAKER_LOGIN;
+            case ADMIN:
+                return InputProcessResult.SUCCESSFUL_ADMIN_LOGIN;
+            case VIP:
+                return InputProcessResult.SUCCESSFUL_VIP_LOGIN;
+            default:
+                return InputProcessResult.INVALID_INPUT;
         }
     }
 

@@ -60,7 +60,7 @@ public class EventEnrollPresenter extends Presenter {
                     .concat("  Capacity " + event.getEventCapacity())
                     .concat("  Currently Enrolled " + event.getEventEnrolledNumber())
                     .concat("  Event Type " + event.getEventType())
-                    .concat("  VIP only: " + event.getViponly()+ "\n");
+                    .concat("  VIP only: " + event.getViponly() + "\n");
         }
         return result;
     }
@@ -75,13 +75,13 @@ public class EventEnrollPresenter extends Presenter {
     public String getInputResponseText(InputProcessResult result) {
         if (result == InputProcessResult.SUCCESS) {
             return "Enroll Successful!";
-        } else if(result == InputProcessResult.BACK){
+        } else if (result == InputProcessResult.BACK) {
             return "Returning back to Main Menu";
         } else if (result == InputProcessResult.EVENT_NOT_FOUND) {
             return "Event not found. Please try again.";
         } else if (result == InputProcessResult.EVENT_FOR_VIPONLY) {
             return "Event is for VIP only and you are not a VIP. Please try again.";
-        } else if (result == InputProcessResult.EVENT_IS_FULL){
+        } else if (result == InputProcessResult.EVENT_IS_FULL) {
             return "Event is currently full. Please try another event.";
         } else if (result == InputProcessResult.USER_ALREADY_ENROLLED) {
             return "You are already enrolled in this event. Please try again.";

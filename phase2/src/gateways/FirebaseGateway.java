@@ -6,8 +6,8 @@ import java.util.List;
 
 public abstract class FirebaseGateway<T> {
 
-    private FirebaseDatabase database;
     protected DatabaseReference databaseReference;
+    private final FirebaseDatabase database;
 
     protected FirebaseGateway(String refrencePath) {
         database = FirebaseDatabase.getInstance();
@@ -45,10 +45,16 @@ public abstract class FirebaseGateway<T> {
     }
 
     public abstract void pushEntities(List<T> entities);
+
     public abstract void removeEntities(List<T> entities);
+
     protected abstract void onChildAdded(DataSnapshot dataSnapshot, String s);
+
     protected abstract void onChildChanged(DataSnapshot dataSnapshot, String s);
+
     protected abstract void onChildRemoved(DataSnapshot dataSnapshot);
+
     protected abstract void onChildMoved(DataSnapshot dataSnapshot, String s);
+
     protected abstract void onCancelled(DatabaseError databaseError);
 }

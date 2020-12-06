@@ -15,7 +15,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class MessageAllAttendeesController extends Controller{
+public class MessageAllAttendeesController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -45,10 +45,9 @@ public class MessageAllAttendeesController extends Controller{
         String screenMessage;
         String message = messageInput.getText();
         InputProcessResult result = sendMessage(message);
-        if(result == InputProcessResult.NO_MESSAGE_DETECTED){
+        if (result == InputProcessResult.NO_MESSAGE_DETECTED) {
             screenMessage = "No input detected. Please enter something.";
-        }
-        else{
+        } else {
             screenMessage = "Message Sent.";
         }
 
@@ -57,7 +56,8 @@ public class MessageAllAttendeesController extends Controller{
 
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert messageInput != null : "fx:id=\"messageInput\" was not injected: check your FXML file 'Message All Attendees.fxml'.";
         assert sendButton != null : "fx:id=\"sendButton\" was not injected: check your FXML file 'Message All Attendees.fxml'.";
@@ -67,7 +67,7 @@ public class MessageAllAttendeesController extends Controller{
     }
 
     public InputProcessResult sendMessage(String message) {
-        if(message.equals("")){
+        if (message.equals("")) {
             return InputProcessResult.NO_MESSAGE_DETECTED;
         }
         for (User user : userManager.getUsers()) {

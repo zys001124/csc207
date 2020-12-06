@@ -53,11 +53,9 @@ public class EventEnrollView extends GuiView {
     private SceneType getNextScreen(InputProcessResult result) {
         if (result == InputProcessResult.SUCCESS) {
             return SceneType.MAIN_MENU;
-        }
-        else if(result == InputProcessResult.BACK){
+        } else if (result == InputProcessResult.BACK) {
             return SceneType.MAIN_MENU;
-        }
-        else {
+        } else {
             return SceneType.ENROLL_IN_EVENT;
         }
     }

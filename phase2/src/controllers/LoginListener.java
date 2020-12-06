@@ -2,5 +2,5 @@ package controllers;
 
 public interface LoginListener {
 
-    public void onSuccessfulLogin();
+    void onSuccessfulLogin();
 }

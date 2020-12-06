@@ -27,6 +27,7 @@ public class UserManager extends Observable {
 
     /**
      * Creates a UserManager with the given list of users
+     *
      * @param users - The list of users this UserManager will manage
      */
     public UserManager(List<User> users) {
@@ -40,7 +41,7 @@ public class UserManager extends Observable {
      * @param username String of the username that will be used to find the user in the System
      * @return the User's UUID to the corresponding username or null if user does not exist
      */
-    public UUID getUserID(String username){
+    public UUID getUserID(String username) {
         for (User u : users) {
             if (u.getUsername().equals(username)) {
                 return u.getId();
@@ -89,11 +90,11 @@ public class UserManager extends Observable {
      * @param id he UUID of the user to be found
      * @return the user that is being removed or null if it can't be found.
      */
-    public User removeUser(UUID id, boolean fromDatabase){
+    public User removeUser(UUID id, boolean fromDatabase) {
         List<User> usersToRemove = new ArrayList<>();
-        for(User user: users){
+        for (User user : users) {
             int index = users.indexOf(user);
-            if(user.getId().equals(id)){
+            if (user.getId().equals(id)) {
                 usersToRemove.add(users.remove(index));
                 notifyObservers(usersToRemove, false, fromDatabase);
                 return usersToRemove.get(0);
@@ -120,11 +121,11 @@ public class UserManager extends Observable {
      * @throws UsernameAlreadyExistsException - if the username is already seen in the system
      */
     public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException,
-            InvalidUserTypeException{
+            InvalidUserTypeException {
         if (doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
         }
-        if(!currentlyLoggedIn.getType().equals(User.UserType.ADMIN) && type.equals(User.UserType.ADMIN)){
+        if (!currentlyLoggedIn.getType().equals(User.UserType.ADMIN) && type.equals(User.UserType.ADMIN)) {
             throw new InvalidUserTypeException(User.UserType.ADMIN, currentlyLoggedIn.getType());
         }
         User user = new User(type, username, password, UUID.randomUUID());
@@ -183,6 +184,7 @@ public class UserManager extends Observable {
 
     /**
      * Gets the list of users
+     *
      * @return the list of users
      */
     public List<User> getUsers() {
@@ -209,11 +211,11 @@ public class UserManager extends Observable {
         }
         throw new UserNotFoundException(username);
     }
-    
+
     public List<User> getAttendees() {
         ArrayList<User> attendees = new ArrayList<>();
-        for(User user: users) {
-            if(user.getType() == User.UserType.ATTENDEE) {
+        for (User user : users) {
+            if (user.getType() == User.UserType.ATTENDEE) {
                 attendees.add(user);
             }
         }
@@ -222,8 +224,8 @@ public class UserManager extends Observable {
 
     public List<User> getOrganizers() {
         ArrayList<User> organizers = new ArrayList<>();
-        for(User user: users) {
-            if(user.getType() == User.UserType.ORGANIZER) {
+        for (User user : users) {
+            if (user.getType() == User.UserType.ORGANIZER) {
                 organizers.add(user);
             }
         }
@@ -232,8 +234,8 @@ public class UserManager extends Observable {
 
     public List<User> getVips() {
         ArrayList<User> vips = new ArrayList<>();
-        for(User user: users) {
-            if(user.getType() == User.UserType.VIP) {
+        for (User user : users) {
+            if (user.getType() == User.UserType.VIP) {
                 vips.add(user);
             }
         }
@@ -242,8 +244,8 @@ public class UserManager extends Observable {
 
     public List<User> getAdmins() {
         ArrayList<User> admins = new ArrayList<>();
-        for(User user: users) {
-            if(user.getType() == User.UserType.ADMIN) {
+        for (User user : users) {
+            if (user.getType() == User.UserType.ADMIN) {
                 admins.add(user);
             }
         }
@@ -252,8 +254,8 @@ public class UserManager extends Observable {
 
     public List<User> getSpeakers() {
         ArrayList<User> speakers = new ArrayList<>();
-        for(User user: users) {
-            if(user.getType() == User.UserType.SPEAKER) {
+        for (User user : users) {
+            if (user.getType() == User.UserType.SPEAKER) {
                 speakers.add(user);
             }
         }
@@ -266,7 +268,7 @@ public class UserManager extends Observable {
      * @param type - The type represented by a String
      * @return a UserType - the corresponding UserType
      * @throws UserTypeDoesNotExistException if the <type> is not descriptive of
-     * any UserType enum
+     *                                       any UserType enum
      */
     public User.UserType parseType(String type) throws UserTypeDoesNotExistException {
         type = type.toUpperCase();

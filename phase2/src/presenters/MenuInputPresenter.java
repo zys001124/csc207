@@ -83,7 +83,7 @@ public class MenuInputPresenter extends Presenter {
                 "4. Message all speakers\n" +
                 "5. Message all attendees\n" +
                 "6. Create user account \n" +
-                "7. Change event capacity\n"+
+                "7. Change event capacity\n" +
                 "8. View Message History\n" +
                 "9. Log out";
     }
@@ -96,6 +96,7 @@ public class MenuInputPresenter extends Presenter {
                 "5. View Message History\n" +
                 "6. Log out";
     }
+
     private String getAdminOptions() {
         return "1. Create event \n" +
                 "2. Cancel event \n" +

@@ -44,7 +44,8 @@ public class OrganizerMainMenuController extends Controller {
     @FXML // fx:id="logoutButton"
     private Button logoutButton; // Value injected by FXMLLoader
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert createEventButton != null : "fx:id=\"createEventButton\" was not injected: check your FXML file 'Organizer Main Menu.fxml'.";
         assert cancelEventButton != null : "fx:id=\"cancelEventButton\" was not injected: check your FXML file 'Organizer Main Menu.fxml'.";

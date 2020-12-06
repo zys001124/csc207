@@ -11,7 +11,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
     private LocalDateTime eventSTime;
     private LocalDateTime eventETime;
-    private  UUID eventId;
+    private UUID eventId;
     private String eventTitle;
     private Integer eventRoom;
     private Integer eventCapacity;
@@ -38,7 +38,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
      * @param capacity    - the maximum number of Attendee of the Event
      * @param VIPonly     - whether this event is for VIPs only
      */
-    public Event(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
+    public Event(String title, LocalDateTime startTime, LocalDateTime endTime, UUID id, UUID organizerId, List<UUID> speakerId,
                  List<UUID> attendees, int room, int capacity, boolean VIPonly) {
         eventSTime = startTime;
         eventETime = endTime;
@@ -52,6 +52,32 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         this.speakerId = speakerId;
         this.attendees = attendees;
         this.VIPonly = VIPonly;
+    }
+
+    public static Event fromEventData(EventData data) {
+
+        List<UUID> speakerIds = new ArrayList<>();
+
+        for (String id : data.speakerIds) {
+            speakerIds.add(UUID.fromString(id));
+        }
+
+        List<UUID> attendeeIds = new ArrayList<>();
+
+        for (String id : data.attendees) {
+            attendeeIds.add(UUID.fromString(id));
+        }
+
+        return new Event(data.eventTitle,
+                LocalDateTime.parse(data.eventSTime),
+                LocalDateTime.parse(data.eventETime),
+                UUID.fromString(data.eventId),
+                UUID.fromString(data.organizerId),
+                speakerIds,
+                attendeeIds,
+                Integer.parseInt(data.eventRoom),
+                Integer.parseInt(data.eventCapacity),
+                Boolean.parseBoolean(data.VIPonly));
     }
 
     /**
@@ -68,28 +94,28 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         return false;
     }
 
-    private void setEventType(List<UUID> speakerId){
-        int n = speakerId.size();
-        if (n ==0){
-            eventType = Type.PARTY;
-        }else if(n==1){
-            eventType = Type.TALK;
-        }else{eventType = Type.PANEL_Dis;}
-    }
-
     /**
-     *
      * @return the eventType based on size of list of speakers.
      */
-    public Type getEventType(){
+    public Type getEventType() {
         return eventType;
     }
 
+    private void setEventType(List<UUID> speakerId) {
+        int n = speakerId.size();
+        if (n == 0) {
+            eventType = Type.PARTY;
+        } else if (n == 1) {
+            eventType = Type.TALK;
+        } else {
+            eventType = Type.PANEL_Dis;
+        }
+    }
+
     /**
-     *
      * @return check if the event is for VIPs only
      */
-    public boolean getViponly(){
+    public boolean getViponly() {
         return VIPonly;
     }
 
@@ -99,7 +125,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
      * @return a boolean value, True if number of Attendee reaches maximum capacity.
      */
     public boolean isFull() {
-    return attendees.size() >= eventCapacity;
+        return attendees.size() >= eventCapacity;
     }
 
     /**
@@ -120,7 +146,6 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         return eventId;
     }
 
-    public void setEventCapacity(Integer eventCapacity){this.eventCapacity = eventCapacity;}
     /**
      * Gets the organizer of this Events UUID
      *
@@ -148,7 +173,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         return eventSTime;
     }
 
-    public LocalDateTime getEventETime(){
+    public LocalDateTime getEventETime() {
         return eventETime;
     }
 
@@ -170,6 +195,10 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         return eventCapacity;
     }
 
+    public void setEventCapacity(Integer eventCapacity) {
+        this.eventCapacity = eventCapacity;
+    }
+
     /**
      * Gets number of attendees that currently enrolled in the event
      *
@@ -178,8 +207,6 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
     public int getEventEnrolledNumber() {
         return attendees.size();
     }
-
-
 
     /**
      * Adds an attendee to this Events list of Attendees
@@ -214,15 +241,6 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         return eventId.compareTo(o.eventId);
     }
 
-    /**
-     * the different types of event
-     */
-    public enum Type{
-        PARTY,
-        TALK,
-        PANEL_Dis,
-    }
-
     public EventData getEventData() {
         EventData data = new EventData();
 
@@ -237,14 +255,14 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
         List<String> speakerIds = new ArrayList<>();
 
-        for(UUID id: speakerId) {
+        for (UUID id : speakerId) {
             speakerIds.add(id.toString());
         }
         data.speakerIds = speakerIds;
 
         List<String> attendeeIds = new ArrayList<>();
 
-        for(UUID id: attendees) {
+        for (UUID id : attendees) {
             attendeeIds.add(id.toString());
         }
         data.attendees = attendeeIds;
@@ -263,12 +281,12 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
             eventETime = LocalDateTime.parse(data.eventETime);
 
             List<UUID> speakerIds = new ArrayList<>();
-            for(String id: data.speakerIds) {
+            for (String id : data.speakerIds) {
                 speakerIds.add(UUID.fromString(id));
             }
             speakerId = speakerIds;
             List<UUID> attendeeIds = new ArrayList<>();
-            for(String id: data.attendees) {
+            for (String id : data.attendees) {
                 attendeeIds.add(UUID.fromString(id));
             }
             attendees = attendeeIds;
@@ -281,30 +299,13 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         }
     }
 
-    public static Event fromEventData(EventData data) {
-
-        List<UUID> speakerIds = new ArrayList<>();
-
-        for(String id: data.speakerIds) {
-            speakerIds.add(UUID.fromString(id));
-        }
-
-        List<UUID> attendeeIds = new ArrayList<>();
-
-        for(String id: data.attendees) {
-            attendeeIds.add(UUID.fromString(id));
-        }
-
-        return new Event(data.eventTitle,
-                LocalDateTime.parse(data.eventSTime),
-                LocalDateTime.parse(data.eventETime),
-                UUID.fromString(data.eventId),
-                UUID.fromString(data.organizerId),
-                speakerIds,
-                attendeeIds,
-                Integer.parseInt(data.eventRoom),
-                Integer.parseInt(data.eventCapacity),
-                Boolean.parseBoolean(data.VIPonly));
+    /**
+     * the different types of event
+     */
+    public enum Type {
+        PARTY,
+        TALK,
+        PANEL_Dis,
     }
 
     public static class EventData {

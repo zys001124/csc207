@@ -77,7 +77,7 @@ public class ConferenceSystem {
         sceneNavigator = new SceneNavigator(primaryStage, useCaseHandler);
         presenterHandler = new PresenterHandler(useCaseHandler, controllerHandler, sceneNavigator);
         viewHandler = new ViewHandler(controllerHandler, presenterHandler, sceneNavigator);
-       // sceneNavigator.getApplicationStage().setScene(sceneNavigator.getLoginScene());
+        // sceneNavigator.getApplicationStage().setScene(sceneNavigator.getLoginScene());
     }
 
     private void initializeScenes() {
@@ -139,7 +139,7 @@ public class ConferenceSystem {
 
     private Scene initializeScene(String fxmlPath, SceneNavigator sceneNavigator) {
         Scene scene;
-        try{
+        try {
             URL url = new File(fxmlPath).toURI().toURL();
             FXMLLoader loader = new FXMLLoader(url);
             scene = new Scene(loader.load());
@@ -156,7 +156,7 @@ public class ConferenceSystem {
 
     private Scene initializeLoginScene(String fxmlPath, SceneNavigator sceneNavigator, LoginListener listener) {
         Scene scene;
-        try{
+        try {
             URL url = new File(fxmlPath).toURI().toURL();
             FXMLLoader loader = new FXMLLoader(url);
             scene = new Scene(loader.load());

@@ -11,12 +11,12 @@ public class DeleteAccountView extends GuiView {
     private final DeleteAccountController controller;
     private final DeleteAccountPresenter presenter;
 
-    public DeleteAccountView(DeleteAccountController controller, DeleteAccountPresenter presenter){
+    public DeleteAccountView(DeleteAccountController controller, DeleteAccountPresenter presenter) {
         this.controller = controller;
         this.presenter = presenter;
     }
 
-    public SceneType runFlow(Scanner inputScanner){
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getAllUsers());
         System.out.println(presenter.getPreInputText());
         String input = inputScanner.nextLine();

@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class CreateAccountController extends Controller{
+public class CreateAccountController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -47,16 +47,15 @@ public class CreateAccountController extends Controller{
     @FXML
     void onBackButtonClicked(ActionEvent event) {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
-        if(currentUserType == User.UserType.ORGANIZER) {
+        if (currentUserType == User.UserType.ORGANIZER) {
             setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
-        }
-        else if(currentUserType == User.UserType.ADMIN) {
+        } else if (currentUserType == User.UserType.ADMIN) {
             setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
         }
     }
 
     @FXML
-    void onCreateButtonClicked(ActionEvent event){
+    void onCreateButtonClicked(ActionEvent event) {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String type = userTypeField.getText();
@@ -64,16 +63,13 @@ public class CreateAccountController extends Controller{
         String labelText = "";
 
         InputProcessResult result = handleInput(username, password, type);
-        if(result == InputProcessResult.USERNAME_TAKEN){
+        if (result == InputProcessResult.USERNAME_TAKEN) {
             labelText = "Username already taken. Try again.";
-        }
-        else if(result == InputProcessResult.INVALID_USER_TYPE){
+        } else if (result == InputProcessResult.INVALID_USER_TYPE) {
             labelText = "Please enter a valid user type.";
-        }
-        else if(result == InputProcessResult.UNQUALIFIED_USER){
+        } else if (result == InputProcessResult.UNQUALIFIED_USER) {
             labelText = "This user is unqualified.";
-        }
-        else{
+        } else {
             //labelText = "Success";
             labelText = "Account created successfully.";
         }
@@ -82,7 +78,8 @@ public class CreateAccountController extends Controller{
 
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert usernameField != null : "fx:id=\"usernameField\" was not injected: check your FXML file 'Create User Account.fxml'.";
         assert passwordField != null : "fx:id=\"passwordField\" was not injected: check your FXML file 'Create User Account.fxml'.";
@@ -92,7 +89,7 @@ public class CreateAccountController extends Controller{
 
     }
 
-    public InputProcessResult handleInput(String username, String password, String type){
+    public InputProcessResult handleInput(String username, String password, String type) {
         try {
             User.UserType userType = userManager.parseType(type);
             userManager.addUser(userType, username, password);

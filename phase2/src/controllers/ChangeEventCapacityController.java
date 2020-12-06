@@ -49,7 +49,7 @@ public class ChangeEventCapacityController extends Controller {
 
         String label = "";
         Label eventLabel = eventListField.getSelectionModel().getSelectedItem();
-        if(eventLabel == null) {
+        if (eventLabel == null) {
             label = "No event selected. Try again";
             createMessageLabel.setText(label);
             return;
@@ -84,24 +84,24 @@ public class ChangeEventCapacityController extends Controller {
     }
 
     private InputProcessResult changeEventCapacity(String c, String event) {
-        if(checkIntFormat(c)){
+        if (checkIntFormat(c)) {
             return InputProcessResult.INVALID_INPUT;
         }
         int capacity = Integer.parseInt(c);
-        if (capacity > 60){
+        if (capacity > 60) {
             return InputProcessResult.CAPACITY_OVER;
         }
-        if(!eventManager.eventTitleExists(event)){
+        if (!eventManager.eventTitleExists(event)) {
             return InputProcessResult.EVENT_DOES_NOT_EXIST;
         }
         eventManager.changeEventCapacity(event, capacity, false);
         return InputProcessResult.SUCCESS;
     }
 
-    private boolean checkIntFormat(String capacity){
-        try{
+    private boolean checkIntFormat(String capacity) {
+        try {
             Integer.parseInt(capacity);
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return true;
         }
         return false;
@@ -113,7 +113,7 @@ public class ChangeEventCapacityController extends Controller {
         super.setEventManager(eventManager);
 
         setEventList();
-        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) ->{
+        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> {
             setEventList();
         });
     }
@@ -123,7 +123,7 @@ public class ChangeEventCapacityController extends Controller {
         for (Event event : events) {
             int room = event.getEventRoom();
             int capacity = event.getEventCapacity();
-            labels.add(new Label("Event: " + event.getEventTitle()+"             Room: "
+            labels.add(new Label("Event: " + event.getEventTitle() + "             Room: "
                     + room + "             Current Capacity: " + capacity));
         }
         return labels;

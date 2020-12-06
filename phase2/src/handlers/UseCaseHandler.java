@@ -14,18 +14,18 @@ import useCaseClasses.UserManager;
 public class UseCaseHandler {
 
     // Managers
-    private UserManager userManager;
-    private MessageManager messageManager;
-    private EventManager eventManager;
+    private final UserManager userManager;
+    private final MessageManager messageManager;
+    private final EventManager eventManager;
 
     // Observers
-    private ManagerObserver<User> userManagerObserver;
-    private ManagerObserver<Message> messageManagerObserver;
-    private ManagerObserver<Event> eventManagerObserver;
+    private final ManagerObserver<User> userManagerObserver;
+    private final ManagerObserver<Message> messageManagerObserver;
+    private final ManagerObserver<Event> eventManagerObserver;
 
-    private UserGateway userGateway;
-    private MessageGateway messageGateway;
-    private EventGateway eventGateway;
+    private final UserGateway userGateway;
+    private final MessageGateway messageGateway;
+    private final EventGateway eventGateway;
 
     public UseCaseHandler() {
 

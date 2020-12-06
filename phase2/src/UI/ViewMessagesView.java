@@ -17,8 +17,9 @@ public class ViewMessagesView extends GuiView {
 
     /**
      * initalizer for the message history view on what controller and presenter to use
+     *
      * @param controller the corresponding ViewMessageController
-     * @param presenter the corresponding ViewMessagePresenter
+     * @param presenter  the corresponding ViewMessagePresenter
      */
     public ViewMessagesView(ViewMessagesController controller, ViewMessagesPresenter presenter) {
         this.controller = controller;
@@ -27,26 +28,25 @@ public class ViewMessagesView extends GuiView {
 
     /**
      * the run flow for how this message history is going to work
+     *
      * @param inputScanner the Scanner that can be used to collect
      *                     input from the user
      * @return The ConsoleView that will lead to the corresponding screen
      */
-    public SceneType runFlow(Scanner inputScanner){
+    public SceneType runFlow(Scanner inputScanner) {
         System.out.println(presenter.getPreInputText());
         System.out.println(presenter.getUsernames());
         String receiveUsername = inputScanner.nextLine();
 
         InputProcessResult result = controller.handleInput(receiveUsername);
 
-        if(result == InputProcessResult.BACK){
+        if (result == InputProcessResult.BACK) {
             System.out.println(presenter.getInputResponseText(result));
             return getNextScreen(result);
-        }
-        else if(result == InputProcessResult.USER_NOT_FOUND){
+        } else if (result == InputProcessResult.USER_NOT_FOUND) {
             System.out.println(presenter.getInputResponseText(result));
             return getNextScreen(result);
-        }
-        else{
+        } else {
             System.out.println(presenter.preMessageHistoryText(receiveUsername));
             System.out.println(presenter.messageHistory(receiveUsername));
             System.out.println(presenter.getInputResponseText(result));
@@ -55,22 +55,20 @@ public class ViewMessagesView extends GuiView {
         }
 
 
-
-
     }
 
     /**
      * used as a helper method to help navigate to the next possble screen depending on
      * param passes in
+     *
      * @param result the InputProcessResult that is called/processed from the runFlow
      * @return The ConsoleViewType for the next screen to be viewed.
      */
     private SceneType getNextScreen(InputProcessResult result) {
-        if(result == InputProcessResult.BACK || result == InputProcessResult.SUCCESS
-                || result == InputProcessResult.NO_MESSAGE_HISTORY){
+        if (result == InputProcessResult.BACK || result == InputProcessResult.SUCCESS
+                || result == InputProcessResult.NO_MESSAGE_HISTORY) {
             return SceneType.MAIN_MENU;
-        }
-        else{
+        } else {
             return SceneType.VIEW_MESSAGES;
         }
     }

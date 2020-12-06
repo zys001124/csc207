@@ -12,8 +12,8 @@ public class SceneNavigator {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
-    private Stage applicationStage;
-    private UseCaseHandler useCaseHandler;
+    private final Stage applicationStage;
+    private final UseCaseHandler useCaseHandler;
 
     private Scene loginScene;
     private Scene speakerMenuInputScene;
@@ -35,13 +35,13 @@ public class SceneNavigator {
     private Scene deleteAccountScene;
     private Scene viewMessagesScene;
 
-    public SceneNavigator(Stage applicationStage, UseCaseHandler useCaseHandler){
+    public SceneNavigator(Stage applicationStage, UseCaseHandler useCaseHandler) {
         this.applicationStage = applicationStage;
         this.useCaseHandler = useCaseHandler;
     }
 
-    public void switchSceneView(SceneViewType sceneViewType){
-        switch(sceneViewType) {
+    public void switchSceneView(SceneViewType sceneViewType) {
+        switch (sceneViewType) {
             case LOGIN: {
                 applicationStage.setScene(getLoginScene());
                 break;
@@ -129,144 +129,148 @@ public class SceneNavigator {
         return loginScene;
     }
 
-    public Scene getSpeakerMenuInputScene() {
-        return speakerMenuInputScene;
-    }
-
-    public Scene getOrganizerMenuInputScene() {
-        return organizerMenuInputScene;
-    }
-
-    public Scene getVipMenuInputScene() { return vipMenuInputScene; }
-
-    public Scene getAdminMenuInputScene() { return adminMenuInputScene; }
-
-    public Scene getAttendeeMenuInputScene() {
-        return attendeeMenuInputScene;
-    }
-
-    public Scene getMessageUserScene() {
-        return messageUserScene;
-    }
-
-    public Scene getCreateAccountScene() {
-        return createAccountScene;
-    }
-
-    public Scene getEventEnrollScene() {
-        return eventEnrollScene;
-    }
-
-    public Scene getEventUnEnrollScene() {
-        return eventUnEnrollScene;
-    }
-
-    public Scene getEventCancelScene() {
-        return eventCancelScene;
-    }
-
-    public Scene getEventCreationScene() {
-        return eventCreationScene;
-    }
-
-    public Scene getMessageAllAttendingEventScene() {
-        return messageAllAttendingEventScene;
-    }
-
-    public Scene getMessageAllSpeakersScene() {
-        return messageAllSpeakersScene;
-    }
-
-    public Scene getMessageAllAttendeesScene() {
-        return messageAllAttendeesScene;
-    }
-
-    public Scene getSeeScheduleScene() {
-        return seeScheduleScene;
-    }
-
-    public Scene getChangeEventCapacityScene() {
-        return changeEventCapacityScene;
-    }
-
-    public Scene getDeleteAccountScene() {
-        return deleteAccountScene;
-    }
-
-    public Scene getViewMessagesScene() {
-        return viewMessagesScene;
-    }
-
     public void setLoginScene(Scene loginScene) {
         this.loginScene = loginScene;
+    }
+
+    public Scene getSpeakerMenuInputScene() {
+        return speakerMenuInputScene;
     }
 
     public void setSpeakerMenuInputScene(Scene menuInputScene) {
         this.speakerMenuInputScene = menuInputScene;
     }
 
+    public Scene getOrganizerMenuInputScene() {
+        return organizerMenuInputScene;
+    }
+
     public void setOrganizerMenuInputScene(Scene menuInputScene) {
         this.organizerMenuInputScene = menuInputScene;
     }
 
-    public void setAttendeeMenuInputScene(Scene menuInputScene) {
-        this.attendeeMenuInputScene = menuInputScene;
-    }
-
-    public void setAdminMenuInputScene(Scene menuInputScene) {
-        this.adminMenuInputScene = menuInputScene;
+    public Scene getVipMenuInputScene() {
+        return vipMenuInputScene;
     }
 
     public void setVipMenuInputScene(Scene menuInputScene) {
         this.vipMenuInputScene = menuInputScene;
     }
 
+    public Scene getAdminMenuInputScene() {
+        return adminMenuInputScene;
+    }
+
+    public void setAdminMenuInputScene(Scene menuInputScene) {
+        this.adminMenuInputScene = menuInputScene;
+    }
+
+    public Scene getAttendeeMenuInputScene() {
+        return attendeeMenuInputScene;
+    }
+
+    public void setAttendeeMenuInputScene(Scene menuInputScene) {
+        this.attendeeMenuInputScene = menuInputScene;
+    }
+
+    public Scene getMessageUserScene() {
+        return messageUserScene;
+    }
+
     public void setMessageUserScene(Scene messageUserScene) {
         this.messageUserScene = messageUserScene;
+    }
+
+    public Scene getCreateAccountScene() {
+        return createAccountScene;
     }
 
     public void setCreateAccountScene(Scene createAccountScene) {
         this.createAccountScene = createAccountScene;
     }
 
-    public void setEventUnEnrollScene(Scene eventUnEnrollScene) {
-        this.eventUnEnrollScene = eventUnEnrollScene;
-    }
-
-    public void setEventCancelScene(Scene eventCancelScene) {
-        this.eventCancelScene = eventCancelScene;
-    }
-
-    public void setEventCreationScene(Scene eventCreationScene) {
-        this.eventCreationScene = eventCreationScene;
+    public Scene getEventEnrollScene() {
+        return eventEnrollScene;
     }
 
     public void setEventEnrollScene(Scene eventEnrollScene) {
         this.eventEnrollScene = eventEnrollScene;
     }
 
+    public Scene getEventUnEnrollScene() {
+        return eventUnEnrollScene;
+    }
+
+    public void setEventUnEnrollScene(Scene eventUnEnrollScene) {
+        this.eventUnEnrollScene = eventUnEnrollScene;
+    }
+
+    public Scene getEventCancelScene() {
+        return eventCancelScene;
+    }
+
+    public void setEventCancelScene(Scene eventCancelScene) {
+        this.eventCancelScene = eventCancelScene;
+    }
+
+    public Scene getEventCreationScene() {
+        return eventCreationScene;
+    }
+
+    public void setEventCreationScene(Scene eventCreationScene) {
+        this.eventCreationScene = eventCreationScene;
+    }
+
+    public Scene getMessageAllAttendingEventScene() {
+        return messageAllAttendingEventScene;
+    }
+
     public void setMessageAllAttendingEventScene(Scene messageAllAttendingEventScene) {
         this.messageAllAttendingEventScene = messageAllAttendingEventScene;
+    }
+
+    public Scene getMessageAllSpeakersScene() {
+        return messageAllSpeakersScene;
     }
 
     public void setMessageAllSpeakersScene(Scene messageAllSpeakersScene) {
         this.messageAllSpeakersScene = messageAllSpeakersScene;
     }
 
+    public Scene getMessageAllAttendeesScene() {
+        return messageAllAttendeesScene;
+    }
+
     public void setMessageAllAttendeesScene(Scene messageAllAttendeesScene) {
         this.messageAllAttendeesScene = messageAllAttendeesScene;
+    }
+
+    public Scene getSeeScheduleScene() {
+        return seeScheduleScene;
     }
 
     public void setSeeScheduleScene(Scene seeScheduleScene) {
         this.seeScheduleScene = seeScheduleScene;
     }
 
+    public Scene getChangeEventCapacityScene() {
+        return changeEventCapacityScene;
+    }
+
     public void setChangeEventCapacityScene(Scene changeEventCapacityScene) {
         this.changeEventCapacityScene = changeEventCapacityScene;
     }
 
+    public Scene getDeleteAccountScene() {
+        return deleteAccountScene;
+    }
+
     public void setDeleteAccountScene(Scene deleteAccountScene) {
         this.deleteAccountScene = deleteAccountScene;
+    }
+
+    public Scene getViewMessagesScene() {
+        return viewMessagesScene;
     }
 
     public void setViewMessagesScene(Scene viewMessagesScene) {

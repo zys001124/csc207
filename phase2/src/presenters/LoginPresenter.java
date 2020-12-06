@@ -9,10 +9,10 @@ import handlers.SceneNavigator;
  */
 public class LoginPresenter {
 
-    private SceneNavigator sceneNavigator;
-    private LoginController controller;
+    private final SceneNavigator sceneNavigator;
+    private final LoginController controller;
 
-    public LoginPresenter(LoginController loginController, SceneNavigator sceneNavigator){
+    public LoginPresenter(LoginController loginController, SceneNavigator sceneNavigator) {
         this.sceneNavigator = sceneNavigator;
         this.controller = loginController;
     }
@@ -64,7 +64,7 @@ public class LoginPresenter {
         }
     }
 
-    public InputProcessResult verifyLogin(String username, String password){
+    public InputProcessResult verifyLogin(String username, String password) {
         return null; //controller.verifyLogin(username, password);
     }
 }

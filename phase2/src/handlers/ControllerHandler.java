@@ -32,7 +32,7 @@ public class ControllerHandler {
         MessageManager messageManager = useCaseHandler.getMessageManager();
         EventManager eventManager = useCaseHandler.getEventManager();
 
-       // loginController = new LoginController(userManager);
+        // loginController = new LoginController(userManager);
         menuInputController = new MenuInputController(userManager);
         messageUserController = new MessageUserController(messageManager, userManager);
         //createAccountController = new CreateAccountController(userManager);
@@ -98,9 +98,11 @@ public class ControllerHandler {
         return messageAllAttendeesController;
     }
 
-    public ChangeEventCapacityController getChangeEventCapacityController(){
+    public ChangeEventCapacityController getChangeEventCapacityController() {
         return changeEventCapacityController;
     }
 
-    public ViewMessagesController getViewMessagesController(){ return viewMessagesController;}
+    public ViewMessagesController getViewMessagesController() {
+        return viewMessagesController;
+    }
 }

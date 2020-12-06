@@ -24,7 +24,7 @@ import java.util.ResourceBundle;
 import java.util.UUID;
 
 
-public class EventCreationController extends Controller{
+public class EventCreationController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -81,24 +81,19 @@ public class EventCreationController extends Controller{
         Boolean vipSelected = vipOnlyCheck.isSelected();
 
         InputProcessResult result = createEvent(eventTitle, sDateTime, eDateTime, speakersUserName, roomNum,
-                capacity,vipSelected);
+                capacity, vipSelected);
 
-        if(result == InputProcessResult.USER_NOT_FOUND){
+        if (result == InputProcessResult.USER_NOT_FOUND) {
             label = "At least one of the speakers could not be found.";
-        }
-        else if(result == InputProcessResult.USER_NOT_SPEAKER){
+        } else if (result == InputProcessResult.USER_NOT_SPEAKER) {
             label = "At least one of the speakers is not a speaker.";
-        }
-        else if(result == InputProcessResult.TIMESLOT_FULL){
+        } else if (result == InputProcessResult.TIMESLOT_FULL) {
             label = "Timeslot full.";
-        }
-        else if(result == InputProcessResult.SPEAKER_OCCUPIED){
+        } else if (result == InputProcessResult.SPEAKER_OCCUPIED) {
             label = "At least one of the speakers is occupied.";
-        }
-        else if(result == InputProcessResult.ROOM_FULL){
+        } else if (result == InputProcessResult.ROOM_FULL) {
             label = "That room is full.";
-        }
-        else{
+        } else {
             label = "Event created successfully.";
         }
 
@@ -107,15 +102,15 @@ public class EventCreationController extends Controller{
 
     @FXML
     void onVipOnlyCheck(ActionEvent event) {
-        if(vipOnlyCheck.isSelected()) {
+        if (vipOnlyCheck.isSelected()) {
             createMessageLabel.setText("Vip only selected.");
-        }
-        else{
+        } else {
             createMessageLabel.setText("Vip only de-selected.");
         }
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert eventTitleField != null : "fx:id=\"eventTitleField\" was not injected: check your FXML file 'Create Event.fxml'.";
         assert startTimeField != null : "fx:id=\"startTimeField\" was not injected: check your FXML file 'Create Event.fxml'.";
@@ -133,22 +128,22 @@ public class EventCreationController extends Controller{
     }
 
     public InputProcessResult createEvent(String eventTitle, LocalDateTime startTime, LocalDateTime endTime, String[] speakersUserName,
-                                          int roomNum, int roomCapacity, Boolean vip){
+                                          int roomNum, int roomCapacity, Boolean vip) {
 
         UUID eventID = getUuid();
         ArrayList<User> speakers = new ArrayList<>();
 
 
-        try{
-            for (String speaker:speakersUserName){
+        try {
+            for (String speaker : speakersUserName) {
                 userManager.getUser(speaker);
                 speakers.add(userManager.getUser(speaker));
             }
-        }catch(UserNotFoundException e) {
+        } catch (UserNotFoundException e) {
             return InputProcessResult.USER_NOT_FOUND;
         }
 
-        for (User speaker:speakers){
+        for (User speaker : speakers) {
             if (!(speaker.getType().equals(User.UserType.SPEAKER))) {
                 return InputProcessResult.USER_NOT_SPEAKER;
             }
@@ -163,17 +158,16 @@ public class EventCreationController extends Controller{
             return InputProcessResult.TIMESLOT_FULL;
         }
 
-        for (User speaker:speakers){
+        for (User speaker : speakers) {
             boolean speakerOccupied = speakerOccupied(startTime, endTime, speaker);
-            if (speakerOccupied){
+            if (speakerOccupied) {
                 return InputProcessResult.SPEAKER_OCCUPIED;
             }
         }
 
-        if (occupiedRoom.contains(roomNum)){
+        if (occupiedRoom.contains(roomNum)) {
             return InputProcessResult.ROOM_FULL;
         }
-
 
 
         Event eventCreated = new Event(eventTitle, startTime, endTime, eventID, organizerID, speakersID,
@@ -227,10 +221,10 @@ public class EventCreationController extends Controller{
             LocalDateTime startTime = eventHosting.getEventTime();
             LocalDateTime endTime = eventHosting.getEventETime();
 
-            if (sDateTime.isBefore(startTime) && eDateTime.isAfter(startTime)|
-                    (sDateTime.isBefore(endTime) && eDateTime.isAfter(endTime))|
+            if (sDateTime.isBefore(startTime) && eDateTime.isAfter(startTime) |
+                    (sDateTime.isBefore(endTime) && eDateTime.isAfter(endTime)) |
                     (sDateTime.isAfter(startTime) && eDateTime.isBefore(endTime))
-            ){
+            ) {
                 return true;
             }
         }

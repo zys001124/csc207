@@ -7,9 +7,9 @@ import useCaseClasses.EventManager;
 
 import java.util.*;
 
-public class EventGateway extends FirebaseGateway<Event>{
+public class EventGateway extends FirebaseGateway<Event> {
 
-    private EventManager eventManager;
+    private final EventManager eventManager;
 
     public EventGateway(EventManager em) {
         super("Events");
@@ -45,7 +45,7 @@ public class EventGateway extends FirebaseGateway<Event>{
     }
 
     public void pushEntities(List<Event> events) {
-        for(Event event: events) {
+        for (Event event : events) {
             Event.EventData eventData = event.getEventData();
             databaseReference.child(event.getId().toString()).setValueAsync(eventData);
             databaseReference.child(event.getId().toString()).child("attendees").setValueAsync(eventData.attendees);
@@ -54,26 +54,24 @@ public class EventGateway extends FirebaseGateway<Event>{
     }
 
     public void removeEntities(List<Event> events) {
-        for(Event event: events) {
+        for (Event event : events) {
             databaseReference.child(event.getId().toString()).removeValueAsync();
         }
     }
 
     private Event.EventData eventDataFromDataSnapshot(DataSnapshot dataSnapshot) {
 
-        Map eventMap= (Map<String, Object>) dataSnapshot.getValue();
+        Map eventMap = (Map<String, Object>) dataSnapshot.getValue();
         Event.EventData eventData = new Event.EventData();
-        if(eventMap.containsKey("attendees")) {
-            eventData.attendees = (Collection<String>)eventMap.get("attendees");
-        }
-        else {
+        if (eventMap.containsKey("attendees")) {
+            eventData.attendees = (Collection<String>) eventMap.get("attendees");
+        } else {
             eventData.attendees = new ArrayList<>();
         }
 
-        if(eventMap.containsKey("speakerIds")) {
-            eventData.speakerIds = (Collection<String>)eventMap.get("speakerIds");
-        }
-        else {
+        if (eventMap.containsKey("speakerIds")) {
+            eventData.speakerIds = (Collection<String>) eventMap.get("speakerIds");
+        } else {
             eventData.speakerIds = new ArrayList<>();
         }
         eventData.eventSTime = (String) eventMap.get("eventSTime");

@@ -7,9 +7,9 @@ import useCaseClasses.MessageManager;
 
 import java.util.List;
 
-public class MessageGateway extends FirebaseGateway<Message>{
+public class MessageGateway extends FirebaseGateway<Message> {
 
-    private MessageManager messageManager;
+    private final MessageManager messageManager;
 
     public MessageGateway(MessageManager mm) {
         super("Messages");
@@ -18,14 +18,14 @@ public class MessageGateway extends FirebaseGateway<Message>{
 
     @Override
     public void pushEntities(List<Message> messages) {
-        for(Message message: messages) {
+        for (Message message : messages) {
             databaseReference.child(message.getId().toString()).setValueAsync(message.getMessageData());
         }
     }
 
     @Override
     public void removeEntities(List<Message> messages) {
-        for(Message message: messages) {
+        for (Message message : messages) {
             databaseReference.child(message.getId().toString()).removeValueAsync();
         }
     }

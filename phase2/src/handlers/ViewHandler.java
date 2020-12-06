@@ -3,7 +3,7 @@ package handlers;
 import UI.*;
 
 public class ViewHandler {
-    
+
     // Views
     private LoginView loginView;
     private MenuInputView menuInputView;
@@ -38,7 +38,7 @@ public class ViewHandler {
         messageAllSpeakersView = new MessageAllSpeakersView(ch.getMessageAllSpeakersController(), ph.getMessageAllSpeakersPresenter());
         messageAllAttendeesView = new MessageAllAttendeesView(ch.getMessageAllAttendeesController(), ph.getMessageAllAttendeesPresenter());
         seeScheduleView = new SeeScheduleView(ph.getSeeSchedulePresenter());
-        changeEventCapacityView = new ChangeEventCapacityView(ch.getChangeEventCapacityController(),ph.getChangeEventCapacityPresenter());
+        changeEventCapacityView = new ChangeEventCapacityView(ch.getChangeEventCapacityController(), ph.getChangeEventCapacityPresenter());
         deleteAccountView = new DeleteAccountView(ch.getDeleteAccountController(), ph.getDeleteAccountPresenter());
         viewMessagesView = new ViewMessagesView(ch.getViewMessagesController(), ph.getViewMessagesPresenter());
     }
@@ -135,7 +135,11 @@ public class ViewHandler {
         return seeScheduleView;
     }
 
-    public ChangeEventCapacityView getChangeEventCapacityView(){return changeEventCapacityView;}
+    public ChangeEventCapacityView getChangeEventCapacityView() {
+        return changeEventCapacityView;
+    }
 
-    public ViewMessagesView getViewMessagesView() { return viewMessagesView; }
+    public ViewMessagesView getViewMessagesView() {
+        return viewMessagesView;
+    }
 }

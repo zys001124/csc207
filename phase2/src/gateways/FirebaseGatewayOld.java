@@ -17,20 +17,17 @@ import java.util.*;
 
 public class FirebaseGatewayOld {
 
-    private UserManager userManager;
-    private EventManager eventManager;
-    private MessageManager messageManager;
-
-    private FirebaseDatabase db;
-
-    private DatabaseReference usersRef;
-    private DatabaseReference eventsRef;
-    private DatabaseReference messagesRef;
-
     public boolean allowWrite = true;
     public boolean allowUsersRead = true;
     public boolean allowEventsRead = true;
     public boolean allowMessagesRead = true;
+    private final UserManager userManager;
+    private final EventManager eventManager;
+    private final MessageManager messageManager;
+    private final FirebaseDatabase db;
+    private final DatabaseReference usersRef;
+    private final DatabaseReference eventsRef;
+    private final DatabaseReference messagesRef;
 
     public FirebaseGatewayOld(UserManager um, EventManager em, MessageManager mm) {
         userManager = um;
@@ -61,13 +58,13 @@ public class FirebaseGatewayOld {
     }
 
     private void addSnapShotListenersAndLoadFromFirebase() {
-        if(allowUsersRead) {
+        if (allowUsersRead) {
             getUsers();
         }
-        if(allowMessagesRead) {
+        if (allowMessagesRead) {
             getMessages();
         }
-        if(allowEventsRead) {
+        if (allowEventsRead) {
             getEvents();
         }
 
@@ -135,7 +132,7 @@ public class FirebaseGatewayOld {
             }
         });
     }
-    
+
     private void getEvents() {
         eventsRef.addChildEventListener(new ChildEventListener() {
             @Override
@@ -167,33 +164,33 @@ public class FirebaseGatewayOld {
             }
         });
     }
-    
+
     public void pushUsers(List<User> users) {
-        for(User user: users) {
+        for (User user : users) {
             usersRef.child(user.getUsername()).setValueAsync(user.getUserData());
         }
     }
 
     public void removeUsers(List<User> users) {
-        for(User user: users) {
+        for (User user : users) {
             usersRef.child(user.getUsername()).removeValueAsync();
         }
     }
 
     public void pushMessages(List<Message> messages) {
-        for(Message message: messages) {
+        for (Message message : messages) {
             messagesRef.child(message.getId().toString()).setValueAsync(message.getMessageData());
         }
     }
-    
+
     public void removeMessages(List<Message> messages) {
-        for(Message message: messages) {
+        for (Message message : messages) {
             messagesRef.child(message.getId().toString()).removeValueAsync();
         }
     }
 
     public void pushEvents(List<Event> events) {
-        for(Event event: events) {
+        for (Event event : events) {
             Event.EventData eventData = event.getEventData();
             eventsRef.child(event.getId().toString()).setValueAsync(eventData);
             eventsRef.child(event.getId().toString()).child("attendees").setValueAsync(eventData.attendees);
@@ -202,26 +199,24 @@ public class FirebaseGatewayOld {
     }
 
     public void removeEvents(List<Event> events) {
-        for(Event event: events) {
+        for (Event event : events) {
             eventsRef.child(event.getId().toString()).removeValueAsync();
         }
     }
 
     private Event.EventData eventDataFromDataSnapshot(DataSnapshot dataSnapshot) {
 
-        Map eventMap= (Map<String, Object>) dataSnapshot.getValue();
+        Map eventMap = (Map<String, Object>) dataSnapshot.getValue();
         Event.EventData eventData = new Event.EventData();
-        if(eventMap.containsKey("attendees")) {
-            eventData.attendees = (Collection<String>)eventMap.get("attendees");
-        }
-        else {
+        if (eventMap.containsKey("attendees")) {
+            eventData.attendees = (Collection<String>) eventMap.get("attendees");
+        } else {
             eventData.attendees = new ArrayList<>();
         }
 
-        if(eventMap.containsKey("speakerIds")) {
-            eventData.speakerIds = (Collection<String>)eventMap.get("speakerIds");
-        }
-        else {
+        if (eventMap.containsKey("speakerIds")) {
+            eventData.speakerIds = (Collection<String>) eventMap.get("speakerIds");
+        } else {
             eventData.speakerIds = new ArrayList<>();
         }
         eventData.eventSTime = (String) eventMap.get("eventSTime");

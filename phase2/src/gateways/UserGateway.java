@@ -8,7 +8,7 @@ import useCaseClasses.UserManager;
 import java.util.List;
 import java.util.UUID;
 
-public class UserGateway extends FirebaseGateway<User>{
+public class UserGateway extends FirebaseGateway<User> {
 
     public UserManager userManager;
 
@@ -19,14 +19,14 @@ public class UserGateway extends FirebaseGateway<User>{
 
     @Override
     public void pushEntities(List<User> entities) {
-        for(User user: entities) {
+        for (User user : entities) {
             databaseReference.child(user.getUsername()).setValueAsync(user.getUserData());
         }
     }
 
     @Override
     public void removeEntities(List<User> entities) {
-        for(User user: entities) {
+        for (User user : entities) {
             databaseReference.child(user.getUsername()).removeValueAsync();
         }
     }

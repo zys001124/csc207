@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ManagerObserver<T> implements Observer<T> {
 
-    private FirebaseGateway<T> gateway;
+    private final FirebaseGateway<T> gateway;
 
     public ManagerObserver(FirebaseGateway<T> gateway) {
         this.gateway = gateway;
@@ -15,16 +15,17 @@ public class ManagerObserver<T> implements Observer<T> {
 
     @Override
     public void update(Observable o, List<T> changes, boolean addedOrChanged, boolean retrievedFromDataBase) throws IncorrectObjectTypeException {
-        if(retrievedFromDataBase){return;}
+        if (retrievedFromDataBase) {
+            return;
+        }
         try {
-            if(addedOrChanged){
+            if (addedOrChanged) {
                 gateway.pushEntities(changes);
-            }
-            else {
+            } else {
                 gateway.removeEntities(changes);
             }
 
-        } catch(ClassCastException e) {
+        } catch (ClassCastException e) {
             throw new IncorrectObjectTypeException("List of type Message required");
         }
 

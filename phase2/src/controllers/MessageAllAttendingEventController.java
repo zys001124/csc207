@@ -15,7 +15,7 @@ import java.util.ResourceBundle;
 /**
  * A controller for the MessageAllAttendingEvent
  */
-public class MessageAllAttendingEventController extends Controller{
+public class MessageAllAttendingEventController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -52,12 +52,13 @@ public class MessageAllAttendingEventController extends Controller{
 
         String eventName = eventList.getSelectionModel().getSelectedItem().getText().split(" on")[0];
 
-        sendMessage(text,eventName);
+        sendMessage(text, eventName);
 
         createMessageLabel.setText(label);
     }
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert eventList != null : "fx:id=\"eventList\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
         assert messageField != null : "fx:id=\"messageField\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
