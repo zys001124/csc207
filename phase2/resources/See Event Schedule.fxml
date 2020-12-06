@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.ListView?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.SeeEventScheduleController">
+    <children>
+        <Label layoutX="220.0" layoutY="50.0" text="Schedule Events" textAlignment="CENTER" underline="true">
+            <font>
+                <Font name="Arial" size="24.0" />
+            </font>
+        </Label>
+        <Label layoutX="30.0" layoutY="85.0" text="Here is the list of events you are enrolled in: ">
+            <font>
+                <Font size="14.0" />
+            </font>
+        </Label>
+        <ListView fx:id="eventListView" layoutX="24.0" layoutY="110.0" prefHeight="220.0" prefWidth="562.0" />
+        <Button fx:id="backButton" layoutX="78.0" layoutY="347.0" mnemonicParsing="false" onAction="#onBackButtonClicked" text="Back" />
+    </children>
+</AnchorPane>

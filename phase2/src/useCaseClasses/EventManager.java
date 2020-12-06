@@ -5,6 +5,7 @@ import entities.Event;
 import entities.User;
 import exceptions.*;
 import gateways.DataSnapshotReader;
+import javafx.scene.control.Label;
 import observers.Observable;
 
 import java.time.LocalDateTime;
@@ -306,13 +307,23 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         throw new EventNotFoundException(eventInput);
     }
 
+    public ArrayList<Event> getEventsWithAttendee(User user){
+        ArrayList<Event> result = new ArrayList<>();
+        for(Event event: events){
+            if(event.hasAttendee(user.getId())){
+                result.add(event);
+            }
+        }
+        return result;
+    }
+
     /**
      * This method sorts the event list in the order of date and time
      *
      * @return An arraylist with events sorts in order of datetime
      */
-    public ArrayList<Event> eventSortTime() {
-        ArrayList<Event> result = new ArrayList<>(events);
+    public ArrayList<Event> eventSortTime(List<Event> eventList) {
+        ArrayList<Event> result = new ArrayList<>(eventList);
         insertionSortEvents(result);
         return result;
     }
@@ -365,6 +376,17 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
             }
         }
         return false;
+    }
+
+    public List<String> getEventCapacityLabels() {
+        ArrayList<String> labels = new ArrayList<>();
+        for (Event event : events) {
+            int room = event.getEventRoom();
+            int capacity = event.getEventCapacity();
+            labels.add("Event: " + event.getEventTitle() + "             Room: "
+                    + room + "             Current Capacity: " + capacity);
+        }
+        return labels;
     }
 
     @Override

@@ -5,9 +5,11 @@ import com.google.firebase.database.DataSnapshot;
 import entities.User;
 import exceptions.*;
 import gateways.DataSnapshotReader;
+import javafx.scene.control.Label;
 import observers.Observable;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -268,6 +270,14 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
             }
         }
         return speakers;
+    }
+
+    public List<String> getDeleteAccountLabels() {
+        ArrayList<String> labels = new ArrayList<>();
+        for (User user : users) {
+            labels.add(user.getUsername() + ": " + user.getType());
+        }
+        return labels;
     }
 
     /**

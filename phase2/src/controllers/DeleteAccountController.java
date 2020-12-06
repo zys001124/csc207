@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.User;
 import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
@@ -99,66 +98,18 @@ public class DeleteAccountController extends Controller {
         setUserList();
     }
 
-    private List<Label> getUserLabels(Collection<User> users) {
-        ArrayList<Label> labels = new ArrayList<>();
-        for (User user : users) {
-            labels.add(new Label(user.getUsername() + ": " + user.getType()));
+    private List<Label> getUserLabels(){
+        List<String> labels= userManager.getDeleteAccountLabels();
+        ArrayList<Label> result = new ArrayList<>();
+        for (String label : labels) {
+            result.add(new Label(label));
         }
-        return labels;
+        return result;
     }
 
     private void setUserList() {
-        userListField.getItems().addAll(getUserLabels(userManager.getUsers()));
+        userListField.getItems().addAll(getUserLabels());
     }
 
 }
 
-
-///**
-// * A controller for handling inputs when try to delete a user
-// */
-//
-//public class DeleteAccountController {
-//
-//    private final UserManager userManager;
-//
-//    /**
-//     * Creates a CreateAccountController with the given UserManager
-//     *
-//     * @param um - The userManager this controller will use
-//     */
-//    public DeleteAccountController(UserManager um){
-//        userManager = um;
-//    }
-//
-//    /**
-//     * Handles the input given by the user
-//     *
-//     * @param input the users input
-//     * @return an InputProcessResult enum that details what happened
-//     * as a result of the given input
-//     */
-//    public InputProcessResult getNextScreen(String input){
-//
-//        if (input.equals("back")) {
-//            return InputProcessResult.BACK;
-//        }
-//
-//        List<User> users = userManager.getUsers();
-//
-//        for(User u : users){
-//            if(u.getUsername().equals(input)){
-//                UUID wanted_id = userManager.getUserID(input);
-//                if(userManager.getUser(wanted_id).getType().equals(User.UserType.ADMIN)){
-//                    return InputProcessResult.INVALID_USER_TYPE;
-//                }
-//                userManager.removeUser(wanted_id);
-//                return InputProcessResult.SUCCESS;
-//            }
-//        }
-//
-//        return InputProcessResult.USER_NOT_FOUND;
-//
-//    }
-//
-//}

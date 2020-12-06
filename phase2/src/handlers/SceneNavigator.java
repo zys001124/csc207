@@ -277,11 +277,11 @@ public class SceneNavigator {
         MESSAGE_ALL_ATTENDING_EVENT, //Jay
         MESSAGE_ALL_SPEAKERS, //Finished
         MESSAGE_ALL_ATTENDEES, //Finished
-        EVENT_SCHEDULE, //Kelvin
+        EVENT_SCHEDULE, //Finished
         CREATE_EVENT, //Finished
         CANCEL_EVENT, //Finished
         ENROLL_IN_EVENT, // Finished
-        UNENROLL_IN_EVENT, // Kelvin
+        UNENROLL_IN_EVENT, // Finished
         CREATE_ACCOUNT, //Finished
         DELETE_ACCOUNT, //Finished
         CHANGE_CAPACITY, //Finished - SMALL BUG

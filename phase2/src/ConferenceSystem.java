@@ -124,7 +124,7 @@ public class ConferenceSystem {
         Scene messageAllAttendeesScene = initializeScene("Message All Attendees.fxml", sceneNavigator);
         sceneNavigator.setMessageAllAttendeesScene(messageAllAttendeesScene);
 
-        Scene seeScheduleScene = initializeScene("loginScene.fxml", sceneNavigator);
+        Scene seeScheduleScene = initializeScene("See Event Schedule.fxml", sceneNavigator);
         sceneNavigator.setSeeScheduleScene(seeScheduleScene);
 
         Scene changeEventCapacityScene = initializeScene("Change Event Capacity.fxml", sceneNavigator);
