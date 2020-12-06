@@ -39,7 +39,8 @@ public class SeeEventScheduleController extends Controller{
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
-        if(userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE)){
+        if(userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE) ||
+                userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.VIP)){
             setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
         }
         else { //They are a speaker
@@ -59,7 +60,8 @@ public class SeeEventScheduleController extends Controller{
     }
 
     private void setEventListField() {
-        if(userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE)) {
+        if(userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE) ||
+                userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.VIP)) {
             eventListView.getItems().addAll(getEventLabelsAttendee());
         }
         else{ //They are a speaker

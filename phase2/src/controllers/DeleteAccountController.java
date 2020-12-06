@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.User;
 import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
@@ -39,7 +40,7 @@ public class DeleteAccountController extends Controller {
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
-        setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+            setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
     }
 
     @FXML

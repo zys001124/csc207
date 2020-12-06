@@ -40,7 +40,12 @@ public class MessageAllAttendeesController extends Controller {
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
-        setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+        User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
+        if (currentUserType == User.UserType.ORGANIZER) {
+            setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+        } else if (currentUserType == User.UserType.ADMIN) {
+            setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+        }
     }
 
     @FXML
@@ -74,13 +79,9 @@ public class MessageAllAttendeesController extends Controller {
             return InputProcessResult.NO_MESSAGE_DETECTED;
         }
 
-        List<UUID> usersToMessage = new ArrayList<>();
-        for (User user : userManager.getUsers()) {
-            if (user.getType().equals(User.UserType.ATTENDEE)) {
-                usersToMessage.add(user.getId());
-            }
-        }
-        messageManager.sendMessageToGroup(userManager.getCurrentlyLoggedIn().getId(), usersToMessage, message);
+        List<UUID> attendeesId = userManager.getUserId(User.UserType.ATTENDEE);
+
+        messageManager.sendMessageToGroup(userManager.getCurrentlyLoggedIn().getId(), attendeesId, message);
 
         return InputProcessResult.SUCCESS;
     }

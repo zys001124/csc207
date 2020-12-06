@@ -274,9 +274,9 @@ public class SceneNavigator {
         ADMIN_MAIN_MENU, //Finished
         VIP_MAIN_MENU, //Finished
         MESSAGE_USER, //Finished
-        MESSAGE_ALL_ATTENDING_EVENT, //Jay
-        MESSAGE_ALL_SPEAKERS, //Finished
-        MESSAGE_ALL_ATTENDEES, //Finished
+        MESSAGE_ALL_ATTENDING_EVENT, //Finished
+        MESSAGE_ALL_SPEAKERS, //Finished - SMALL BUG
+        MESSAGE_ALL_ATTENDEES, //Finished - SMALL BUG
         EVENT_SCHEDULE, //Finished
         CREATE_EVENT, //Finished
         CANCEL_EVENT, //Finished
@@ -284,6 +284,6 @@ public class SceneNavigator {
         UNENROLL_IN_EVENT, // Finished
         CREATE_ACCOUNT, //Finished
         DELETE_ACCOUNT, //Finished
-        CHANGE_CAPACITY, //Finished - SMALL BUG
+        CHANGE_CAPACITY, //Finished
     }
 }

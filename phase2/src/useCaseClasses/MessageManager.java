@@ -93,6 +93,8 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         notifyObservers(messagesToAdd, true, false);
     }
 
+    //public void sendMessageToAttendees()
+
     public void addMessageFromDataSnapshot(DataSnapshot dataSnapshot) {
         Message message = getFromDataSnapshot(dataSnapshot);
 
@@ -122,6 +124,7 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         messages.addAll(messagesToAdd);
         notifyObservers(messagesToAdd, true, false);
     }
+
 
     /**
      * takes in two users and checks to see if a message was sent between the two

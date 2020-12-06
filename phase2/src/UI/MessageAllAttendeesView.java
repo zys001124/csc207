@@ -37,12 +37,13 @@ public class MessageAllAttendeesView extends GuiView {
      */
     @Override
     public SceneType runFlow(Scanner inputScanner) {
-        System.out.println(presenter.getPreInputText());
-        String message = inputScanner.nextLine();
+        //System.out.println(presenter.getPreInputText());
+        //String message = inputScanner.nextLine();
 
-        InputProcessResult result = controller.sendMessage(message);
-        System.out.println(presenter.getInputResponseText(result));
-        return getNextScreen(result);
+        //InputProcessResult result = controller.sendMessage(message);
+        //System.out.println(presenter.getInputResponseText(result));
+        //return getNextScreen(result);
+        return null;
     }
 
     /**

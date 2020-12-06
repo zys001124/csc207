@@ -64,7 +64,12 @@ public class EventCreationController extends Controller {
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
-        setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+        User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
+        if (currentUserType == User.UserType.ORGANIZER) {
+            setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+        } else if (currentUserType == User.UserType.ADMIN) {
+            setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+        }
     }
 
     @FXML

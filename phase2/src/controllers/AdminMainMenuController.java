@@ -40,6 +40,9 @@ public class AdminMainMenuController extends Controller {
     @FXML // fx:id="logoutButton"
     private Button logoutButton; // Value injected by FXMLLoader
 
+    @FXML // fx:id="changeCapacity"
+    private Button changeCapacity; // Value injected by FXMLLoader
+
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -51,7 +54,7 @@ public class AdminMainMenuController extends Controller {
         assert createUserAccountButton != null : "fx:id=\"createUserAccountButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
         assert deleteUserAccountButton != null : "fx:id=\"deleteUserAccountButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
         assert logoutButton != null : "fx:id=\"logoutButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
-
+        assert changeCapacity != null : "fx:id=\"changeCapacity\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
     }
 
     @FXML
@@ -94,5 +97,8 @@ public class AdminMainMenuController extends Controller {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
     }
 
+    @FXML
+    void onChangeCapacityClicked(ActionEvent event) { setSceneView(SceneNavigator.SceneViewType.CHANGE_CAPACITY);
 
+    }
 }
