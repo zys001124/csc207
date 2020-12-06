@@ -46,17 +46,26 @@ public class MessageAllAttendingEventController extends Controller {
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
-        setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+        setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
     }
 
     @FXML
     void onSendButtonClicked(ActionEvent event) {
 
-        String label = "";
+        String label = "Message successfully sent. \nReturning to Main Menu";
 
         String text = messageField.getText();
 
-        String eventName = eventList.getSelectionModel().getSelectedItem().getText().split(" on")[0];
+        Label selectedItem  = eventList.getSelectionModel().getSelectedItem();
+
+        if(selectedItem != null) {
+            String eventName = selectedItem.getText().split(" on")[0];
+
+            sendMessage(text, eventName);
+        }
+        else {
+            label = "You have not selected an Event. Try Again";
+        }
 
         InputProcessResult result = handleInput(eventName, text);
         if (result == InputProcessResult.SUCCESS) {
@@ -82,12 +91,7 @@ public class MessageAllAttendingEventController extends Controller {
         super.setEventManager(eventManager);
 
         setEventList();
-        messageManager.addObserver(new Observer() {
-            @Override
-            public void update(Observable o, List changes, boolean addedOrChanged, boolean retrievedFromDatabase) throws IncorrectObjectTypeException {
-                setEventList();
-            }
-        });
+        messageManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventList());
     }
 
     /**

@@ -292,6 +292,16 @@ public class EventManager extends Observable {
         throw new EventNotFoundException(eventInput);
     }
 
+    public List<Event> getEventsWithSpeaker(UUID speakerId) {
+        List<Event> speakerEvents = new ArrayList<>();
+        for(Event e: events) {
+            if(e.getSpeakerId().contains(speakerId)) {
+                speakerEvents.add(e);
+            }
+        }
+        return speakerEvents;
+    }
+
     private void removingUser(User attendee, Event event) {
         List<Event> eventsChanged = new ArrayList<>();
         event.removeAttendee(attendee);
