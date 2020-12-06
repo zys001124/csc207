@@ -175,7 +175,7 @@ public class MessageAllAttendingEventController extends Controller {
     }
 
     private void setEventList() {
-        eventList.getItems().setAll(getEventLabels(eventManager.getEvents()));
+        eventList.getItems().setAll(getEventLabels(eventManager.getEventsWithSpeaker(userManager.getCurrentlyLoggedIn().getId())));
     }
 
     /**
