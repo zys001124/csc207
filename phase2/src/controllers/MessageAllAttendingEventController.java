@@ -57,21 +57,13 @@ public class MessageAllAttendingEventController extends Controller {
         String text = messageField.getText();
 
         Label selectedItem  = eventList.getSelectionModel().getSelectedItem();
-        String eventName = null;
-        if(selectedItem != null) {
-            eventName = selectedItem.getText().split(" on")[0];
-
-            sendMessage(text, eventName);
-        }
-        else {
-            label = "You have not selected an Event. Try Again";
-        }
+        String eventName = selectedItem.getText().split(" on")[0];
 
         InputProcessResult result = handleInput(eventName, text);
         if (result == InputProcessResult.SUCCESS) {
             label = "Message successfully sent. \nReturning to Main Menu";
         } else if (result == InputProcessResult.INVALID_INPUT) {
-            label = "Could Not understand your input. Staying on this screen";
+            label = "Could Not understand your input. Maybe you haven't selected an event?";
         }
         createMessageLabel.setText(label);
     }
@@ -175,7 +167,9 @@ public class MessageAllAttendingEventController extends Controller {
     }
 
     private void setEventList() {
-        eventList.getItems().setAll(getEventLabels(eventManager.getEventsWithSpeaker(userManager.getCurrentlyLoggedIn().getId())));
+        UUID currentUserId = userManager.getCurrentlyLoggedIn().getId();
+        List<Event> events = eventManager.getEventsWithSpeaker(currentUserId);
+        eventList.getItems().setAll(getEventLabels(events));
     }
 
     /**
