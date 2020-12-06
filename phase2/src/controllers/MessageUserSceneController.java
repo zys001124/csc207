@@ -61,7 +61,7 @@ public class MessageUserSceneController extends Controller {
     public void setUserManager(UserManager userManager) {
         super.setUserManager(userManager);
 
-        userListView.getItems().setAll(getUserLabels(userManager.getUsers()));
+        userListView.getItems().setAll(getUserLabels(userManager.getUsersSorted()));
     }
 
     @Override

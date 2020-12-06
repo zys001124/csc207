@@ -46,11 +46,13 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
                 if(receiverType.equals(User.UserType.ORGANIZER) || receiverType.equals(User.UserType.VIP) || receiverType.equals(User.UserType.ADMIN)){
                     throw new InvalidUserTypeException(receiverType);
                 }
+                break;
             }
             case ORGANIZER: {
                 if(receiverType.equals(User.UserType.ADMIN)){
                     throw new InvalidUserTypeException(receiverType);
                 }
+                break;
             }
             case SPEAKER: {
                 if(receiverType.equals(User.UserType.ADMIN)){
@@ -59,6 +61,7 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
                 else if(receiverType.equals(User.UserType.ATTENDEE) && !messageSentBy(receiver, sender)){
                     throw new NoMessageException();
                 }
+                break;
             }
             case VIP: {
                 if(receiverType.equals(User.UserType.ADMIN)){
