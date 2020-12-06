@@ -1,10 +1,10 @@
 package controllers;
 
 import entities.Event;
+import useCaseClasses.EventManager;
 import exceptions.EventNotFoundException;
 import exceptions.UserNotEnrolledInEventException;
 import handlers.SceneNavigator;
-import useCaseClasses.EventManager;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -46,8 +46,8 @@ public class EventUnEnrollController extends Controller{
     void initialize() {
         assert eventListView != null : "fx:id=\"eventListView\" was not injected: check your FXML file 'Unenroll Event.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Unenroll Event.fxml'.";
-        assert unEnrollButton != null : "fx:id=\"unEnrollButton\" was not injected: check your FXML file 'Unenroll Event.fxml";
-        assert unEnrollMessageLabel != null : "fx:id=\"unEnrollMessageLabel\" was not injected: check your FXML file 'Unenroll Event.fxml";
+        assert unEnrollButton != null : "fx:id=\"unEnrollButton\" was not injected: check your FXML file 'Unenroll Event.fxml'.";
+        assert unEnrollMessageLabel != null : "fx:id=\"unEnrollMessageLabel\" was not injected: check your FXML file 'Unenroll Event.fxml'.";
     }
 
     @FXML

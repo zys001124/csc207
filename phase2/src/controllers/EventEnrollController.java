@@ -1,18 +1,18 @@
 package controllers;
 
 import entities.Event;
+import useCaseClasses.EventManager;
 import exceptions.EventFullException;
 import exceptions.EventNotFoundException;
 import exceptions.InvalidUserTypeException;
 import exceptions.UserAlreadyEnrolledException;
 import handlers.SceneNavigator;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import useCaseClasses.EventManager;
-
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -48,8 +48,8 @@ public class EventEnrollController extends Controller {
     void initialize() {
         assert eventListView != null : "fx:id=\"eventListView\" was not injected: check your FXML file 'Enroll Event.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Enroll Event.fxml'.";
-        assert enrollButton != null : "fx:id=\"enrollButton\" was not injected: check your FXML file 'Enroll Event.fxml";
-        assert enrollMessageLabel != null : "fx:id=\"enrollMessageLabel\" was not injected: check your FXML file 'Enroll Event.fxml";
+        assert enrollButton != null : "fx:id=\"enrollButton\" was not injected: check your FXML file 'Enroll Event.fxml'.";
+        assert enrollMessageLabel != null : "fx:id=\"enrollMessageLabel\" was not injected: check your FXML file 'Enroll Event.fxml'.";
     }
 
     @FXML
