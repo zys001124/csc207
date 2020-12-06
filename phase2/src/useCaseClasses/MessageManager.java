@@ -115,7 +115,6 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
 
     public void messageAllAttendingEvent(String message, Event e, UUID sender) {
         List<Message> messagesToAdd = new ArrayList<>();
-        System.out.println("Okok");
         for (UUID userId : e) {
 
             messagesToAdd.add(new Message(message, sender, userId, UUID.randomUUID()));
