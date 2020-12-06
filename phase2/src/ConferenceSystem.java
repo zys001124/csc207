@@ -1,3 +1,6 @@
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import controllers.Controller;
 import controllers.LoginController;
 import controllers.LoginListener;
@@ -8,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 
@@ -34,6 +38,7 @@ public class ConferenceSystem {
      */
 
     public ConferenceSystem(Stage primaryStage) {
+        initializeFirebase();
         initializeHandlers(primaryStage);
     }
 
@@ -48,6 +53,23 @@ public class ConferenceSystem {
         sceneNavigator.getApplicationStage().show();
     }
 
+    public void initializeFirebase() {
+        try {
+            FileInputStream serviceAccount =
+                    new FileInputStream("conference-system-key.json");
+
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://conference-system-b48bf.firebaseio.com")
+                    .build();
+
+            FirebaseApp.initializeApp(options);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            System.exit(-1);
+        }
+    }
+
     public void initializeHandlers(Stage primaryStage) {
         useCaseHandler = new UseCaseHandler();
         controllerHandler = new ControllerHandler(useCaseHandler);
@@ -55,7 +77,7 @@ public class ConferenceSystem {
         sceneNavigator = new SceneNavigator(primaryStage, useCaseHandler);
         presenterHandler = new PresenterHandler(useCaseHandler, controllerHandler, sceneNavigator);
         viewHandler = new ViewHandler(controllerHandler, presenterHandler, sceneNavigator);
-       // sceneNavigator.getApplicationStage().setScene(sceneNavigator.getLoginScene());
+        // sceneNavigator.getApplicationStage().setScene(sceneNavigator.getLoginScene());
     }
 
     private void initializeScenes() {
@@ -115,7 +137,7 @@ public class ConferenceSystem {
 
     private Scene initializeScene(String fxmlPath, SceneNavigator sceneNavigator) {
         Scene scene;
-        try{
+        try {
             URL url = new File(fxmlPath).toURI().toURL();
             FXMLLoader loader = new FXMLLoader(url);
             scene = new Scene(loader.load());
@@ -132,7 +154,7 @@ public class ConferenceSystem {
 
     private Scene initializeLoginScene(String fxmlPath, SceneNavigator sceneNavigator, LoginListener listener) {
         Scene scene;
-        try{
+        try {
             URL url = new File(fxmlPath).toURI().toURL();
             FXMLLoader loader = new FXMLLoader(url);
             scene = new Scene(loader.load());

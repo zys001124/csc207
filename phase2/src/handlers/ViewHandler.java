@@ -3,7 +3,7 @@ package handlers;
 import UI.*;
 
 public class ViewHandler {
-    
+
     // Views
     private LoginView loginView;
     private MenuInputView menuInputView;
@@ -19,6 +19,7 @@ public class ViewHandler {
     private SeeScheduleView seeScheduleView;
     private ChangeEventCapacityView changeEventCapacityView;
     private DeleteAccountView deleteAccountView;
+    private ViewMessagesView viewMessagesView;
 
     public ViewHandler(ControllerHandler ch, PresenterHandler ph, SceneNavigator sn) {
         constructProgramViews(ch, ph, sn);
@@ -37,8 +38,9 @@ public class ViewHandler {
         messageAllSpeakersView = new MessageAllSpeakersView(ch.getMessageAllSpeakersController(), ph.getMessageAllSpeakersPresenter());
         messageAllAttendeesView = new MessageAllAttendeesView(ch.getMessageAllAttendeesController(), ph.getMessageAllAttendeesPresenter());
         seeScheduleView = new SeeScheduleView(ph.getSeeSchedulePresenter());
-        changeEventCapacityView = new ChangeEventCapacityView(ch.getChangeEventCapacityController(),ph.getChangeEventCapacityPresenter());
+        changeEventCapacityView = new ChangeEventCapacityView(ch.getChangeEventCapacityController(), ph.getChangeEventCapacityPresenter());
         deleteAccountView = new DeleteAccountView(ch.getDeleteAccountController(), ph.getDeleteAccountPresenter());
+        viewMessagesView = new ViewMessagesView(ch.getViewMessagesController(), ph.getViewMessagesPresenter());
     }
 
     public GuiView getView(GuiView.SceneType type) {
@@ -74,6 +76,8 @@ public class ViewHandler {
                 return messageAllAttendeesView;
             case CHANGE_CAPACITY:
                 return changeEventCapacityView;
+            case VIEW_MESSAGES:
+                return viewMessagesView;
             default:
                 return null;
         }
@@ -131,6 +135,11 @@ public class ViewHandler {
         return seeScheduleView;
     }
 
-    public ChangeEventCapacityView getChangeEventCapacityView(){return changeEventCapacityView;}
+    public ChangeEventCapacityView getChangeEventCapacityView() {
+        return changeEventCapacityView;
+    }
 
+    public ViewMessagesView getViewMessagesView() {
+        return viewMessagesView;
+    }
 }

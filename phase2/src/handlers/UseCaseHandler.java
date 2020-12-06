@@ -1,9 +1,12 @@
 package handlers;
 
-import gateways.FirebaseGateway;
-import observers.EventManagerObserver;
-import observers.MessageManagerObserver;
-import observers.UserManagerObserver;
+import entities.Event;
+import entities.Message;
+import entities.User;
+import gateways.EventGateway;
+import gateways.MessageGateway;
+import gateways.UserGateway;
+import observers.ManagerObserver;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
@@ -11,16 +14,18 @@ import useCaseClasses.UserManager;
 public class UseCaseHandler {
 
     // Managers
-    private UserManager userManager;
-    private MessageManager messageManager;
-    private EventManager eventManager;
+    private final UserManager userManager;
+    private final MessageManager messageManager;
+    private final EventManager eventManager;
 
     // Observers
-    private UserManagerObserver userManagerObserver;
-    private MessageManagerObserver messageManagerObserver;
-    private EventManagerObserver eventManagerObserver;
+    private final ManagerObserver<User> userManagerObserver;
+    private final ManagerObserver<Message> messageManagerObserver;
+    private final ManagerObserver<Event> eventManagerObserver;
 
-    private FirebaseGateway fbg;
+    private final UserGateway userGateway;
+    private final MessageGateway messageGateway;
+    private final EventGateway eventGateway;
 
     public UseCaseHandler() {
 
@@ -28,11 +33,14 @@ public class UseCaseHandler {
         messageManager = new MessageManager();
         eventManager = new EventManager();
 
-        fbg = new FirebaseGateway(userManager, eventManager, messageManager);
+//        fbg = new FirebaseGatewayOld(userManager, eventManager, messageManager);
+        userGateway = new UserGateway(userManager);
+        messageGateway = new MessageGateway(messageManager);
+        eventGateway = new EventGateway(eventManager);
 
-        userManagerObserver = new UserManagerObserver(fbg);
-        messageManagerObserver = new MessageManagerObserver(fbg);
-        eventManagerObserver = new EventManagerObserver(fbg);
+        userManagerObserver = new ManagerObserver(userGateway);
+        messageManagerObserver = new ManagerObserver(messageGateway);
+        eventManagerObserver = new ManagerObserver(eventGateway);
 
         userManager.addObserver(userManagerObserver);
         messageManager.addObserver(messageManagerObserver);

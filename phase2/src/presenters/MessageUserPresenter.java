@@ -1,13 +1,9 @@
 package presenters;
 
 import controllers.InputProcessResult;
-import entities.Message;
 import entities.User;
-import exceptions.UserNotFoundException;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
-
-import java.util.List;
 
 /**
  * The presenter meant to be used by the MessageUserView, for when messaging a specific user at the conference

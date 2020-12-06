@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Observable {
-    private List<Observer> observers;
+    private final List<Observer> observers;
 
-    public Observable(){
+    public Observable() {
         observers = new ArrayList<>();
     }
 
@@ -27,7 +27,7 @@ public abstract class Observable {
     public void notifyObservers(List<?> changes, boolean addedOrChanged, boolean retrievedFromDataBase) {
 
         try {
-            for(Observer o: observers) {
+            for (Observer o : observers) {
                 o.update(this, changes, addedOrChanged, retrievedFromDataBase);
             }
         } catch (IncorrectObjectTypeException e) {

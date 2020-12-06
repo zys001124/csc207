@@ -56,7 +56,7 @@ public class MessageManager extends Observable {
 
     public void addMessageFromDatabase(Message.MessageData data) {
 
-        if(!messageExists(UUID.fromString(data.messageId))) {
+        if (!messageExists(UUID.fromString(data.messageId))) {
             List<Message> messagesToAdd = new ArrayList<>();
             messagesToAdd.add(Message.fromMessageData(data));
             messages.addAll(messagesToAdd);
@@ -100,8 +100,8 @@ public class MessageManager extends Observable {
     }
 
     private boolean messageExists(UUID messageID) {
-        for(Message m: messages) {
-            if(m.getId().equals(messageID)) {
+        for (Message m : messages) {
+            if (m.getId().equals(messageID)) {
                 return true;
             }
         }

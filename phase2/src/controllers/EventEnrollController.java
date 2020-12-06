@@ -1,25 +1,30 @@
 package controllers;
 
 import entities.Event;
-import useCaseClasses.EventManager;
 import exceptions.EventFullException;
 import exceptions.EventNotFoundException;
 import exceptions.InvalidUserTypeException;
 import exceptions.UserAlreadyEnrolledException;
 import handlers.SceneNavigator;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import useCaseClasses.EventManager;
+
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * A controller for handling inputs when the Attendee is enrolling
  * in an Event
  */
-public class EventEnrollController extends Controller{
+public class EventEnrollController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -53,21 +58,21 @@ public class EventEnrollController extends Controller{
     }
 
     @FXML
-    void onEnrollButtonClicked(ActionEvent event){
+    void onEnrollButtonClicked(ActionEvent event) {
         String eventTitle = eventListView.getSelectionModel().getSelectedItem().getText().split("  Time:")[0];
         String label;
         InputProcessResult result = enrollEvent(eventTitle);
-        if(result == InputProcessResult.SUCCESS){
+        if (result == InputProcessResult.SUCCESS) {
             label = "Enroll Successful!";
-        }else if(result == InputProcessResult.EVENT_NOT_FOUND){
+        } else if (result == InputProcessResult.EVENT_NOT_FOUND) {
             label = "Event not found. Please try again.";
-        }else if(result == InputProcessResult.EVENT_FOR_VIPONLY){
+        } else if (result == InputProcessResult.EVENT_FOR_VIPONLY) {
             label = "Event is for VIP only and you are not a VIP. Please try again.";
-        }else if(result == InputProcessResult.EVENT_IS_FULL){
+        } else if (result == InputProcessResult.EVENT_IS_FULL) {
             label = "Event is currently full. Please try another event.";
-        }else if(result == InputProcessResult.USER_ALREADY_ENROLLED){
+        } else if (result == InputProcessResult.USER_ALREADY_ENROLLED) {
             label = "You are already enrolled in this event. Please try again.";
-        }else{
+        } else {
             label = "Invalid Input. Please try again.";
         }
         enrollMessageLabel.setText(label);
@@ -79,7 +84,7 @@ public class EventEnrollController extends Controller{
         setEventListField();
     }
 
-    private void setEventListField(){
+    private void setEventListField() {
         eventListView.getItems().addAll(getEventLabels(eventManager.getEvents()));
     }
 
@@ -87,12 +92,12 @@ public class EventEnrollController extends Controller{
         ArrayList<Label> labels = new ArrayList<>();
         for (Event event : events) {
             String labelText = event.getEventTitle()
-                                + "  Time: " +event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
-                                + "  Room: " + event.getEventRoom()
-                                + "  Capacity: " + event.getEventCapacity()
-                                + "  Currently Enrolled: " + event.getEventEnrolledNumber()
-                                + "  Event Type: " + event.getEventType()
-                                + "  VIP only: " + event.getViponly();
+                    + "  Time: " + event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                    + "  Room: " + event.getEventRoom()
+                    + "  Capacity: " + event.getEventCapacity()
+                    + "  Currently Enrolled: " + event.getEventEnrolledNumber()
+                    + "  Event Type: " + event.getEventType()
+                    + "  VIP only: " + event.getViponly();
             Label label = new Label(labelText);
             labels.add(label);
         }
@@ -110,9 +115,9 @@ public class EventEnrollController extends Controller{
             eventManager.addUserToEvent(eventInput, userManager.getCurrentlyLoggedIn());
         } catch (EventNotFoundException e) {
             return InputProcessResult.EVENT_NOT_FOUND;
-        }catch (InvalidUserTypeException e) {
+        } catch (InvalidUserTypeException e) {
             return InputProcessResult.EVENT_FOR_VIPONLY;
-        }catch (EventFullException e) {
+        } catch (EventFullException e) {
             return InputProcessResult.EVENT_IS_FULL;
         } catch (NumberFormatException e) {
             return InputProcessResult.INVALID_INPUT;

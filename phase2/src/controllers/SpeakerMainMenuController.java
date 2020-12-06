@@ -4,15 +4,15 @@
 
 package controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class SpeakerMainMenuController extends Controller{
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class SpeakerMainMenuController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -53,7 +53,8 @@ public class SpeakerMainMenuController extends Controller{
     }
 
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert messageAllAttendeesOfEventButton != null : "fx:id=\"messageAllAttendeesOfEventButton\" was not injected: check your FXML file 'Speaker Main Menu.fxml'.";
         assert messageAttendeeButton != null : "fx:id=\"messageAttendeeButton\" was not injected: check your FXML file 'Speaker Main Menu.fxml'.";

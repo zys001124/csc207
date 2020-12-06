@@ -40,7 +40,7 @@ public class EventManager extends Observable {
         notifyObservers(eventsToAdd, true, false);
     }
 
-    public void addEvent(String title, LocalDateTime startTime, LocalDateTime endTime,UUID id, UUID organizerId, List<UUID> speakerId,
+    public void addEvent(String title, LocalDateTime startTime, LocalDateTime endTime, UUID id, UUID organizerId, List<UUID> speakerId,
                          List<UUID> attendees, int room, int capacity, boolean VIPonly) {
 
         Event e = new Event(title, startTime, endTime, id, organizerId, speakerId,
@@ -51,7 +51,7 @@ public class EventManager extends Observable {
 
     public void addEventFromDatabase(Event.EventData data) {
 
-        if(!eventExists(UUID.fromString(data.eventId))) {
+        if (!eventExists(UUID.fromString(data.eventId))) {
             List<Event> eventsToAdd = new ArrayList<>();
             Event e = Event.fromEventData(data);
             eventsToAdd.add(e);
@@ -61,8 +61,8 @@ public class EventManager extends Observable {
     }
 
     private boolean eventExists(UUID eventId) {
-        for(Event event: events) {
-            if(eventId.equals(event.getId())) {
+        for (Event event : events) {
+            if (eventId.equals(event.getId())) {
                 return true;
             }
         }
@@ -76,19 +76,23 @@ public class EventManager extends Observable {
      * @return ArrayList<Integer> rooms occupied at some point on the interval [sTime, eTime]
      */
     public ArrayList<Integer> availabilityInTime(LocalDateTime sTime, LocalDateTime eTime) {
-        ArrayList<Integer> roomTaken= new ArrayList<>();
+        ArrayList<Integer> roomTaken = new ArrayList<>();
 
         for (Event temp : events) {
             LocalDateTime timeStart = temp.getEventTime();
             LocalDateTime timeEnd = temp.getEventETime();
             Integer roomNum = temp.getEventRoom();
-            if (timeStart.isBefore(sTime) && timeEnd.isAfter(sTime)||
-                    (timeStart.isBefore(eTime) && timeEnd.isAfter(eTime))||
+            if (timeStart.isBefore(sTime) && timeEnd.isAfter(sTime) ||
+                    (timeStart.isBefore(eTime) && timeEnd.isAfter(eTime)) ||
                     (timeStart.isAfter(sTime) && timeEnd.isBefore((eTime)))
             ) {
-                if (!roomTaken.contains(roomNum)){roomTaken.add(roomNum);}
+                if (!roomTaken.contains(roomNum)) {
+                    roomTaken.add(roomNum);
+                }
             }
-            if (roomTaken.size() == 6){break;}
+            if (roomTaken.size() == 6) {
+                break;
+            }
         }
 
         return roomTaken;
@@ -115,16 +119,16 @@ public class EventManager extends Observable {
     }
 
     public void removeEventFromDataBase(UUID id) {
-
-        List<Event> eventsToRemove = new ArrayList<>();
-        for (Event event : events) {
-            int index = events.indexOf(event);
-            if (event.getId().equals(id)) {
-                eventsToRemove.add(events.remove(index));
-                notifyObservers(eventsToRemove, false, true);
-            }
-        }
-
+        removeEvent(id);
+//        List<Event> eventsToRemove = new ArrayList<>();
+//        for (Event event : events) {
+//            int index = events.indexOf(event);
+//            if (event.getId().equals(id)) {
+//                eventsToRemove.add(events.remove(index));
+//                notifyObservers(eventsToRemove, false, false);
+//                return;
+//            }
+//        }
     }
 
     /**
@@ -195,19 +199,19 @@ public class EventManager extends Observable {
      * Find the event in the list based on user input index and add this user to the event
      *
      * @param eventInput The name of the event in the event list
-     * @param attendee    The user(attendee) to be added to the event
+     * @param attendee   The user(attendee) to be added to the event
      * @throws EventNotFoundException       if the entered index does not corresponds to a event
      * @throws NumberFormatException        if the input is not a number
      * @throws UserAlreadyEnrolledException if the user(attendee) was already enrolled in the event
      */
     public void addUserToEvent(String eventInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserAlreadyEnrolledException, EventFullException, InvalidUserTypeException {
-        for(Event event: events){
-            if(event.getEventTitle().equals(eventInput)){
-                if(event.getViponly() && !attendee.getType().equals(User.UserType.VIP)){
+        for (Event event : events) {
+            if (event.getEventTitle().equals(eventInput)) {
+                if (event.getViponly() && !attendee.getType().equals(User.UserType.VIP)) {
                     throw new InvalidUserTypeException(User.UserType.VIP, attendee.getType());
                 }
-                if (event.isFull()){
+                if (event.isFull()) {
                     throw new EventFullException(eventInput);
                 }
                 if (event.hasAttendee(attendee.getId())) {
@@ -227,14 +231,22 @@ public class EventManager extends Observable {
         notifyObservers(eventsChanged, true, false);
     }
 
+    public void changeEventCapacity(String eventTitle, int newCapacity, boolean changeFromDatabase) {
+        List<Event> eventsToChange = new ArrayList<>();
+        Event event = getEvent(eventTitle);
+        event.setEventCapacity(newCapacity);
+        eventsToChange.add(event);
+        notifyObservers(eventsToChange, true, changeFromDatabase);
+    }
+
     public void addUserToEventFromDataBase(String eventInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserAlreadyEnrolledException, EventFullException, InvalidUserTypeException {
-        for(Event event: events){
-            if(event.getEventTitle().equals(eventInput)){
-                if(event.getViponly() && !attendee.getType().equals(User.UserType.VIP)){
+        for (Event event : events) {
+            if (event.getEventTitle().equals(eventInput)) {
+                if (event.getViponly() && !attendee.getType().equals(User.UserType.VIP)) {
                     throw new InvalidUserTypeException(User.UserType.VIP, attendee.getType());
                 }
-                if (event.isFull()){
+                if (event.isFull()) {
                     throw new EventFullException(eventInput);
                 }
                 if (event.hasAttendee(attendee.getId())) {
@@ -247,11 +259,20 @@ public class EventManager extends Observable {
         throw new EventNotFoundException(eventInput);
     }
 
+    public void updateEventFromDatabase(Event.EventData data) {
+        // Find event
+        Event eventToChange = getEvent(UUID.fromString(data.eventId));
+        eventToChange.set(data);
+        List<Event> eventsToChange = new ArrayList<>();
+        eventsToChange.add(eventToChange);
+        notifyObservers(eventsToChange, true, true);
+    }
+
     /**
      * Find the event in the list based on user input index and remove this user from the event
      *
      * @param eventInput The name of the event in the event list
-     * @param attendee    The user(attendee) to be removed from the event
+     * @param attendee   The user(attendee) to be removed from the event
      * @throws EventNotFoundException          if the entered index does not corresponds to a event
      * @throws NumberFormatException           if the input is not a number
      * @throws UserNotEnrolledInEventException if the user(attendee) was never enrolled in the event
@@ -259,9 +280,9 @@ public class EventManager extends Observable {
      */
     public void removeUserFromEvent(String eventInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserNotEnrolledInEventException {
-        for(Event event: events){
-            if(event.getEventTitle().equals(eventInput)){
-                if(!event.hasAttendee(attendee.getId())){
+        for (Event event : events) {
+            if (event.getEventTitle().equals(eventInput)) {
+                if (!event.hasAttendee(attendee.getId())) {
                     throw new UserNotEnrolledInEventException();
                 }
             }
@@ -280,9 +301,9 @@ public class EventManager extends Observable {
 
     public void removeUserFromEventFromDatabase(String eventInput, User attendee) throws EventNotFoundException,
             NumberFormatException, UserNotEnrolledInEventException {
-        for(Event event: events){
-            if(event.getEventTitle().equals(eventInput)){
-                if(!event.hasAttendee(attendee.getId())){
+        for (Event event : events) {
+            if (event.getEventTitle().equals(eventInput)) {
+                if (!event.hasAttendee(attendee.getId())) {
                     throw new UserNotEnrolledInEventException();
                 }
             }
@@ -327,8 +348,8 @@ public class EventManager extends Observable {
     }
 
     public boolean eventTitleExists(String title) {
-        for(Event e: events) {
-            if(e.getEventTitle().equals(title)) {
+        for (Event e : events) {
+            if (e.getEventTitle().equals(title)) {
                 return true;
             }
         }

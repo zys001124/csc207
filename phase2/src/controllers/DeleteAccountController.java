@@ -5,15 +5,17 @@ import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import useCaseClasses.UserManager;
-
 
 import java.net.URL;
 import java.util.*;
 
 
-public class DeleteAccountController extends Controller{
+public class DeleteAccountController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -37,7 +39,9 @@ public class DeleteAccountController extends Controller{
     private Label createMessageLabel; // Value injected by FXMLLoader
 
     @FXML
-    void onBackButtonClicked(ActionEvent event) { setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU); }
+    void onBackButtonClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+    }
 
     @FXML
     void onDeleteButtonClicked(ActionEvent event) {
@@ -48,7 +52,7 @@ public class DeleteAccountController extends Controller{
 
         InputProcessResult result = deleteAccount(userName);
 
-        if (result == InputProcessResult.SUCCESS){
+        if (result == InputProcessResult.SUCCESS) {
             label = "Account deleted successfully.";
         } else if (result == InputProcessResult.USER_NOT_FOUND) {
             label = "This user does not exist. Try again.";
@@ -71,14 +75,14 @@ public class DeleteAccountController extends Controller{
     private InputProcessResult deleteAccount(String userName) {
 
         try {
-            if(userManager.checkAdmin(userName)) {
+            if (userManager.checkAdmin(userName)) {
                 return InputProcessResult.INVALID_USER_TYPE;
             }
         } catch (UserNotFoundException e) {
             return InputProcessResult.USER_NOT_FOUND;
         }
 
-        if(!userManager.doesUserExist(userName)) {
+        if (!userManager.doesUserExist(userName)) {
             return InputProcessResult.USER_NOT_FOUND;
         }
 
@@ -97,18 +101,17 @@ public class DeleteAccountController extends Controller{
 
     private List<Label> getUserLabels(Collection<User> users) {
         ArrayList<Label> labels = new ArrayList<>();
-        for(User user: users) {
-            labels.add(new Label(user.getUsername()+": "+user.getType()));
+        for (User user : users) {
+            labels.add(new Label(user.getUsername() + ": " + user.getType()));
         }
         return labels;
     }
 
-    private void setUserList(){
+    private void setUserList() {
         userListField.getItems().addAll(getUserLabels(userManager.getUsers()));
     }
 
 }
-
 
 
 ///**

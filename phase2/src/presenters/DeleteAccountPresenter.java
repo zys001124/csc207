@@ -9,7 +9,7 @@ import useCaseClasses.UserManager;
  * on the console when an organizer wants to cancel an existing event
  */
 
-public class DeleteAccountPresenter extends Presenter{
+public class DeleteAccountPresenter extends Presenter {
 
     public final UserManager userManager;
 
@@ -19,7 +19,7 @@ public class DeleteAccountPresenter extends Presenter{
      * @param um the UserManager this controller will use
      */
 
-    public DeleteAccountPresenter(UserManager um){
+    public DeleteAccountPresenter(UserManager um) {
         userManager = um;
     }
 

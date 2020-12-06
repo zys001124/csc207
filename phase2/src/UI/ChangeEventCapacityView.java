@@ -29,7 +29,7 @@ public class ChangeEventCapacityView extends GuiView {
         return null;
     }
 
-    private SceneType getNextScreen(InputProcessResult result){
+    private SceneType getNextScreen(InputProcessResult result) {
         switch (result) {
             case BACK:
                 return SceneType.MAIN_MENU;

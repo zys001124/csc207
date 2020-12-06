@@ -18,8 +18,8 @@ public class LoginView extends GuiView {
     /**
      * Creates a LoginView with the given LoginController and LoginPresenter
      *
-     * @param presenter  - The LoginPresenter that this view will use to get
-     *                   formatted output for this view to display
+     * @param presenter - The LoginPresenter that this view will use to get
+     *                  formatted output for this view to display
      */
     public LoginView(LoginPresenter presenter, SceneNavigator sceneNavigator) {
         this.presenter = presenter;

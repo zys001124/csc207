@@ -4,13 +4,13 @@
 
 package controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class VIPMainMenuController extends Controller {
 
@@ -61,7 +61,8 @@ public class VIPMainMenuController extends Controller {
     }
 
 
-    @FXML // This method is called by the FXMLLoader when initialization is complete
+    @FXML
+        // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert messageUserButton != null : "fx:id=\"messageUserButton\" was not injected: check your FXML file 'VIP Main Menu.fxml'.";
         assert enrollInEventButton != null : "fx:id=\"enrollInEventButton\" was not injected: check your FXML file 'VIP Main Menu.fxml'.";

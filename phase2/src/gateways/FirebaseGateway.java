@@ -1,253 +1,60 @@
 package gateways;
 
-import com.google.api.core.ApiFuture;
-import com.google.api.core.ApiFutureCallback;
-import com.google.api.core.ApiFutures;
-import com.google.auth.oauth2.GoogleCredentials;
-import com.google.cloud.Timestamp;
-import com.google.cloud.firestore.*;
-import com.google.cloud.firestore.EventListener;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.FirebaseOptions;
-import com.google.firebase.cloud.FirestoreClient;
 import com.google.firebase.database.*;
-import com.google.firebase.database.annotations.Nullable;
-import entities.Event;
-import entities.Message;
-import entities.User;
-import exceptions.InvalidUserTypeException;
-import exceptions.UserTypeDoesNotExistException;
-import exceptions.UsernameAlreadyExistsException;
-import useCaseClasses.EventManager;
-import useCaseClasses.MessageManager;
-import useCaseClasses.UserManager;
 
-import javax.xml.crypto.Data;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.*;
+import java.util.List;
 
-public class FirebaseGateway {
+public abstract class FirebaseGateway<T> {
 
-    private UserManager userManager;
-    private EventManager eventManager;
-    private MessageManager messageManager;
+    protected DatabaseReference databaseReference;
+    private final FirebaseDatabase database;
 
-    private FirebaseDatabase db;
-
-    private DatabaseReference usersRef;
-    private DatabaseReference eventsRef;
-    private DatabaseReference messagesRef;
-
-    public boolean allowWrite = true;
-    public boolean allowUsersRead = true;
-    public boolean allowEventsRead = true;
-    public boolean allowMessagesRead = true;
-
-    public FirebaseGateway(UserManager um, EventManager em, MessageManager mm) {
-        userManager = um;
-        eventManager = em;
-        messageManager = mm;
-
-        try {
-            FileInputStream serviceAccount =
-                    new FileInputStream("conference-system-key.json");
-
-            FirebaseOptions options = new FirebaseOptions.Builder()
-                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
-                    .setDatabaseUrl("https://conference-system-b48bf.firebaseio.com")
-                    .build();
-
-            FirebaseApp.initializeApp(options);
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            System.exit(-1);
-        }
-
-        db = FirebaseDatabase.getInstance();
-        usersRef = db.getReference().child("Users");
-        eventsRef = db.getReference().child("Events");
-        messagesRef = db.getReference().child("Messages");
-
-        addSnapShotListenersAndLoadFromFirebase();
+    protected FirebaseGateway(String refrencePath) {
+        database = FirebaseDatabase.getInstance();
+        databaseReference = database.getReference().child(refrencePath);
+        addListeners();
     }
 
-    private void addSnapShotListenersAndLoadFromFirebase() {
-        if(allowUsersRead) {
-            getUsers();
-        }
-        if(allowMessagesRead) {
-            getMessages();
-        }
-        if(allowEventsRead) {
-            getEvents();
-        }
-
-    }
-
-    private void getUsers() {
-        usersRef.addChildEventListener(new ChildEventListener() {
+    private void addListeners() {
+        databaseReference.addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                User.UserData userData = dataSnapshot.getValue(User.UserData.class);
-                userManager.addUserFromDatabase(userData);
+                FirebaseGateway.this.onChildAdded(dataSnapshot, s);
             }
 
             @Override
             public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-                User.UserData userData = dataSnapshot.getValue(User.UserData.class);
-                userManager.changeUserFromDatabase(userData);
+                FirebaseGateway.this.onChildChanged(dataSnapshot, s);
             }
 
             @Override
             public void onChildRemoved(DataSnapshot dataSnapshot) {
-                User.UserData userData = dataSnapshot.getValue(User.UserData.class);
-                userManager.removeUser(UUID.fromString(userData.uuid), true);
+                FirebaseGateway.this.onChildRemoved(dataSnapshot);
             }
 
             @Override
             public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
+                FirebaseGateway.this.onChildMoved(dataSnapshot, s);
             }
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                FirebaseGateway.this.onCancelled(databaseError);
             }
         });
     }
 
+    public abstract void pushEntities(List<T> entities);
 
-    private void getMessages() {
-        messagesRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Message.MessageData mData = dataSnapshot.getValue(Message.MessageData.class);
-                messageManager.addMessageFromDatabase(mData);
-            }
+    public abstract void removeEntities(List<T> entities);
 
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+    protected abstract void onChildAdded(DataSnapshot dataSnapshot, String s);
 
-            }
+    protected abstract void onChildChanged(DataSnapshot dataSnapshot, String s);
 
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
+    protected abstract void onChildRemoved(DataSnapshot dataSnapshot);
 
-            }
+    protected abstract void onChildMoved(DataSnapshot dataSnapshot, String s);
 
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-    
-    private void getEvents() {
-        eventsRef.addChildEventListener(new ChildEventListener() {
-            @Override
-            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                Event.EventData data = eventDataFromDataSnapshot(dataSnapshot);
-                eventManager.addEventFromDatabase(data);
-            }
-
-            @Override
-            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onChildRemoved(DataSnapshot dataSnapshot) {
-                Event.EventData data = eventDataFromDataSnapshot(dataSnapshot);
-                eventManager.removeEventFromDataBase(UUID.fromString(data.eventId));
-            }
-
-            @Override
-            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
-    }
-    
-    public void pushUsers(List<User> users) {
-        for(User user: users) {
-            usersRef.child(user.getUsername()).setValueAsync(user.getUserData());
-        }
-    }
-
-    public void removeUsers(List<User> users) {
-        for(User user: users) {
-            usersRef.child(user.getUsername()).removeValueAsync();
-        }
-    }
-
-    public void pushMessages(List<Message> messages) {
-        for(Message message: messages) {
-            messagesRef.child(message.getId().toString()).setValueAsync(message.getMessageData());
-        }
-    }
-    
-    public void removeMessages(List<Message> messages) {
-        for(Message message: messages) {
-            messagesRef.child(message.getId().toString()).removeValueAsync();
-        }
-    }
-
-    public void pushEvents(List<Event> events) {
-        for(Event event: events) {
-            Event.EventData eventData = event.getEventData();
-            eventsRef.child(event.getId().toString()).setValueAsync(eventData);
-            eventsRef.child(event.getId().toString()).child("attendees").setValueAsync(eventData.attendees);
-            eventsRef.child(event.getId().toString()).child("speakerIds").setValueAsync(eventData.speakerIds);
-        }
-    }
-
-    public void removeEvents(List<Event> events) {
-        for(Event event: events) {
-            eventsRef.child(event.getId().toString()).removeValueAsync();
-        }
-    }
-
-    private Event.EventData eventDataFromDataSnapshot(DataSnapshot dataSnapshot) {
-
-        Map eventMap= (Map<String, Object>) dataSnapshot.getValue();
-        Event.EventData eventData = new Event.EventData();
-        if(eventMap.containsKey("attendees")) {
-            eventData.attendees = (Collection<String>)eventMap.get("attendees");
-        }
-        else {
-            eventData.attendees = new ArrayList<>();
-        }
-
-        if(eventMap.containsKey("speakerIds")) {
-            eventData.speakerIds = (Collection<String>)eventMap.get("speakerIds");
-        }
-        else {
-            eventData.speakerIds = new ArrayList<>();
-        }
-        eventData.eventSTime = (String) eventMap.get("eventSTime");
-        eventData.eventETime = (String) eventMap.get("eventETime");
-        eventData.organizerId = (String) eventMap.get("organizerId");
-        eventData.VIPonly = (String) eventMap.get("VIPonly");
-        eventData.eventCapacity = (String) eventMap.get("eventCapacity");
-        eventData.eventRoom = (String) eventMap.get("eventRoom");
-        eventData.eventId = (String) eventMap.get("eventId");
-        eventData.eventTitle = (String) eventMap.get("eventTitle");
-
-        return eventData;
-
-    }
-
+    protected abstract void onCancelled(DatabaseError databaseError);
 }

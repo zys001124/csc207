@@ -37,9 +37,9 @@ public class CreateAccountPresenter extends Presenter {
             return "Account added successfully";
         } else if (result == InputProcessResult.USERNAME_TAKEN) {
             return "Username taken. Try again.";
-        } else if(result == InputProcessResult.INVALID_USER_TYPE) {
+        } else if (result == InputProcessResult.INVALID_USER_TYPE) {
             return "Invalid user type given. Try again.";
-        } else if(result == InputProcessResult.UNQUALIFIED_USER) {
+        } else if (result == InputProcessResult.UNQUALIFIED_USER) {
             return "You are not qualified to create this type of user. Try again.";
         } else {
             return "";

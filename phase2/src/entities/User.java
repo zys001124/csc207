@@ -29,6 +29,11 @@ public class User implements Serializable {
         this.type = type;
     }
 
+    public static User fromUserData(UserData data) {
+        return new User(UserType.valueOf(data.type), data.username,
+                data.password, UUID.fromString(data.uuid));
+    }
+
     /**
      * Gets the Users username
      *
@@ -77,22 +82,6 @@ public class User implements Serializable {
         return password;
     }
 
-    /**
-     * This documents what kind of User the User is
-     */
-    public enum UserType {
-        ATTENDEE,
-        ORGANIZER,
-        SPEAKER,
-        VIP,
-        ADMIN
-    }
-
-    public static User fromUserData(UserData data) {
-        return new User(UserType.valueOf(data.type), data.username,
-                data.password, UUID.fromString(data.uuid));
-    }
-
     public UserData getUserData() {
         UserData data = new UserData();
 
@@ -102,6 +91,17 @@ public class User implements Serializable {
         data.type = type.toString();
 
         return data;
+    }
+
+    /**
+     * This documents what kind of User the User is
+     */
+    public enum UserType {
+        ATTENDEE,
+        ORGANIZER,
+        SPEAKER,
+        VIP,
+        ADMIN
     }
 
     public static class UserData {

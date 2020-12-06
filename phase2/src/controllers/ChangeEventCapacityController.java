@@ -2,18 +2,19 @@ package controllers;
 
 import entities.Event;
 import handlers.SceneNavigator;
-import useCaseClasses.EventManager;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import useCaseClasses.EventManager;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ChangeEventCapacityController extends Controller {
 
@@ -47,7 +48,13 @@ public class ChangeEventCapacityController extends Controller {
     void onChangeButtonClicked(ActionEvent event) {
 
         String label = "";
-        String inter = eventListField.getSelectionModel().getSelectedItem().getText().split("             Room")[0];
+        Label eventLabel = eventListField.getSelectionModel().getSelectedItem();
+        if (eventLabel == null) {
+            label = "No event selected. Try again";
+            createMessageLabel.setText(label);
+            return;
+        }
+        String inter = eventLabel.getText().split("             Room")[0];
         String eventname = inter.split(": ")[1];
         String capacity = capacityField.getText();
 
@@ -77,26 +84,24 @@ public class ChangeEventCapacityController extends Controller {
     }
 
     private InputProcessResult changeEventCapacity(String c, String event) {
-        if(checkIntFormat(c)){
+        if (checkIntFormat(c)) {
             return InputProcessResult.INVALID_INPUT;
         }
         int capacity = Integer.parseInt(c);
-        if (capacity > 60){
+        if (capacity > 60) {
             return InputProcessResult.CAPACITY_OVER;
         }
-        if(!eventManager.eventTitleExists(event)){
+        if (!eventManager.eventTitleExists(event)) {
             return InputProcessResult.EVENT_DOES_NOT_EXIST;
         }
-        Event currentEvent = eventManager.getEvent(event);
-
-        currentEvent.setEventCapacity(capacity);
+        eventManager.changeEventCapacity(event, capacity, false);
         return InputProcessResult.SUCCESS;
     }
 
-    private boolean checkIntFormat(String capacity){
-        try{
+    private boolean checkIntFormat(String capacity) {
+        try {
             Integer.parseInt(capacity);
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             return true;
         }
         return false;
@@ -108,6 +113,9 @@ public class ChangeEventCapacityController extends Controller {
         super.setEventManager(eventManager);
 
         setEventList();
+        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> {
+            setEventList();
+        });
     }
 
     private List<Label> getEventLabels(Collection<Event> events) {
@@ -115,14 +123,17 @@ public class ChangeEventCapacityController extends Controller {
         for (Event event : events) {
             int room = event.getEventRoom();
             int capacity = event.getEventCapacity();
-            labels.add(new Label("Event: " + event.getEventTitle()+"             Room: "
-                    + Integer.toString(room) + "             Current Capacity: " + Integer.toString(capacity)));
+            labels.add(new Label("Event: " + event.getEventTitle() + "             Room: "
+                    + room + "             Current Capacity: " + capacity));
         }
         return labels;
     }
 
     private void setEventList() {
-        eventListField.getItems().addAll(getEventLabels(eventManager.getEvents()));
+        eventListField.getItems().clear();
+        eventListField.refresh();
+        eventListField.getItems().setAll(getEventLabels(eventManager.getEvents()));
+        eventListField.refresh();
     }
 }
 

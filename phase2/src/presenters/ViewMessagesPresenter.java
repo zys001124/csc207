@@ -8,20 +8,20 @@ import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Presenter for option to view the message history between the currently looged in user
  * and the user they wish to view their convo history with
  */
-public class ViewMessagesPresenter extends Presenter{
+public class ViewMessagesPresenter extends Presenter {
 
     private final UserManager userManager;
     private final MessageManager messageManager;
 
     /**
      * initalizer for the presenter that allows to view convo history
-     * @param userManager - user manager for the corresponding part of the program
+     *
+     * @param userManager    - user manager for the corresponding part of the program
      * @param messageManager - message manager for teh corresponding part of the program
      */
     public ViewMessagesPresenter(UserManager userManager, MessageManager messageManager) {
@@ -31,20 +31,22 @@ public class ViewMessagesPresenter extends Presenter{
 
     /**
      * the string for the first part of the menu option
+     *
      * @return string that greets the user for this option
      */
-    public String getPreInputText(){
+    public String getPreInputText() {
         return "Please type in the username you wish view your conversation history with.\n" +
                 "Enter 'back' to go back to the main menu.";
     }
 
     /**
      * String of usernames for the user to view the message history with.
+     *
      * @return a string of all possible usernames
      */
-    public String getUsernames(){
+    public String getUsernames() {
         StringBuilder userList = new StringBuilder();
-        for(User user: userManager.getUsers()){
+        for (User user : userManager.getUsers()) {
             userList.append(user.getUsername()).append("\n");
 
         }
@@ -53,6 +55,7 @@ public class ViewMessagesPresenter extends Presenter{
 
     /**
      * pretext for the message history
+     *
      * @param recipientUsername the username that the user is veiwing their message history
      *                          with
      * @return returns the pre message string
@@ -65,6 +68,7 @@ public class ViewMessagesPresenter extends Presenter{
     /**
      * the full message history between the currently logged in user and the user they
      * wish to view
+     *
      * @param recipientUsername the user that the currently logged in user is viewing
      *                          their message with
      * @return the full message history as a string
@@ -90,13 +94,11 @@ public class ViewMessagesPresenter extends Presenter{
 
     @Override
     public String getInputResponseText(InputProcessResult result) {
-        if(result == InputProcessResult.BACK){
+        if (result == InputProcessResult.BACK) {
             return "Navigating back to Main Menu.";
-        }
-        else if(result == InputProcessResult.USER_NOT_FOUND){
+        } else if (result == InputProcessResult.USER_NOT_FOUND) {
             return "Could not find user. Please Try again.";
-        }
-        else{
+        } else {
             return "Enter anything to continue to Main Menu.";
         }
     }

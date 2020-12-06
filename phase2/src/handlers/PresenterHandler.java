@@ -21,7 +21,7 @@ public class PresenterHandler {
     private MessageAllAttendeesPresenter messageAllAttendeesPresenter;
     private SeeSchedulePresenter seeSchedulePresenter;
     private ChangeEventCapacityPresenter changeEventCapacityPresenter;
-    private  DeleteAccountPresenter deleteAccountPresenter;
+    private DeleteAccountPresenter deleteAccountPresenter;
     private ViewMessagesPresenter viewMessagesPresenter;
 
     public PresenterHandler(UseCaseHandler useCaseHandler, ControllerHandler controllerHandler, SceneNavigator sceneNavigator) {
@@ -107,5 +107,7 @@ public class PresenterHandler {
         return changeEventCapacityPresenter;
     }
 
-    public ViewMessagesPresenter getViewMessagesPresenter(){ return viewMessagesPresenter;}
+    public ViewMessagesPresenter getViewMessagesPresenter() {
+        return viewMessagesPresenter;
+    }
 }
