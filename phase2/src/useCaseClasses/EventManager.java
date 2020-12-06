@@ -306,13 +306,23 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         throw new EventNotFoundException(eventInput);
     }
 
+    public ArrayList<Event> getEventsWithAttendee(User user){
+        ArrayList<Event> result = new ArrayList<>();
+        for(Event event: events){
+            if(event.hasAttendee(user.getId())){
+                result.add(event);
+            }
+        }
+        return result;
+    }
+
     /**
      * This method sorts the event list in the order of date and time
      *
      * @return An arraylist with events sorts in order of datetime
      */
-    public ArrayList<Event> eventSortTime() {
-        ArrayList<Event> result = new ArrayList<>(events);
+    public ArrayList<Event> eventSortTime(List<Event> eventList) {
+        ArrayList<Event> result = new ArrayList<>(eventList);
         insertionSortEvents(result);
         return result;
     }

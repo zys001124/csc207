@@ -20,6 +20,7 @@ public class ControllerHandler {
     private MessageAllAttendeesController messageAllAttendeesController;
     private DeleteAccountController deleteAccountController;
     private ChangeEventCapacityController changeEventCapacityController;
+    private SeeEventScheduleController seeEventScheduleController;
 
     public ControllerHandler(UseCaseHandler useCaseHandler) {
         constructProgramControllers(useCaseHandler);
@@ -100,4 +101,7 @@ public class ControllerHandler {
         return changeEventCapacityController;
     }
 
+    public SeeEventScheduleController getSeeEventScheduleController() {
+        return seeEventScheduleController;
+    }
 }

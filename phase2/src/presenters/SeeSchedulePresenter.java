@@ -39,7 +39,7 @@ public class SeeSchedulePresenter extends Presenter {
     }
 
     private String getAttendeeEvents() {
-        ArrayList<Event> sortedEvents = eventManager.eventSortTime();
+        ArrayList<Event> sortedEvents = eventManager.eventSortTime(eventManager.getEvents());
         String result = "";
         for (int i = 1; i <= sortedEvents.size(); i++) {
             Event e = sortedEvents.get(i - 1);
