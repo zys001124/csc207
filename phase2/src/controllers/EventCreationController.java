@@ -4,15 +4,6 @@
 
 package controllers;
 
-import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.ResourceBundle;
-
-import java.util.UUID;
-
 import entities.Event;
 import entities.User;
 import exceptions.UserNotFoundException;
@@ -23,7 +14,14 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import useCaseClasses.UserManager;
+
+import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.UUID;
 
 
 public class EventCreationController extends Controller{

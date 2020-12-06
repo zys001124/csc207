@@ -1,19 +1,24 @@
 package controllers;
 
 import entities.Event;
-import useCaseClasses.EventManager;
 import exceptions.EventFullException;
 import exceptions.EventNotFoundException;
 import exceptions.InvalidUserTypeException;
 import exceptions.UserAlreadyEnrolledException;
 import handlers.SceneNavigator;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import useCaseClasses.EventManager;
+
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * A controller for handling inputs when the Attendee is enrolling

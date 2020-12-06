@@ -4,7 +4,7 @@ import exceptions.IncorrectObjectTypeException;
 
 import java.util.List;
 
-public interface Observer {
+public interface Observer<T> {
 
-    public void update(Observable o, List<?> changes, boolean addedOrChanged, boolean retrievedFromDatabase) throws IncorrectObjectTypeException;
+    public void update(Observable o, List<T> changes, boolean addedOrChanged, boolean retrievedFromDatabase) throws IncorrectObjectTypeException;
 }

@@ -8,7 +8,6 @@ import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Presenter for option to view the message history between the currently looged in user

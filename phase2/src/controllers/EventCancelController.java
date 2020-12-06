@@ -1,26 +1,18 @@
 package controllers;
 
 import entities.Event;
-import entities.Message;
 import entities.User;
-import exceptions.IncorrectObjectTypeException;
 import handlers.SceneNavigator;
-import observers.Observable;
-import observers.Observer;
-import useCaseClasses.EventManager;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import useCaseClasses.EventManager;
 
 import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.ResourceBundle;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
 
 
 public class EventCancelController extends Controller{

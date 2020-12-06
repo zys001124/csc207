@@ -6,7 +6,6 @@ import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
 import java.util.Collection;
-import java.util.List;
 
 /**
  * controller class for viewing the message history between the currently logged in user

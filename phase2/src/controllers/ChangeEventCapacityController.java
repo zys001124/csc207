@@ -1,22 +1,20 @@
 package controllers;
 
 import entities.Event;
-import exceptions.IncorrectObjectTypeException;
 import handlers.SceneNavigator;
-import observers.Observable;
-import observers.Observer;
-import useCaseClasses.EventManager;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
-
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
+import useCaseClasses.EventManager;
 
 import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.ResourceBundle;
 
 public class ChangeEventCapacityController extends Controller {
 

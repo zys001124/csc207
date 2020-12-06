@@ -1,29 +1,25 @@
 
 package controllers;
 
-import java.net.URL;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
-
 import entities.Message;
 import entities.User;
 import exceptions.IncorrectObjectTypeException;
 import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import observers.Observable;
 import observers.Observer;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
-import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+
+import java.net.URL;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 public class MessageUserSceneController extends Controller {
 
@@ -70,9 +66,9 @@ public class MessageUserSceneController extends Controller {
     public void setMessageManager(MessageManager messageManager) {
         super.setMessageManager(messageManager);
 
-        messageManager.addObserver(new Observer() {
+        messageManager.addObserver(new Observer<Message>() {
             @Override
-            public void update(Observable o, List<?> changes, boolean addedOrChanged, boolean retrievedFromDataBase) throws IncorrectObjectTypeException {
+            public void update(Observable o, List<Message> changes, boolean addedOrChanged, boolean retrievedFromDataBase) throws IncorrectObjectTypeException {
                 //Using set so no duplicates are made
                 Set<Message> newMessages = new TreeSet<>();
                 UUID currentUserID = userManager.getCurrentlyLoggedIn().getId();

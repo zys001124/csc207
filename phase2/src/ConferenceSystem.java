@@ -1,3 +1,6 @@
+import com.google.auth.oauth2.GoogleCredentials;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.FirebaseOptions;
 import controllers.Controller;
 import controllers.LoginController;
 import controllers.LoginListener;
@@ -8,6 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
 
@@ -34,6 +38,7 @@ public class ConferenceSystem {
      */
 
     public ConferenceSystem(Stage primaryStage) {
+        initializeFirebase();
         initializeHandlers(primaryStage);
     }
 
@@ -46,6 +51,23 @@ public class ConferenceSystem {
         // Default to login scene
         sceneNavigator.switchSceneView(SceneNavigator.SceneViewType.LOGIN);
         sceneNavigator.getApplicationStage().show();
+    }
+
+    public void initializeFirebase() {
+        try {
+            FileInputStream serviceAccount =
+                    new FileInputStream("conference-system-key.json");
+
+            FirebaseOptions options = new FirebaseOptions.Builder()
+                    .setCredentials(GoogleCredentials.fromStream(serviceAccount))
+                    .setDatabaseUrl("https://conference-system-b48bf.firebaseio.com")
+                    .build();
+
+            FirebaseApp.initializeApp(options);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+            System.exit(-1);
+        }
     }
 
     public void initializeHandlers(Stage primaryStage) {
