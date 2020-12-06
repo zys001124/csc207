@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'Create User Account.fxml' Controller Class
- */
-
 package controllers;
 
 import entities.User;
@@ -60,7 +56,7 @@ public class CreateAccountController extends Controller {
         String password = passwordField.getText();
         String type = userTypeField.getText();
 
-        String labelText = "";
+        String labelText;
 
         InputProcessResult result = handleInput(username, password, type);
         if (result == InputProcessResult.USERNAME_TAKEN) {
