@@ -60,8 +60,6 @@ public class MessageAllAttendeesController extends Controller {
         }
 
         noInputMessage.setText(screenMessage);
-
-
     }
 
     @FXML
@@ -85,7 +83,5 @@ public class MessageAllAttendeesController extends Controller {
 
         return InputProcessResult.SUCCESS;
     }
-
-
 }
 

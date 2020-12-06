@@ -88,8 +88,8 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         List<Message> messagesToAdd = new ArrayList<>();
         for(UUID receiverId: receivers){
             messagesToAdd.add(new Message(message, sender, receiverId, UUID.randomUUID()));
-            messages.addAll(messagesToAdd);
         }
+        messages.addAll(messagesToAdd);
         notifyObservers(messagesToAdd, true, false);
     }
 
