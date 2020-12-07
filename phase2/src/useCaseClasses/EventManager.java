@@ -170,6 +170,26 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return events;
     }
 
+    public List<Event> getEventsWithAttendee(User user){
+        List<Event> result = new ArrayList<>();
+        for(Event event: events){
+            if(event.hasAttendee(user.getId())){
+                result.add(event);
+            }
+        }
+        return result;
+    }
+
+    public List<Event> getEventsWithSpeaker(UUID speakerId) {
+        List<Event> speakerEvents = new ArrayList<>();
+        for(Event e: events) {
+            if(e.getSpeakerId().contains(speakerId)) {
+                speakerEvents.add(e);
+            }
+        }
+        return speakerEvents;
+    }
+
     /**
      * Check whether the given user u is the organizer of the given event e
      * return true if u is the organizer of e and false if u is not
@@ -318,16 +338,6 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         throw new EventNotFoundException(eventInput);
     }
 
-    public ArrayList<Event> getEventsWithAttendee(User user){
-        ArrayList<Event> result = new ArrayList<>();
-        for(Event event: events){
-            if(event.hasAttendee(user.getId())){
-                result.add(event);
-            }
-        }
-        return result;
-    }
-
     /**
      * This method sorts the event list in the order of date and time
      *
@@ -355,37 +365,32 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return eventSortTime(getEventsWithAttendee(user));
     }
 
-    public String getEventAttribute(int eventNumber, List<Event> eventList, String attribute) {
-        //This method is intended for formatting list of events in different scenes
-        Event event = eventList.get(eventNumber);
-        switch (attribute){
-            case "Title":
-                return event.getEventTitle();
-            case "Time":
-                return event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            case "Room":
-                return String.valueOf(event.getEventRoom());
-            case "Capacity":
-                return String.valueOf(event.getEventCapacity());
-            case "Enrolled Number":
-                return String.valueOf(event.getEventEnrolledNumber());
-            case "Type":
-                return String.valueOf(event.getEventType().toString());
-            case "VIP":
-                return String.valueOf(event.getViponly());
-            default:
-                return null;
-        }
+    public String getIndividualTitle(Event event){
+        return event.getEventTitle();
     }
 
-    public List<Event> getEventsWithSpeaker(UUID speakerId) {
-        List<Event> speakerEvents = new ArrayList<>();
-        for(Event e: events) {
-            if(e.getSpeakerId().contains(speakerId)) {
-                speakerEvents.add(e);
-            }
-        }
-        return speakerEvents;
+    public String getIndividualTime(Event event, String format){
+        return event.getEventTime().format(DateTimeFormatter.ofPattern(format));
+    }
+
+    public String getIndividualRoom(Event event){
+        return String.valueOf(event.getEventRoom());
+    }
+
+    public String getIndividualCapacity(Event event){
+        return String.valueOf(event.getEventCapacity());
+    }
+
+    public String getIndividualEnrolledNumber(Event event){
+        return String.valueOf(event.getEventEnrolledNumber());
+    }
+
+    public String getIndividualType(Event event){
+        return String.valueOf(event.getEventType().toString());
+    }
+
+    public String getIndividualVIP(Event event){
+        return String.valueOf(event.getViponly());
     }
 
     public void changeEventCapacity(String eventTitle, int newCapacity, boolean changeFromDatabase) {
