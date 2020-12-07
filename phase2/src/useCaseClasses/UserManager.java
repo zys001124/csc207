@@ -151,9 +151,11 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
     public void addUserFromDataSnapshot(DataSnapshot dataSnapshot) {
         User user = getFromDataSnapshot(dataSnapshot);
         List<User> usersToAdd = new ArrayList<>();
-        usersToAdd.add(user);
-        users.addAll(usersToAdd);
-        notifyObservers(usersToAdd, true, true);
+        if(!doesUserExist(user.getUsername())) {
+            usersToAdd.add(user);
+            users.addAll(usersToAdd);
+            notifyObservers(usersToAdd, true, true);
+        }
     }
 
     public void changeUserFromDataSnapshot(DataSnapshot dataSnapshot) {
