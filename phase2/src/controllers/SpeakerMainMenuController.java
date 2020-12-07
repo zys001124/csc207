@@ -12,6 +12,10 @@ import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller for the speaker main menu scene that handles the input from the scene and navigates to the correct
+ * scene when a button is clicked
+ */
 public class SpeakerMainMenuController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -32,27 +36,46 @@ public class SpeakerMainMenuController extends Controller {
     @FXML // fx:id="logoutButton"
     private Button logoutButton; // Value injected by FXMLLoader
 
+    /**
+     * Method that directs the user to the login scene when this button is clicked.
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onLogoutClicked(ActionEvent event) {
         setSceneView(SceneNavigator.SceneViewType.LOGIN);
     }
 
+    /**
+     * Method that directs the user to the message all attending event scene when this button is clicked
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onMessageAllAttendeesClicked(ActionEvent event) {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_ATTENDING_EVENT);
     }
 
+    /**
+     * Method that directs the user to the message user scene when this button is clicked
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onMessageAttendeeClicked(ActionEvent event) {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
     }
 
+    /**
+     * Method that directs the user to the event schedule scene when this button is clicked
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onSeeEventScheduleClicked(ActionEvent event) {
         setSceneView(SceneNavigator.SceneViewType.EVENT_SCHEDULE);
     }
 
 
+    /**
+     * initialize method to initialize the buttons in the scene and the controller to be clicked
+     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {

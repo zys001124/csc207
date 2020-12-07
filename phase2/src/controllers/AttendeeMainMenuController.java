@@ -8,6 +8,10 @@ import javafx.scene.control.Button;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * The controller class for the attendee main menu that handles the user input on which buttons
+ * they press to navigate to a certain scene
+ */
 public class AttendeeMainMenuController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -31,6 +35,10 @@ public class AttendeeMainMenuController extends Controller {
     @FXML // fx:id="logoutButton"
     private Button logoutButton; // Value injected by FXMLLoader
 
+    /**
+     * Initialize method for all of the buttons to be pressed in the scene and to handle the input
+     * in the controller
+     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -42,26 +50,46 @@ public class AttendeeMainMenuController extends Controller {
 
     }
 
+    /**
+     * Method that directs the user to the enrol in event scene when this button is clicked
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onEnrollInEventButtonClicked(ActionEvent event) {
         setSceneView(SceneNavigator.SceneViewType.ENROLL_IN_EVENT);
     }
 
+    /**
+     * Method that directs the user to the login scene when this button is clicked
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onLogoutButtonClicked(ActionEvent event) {
         setSceneView(SceneNavigator.SceneViewType.LOGIN);
     }
 
+    /**
+     * Method that directs the user to the message user scene when this button is clicked
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onMessageUserButtonClicked(ActionEvent event) {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
     }
 
+    /**
+     * method that directs the user to the event schedule scene when this button is clicked
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onSeeEventScheduleButtonClicked(ActionEvent event) {
         setSceneView(SceneNavigator.SceneViewType.EVENT_SCHEDULE);
     }
 
+    /**
+     * Method that directs the user to the unenroll in event scene when this button is clicked
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onUnenrollInEventButtonClicked(ActionEvent event) {
         setSceneView(SceneNavigator.SceneViewType.UNENROLL_IN_EVENT);

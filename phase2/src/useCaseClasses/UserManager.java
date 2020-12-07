@@ -261,6 +261,15 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         throw new UserNotFoundException(username);
     }
 
+    public ArrayList<UUID> listOfID(ArrayList<User> u){
+        ArrayList<UUID> usersID = new ArrayList<>();
+        for (User user : u) {
+            usersID.add(user.getId());
+        }
+        return usersID;
+    }
+
+
     public List<UUID> getUserId(User.UserType userType){
         ArrayList<UUID> attendees = new ArrayList<>();
         for (User user : users) {

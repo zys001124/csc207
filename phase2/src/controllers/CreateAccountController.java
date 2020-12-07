@@ -14,6 +14,10 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Controller class for handling the input for the create account scene
+ * Extends controller.
+ */
 public class CreateAccountController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -40,6 +44,10 @@ public class CreateAccountController extends Controller {
     @FXML // fx:id="invalidInputMessage"
     private Label invalidInputMessage; // Value injected by FXMLLoader
 
+    /**
+     * Method that takes the user back to their corresponding main menu scene
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onBackButtonClicked(ActionEvent event) {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
@@ -50,6 +58,11 @@ public class CreateAccountController extends Controller {
         }
     }
 
+    /**
+     * Method that handles the input for the scene when the user tries to create an account
+     * Will output whether or not a user has been created
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onCreateButtonClicked(ActionEvent event) {
         String username = usernameField.getText();
@@ -72,6 +85,9 @@ public class CreateAccountController extends Controller {
 
     }
 
+    /**
+     * Initializes the input fields for this controller
+     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -83,6 +99,15 @@ public class CreateAccountController extends Controller {
 
     }
 
+    /**
+     * Helper method for handling the input of the user.
+     * Creates the user if no exception is found
+     * @param username the username of the account to be created
+     * @param password the password of the account to be created
+     * @param type the type of account to be created
+     * @return InputProcessResult to help the button method decide on what to output if the user has
+     * been created or not
+     */
     public InputProcessResult handleInput(String username, String password, String type) {
         try {
             User.UserType userType = userManager.parseType(type);
@@ -95,54 +120,4 @@ public class CreateAccountController extends Controller {
         }
     }
 }
-//public class CreateAccountController extends Controller{
-//
-//    private final UserManager userManager;
-//
-//    /**
-//     * Creates a CreateAccountController with the given UserManager
-//     *
-//     * @param um - The userManager this controller will use
-//     */
-//    public CreateAccountController(UserManager um) {
-//        userManager = um;
-//    }
-//
-//    /**
-//     * Handles the input given by the user
-//     *
-//     * @param input the users input
-//     * @return an InputProcessResult enum that details what happened
-//     * as a result of the given input
-//     */
-//    public InputProcessResult handleInput(String input) {
-//
-//        if (input.equals("back")) {
-//            return InputProcessResult.BACK;
-//        }
-//
-//        String[] usernamePasswordAndType = input.split(" ");
-//
-//        // Invalid input
-//        if (usernamePasswordAndType.length != 3) {
-//            return InputProcessResult.INVALID_INPUT;
-//        }
-//
-//        String username = usernamePasswordAndType[0];
-//        String password = usernamePasswordAndType[1];
-//
-//        try {
-//            User.UserType type = userManager.parseType(usernamePasswordAndType[2]);
-//            userManager.addUser(type, username, password);
-//            return InputProcessResult.SUCCESS;
-//        } catch (UsernameAlreadyExistsException e) {
-//            return InputProcessResult.USERNAME_TAKEN;
-//        } catch (UserTypeDoesNotExistException e) {
-//            return InputProcessResult.INVALID_USER_TYPE;
-//        } catch (InvalidUserTypeException e) {
-//            return InputProcessResult.UNQUALIFIED_USER;
-//        }
-//
-//    }
-//
-//}
+
