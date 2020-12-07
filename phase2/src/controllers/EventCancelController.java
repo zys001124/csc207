@@ -1,7 +1,5 @@
 package controllers;
 
-import entities.Event;
-import entities.User;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -50,10 +48,10 @@ public class EventCancelController extends Controller {
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
-        if (checkUserType()) {
+        if (!checkUserType()) {
             setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
         }
-        if (!checkUserType()) {
+        if (checkUserType()) {
             setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
         }
     }
@@ -82,21 +80,17 @@ public class EventCancelController extends Controller {
             return InputProcessResult.EVENT_DOES_NOT_EXIST;
         }
 
-        User currentUser = userManager.getCurrentlyLoggedIn();
-        Event currentEvent = eventManager.getEvent(eventName);
-
-        if (!eventManager.hasOrganizedEvent(currentUser, currentEvent) &&
+        if (!eventManager.hasOrganizedEvent(userManager.getCurrentlyLoggedIn(), eventManager.getEvent(eventName)) &&
                 !checkUserType()) {
             return InputProcessResult.USER_DID_NOT_ORGANIZE_EVENT;
         }
 
-        eventManager.removeEvent(currentEvent.getId());
+        eventManager.removeEvent(eventManager.getEventId(eventManager.getEvent(eventName)));
         return InputProcessResult.SUCCESS;
     }
 
     private boolean checkUserType() {
-        User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
-        return currentUserType == User.UserType.ADMIN; //True if Admin, False if Organizer
+        return userManager.checkOrganizer(userManager.getCurrentlyLoggedIn()); //False if Admin, True if Organizer
     }
 
     @Override
@@ -107,28 +101,29 @@ public class EventCancelController extends Controller {
         eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventList());
     }
 
-    private List<Label> getEventLabels(Collection<Event> events) {
-        ArrayList<Label> labels = new ArrayList<>();
-        for (Event event : events) {
-            String labelText = event.getEventTitle() + " on " + event.getEventTime().format(DateTimeFormatter.ofPattern("MMMM dd, HH:mm")) + ".";
-            if (event.getSpeakerId().size() > 0) {
-                labelText = labelText + " Hosted by";
-                for (int i = 0; i < event.getSpeakerId().size(); i++) {
-                    UUID speakerId = event.getSpeakerId().get(i);
-                    labelText = labelText + " " + userManager.getUser(speakerId).getUsername();
-                    if (i != event.getSpeakerId().size() - 1) {
-                        labelText = labelText + ",";
-                    }
+    private List<Label> getEventLabels() {
+        ArrayList<Label> result = new ArrayList<>();
+        List<String> labels = eventManager.getEventCancelLabels();
+        int i = 0;
+        List<List<UUID>> speakers = eventManager.getSpeakersId();
+        while(i<labels.size()){
+            String labelText = labels.get(i);
+            for (int x = 0; x < speakers.get(i).size(); x++) {
+                labelText = labelText + " " + userManager.getName(speakers.get(i).get(x));
+                if (x != speakers.get(i).size() - 1) {
+                    labelText = labelText + ",";
                 }
             }
-            Label eventLabel = new Label(labelText);
-            labels.add(eventLabel);
+
+            result.add(new Label(labelText));
+            i++;
         }
-        return labels;
+
+        return result;
     }
 
     private void setEventList() {
-        eventListView.getItems().setAll(getEventLabels(eventManager.getEvents()));
+        eventListView.getItems().setAll(getEventLabels());
     }
 }
 

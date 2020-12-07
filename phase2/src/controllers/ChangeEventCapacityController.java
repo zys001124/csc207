@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.User;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -45,10 +44,9 @@ public class ChangeEventCapacityController extends Controller {
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
-        User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
-        if (currentUserType == User.UserType.ORGANIZER) {
+        if (userManager.checkOrganizer(userManager.getCurrentlyLoggedIn())) {
             setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
-        } else if (currentUserType == User.UserType.ADMIN) {
+        } else {
             setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
         }
     }

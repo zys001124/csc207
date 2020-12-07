@@ -428,6 +428,14 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
     }
 
     /**
+     * This helper method returns the event id of the given event
+     *
+     * @param event An event
+     * @return the id of the event
+     */
+    public UUID getEventId(Event event){ return event.getId(); }
+
+    /**
      * A helper method that generates the label texts for the change event capacity scene.
      *
      * @return A list of stings that will become label texts in the change event capacity scene
@@ -441,6 +449,43 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
                     + room + "             Current Capacity: " + capacity);
         }
         return labels;
+    }
+
+    /**
+     * A helper method that generates the label texts for the change event cancel scene.
+     *
+     * @return A list of stings that will become label texts in the change event cancel scene
+     */
+    public List<String> getEventCancelLabels() {
+        ArrayList<String> labels = new ArrayList<>();
+        for (Event event : events) {
+            String labelText = event.getEventTitle() + " on " + event.getEventTime().format(DateTimeFormatter.ofPattern("MMMM dd, HH:mm")) + ".";
+            if (event.getSpeakerId().size() > 0) {
+                labelText = labelText + " Hosted by";
+//                for (int i = 0; i < event.getSpeakerId().size(); i++) {
+//                    UUID speakerId = event.getSpeakerId().get(i);
+//                    labelText = labelText + " " + userManager.getUser(speakerId).getUsername();
+//                    if (i != event.getSpeakerId().size() - 1) {
+//                        labelText = labelText + ",";
+//                    }
+//                }
+            }
+            labels.add(labelText);
+        }
+        return labels;
+    }
+
+    /**
+     * A helper method that generates the list of list of ids of speakers of each event.
+     *
+     * @return A list of list of ids of speakers of each event.
+     */
+    public List<List<UUID>> getSpeakersId(){
+        ArrayList<List<UUID>> ids = new ArrayList<>();
+        for(Event event:events){
+            ids.add(event.getSpeakerId());
+        }
+        return ids;
     }
 
     @Override

@@ -193,6 +193,16 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
     }
 
     /**
+     * helper method to check and see if this user is
+     * an Organizer user
+     *
+     * @return boolean on whether or not the user is an Organizer user
+     */
+    public boolean checkOrganizer(User user) {
+        return user.getType().equals(User.UserType.ORGANIZER);
+    }
+
+    /**
      * Gets the list of users
      *
      * @return the list of users
@@ -332,6 +342,21 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
             labels.add(user.getUsername() + ": " + user.getType());
         }
         return labels;
+    }
+
+    /**
+     * A helper method that generates the name of the user from given user id.
+     *
+     * @param id the user id of this user
+     * @return The name of the user who has the given user id
+     */
+    public String getName(UUID id){
+        for(User user: users){
+            if(user.getId().equals(id)){
+                return user.getUsername();
+            }
+        }
+        return null;
     }
 
     /**
