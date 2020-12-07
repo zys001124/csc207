@@ -27,7 +27,6 @@ public class ConferenceSystem {
     public static final String EVENT_DATA_PATH = "eventData.txt";
 
     private UseCaseHandler useCaseHandler;
-    private ControllerHandler controllerHandler;
     private SceneNavigator sceneNavigator;
 
     /**
@@ -36,7 +35,7 @@ public class ConferenceSystem {
 
     public ConferenceSystem(Stage primaryStage) {
         initializeFirebase();
-        initializeHandlers(primaryStage);
+        initializeSceneNavigator(primaryStage);
     }
 
     public void run() {
@@ -67,14 +66,9 @@ public class ConferenceSystem {
         }
     }
 
-    public void initializeHandlers(Stage primaryStage) {
+    public void initializeSceneNavigator(Stage primaryStage) {
         useCaseHandler = new UseCaseHandler();
-        controllerHandler = new ControllerHandler(useCaseHandler);
-
         sceneNavigator = new SceneNavigator(primaryStage, useCaseHandler);
-       // presenterHandler = new PresenterHandler(useCaseHandler, controllerHandler, sceneNavigator);
-      //  viewHandler = new ViewHandler(controllerHandler, presenterHandler, sceneNavigator);
-        // sceneNavigator.getApplicationStage().setScene(sceneNavigator.getLoginScene());
     }
 
     private void initializeScenes() {
