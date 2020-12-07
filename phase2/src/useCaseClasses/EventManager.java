@@ -284,10 +284,12 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
             if(e.getId().equals(event.getId())){
                 events.remove(e);
                 events.add(event);
+                notifyObservers(eventsToChange, true, true);
+                return;
             }
         }
 
-        notifyObservers(eventsToChange, true, true);
+
     }
 
     /**
@@ -318,7 +320,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         List<Event> eventsChanged = new ArrayList<>();
         event.removeAttendee(attendee);
         eventsChanged.add(event);
-        notifyObservers(eventsChanged, false, false);
+        notifyObservers(eventsChanged, true, false);
     }
 
     public void removeUserFromEventFromDatabase(String eventInput, User attendee) throws EventNotFoundException,
