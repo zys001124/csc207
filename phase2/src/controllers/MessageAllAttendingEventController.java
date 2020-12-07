@@ -2,7 +2,6 @@ package controllers;
 
 
 import entities.Event;
-import exceptions.IncorrectObjectTypeException;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -10,8 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import observers.Observable;
-import observers.Observer;
 import useCaseClasses.EventManager;
 
 import java.net.URL;
@@ -56,7 +53,7 @@ public class MessageAllAttendingEventController extends Controller {
 
         String text = messageField.getText();
 
-        Label selectedItem  = eventList.getSelectionModel().getSelectedItem();
+        Label selectedItem = eventList.getSelectionModel().getSelectedItem();
         String eventName = selectedItem.getText().split(" on")[0];
 
         InputProcessResult result = handleInput(eventName, text);

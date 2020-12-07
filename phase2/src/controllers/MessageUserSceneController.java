@@ -140,9 +140,9 @@ public class MessageUserSceneController extends Controller {
 
         try {
             messageManager.sendIndividualMessage(userManager.getCurrentlyLoggedIn().getType(), sender, userManager.getUser(recipient).getType(), recipient, text);
-        } catch(InvalidUserTypeException e){
+        } catch (InvalidUserTypeException e) {
             label = "You can't message this user.";
-        } catch(NoMessageException e){
+        } catch (NoMessageException e) {
             label = "You can't send a message to this attendee right now.";
         }
         cantSendToUserMessage.setText(label);

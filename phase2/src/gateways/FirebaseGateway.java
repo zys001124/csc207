@@ -6,8 +6,8 @@ import java.util.List;
 
 public abstract class FirebaseGateway<T> {
 
-    protected DatabaseReference databaseReference;
     private final FirebaseDatabase database;
+    protected DatabaseReference databaseReference;
 
     protected FirebaseGateway(String referencePath) {
         database = FirebaseDatabase.getInstance();

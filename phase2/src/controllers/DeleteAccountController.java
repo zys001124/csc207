@@ -1,6 +1,5 @@
 package controllers;
 
-import exceptions.IncorrectObjectTypeException;
 import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
@@ -9,12 +8,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import observers.Observable;
-import observers.Observer;
 import useCaseClasses.UserManager;
 
 import java.net.URL;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.UUID;
 
 /**
  * A controller for handling inputs when the Admin is deleting
@@ -45,7 +45,7 @@ public class DeleteAccountController extends Controller {
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
-            setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+        setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
     }
 
     @FXML
@@ -105,8 +105,8 @@ public class DeleteAccountController extends Controller {
         userManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setUserList());
     }
 
-    private List<Label> getUserLabels(){
-        List<String> labels= userManager.getDeleteAccountLabels();
+    private List<Label> getUserLabels() {
+        List<String> labels = userManager.getDeleteAccountLabels();
         ArrayList<Label> result = new ArrayList<>();
         for (String label : labels) {
             result.add(new Label(label));

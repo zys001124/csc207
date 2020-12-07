@@ -81,10 +81,9 @@ public class EventCreationController extends Controller {
         LocalDateTime sDateTime = getLocalDateTime(startTimeField.getText());
         LocalDateTime eDateTime = getLocalDateTime(endTimeField.getText());
         String[] speakersUserName;
-        if(!speakerUsernamesField.getText().equals("")){
+        if (!speakerUsernamesField.getText().equals("")) {
             speakersUserName = speakerUsernamesField.getText().split(":");
-        }
-        else{
+        } else {
             speakersUserName = new String[0];
         }
         int roomNum = Integer.parseInt(roomNumberField.getText());
@@ -98,7 +97,7 @@ public class EventCreationController extends Controller {
             label = "At least one of the speakers could not be found.";
         } else if (result == InputProcessResult.USER_NOT_SPEAKER) {
             label = "At least one of the speakers is not a speaker.";
-        } else if(result == InputProcessResult.EVENT_NAME_TAKEN){
+        } else if (result == InputProcessResult.EVENT_NAME_TAKEN) {
             label = "That event name is taken.";
         } else if (result == InputProcessResult.TIMESLOT_FULL) {
             label = "This room is occupied at this time.";
@@ -106,7 +105,7 @@ public class EventCreationController extends Controller {
             label = "At least one of the speakers is occupied.";
         } else if (result == InputProcessResult.ROOM_FULL) {
             label = "That room is full.";
-        } else if (result == InputProcessResult.CAPACITY_OVER){
+        } else if (result == InputProcessResult.CAPACITY_OVER) {
             label = "The capacity can't be over 60.";
         } else {
             label = "Event created successfully.";
@@ -164,8 +163,8 @@ public class EventCreationController extends Controller {
             }
         }
 
-        for(Event event : eventManager.getEvents()){
-            if(event.getEventTitle().equals(eventTitle)){
+        for (Event event : eventManager.getEvents()) {
+            if (event.getEventTitle().equals(eventTitle)) {
                 return InputProcessResult.EVENT_NAME_TAKEN;
             }
         }
@@ -190,7 +189,7 @@ public class EventCreationController extends Controller {
 //            return InputProcessResult.ROOM_FULL;
 //        }
 
-        if(roomCapacity > 60){
+        if (roomCapacity > 60) {
             return InputProcessResult.CAPACITY_OVER;
         }
 

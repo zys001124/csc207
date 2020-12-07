@@ -98,7 +98,8 @@ public class AdminMainMenuController extends Controller {
     }
 
     @FXML
-    void onChangeCapacityClicked(ActionEvent event) { setSceneView(SceneNavigator.SceneViewType.CHANGE_CAPACITY);
+    void onChangeCapacityClicked(ActionEvent event) {
+        setSceneView(SceneNavigator.SceneViewType.CHANGE_CAPACITY);
 
     }
 }
