@@ -170,6 +170,26 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return events;
     }
 
+    public List<Event> getEventsWithAttendee(User user){
+        List<Event> result = new ArrayList<>();
+        for(Event event: events){
+            if(event.hasAttendee(user.getId())){
+                result.add(event);
+            }
+        }
+        return result;
+    }
+
+    public List<Event> getEventsWithSpeaker(UUID speakerId) {
+        List<Event> speakerEvents = new ArrayList<>();
+        for(Event e: events) {
+            if(e.getSpeakerId().contains(speakerId)) {
+                speakerEvents.add(e);
+            }
+        }
+        return speakerEvents;
+    }
+
     /**
      * Check whether the given user u is the organizer of the given event e
      * return true if u is the organizer of e and false if u is not
@@ -255,19 +275,21 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     public void updateEventFromDataSnapshot(DataSnapshot dataSnapshot) {
         Event event = getFromDataSnapshot(dataSnapshot);
-
+        Event.EventData eventData = event.getEventData();
         // Find event
         List<Event> eventsToChange = new ArrayList<>();
-        eventsToChange.add(event);
 
         for(Event e: events) {
             if(e.getId().equals(event.getId())){
-                events.remove(e);
-                events.add(event);
+                e.set(eventData);
+                eventsToChange.add(e);
+                System.out.println("here");
+                notifyObservers(eventsToChange, true, true);
+                return;
             }
         }
 
-        notifyObservers(eventsToChange, true, true);
+
     }
 
     /**
@@ -298,7 +320,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         List<Event> eventsChanged = new ArrayList<>();
         event.removeAttendee(attendee);
         eventsChanged.add(event);
-        notifyObservers(eventsChanged, false, false);
+        notifyObservers(eventsChanged, true, false);
     }
 
     public void removeUserFromEventFromDatabase(String eventInput, User attendee) throws EventNotFoundException,
@@ -316,16 +338,6 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
             }
         }
         throw new EventNotFoundException(eventInput);
-    }
-
-    public ArrayList<Event> getEventsWithAttendee(User user){
-        ArrayList<Event> result = new ArrayList<>();
-        for(Event event: events){
-            if(event.hasAttendee(user.getId())){
-                result.add(event);
-            }
-        }
-        return result;
     }
 
     /**
@@ -355,37 +367,32 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return eventSortTime(getEventsWithAttendee(user));
     }
 
-    public String getEventAttribute(int eventNumber, List<Event> eventList, String attribute) {
-        //This method is intended for formatting list of events in different scenes
-        Event event = eventList.get(eventNumber);
-        switch (attribute){
-            case "Title":
-                return event.getEventTitle();
-            case "Time":
-                return event.getEventTime().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            case "Room":
-                return String.valueOf(event.getEventRoom());
-            case "Capacity":
-                return String.valueOf(event.getEventCapacity());
-            case "Enrolled Number":
-                return String.valueOf(event.getEventEnrolledNumber());
-            case "Type":
-                return String.valueOf(event.getEventType().toString());
-            case "VIP":
-                return String.valueOf(event.getViponly());
-            default:
-                return null;
-        }
+    public String getIndividualTitle(Event event){
+        return event.getEventTitle();
     }
 
-    public List<Event> getEventsWithSpeaker(UUID speakerId) {
-        List<Event> speakerEvents = new ArrayList<>();
-        for(Event e: events) {
-            if(e.getSpeakerId().contains(speakerId)) {
-                speakerEvents.add(e);
-            }
-        }
-        return speakerEvents;
+    public String getIndividualTime(Event event, String format){
+        return event.getEventTime().format(DateTimeFormatter.ofPattern(format));
+    }
+
+    public String getIndividualRoom(Event event){
+        return String.valueOf(event.getEventRoom());
+    }
+
+    public String getIndividualCapacity(Event event){
+        return String.valueOf(event.getEventCapacity());
+    }
+
+    public String getIndividualEnrolledNumber(Event event){
+        return String.valueOf(event.getEventEnrolledNumber());
+    }
+
+    public String getIndividualType(Event event){
+        return String.valueOf(event.getEventType().toString());
+    }
+
+    public String getIndividualVIP(Event event){
+        return String.valueOf(event.getViponly());
     }
 
     public void changeEventCapacity(String eventTitle, int newCapacity, boolean changeFromDatabase) {
@@ -407,6 +414,12 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return theList;
     }
 
+    /**
+     * This method checks whether the event exist by its name
+     *
+     * @param title A string that is the name of the event
+     * @return A boolean value of whether this event exist
+     */
     public boolean eventTitleExists(String title) {
         for (Event e : events) {
             if (e.getEventTitle().equals(title)) {
@@ -416,6 +429,19 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return false;
     }
 
+    /**
+     * This helper method returns the event id of the given event
+     *
+     * @param event An event
+     * @return the id of the event
+     */
+    public UUID getEventId(Event event){ return event.getId(); }
+
+    /**
+     * A helper method that generates the label texts for the change event capacity scene.
+     *
+     * @return A list of stings that will become label texts in the change event capacity scene
+     */
     public List<String> getEventCapacityLabels() {
         ArrayList<String> labels = new ArrayList<>();
         for (Event event : events) {
@@ -425,6 +451,43 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
                     + room + "             Current Capacity: " + capacity);
         }
         return labels;
+    }
+
+    /**
+     * A helper method that generates the label texts for the change event cancel scene.
+     *
+     * @return A list of stings that will become label texts in the change event cancel scene
+     */
+    public List<String> getEventCancelLabels() {
+        ArrayList<String> labels = new ArrayList<>();
+        for (Event event : events) {
+            String labelText = event.getEventTitle() + " on " + event.getEventTime().format(DateTimeFormatter.ofPattern("MMMM dd, HH:mm")) + ".";
+            if (event.getSpeakerId().size() > 0) {
+                labelText = labelText + " Hosted by";
+//                for (int i = 0; i < event.getSpeakerId().size(); i++) {
+//                    UUID speakerId = event.getSpeakerId().get(i);
+//                    labelText = labelText + " " + userManager.getUser(speakerId).getUsername();
+//                    if (i != event.getSpeakerId().size() - 1) {
+//                        labelText = labelText + ",";
+//                    }
+//                }
+            }
+            labels.add(labelText);
+        }
+        return labels;
+    }
+
+    /**
+     * A helper method that generates the list of list of ids of speakers of each event.
+     *
+     * @return A list of list of ids of speakers of each event.
+     */
+    public List<List<UUID>> getSpeakersId(){
+        ArrayList<List<UUID>> ids = new ArrayList<>();
+        for(Event event:events){
+            ids.add(event.getSpeakerId());
+        }
+        return ids;
     }
 
     @Override

@@ -14,7 +14,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class SeeEventScheduleController extends Controller{
@@ -67,7 +66,8 @@ public class SeeEventScheduleController extends Controller{
         eventListView.getItems().clear();
         if(userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE) ||
                 userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.VIP)) {
-            eventListView.getItems().addAll(getEventLabelsAttendee());
+            List<Event> events = eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn());
+            eventListView.getItems().addAll(getEventLabelsAttendee(events));
         }
         else{ //They are a speaker
             UUID currentUserId = userManager.getCurrentlyLoggedIn().getId();
@@ -77,17 +77,13 @@ public class SeeEventScheduleController extends Controller{
         eventListView.refresh();
     }
 
-    private List<Label> getEventLabelsAttendee() {
+    private List<Label> getEventLabelsAttendee(List<Event> events) {
         ArrayList<Label> labels = new ArrayList<>();
-        for(int i=0; i<eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()).size(); i++){
-            String labelText = eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()), "Title")
-                    + "  Time: " + eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Time")
-                    + "  Room: " + eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Room")
-                    + "  Event Type: " + eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Type");
+        for(Event event: events){
+            String labelText = eventManager.getIndividualTitle(event)
+                    + "  Time: " + eventManager.getIndividualTime(event, "yyyy-MM-dd HH:mm:ss")
+                    + "  Room: " + eventManager.getIndividualRoom(event)
+                    + "  Event Type: " + eventManager.getIndividualType(event);
             Label label = new Label(labelText);
             labels.add(label);
         }
@@ -97,7 +93,8 @@ public class SeeEventScheduleController extends Controller{
     private List<Label> getEventLabelsSpeaker(Collection<Event> events) {
         ArrayList<Label> labels = new ArrayList<>();
         for (Event event : events) {
-            String labelText = event.getEventTitle() + " on " + event.getEventTime().format(DateTimeFormatter.ofPattern("MMMM dd, HH:mm")) + ".";
+            String labelText = eventManager.getIndividualTitle(event) + " on "
+                             + eventManager.getIndividualTime(event, "MMMM dd, HH:mm") + ".";
             Label eventLabel = new Label(labelText);
             labels.add(eventLabel);
         }

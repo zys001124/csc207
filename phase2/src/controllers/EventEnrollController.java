@@ -1,5 +1,6 @@
 package controllers;
 
+import entities.Event;
 import exceptions.*;
 import observers.Observable;
 import observers.Observer;
@@ -82,21 +83,21 @@ public class EventEnrollController extends Controller {
     }
 
     private void setEventListField() {
-        eventListView.getItems().clear();
-        eventListView.getItems().addAll(getEventLabels());
+        //eventListView.getItems().clear();
+        eventListView.getItems().setAll(getEventLabels(eventManager.getEvents()));
         eventListView.refresh();
     }
 
-    private List<Label> getEventLabels() {
+    private List<Label> getEventLabels(List<Event> events) {
         ArrayList<Label> labels = new ArrayList<>();
-        for (int i = 0; i < eventManager.getEvents().size(); i++) {
-            String labelText = eventManager.getEventAttribute(i, eventManager.getEvents(),"Title")
-                             + "  Time: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"Time")
-                             + "  Room: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"Room")
-                             + "  Capacity: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"Capacity")
-                             + "  Currently Enrolled: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"Enrolled Number")
-                             + "  Event Type: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"Type")
-                             + "  VIP only: " + eventManager.getEventAttribute(i, eventManager.getEvents(),"VIP");
+        for (Event event: events) {
+            String labelText = eventManager.getIndividualTitle(event)
+                             + "  Time: " + eventManager.getIndividualTime(event, "yyyy-MM-dd HH:mm:ss")
+                             + "  Room: " + eventManager.getIndividualRoom(event)
+                             + "  Capacity: " + eventManager.getIndividualCapacity(event)
+                             + "  Currently Enrolled: " + eventManager.getIndividualEnrolledNumber(event)
+                             + "  Event Type: " + eventManager.getIndividualType(event)
+                             + "  VIP only: " + eventManager.getIndividualVIP(event);
             Label label = new Label(labelText);
             labels.add(label);
         }

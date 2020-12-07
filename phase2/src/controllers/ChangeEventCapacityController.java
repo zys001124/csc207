@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.User;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,6 +15,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * A controller for handling inputs when the Organizer is changing
+ * the capacity of  an Event
+ */
 public class ChangeEventCapacityController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -41,10 +44,9 @@ public class ChangeEventCapacityController extends Controller {
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
-        User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
-        if (currentUserType == User.UserType.ORGANIZER) {
+        if (userManager.checkOrganizer(userManager.getCurrentlyLoggedIn())) {
             setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
-        } else if (currentUserType == User.UserType.ADMIN) {
+        } else {
             setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
         }
     }

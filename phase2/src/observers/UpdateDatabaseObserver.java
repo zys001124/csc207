@@ -5,11 +5,11 @@ import gateways.FirebaseGateway;
 
 import java.util.List;
 
-public class ManagerObserver<T> implements Observer<T> {
+public class UpdateDatabaseObserver<T> implements Observer<T> {
 
     private final FirebaseGateway<T> gateway;
 
-    public ManagerObserver(FirebaseGateway<T> gateway) {
+    public UpdateDatabaseObserver(FirebaseGateway<T> gateway) {
         this.gateway = gateway;
     }
 

@@ -1,6 +1,7 @@
 package controllers;
 
 import exceptions.IncorrectObjectTypeException;
+import entities.Event;
 import observers.Observable;
 import observers.Observer;
 import useCaseClasses.EventManager;
@@ -79,29 +80,24 @@ public class EventUnEnrollController extends Controller{
 
     private void setEventListField() {
         eventListView.getItems().clear();
-        eventListView.getItems().addAll(getEventLabels());
+        eventListView.getItems().addAll(getEventLabels(eventManager.getEvents()));
         eventListView.refresh();
     }
 
-    private List<Label> getEventLabels() {
+    private List<Label> getEventLabels(List<Event> events) {
         ArrayList<Label> labels = new ArrayList<>();
-        for(int i=0; i<eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()).size(); i++){
-            String labelText = eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()), "Title")
-                    + "  Time: " + eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Time")
-                    + "  Room: " + eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Room")
-                    + "  Capacity: " + eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Capacity")
-                    + "  Currently Enrolled: " + eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Enrolled Number")
-                    + "  Event Type: " + eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"Type")
-                    + "  VIP only: " + eventManager.getEventAttribute(i,
-                    eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn()),"VIP");
-            Label label = new Label(labelText);
-            labels.add(label);
+        for(Event event: events){
+            if(event.hasAttendee(userManager.getCurrentlyLoggedIn().getId())){
+                String labelText = eventManager.getIndividualTitle(event)
+                        + "  Time: " + eventManager.getIndividualTime(event, "yyyy-MM-dd HH:mm:ss")
+                        + "  Room: " + eventManager.getIndividualRoom(event)
+                        + "  Capacity: " + eventManager.getIndividualCapacity(event)
+                        + "  Currently Enrolled: " + eventManager.getIndividualEnrolledNumber(event)
+                        + "  Event Type: " + eventManager.getIndividualType(event)
+                        + "  VIP only: " + eventManager.getIndividualVIP(event);
+                Label label = new Label(labelText);
+                labels.add(label);
+            }
         }
         return labels;
     }
