@@ -28,9 +28,6 @@ public class ConferenceSystem {
 
     private UseCaseHandler useCaseHandler;
     private ControllerHandler controllerHandler;
-    private PresenterHandler presenterHandler;
-
-    private ViewHandler viewHandler;
     private SceneNavigator sceneNavigator;
 
     /**
@@ -75,8 +72,8 @@ public class ConferenceSystem {
         controllerHandler = new ControllerHandler(useCaseHandler);
 
         sceneNavigator = new SceneNavigator(primaryStage, useCaseHandler);
-        presenterHandler = new PresenterHandler(useCaseHandler, controllerHandler, sceneNavigator);
-        viewHandler = new ViewHandler(controllerHandler, presenterHandler, sceneNavigator);
+       // presenterHandler = new PresenterHandler(useCaseHandler, controllerHandler, sceneNavigator);
+      //  viewHandler = new ViewHandler(controllerHandler, presenterHandler, sceneNavigator);
         // sceneNavigator.getApplicationStage().setScene(sceneNavigator.getLoginScene());
     }
 
