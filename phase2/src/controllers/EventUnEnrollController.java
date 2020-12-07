@@ -1,5 +1,8 @@
 package controllers;
 
+import exceptions.IncorrectObjectTypeException;
+import observers.Observable;
+import observers.Observer;
 import useCaseClasses.EventManager;
 import exceptions.EventNotFoundException;
 import exceptions.UserNotEnrolledInEventException;
@@ -71,10 +74,13 @@ public class EventUnEnrollController extends Controller{
     public void setEventManager(EventManager eventManager) {
         super.setEventManager(eventManager);
         setEventListField();
+        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventListField());
     }
 
     private void setEventListField() {
+        eventListView.getItems().clear();
         eventListView.getItems().addAll(getEventLabels());
+        eventListView.refresh();
     }
 
     private List<Label> getEventLabels() {

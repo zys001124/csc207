@@ -1,10 +1,9 @@
 package controllers;
 
+import exceptions.*;
+import observers.Observable;
+import observers.Observer;
 import useCaseClasses.EventManager;
-import exceptions.EventFullException;
-import exceptions.EventNotFoundException;
-import exceptions.InvalidUserTypeException;
-import exceptions.UserAlreadyEnrolledException;
 import handlers.SceneNavigator;
 
 import javafx.event.ActionEvent;
@@ -79,10 +78,13 @@ public class EventEnrollController extends Controller {
     public void setEventManager(EventManager eventManager) {
         super.setEventManager(eventManager);
         setEventListField();
+        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventListField());
     }
 
     private void setEventListField() {
+        eventListView.getItems().clear();
         eventListView.getItems().addAll(getEventLabels());
+        eventListView.refresh();
     }
 
     private List<Label> getEventLabels() {

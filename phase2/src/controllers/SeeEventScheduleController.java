@@ -2,6 +2,9 @@ package controllers;
 
 import entities.Event;
 import entities.User;
+import exceptions.IncorrectObjectTypeException;
+import observers.Observable;
+import observers.Observer;
 import useCaseClasses.EventManager;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
@@ -57,9 +60,11 @@ public class SeeEventScheduleController extends Controller{
         }
 
         setEventListField();
+        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventListField());
     }
 
     private void setEventListField() {
+        eventListView.getItems().clear();
         if(userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE) ||
                 userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.VIP)) {
             eventListView.getItems().addAll(getEventLabelsAttendee());
@@ -67,8 +72,9 @@ public class SeeEventScheduleController extends Controller{
         else{ //They are a speaker
             UUID currentUserId = userManager.getCurrentlyLoggedIn().getId();
             List<Event> events = eventManager.getEventsWithSpeaker(currentUserId);
-            eventListView.getItems().setAll(getEventLabelsSpeaker(events));
+            eventListView.getItems().addAll(getEventLabelsSpeaker(events));
         }
+        eventListView.refresh();
     }
 
     private List<Label> getEventLabelsAttendee() {
