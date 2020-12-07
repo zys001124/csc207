@@ -1,6 +1,5 @@
 package controllers;
 
-import entities.User;
 import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
@@ -14,7 +13,10 @@ import useCaseClasses.UserManager;
 import java.net.URL;
 import java.util.*;
 
-
+/**
+ * A controller for handling inputs when the Admin is deleting
+ * an user account
+ */
 public class DeleteAccountController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader

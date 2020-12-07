@@ -321,6 +321,11 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         return speakers;
     }
 
+    /**
+     * A helper method that generates the label texts for the delete account scene.
+     *
+     * @return A list of stings that will become label texts in the delete account scene
+     */
     public List<String> getDeleteAccountLabels() {
         ArrayList<String> labels = new ArrayList<>();
         for (User user : users) {

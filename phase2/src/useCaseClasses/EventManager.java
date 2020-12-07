@@ -412,6 +412,12 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return theList;
     }
 
+    /**
+     * This method checks whether the event exist by its name
+     *
+     * @param title A string that is the name of the event
+     * @return A boolean value of whether this event exist
+     */
     public boolean eventTitleExists(String title) {
         for (Event e : events) {
             if (e.getEventTitle().equals(title)) {
@@ -421,6 +427,11 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return false;
     }
 
+    /**
+     * A helper method that generates the label texts for the change event capacity scene.
+     *
+     * @return A list of stings that will become label texts in the change event capacity scene
+     */
     public List<String> getEventCapacityLabels() {
         ArrayList<String> labels = new ArrayList<>();
         for (Event event : events) {

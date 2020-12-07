@@ -14,7 +14,10 @@ import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-
+/**
+ * A controller for handling inputs when the Organizer or Admin is canceling
+ * an Event
+ */
 public class EventCancelController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader

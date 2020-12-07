@@ -16,6 +16,10 @@ import java.util.Collection;
 import java.util.List;
 import java.util.ResourceBundle;
 
+/**
+ * A controller for handling inputs when the Organizer is changing
+ * the capacity of  an Event
+ */
 public class ChangeEventCapacityController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
