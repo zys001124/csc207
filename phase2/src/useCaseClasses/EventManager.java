@@ -275,15 +275,15 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     public void updateEventFromDataSnapshot(DataSnapshot dataSnapshot) {
         Event event = getFromDataSnapshot(dataSnapshot);
-
+        Event.EventData eventData = event.getEventData();
         // Find event
         List<Event> eventsToChange = new ArrayList<>();
-        eventsToChange.add(event);
 
         for(Event e: events) {
             if(e.getId().equals(event.getId())){
-                events.remove(e);
-                events.add(event);
+                e.set(eventData);
+                eventsToChange.add(e);
+                System.out.println("here");
                 notifyObservers(eventsToChange, true, true);
                 return;
             }

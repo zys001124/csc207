@@ -6,7 +6,7 @@ import entities.User;
 import gateways.EventGateway;
 import gateways.MessageGateway;
 import gateways.UserGateway;
-import observers.ManagerObserver;
+import observers.UpdateDatabaseObserver;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
@@ -19,9 +19,9 @@ public class UseCaseHandler {
     private final EventManager eventManager;
 
     // Observers
-    private final ManagerObserver<User> userManagerObserver;
-    private final ManagerObserver<Message> messageManagerObserver;
-    private final ManagerObserver<Event> eventManagerObserver;
+    private final UpdateDatabaseObserver<User> userUpdateDatabaseObserver;
+    private final UpdateDatabaseObserver<Message> messageUpdateDatabaseObserver;
+    private final UpdateDatabaseObserver<Event> eventUpdateDatabaseObserver;
 
     private final UserGateway userGateway;
     private final MessageGateway messageGateway;
@@ -38,13 +38,13 @@ public class UseCaseHandler {
         messageGateway = new MessageGateway(messageManager);
         eventGateway = new EventGateway(eventManager);
 
-        userManagerObserver = new ManagerObserver(userGateway);
-        messageManagerObserver = new ManagerObserver(messageGateway);
-        eventManagerObserver = new ManagerObserver(eventGateway);
+        userUpdateDatabaseObserver = new UpdateDatabaseObserver(userGateway);
+        messageUpdateDatabaseObserver = new UpdateDatabaseObserver(messageGateway);
+        eventUpdateDatabaseObserver = new UpdateDatabaseObserver(eventGateway);
 
-        userManager.addObserver(userManagerObserver);
-        messageManager.addObserver(messageManagerObserver);
-        eventManager.addObserver(eventManagerObserver);
+        userManager.addObserver(userUpdateDatabaseObserver);
+        messageManager.addObserver(messageUpdateDatabaseObserver);
+        eventManager.addObserver(eventUpdateDatabaseObserver);
     }
 
     public UserManager getUserManager() {
