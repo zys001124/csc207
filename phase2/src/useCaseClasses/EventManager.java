@@ -118,17 +118,16 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
     }
 
     public void removeEventFromDataSnapshot(DataSnapshot dataSnapshot) {
-        Event event = getFromDataSnapshot(dataSnapshot);
-        removeEvent(event.getId());
-//        List<Event> eventsToRemove = new ArrayList<>();
-//        for (Event event : events) {
-//            int index = events.indexOf(event);
-//            if (event.getId().equals(id)) {
-//                eventsToRemove.add(events.remove(index));
-//                notifyObservers(eventsToRemove, false, false);
-//                return;
-//            }
-//        }
+        Event eventChanged = getFromDataSnapshot(dataSnapshot);
+        List<Event> eventsToRemove = new ArrayList<>();
+        for (Event event : events) {
+            int index = events.indexOf(event);
+            if (event.getId().equals(eventChanged.getId())) {
+                eventsToRemove.add(events.remove(index));
+                notifyObservers(eventsToRemove, false, true);
+                return;
+            }
+        }
     }
 
     /**
@@ -260,6 +259,14 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         // Find event
         List<Event> eventsToChange = new ArrayList<>();
         eventsToChange.add(event);
+
+        for(Event e: events) {
+            if(e.getId().equals(event.getId())){
+                events.remove(e);
+                events.add(event);
+            }
+        }
+
         notifyObservers(eventsToChange, true, true);
     }
 
@@ -291,7 +298,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         List<Event> eventsChanged = new ArrayList<>();
         event.removeAttendee(attendee);
         eventsChanged.add(event);
-        notifyObservers(eventsChanged, true, false);
+        notifyObservers(eventsChanged, false, false);
     }
 
     public void removeUserFromEventFromDatabase(String eventInput, User attendee) throws EventNotFoundException,
@@ -304,7 +311,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
                 List<Event> eventsChanged = new ArrayList<>();
                 event.removeAttendee(attendee);
                 eventsChanged.add(event);
-                notifyObservers(eventsChanged, true, true);
+                notifyObservers(eventsChanged, false, true);
                 return;
             }
         }
