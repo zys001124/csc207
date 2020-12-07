@@ -65,7 +65,8 @@ public class MessageUserSceneController extends Controller {
     public void setUserManager(UserManager userManager) {
         super.setUserManager(userManager);
 
-        userListView.getItems().setAll(getUserLabels(userManager.getUsersSorted()));
+        setUserList();
+        userManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setUserList());
     }
 
     @Override
@@ -175,5 +176,9 @@ public class MessageUserSceneController extends Controller {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    private void setUserList() {
+        userListView.getItems().setAll(getUserLabels(userManager.getUsersSorted()));
     }
 }
