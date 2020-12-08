@@ -135,11 +135,11 @@ public class MessageUserSceneController extends Controller {
         Label userLabel = userListView.getSelectionModel().getSelectedItems().get(0);
         String recipientUsername = userLabel.getText().split(":")[0];
 
-        UUID recipient = userManager.getUserID(recipientUsername);
-        UUID sender = userManager.getCurrentlyLoggedIn().getId();
+        User recipient = userManager.getUser(userManager.getUserID(recipientUsername));
+        User sender = userManager.getCurrentlyLoggedIn();
 
         try {
-            messageManager.sendIndividualMessage(userManager.getCurrentlyLoggedIn().getType(), sender, userManager.getUser(recipient).getType(), recipient, text);
+            messageManager.sendMessage(sender, recipient, text);
         } catch (InvalidUserTypeException e) {
             label = "You can't message this user.";
         } catch (NoMessageException e) {

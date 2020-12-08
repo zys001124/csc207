@@ -76,9 +76,11 @@ public class MessageAllSpeakersController extends Controller {
             return InputProcessResult.NO_MESSAGE_DETECTED;
         }
 
-        List<UUID> speakersId = userManager.getUserId(User.UserType.SPEAKER);
+        // Use ID to override normal checks
+        for(User speaker : userManager.getSpeakers()){
+            messageManager.sendMessageById(userManager.getCurrentlyLoggedIn().getId(), speaker.getId(), message);
+        }
 
-        messageManager.sendMessageToGroup(userManager.getCurrentlyLoggedIn().getId(), speakersId, message);
         return InputProcessResult.SUCCESS;
     }
 }

@@ -76,9 +76,10 @@ public class MessageAllAttendeesController extends Controller {
             return InputProcessResult.NO_MESSAGE_DETECTED;
         }
 
-        List<UUID> attendeesId = userManager.getUserId(User.UserType.ATTENDEE);
-
-        messageManager.sendMessageToGroup(userManager.getCurrentlyLoggedIn().getId(), attendeesId, message);
+        // Use ID to override normal checks
+        for(User attendee : userManager.getAttendees()){
+            messageManager.sendMessageById(userManager.getCurrentlyLoggedIn().getId(), attendee.getId(), message);
+        }
 
         return InputProcessResult.SUCCESS;
     }

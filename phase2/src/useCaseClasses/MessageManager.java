@@ -36,42 +36,55 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
     /**
      * Adds a message to the list of messages
      *
-     * @param sender   the UUID of the sender of the message
-     * @param receiver the UUID of the recieves of the message
+     * @param sender   the User sending the message
+     * @param recipient the User receiving the message
      * @param message  the message that is sent
      */
-    public void sendIndividualMessage(User.UserType senderType, UUID sender, User.UserType receiverType, UUID receiver, String message) throws InvalidUserTypeException, NoMessageException {
+    public void sendMessage(User sender, User recipient, String message) throws InvalidUserTypeException, NoMessageException {
+
+        User.UserType senderType = sender.getType();
+        User.UserType recipientType = recipient.getType();
+
         switch (senderType) {
             case ATTENDEE: {
-                if (receiverType.equals(User.UserType.ORGANIZER) || receiverType.equals(User.UserType.VIP) || receiverType.equals(User.UserType.ADMIN)) {
-                    throw new InvalidUserTypeException(receiverType);
+                if (recipientType.equals(User.UserType.ORGANIZER) || recipientType.equals(User.UserType.VIP) || recipientType.equals(User.UserType.ADMIN)) {
+                    throw new InvalidUserTypeException(recipientType);
                 }
                 break;
             }
             case ORGANIZER: {
-                if (receiverType.equals(User.UserType.ADMIN)) {
-                    throw new InvalidUserTypeException(receiverType);
+                if (recipientType.equals(User.UserType.ADMIN)) {
+                    throw new InvalidUserTypeException(recipientType);
                 }
                 break;
             }
             case SPEAKER: {
-                if (receiverType.equals(User.UserType.ADMIN)) {
-                    throw new InvalidUserTypeException(receiverType);
-                } else if (receiverType.equals(User.UserType.ATTENDEE) && !messageSentBy(receiver, sender)) {
+                if (recipientType.equals(User.UserType.ADMIN)) {
+                    throw new InvalidUserTypeException(recipientType);
+                } else if (recipientType.equals(User.UserType.ATTENDEE) && !messageSentBy(recipient.getId(), recipient.getId())) {
                     throw new NoMessageException();
                 }
                 break;
             }
             case VIP: {
-                if (receiverType.equals(User.UserType.ADMIN)) {
-                    throw new InvalidUserTypeException(receiverType);
+                if (recipientType.equals(User.UserType.ADMIN)) {
+                    throw new InvalidUserTypeException(recipientType);
                 }
             }
         }
 
         List<Message> messagesToAdd = new ArrayList<>();
 
-        messagesToAdd.add(new Message(message, sender, receiver, UUID.randomUUID()));
+        messagesToAdd.add(new Message(message, sender.getId(), recipient.getId(), UUID.randomUUID()));
+        messages.addAll(messagesToAdd);
+        notifyObservers(messagesToAdd, true, false);
+    }
+
+    public void sendMessageById(UUID sender, UUID recipient, String message){
+
+        List<Message> messagesToAdd = new ArrayList<>();
+
+        messagesToAdd.add(new Message(message, sender, recipient, UUID.randomUUID()));
         messages.addAll(messagesToAdd);
         notifyObservers(messagesToAdd, true, false);
     }
