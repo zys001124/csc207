@@ -282,8 +282,6 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
                 return;
             }
         }
-
-
     }
 
     /**
@@ -505,13 +503,6 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
             String labelText = event.getEventTitle() + " on " + event.getEventTime().format(DateTimeFormatter.ofPattern("MMMM dd, HH:mm")) + ".";
             if (event.getSpeakerId().size() > 0) {
                 labelText = labelText + " Hosted by";
-//                for (int i = 0; i < event.getSpeakerId().size(); i++) {
-//                    UUID speakerId = event.getSpeakerId().get(i);
-//                    labelText = labelText + " " + userManager.getUser(speakerId).getUsername();
-//                    if (i != event.getSpeakerId().size() - 1) {
-//                        labelText = labelText + ",";
-//                    }
-//                }
             }
             labels.add(labelText);
         }
