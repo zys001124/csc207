@@ -115,7 +115,7 @@ public class DeleteAccountController extends Controller {
         super.setUserManager(userManager);
 
         setUserList();
-        userManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setUserList());
+        userManager.addObserver((o, changes, addedOrChanged) -> setUserList());
     }
 
     private List<Label> getUserLabels() {

@@ -2,6 +2,7 @@ package useCaseClasses;
 
 
 import com.google.firebase.database.DataSnapshot;
+import entities.Message;
 import entities.User;
 import exceptions.*;
 import gateways.snapshotreaders.DataSnapshotReader;
@@ -25,15 +26,6 @@ public class UserManager extends Observable {
      */
     public UserManager() {
         users = new ArrayList<>();
-    }
-
-    /**
-     * Creates a UserManager with the given list of users
-     *
-     * @param users - The list of users this UserManager will manage
-     */
-    public UserManager(List<User> users) {
-        this.users = users;
     }
 
     /**
@@ -98,11 +90,24 @@ public class UserManager extends Observable {
             int index = users.indexOf(user);
             if (user.getId().equals(id)) {
                 usersToRemove.add(users.remove(index));
-                notifyObservers(usersToRemove, false, false);
+                notifyObservers(usersToRemove, false);
                 return usersToRemove.get(0);
             }
         }
         return null;
+    }
+
+    public User removeUser(User user) {
+        List<User> usersToRemove = new ArrayList<>();
+        if(users.remove(user)){
+            usersToRemove.add(user);
+            notifyObservers(usersToRemove, false);
+            return usersToRemove.get(0);
+        }
+        else
+        {
+            return null;
+        }
     }
 
     /**
@@ -116,7 +121,7 @@ public class UserManager extends Observable {
             int index = users.indexOf(user);
             if (user.getId().equals(userId)) {
                 usersToRemove.add(users.remove(index));
-                notifyObservers(usersToRemove, false, true);
+                notifyObservers(usersToRemove, false);
             }
         }
     }
@@ -153,30 +158,30 @@ public class UserManager extends Observable {
         List<User> usersToAdd = new ArrayList<>();
         usersToAdd.add(user);
         users.addAll(usersToAdd);
-        notifyObservers(usersToAdd, true, false);
+        notifyObservers(usersToAdd, true);
     }
 
     /**
      * Adds new users from a data snapshot that is linked to firebase for live updates
      */
-    public void addUserFromDatabase(User user) {
+    public void addUser(User user) {
         List<User> usersToAdd = new ArrayList<>();
         if (!doesUserExist(user.getUsername())) {
             usersToAdd.add(user);
             users.addAll(usersToAdd);
-            notifyObservers(usersToAdd, true, true);
+            notifyObservers(usersToAdd, true);
         }
     }
 
     /**
      * Changes the user from the data snapshot that is given which is linked to firebase
      */
-    public void changeUserFromDatabase(User user) {
+    public void changeUser(User user) {
         List<User> usersToAdd = new ArrayList<>();
         usersToAdd.add(user);
         removeUserFromDatabase(user);
         users.addAll(usersToAdd);
-        notifyObservers(usersToAdd, true, true);
+        notifyObservers(usersToAdd, true);
     }
 
     /**
@@ -184,7 +189,7 @@ public class UserManager extends Observable {
      * called in addUser
      *
      * @param username the string of the username to see if it is found
-     * @return boolean on wether or not the user exists
+     * @return boolean on whether or not the user exists
      */
     public boolean doesUserExist(String username) {
         for (User user : users) {
@@ -410,4 +415,13 @@ public class UserManager extends Observable {
         }
     }
 
+    /**
+     * Checks if this instance of the manager contains a given user
+     * @param user - the user we wish to check
+     * @return a boolean - whether or not the user is being kept track of
+     * by this instance of UserManager
+     */
+    public boolean isUserInManager(User user) {
+        return users.contains(user);
+    }
 }

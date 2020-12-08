@@ -64,7 +64,7 @@ public class MessageUserSceneController extends Controller {
         super.setUserManager(userManager);
 
         setUserList();
-        userManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setUserList());
+        userManager.addObserver((o, changes, addedOrChanged) -> setUserList());
     }
 
     @Override
@@ -73,7 +73,7 @@ public class MessageUserSceneController extends Controller {
 
         messageManager.addObserver(new Observer<Message>() {
             @Override
-            public void update(Observable o, List<Message> changes, boolean addedOrChanged, boolean retrievedFromDataBase) throws IncorrectObjectTypeException {
+            public void update(Observable o, List<Message> changes, boolean addedOrChanged) throws IncorrectObjectTypeException {
                 //Using set so no duplicates are made
                 Set<Message> newMessages = new TreeSet<>();
                 UUID currentUserID = userManager.getCurrentlyLoggedIn().getId();

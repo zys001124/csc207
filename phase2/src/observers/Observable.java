@@ -52,11 +52,11 @@ public class Observable {
      * @param addedOrChanged        - Whether or not these changes are either new additions or changes of existing objects
      * @param retrievedFromDataBase - Whether or not these changes came from the database
      */
-    public void notifyObservers(List<?> changes, boolean addedOrChanged, boolean retrievedFromDataBase) {
+    public void notifyObservers(List<?> changes, boolean addedOrChanged) {
 
         try {
             for (Observer o : observers) {
-                o.update(this, changes, addedOrChanged, retrievedFromDataBase);
+                o.update(this, changes, addedOrChanged);
             }
         } catch (IncorrectObjectTypeException e) {
             e.printStackTrace();

@@ -113,7 +113,7 @@ public class EventCancelController extends Controller {
         super.setEventManager(eventManager);
 
         setEventList();
-        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventList());
+        eventManager.addObserver((o, changes, addedOrChanged) -> setEventList());
     }
 
     private List<Label> getEventLabels() {

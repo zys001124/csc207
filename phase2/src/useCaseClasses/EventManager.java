@@ -38,37 +38,7 @@ public class EventManager extends Observable {
         List<Event> eventsToAdd = new ArrayList<>();
         eventsToAdd.add(e);
         events.addAll(eventsToAdd);
-        notifyObservers(eventsToAdd, true, false);
-    }
-
-    /**
-     * Adds an event from a given firebase data snapshot for live updates
-     *
-     * @param dataSnapshot the snapshot to be processed for the event to be added
-     */
-    public void addEventFromDatabase(Event event) {
-
-        if (!eventExists(event.getId())) {
-            List<Event> eventsToAdd = new ArrayList<>();
-            eventsToAdd.add(event);
-            events.addAll(eventsToAdd);
-            notifyObservers(eventsToAdd, true, true);
-        }
-    }
-
-    /**
-     * Checks to see if an event exists based on its UUID
-     *
-     * @param eventId the UUID of the event that is to be found in the conference system
-     * @return boolean on if the event is found
-     */
-    private boolean eventExists(UUID eventId) {
-        for (Event event : events) {
-            if (eventId.equals(event.getId())) {
-                return true;
-            }
-        }
-        return false;
+        notifyObservers(eventsToAdd, true);
     }
 
     /***
@@ -110,7 +80,7 @@ public class EventManager extends Observable {
             int index = events.indexOf(event);
             if (event.getId().equals(id)) {
                 eventsToRemove.add(events.remove(index));
-                notifyObservers(eventsToRemove, false, false);
+                notifyObservers(eventsToRemove, false);
                 return eventsToRemove.get(0);
             }
         }
@@ -126,7 +96,7 @@ public class EventManager extends Observable {
             int index = events.indexOf(event);
             if (event.getId().equals(eventRemoved.getId())) {
                 eventsToRemove.add(events.remove(index));
-                notifyObservers(eventsToRemove, false, true);
+                notifyObservers(eventsToRemove, false);
                 return;
             }
         }
@@ -261,15 +231,14 @@ public class EventManager extends Observable {
         List<Event> eventsChanged = new ArrayList<>();
         event.addAttendee(attendee);
         eventsChanged.add(event);
-        notifyObservers(eventsChanged, true, false);
+        notifyObservers(eventsChanged, true);
     }
 
     /**
      * updates the information of an event based on the firebase updates for the data snapshot
      *
-     * @param dataSnapshot the snapshot that stores info on what changes about the event
      */
-    public void updateEventFromDatabase(Event event) {
+    public void updateStoredEvent(Event event) {
 
         Event.EventData eventData = event.getEventData();
         // Find event
@@ -279,8 +248,7 @@ public class EventManager extends Observable {
             if (e.getId().equals(event.getId())) {
                 e.set(eventData);
                 eventsToChange.add(e);
-                System.out.println("here");
-                notifyObservers(eventsToChange, true, true);
+                notifyObservers(eventsToChange, true);
                 return;
             }
         }
@@ -320,7 +288,7 @@ public class EventManager extends Observable {
         List<Event> eventsChanged = new ArrayList<>();
         event.removeAttendee(attendee);
         eventsChanged.add(event);
-        notifyObservers(eventsChanged, true, false);
+        notifyObservers(eventsChanged, true);
     }
 
 
@@ -445,7 +413,7 @@ public class EventManager extends Observable {
         Event event = getEvent(eventTitle);
         event.setEventCapacity(newCapacity);
         eventsToChange.add(event);
-        notifyObservers(eventsToChange, true, changeFromDatabase);
+        notifyObservers(eventsToChange, true);
     }
 
     /**
@@ -534,5 +502,15 @@ public class EventManager extends Observable {
             ids.add(event.getSpeakerId());
         }
         return ids;
+    }
+
+    /**
+     * Checks if this instance of the manager contains a given event
+     * @param e - the event we wish to check
+     * @return a boolean - whether or not the event is being kept track of
+     * by this instance of EventManager
+     */
+    public boolean isEventInManager(Event e) {
+        return events.contains(e);
     }
 }

@@ -65,7 +65,7 @@ public class SeeEventScheduleController extends Controller {
         }
 
         setEventListField();
-        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventListField());
+        eventManager.addObserver((o, changes, addedOrChanged) -> setEventListField());
     }
 
     /**

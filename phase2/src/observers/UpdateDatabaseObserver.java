@@ -28,14 +28,10 @@ public class UpdateDatabaseObserver<T> implements Observer<T> {
      * @param changes               - the List of changes that were made
      * @param addedOrChanged        - whether or not the changes were either additions or changes
      *                              within the objects
-     * @param retrievedFromDataBase - whether or not these changes were retrieved from the database
      * @throws IncorrectObjectTypeException
      */
     @Override
-    public void update(Observable o, List<T> changes, boolean addedOrChanged, boolean retrievedFromDataBase) throws IncorrectObjectTypeException {
-        if (retrievedFromDataBase) {
-            return;
-        }
+    public void update(Observable o, List<T> changes, boolean addedOrChanged) throws IncorrectObjectTypeException {
         try {
             if (addedOrChanged) {
                 gateway.pushEntities(changes);

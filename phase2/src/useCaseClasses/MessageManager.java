@@ -80,7 +80,7 @@ public class MessageManager extends Observable {
 
         messagesToAdd.add(new Message(message, sender.getId(), recipient.getId(), UUID.randomUUID()));
         messages.addAll(messagesToAdd);
-        notifyObservers(messagesToAdd, true, false);
+        notifyObservers(messagesToAdd, true);
     }
 
     /**
@@ -96,7 +96,7 @@ public class MessageManager extends Observable {
 
         messagesToAdd.add(new Message(message, sender, recipient, UUID.randomUUID()));
         messages.addAll(messagesToAdd);
-        notifyObservers(messagesToAdd, true, false);
+        notifyObservers(messagesToAdd, true);
     }
 
     /**
@@ -112,20 +112,19 @@ public class MessageManager extends Observable {
         List<Message> messagesToAdd = new ArrayList<>();
         messagesToAdd.add(new Message(message, sender, receiver, messageId, timeSent));
         messages.addAll(messagesToAdd);
-        notifyObservers(messagesToAdd, true, false);
+        notifyObservers(messagesToAdd, true);
     }
 
     /**
-     * Adds a message to the conference system from the firebase update data snapshot
+     * Messages that are to be added to the conference system
      *
+     * @param message the message object to be added
      */
-    public void addMessageFromDatabase(Message message) {
-        if (!messageExists(message.getId())) {
-            List<Message> messagesToAdd = new ArrayList<>();
-            messagesToAdd.add(message);
-            messages.addAll(messagesToAdd);
-            notifyObservers(messagesToAdd, true, true);
-        }
+    public void addMessage(Message message) {
+        List<Message> messagesToAdd = new ArrayList<>();
+        messagesToAdd.add(message);
+        messages.addAll(messagesToAdd);
+        notifyObservers(messagesToAdd, true);
     }
 
     /**
@@ -151,7 +150,7 @@ public class MessageManager extends Observable {
             messagesToAdd.add(new Message(message, sender, userId, UUID.randomUUID()));
         }
         messages.addAll(messagesToAdd);
-        notifyObservers(messagesToAdd, true, false);
+        notifyObservers(messagesToAdd, true);
     }
 
 
@@ -205,5 +204,15 @@ public class MessageManager extends Observable {
         }
         Collections.sort(theMessages);
         return theMessages;
+    }
+
+    /**
+     * Checks if this instance of the manager contains a given message
+     * @param message - the message we wish to check
+     * @return a boolean - whether or not the message is being kept track of
+     * by this instance of MessageManager
+     */
+    public boolean isMessageInManager(Message message) {
+        return messages.contains(message);
     }
 }

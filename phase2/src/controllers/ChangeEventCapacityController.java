@@ -145,7 +145,7 @@ public class ChangeEventCapacityController extends Controller {
         super.setEventManager(eventManager);
 
         setEventList();
-        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> {
+        eventManager.addObserver((o, changes, addedOrChanged) -> {
             setEventList();
         });
     }

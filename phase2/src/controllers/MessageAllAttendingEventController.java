@@ -91,7 +91,7 @@ public class MessageAllAttendingEventController extends Controller {
         super.setEventManager(eventManager);
 
         setEventList();
-        messageManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventList());
+        messageManager.addObserver((o, changes, addedOrChanged) -> setEventList());
     }
 
     /**

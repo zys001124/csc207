@@ -83,7 +83,7 @@ public class EventUnEnrollController extends Controller {
     public void setEventManager(EventManager eventManager) {
         super.setEventManager(eventManager);
         setEventListField();
-        eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventListField());
+        eventManager.addObserver((o, changes, addedOrChanged) -> setEventListField());
     }
 
     /**

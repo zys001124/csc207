@@ -253,6 +253,29 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         return eventId.compareTo(o.eventId);
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Event uuids = (Event) o;
+        return VIPonly == uuids.VIPonly &&
+                Objects.equals(eventSTime, uuids.eventSTime) &&
+                Objects.equals(eventETime, uuids.eventETime) &&
+                Objects.equals(eventId, uuids.eventId) &&
+                Objects.equals(eventTitle, uuids.eventTitle) &&
+                Objects.equals(eventRoom, uuids.eventRoom) &&
+                Objects.equals(eventCapacity, uuids.eventCapacity) &&
+                eventType == uuids.eventType &&
+                Objects.equals(organizerId, uuids.organizerId) &&
+                Objects.equals(speakerId, uuids.speakerId) &&
+                Objects.equals(attendees, uuids.attendees);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(eventSTime, eventETime, eventId, eventTitle, eventRoom, eventCapacity, eventType, VIPonly, organizerId, speakerId, attendees);
+    }
+
     /**
      * Gets the event data of this particular event
      *
