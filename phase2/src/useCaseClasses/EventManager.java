@@ -5,7 +5,6 @@ import entities.Event;
 import entities.User;
 import exceptions.*;
 import gateways.DataSnapshotReader;
-import javafx.scene.control.Label;
 import observers.Observable;
 
 import java.time.LocalDateTime;
@@ -170,10 +169,10 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return events;
     }
 
-    public List<Event> getEventsWithAttendee(User user){
+    public List<Event> getEventsWithAttendee(User user) {
         List<Event> result = new ArrayList<>();
-        for(Event event: events){
-            if(event.hasAttendee(user.getId())){
+        for (Event event : events) {
+            if (event.hasAttendee(user.getId())) {
                 result.add(event);
             }
         }
@@ -182,8 +181,8 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     public List<Event> getEventsWithSpeaker(UUID speakerId) {
         List<Event> speakerEvents = new ArrayList<>();
-        for(Event e: events) {
-            if(e.getSpeakerId().contains(speakerId)) {
+        for (Event e : events) {
+            if (e.getSpeakerId().contains(speakerId)) {
                 speakerEvents.add(e);
             }
         }
@@ -279,8 +278,8 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         // Find event
         List<Event> eventsToChange = new ArrayList<>();
 
-        for(Event e: events) {
-            if(e.getId().equals(event.getId())){
+        for (Event e : events) {
+            if (e.getId().equals(event.getId())) {
                 e.set(eventData);
                 eventsToChange.add(e);
                 System.out.println("here");
@@ -363,35 +362,35 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         }
     }
 
-    public ArrayList<Event> sortedEventsWithAttendees(User user){
+    public ArrayList<Event> sortedEventsWithAttendees(User user) {
         return eventSortTime(getEventsWithAttendee(user));
     }
 
-    public String getIndividualTitle(Event event){
+    public String getIndividualTitle(Event event) {
         return event.getEventTitle();
     }
 
-    public String getIndividualTime(Event event, String format){
+    public String getIndividualTime(Event event, String format) {
         return event.getEventTime().format(DateTimeFormatter.ofPattern(format));
     }
 
-    public String getIndividualRoom(Event event){
+    public String getIndividualRoom(Event event) {
         return String.valueOf(event.getEventRoom());
     }
 
-    public String getIndividualCapacity(Event event){
+    public String getIndividualCapacity(Event event) {
         return String.valueOf(event.getEventCapacity());
     }
 
-    public String getIndividualEnrolledNumber(Event event){
+    public String getIndividualEnrolledNumber(Event event) {
         return String.valueOf(event.getEventEnrolledNumber());
     }
 
-    public String getIndividualType(Event event){
+    public String getIndividualType(Event event) {
         return String.valueOf(event.getEventType().toString());
     }
 
-    public String getIndividualVIP(Event event){
+    public String getIndividualVIP(Event event) {
         return String.valueOf(event.getViponly());
     }
 
@@ -435,7 +434,9 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
      * @param event An event
      * @return the id of the event
      */
-    public UUID getEventId(Event event){ return event.getId(); }
+    public UUID getEventId(Event event) {
+        return event.getId();
+    }
 
     /**
      * A helper method that generates the label texts for the change event capacity scene.
@@ -482,9 +483,9 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
      *
      * @return A list of list of ids of speakers of each event.
      */
-    public List<List<UUID>> getSpeakersId(){
+    public List<List<UUID>> getSpeakersId() {
         ArrayList<List<UUID>> ids = new ArrayList<>();
-        for(Event event:events){
+        for (Event event : events) {
             ids.add(event.getSpeakerId());
         }
         return ids;

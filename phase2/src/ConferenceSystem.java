@@ -4,7 +4,8 @@ import com.google.firebase.FirebaseOptions;
 import controllers.Controller;
 import controllers.LoginController;
 import controllers.LoginListener;
-import handlers.*;
+import handlers.SceneNavigator;
+import handlers.UseCaseHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -27,10 +28,6 @@ public class ConferenceSystem {
     public static final String EVENT_DATA_PATH = "eventData.txt";
 
     private UseCaseHandler useCaseHandler;
-    private ControllerHandler controllerHandler;
-    private PresenterHandler presenterHandler;
-
-    private ViewHandler viewHandler;
     private SceneNavigator sceneNavigator;
 
     /**
@@ -39,7 +36,7 @@ public class ConferenceSystem {
 
     public ConferenceSystem(Stage primaryStage) {
         initializeFirebase();
-        initializeHandlers(primaryStage);
+        initializeSceneNavigator(primaryStage);
     }
 
     public void run() {
@@ -70,14 +67,9 @@ public class ConferenceSystem {
         }
     }
 
-    public void initializeHandlers(Stage primaryStage) {
+    public void initializeSceneNavigator(Stage primaryStage) {
         useCaseHandler = new UseCaseHandler();
-        controllerHandler = new ControllerHandler(useCaseHandler);
-
         sceneNavigator = new SceneNavigator(primaryStage, useCaseHandler);
-        presenterHandler = new PresenterHandler(useCaseHandler, controllerHandler, sceneNavigator);
-        viewHandler = new ViewHandler(controllerHandler, presenterHandler, sceneNavigator);
-        // sceneNavigator.getApplicationStage().setScene(sceneNavigator.getLoginScene());
     }
 
     private void initializeScenes() {

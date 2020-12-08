@@ -1,19 +1,16 @@
 package controllers;
 
-import exceptions.IncorrectObjectTypeException;
 import entities.Event;
-import observers.Observable;
-import observers.Observer;
-import useCaseClasses.EventManager;
 import exceptions.EventNotFoundException;
 import exceptions.UserNotEnrolledInEventException;
 import handlers.SceneNavigator;
-
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import useCaseClasses.EventManager;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +20,7 @@ import java.util.ResourceBundle;
  * A controller for handling inputs when the Attendee is un-enrolling
  * from an Event
  */
-public class EventUnEnrollController extends Controller{
+public class EventUnEnrollController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
@@ -57,13 +54,13 @@ public class EventUnEnrollController extends Controller{
     }
 
     @FXML
-    void onUnEnrollButtonClicked(ActionEvent event){
+    void onUnEnrollButtonClicked(ActionEvent event) {
         String eventTitle = eventListView.getSelectionModel().getSelectedItem().getText().split("  Time: ")[0];
         String label;
         InputProcessResult result = unEnrollEvent(eventTitle);
-        if (result == InputProcessResult.SUCCESS){
+        if (result == InputProcessResult.SUCCESS) {
             label = "Un-Enroll Successful!";
-        } else if (result == InputProcessResult.EVENT_NOT_FOUND){
+        } else if (result == InputProcessResult.EVENT_NOT_FOUND) {
             label = "Event not found. Please try again.";
         } else {
             label = "You are not enrolled in this event. Please try again.";
@@ -86,8 +83,8 @@ public class EventUnEnrollController extends Controller{
 
     private List<Label> getEventLabels(List<Event> events) {
         ArrayList<Label> labels = new ArrayList<>();
-        for(Event event: events){
-            if(event.hasAttendee(userManager.getCurrentlyLoggedIn().getId())){
+        for (Event event : events) {
+            if (event.hasAttendee(userManager.getCurrentlyLoggedIn().getId())) {
                 String labelText = eventManager.getIndividualTitle(event)
                         + "  Time: " + eventManager.getIndividualTime(event, "yyyy-MM-dd HH:mm:ss")
                         + "  Room: " + eventManager.getIndividualRoom(event)

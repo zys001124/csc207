@@ -9,8 +9,10 @@ import javafx.scene.control.ListView;
 import useCaseClasses.EventManager;
 
 import java.net.URL;
-import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.UUID;
 
 /**
  * A controller for handling inputs when the Organizer or Admin is canceling
@@ -106,7 +108,7 @@ public class EventCancelController extends Controller {
         List<String> labels = eventManager.getEventCancelLabels();
         int i = 0;
         List<List<UUID>> speakers = eventManager.getSpeakersId();
-        while(i<labels.size()){
+        while (i < labels.size()) {
             String labelText = labels.get(i);
             for (int x = 0; x < speakers.get(i).size(); x++) {
                 labelText = labelText + " " + userManager.getName(speakers.get(i).get(x));

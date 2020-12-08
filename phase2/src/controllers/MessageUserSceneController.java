@@ -65,7 +65,8 @@ public class MessageUserSceneController extends Controller {
     public void setUserManager(UserManager userManager) {
         super.setUserManager(userManager);
 
-        userListView.getItems().setAll(getUserLabels(userManager.getUsersSorted()));
+        setUserList();
+        userManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setUserList());
     }
 
     @Override
@@ -139,9 +140,9 @@ public class MessageUserSceneController extends Controller {
 
         try {
             messageManager.sendIndividualMessage(userManager.getCurrentlyLoggedIn().getType(), sender, userManager.getUser(recipient).getType(), recipient, text);
-        } catch(InvalidUserTypeException e){
+        } catch (InvalidUserTypeException e) {
             label = "You can't message this user.";
-        } catch(NoMessageException e){
+        } catch (NoMessageException e) {
             label = "You can't send a message to this attendee right now.";
         }
         cantSendToUserMessage.setText(label);
@@ -175,5 +176,9 @@ public class MessageUserSceneController extends Controller {
             e.printStackTrace();
             System.exit(1);
         }
+    }
+
+    private void setUserList() {
+        userListView.getItems().setAll(getUserLabels(userManager.getUsersSorted()));
     }
 }

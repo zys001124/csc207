@@ -265,7 +265,6 @@ public class SceneNavigator {
     }
 
 
-
     public enum SceneViewType {
         LOGIN, // Finished
         SPEAKER_MAIN_MENU, // Finished

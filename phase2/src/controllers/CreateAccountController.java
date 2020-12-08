@@ -1,7 +1,6 @@
 package controllers;
 
 import entities.User;
-import exceptions.InvalidUserTypeException;
 import exceptions.UserTypeDoesNotExistException;
 import exceptions.UsernameAlreadyExistsException;
 import handlers.SceneNavigator;

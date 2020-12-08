@@ -11,8 +11,8 @@ public class InvalidUserTypeException extends Exception {
     /**
      * Creates an InvalidUserTypeException
      *
-     * @param given    the UserType of the user attempting to perform
-     *                 such an action
+     * @param given the UserType of the user attempting to perform
+     *              such an action
      */
     public InvalidUserTypeException(User.UserType given) {
         super("Invalid user type given: " + given.name());

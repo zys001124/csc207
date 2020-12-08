@@ -3,13 +3,14 @@ package useCaseClasses;
 
 import com.google.firebase.database.DataSnapshot;
 import entities.User;
-import exceptions.*;
+import exceptions.IncorrectPasswordException;
+import exceptions.UserNotFoundException;
+import exceptions.UserTypeDoesNotExistException;
+import exceptions.UsernameAlreadyExistsException;
 import gateways.DataSnapshotReader;
-import javafx.scene.control.Label;
 import observers.Observable;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -137,7 +138,7 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
      * @param password the password of the user to be added
      * @throws UsernameAlreadyExistsException - if the username is already seen in the system
      */
-    public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException{
+    public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException {
         if (doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
         }
@@ -151,9 +152,11 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
     public void addUserFromDataSnapshot(DataSnapshot dataSnapshot) {
         User user = getFromDataSnapshot(dataSnapshot);
         List<User> usersToAdd = new ArrayList<>();
-        usersToAdd.add(user);
-        users.addAll(usersToAdd);
-        notifyObservers(usersToAdd, true, true);
+        if (!doesUserExist(user.getUsername())) {
+            usersToAdd.add(user);
+            users.addAll(usersToAdd);
+            notifyObservers(usersToAdd, true, true);
+        }
     }
 
     public void changeUserFromDataSnapshot(DataSnapshot dataSnapshot) {
@@ -221,21 +224,25 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         List<User> vips = new ArrayList<>();
         List<User> admins = new ArrayList<>();
 
-        for(User user: users){
-            switch(user.getType()){
-                case ATTENDEE:{
+        for (User user : users) {
+            switch (user.getType()) {
+                case ATTENDEE: {
                     attendees.add(user);
                     break;
-                } case ORGANIZER:{
+                }
+                case ORGANIZER: {
                     organizers.add(user);
                     break;
-                } case SPEAKER:{
+                }
+                case SPEAKER: {
                     speakers.add(user);
                     break;
-                } case VIP:{
+                }
+                case VIP: {
                     vips.add(user);
                     break;
-                } case ADMIN:{
+                }
+                case ADMIN: {
                     admins.add(user);
                 }
             }
@@ -271,16 +278,7 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         throw new UserNotFoundException(username);
     }
 
-    public ArrayList<UUID> listOfID(ArrayList<User> u){
-        ArrayList<UUID> usersID = new ArrayList<>();
-        for (User user : u) {
-            usersID.add(user.getId());
-        }
-        return usersID;
-    }
-
-
-    public List<UUID> getUserId(User.UserType userType){
+    public List<UUID> getUserId(User.UserType userType) {
         ArrayList<UUID> attendees = new ArrayList<>();
         for (User user : users) {
             if (user.getType() == userType) {
@@ -359,9 +357,9 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
      * @param id the user id of this user
      * @return The name of the user who has the given user id
      */
-    public String getName(UUID id){
-        for(User user: users){
-            if(user.getId().equals(id)){
+    public String getName(UUID id) {
+        for (User user : users) {
+            if (user.getId().equals(id)) {
                 return user.getUsername();
             }
         }

@@ -2,21 +2,18 @@ package controllers;
 
 import entities.Event;
 import entities.User;
-import exceptions.IncorrectObjectTypeException;
-import observers.Observable;
-import observers.Observer;
-import useCaseClasses.EventManager;
 import handlers.SceneNavigator;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import useCaseClasses.EventManager;
 
 import java.net.URL;
 import java.util.*;
 
-public class SeeEventScheduleController extends Controller{
+public class SeeEventScheduleController extends Controller {
     @FXML // ResourceBundle that was given to the FXMLLoader
     private ResourceBundle resources;
 
@@ -35,17 +32,16 @@ public class SeeEventScheduleController extends Controller{
     @FXML
     void initialize() {
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'See Event Schedule.fxml'.";
-        assert eventListView != null: "fx:id=\"eventListView\" was not injected: check your FXML file 'See Event Schedule.fxml'.";
+        assert eventListView != null : "fx:id=\"eventListView\" was not injected: check your FXML file 'See Event Schedule.fxml'.";
         assert textBox != null : "fx:id=\"textBox\" was not injected: check your FXML file 'See Event Schedule.fxml'.";
     }
 
     @FXML
     void onBackButtonClicked(ActionEvent event) {
-        if(userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE) ||
-                userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.VIP)){
+        if (userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE) ||
+                userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.VIP)) {
             setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
-        }
-        else { //They are a speaker
+        } else { //They are a speaker
             setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
         }
 
@@ -54,7 +50,7 @@ public class SeeEventScheduleController extends Controller{
     @Override
     public void setEventManager(EventManager eventManager) {
         super.setEventManager(eventManager);
-        if(userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.SPEAKER)){
+        if (userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.SPEAKER)) {
             textBox.setText("Here is the list of events you are hosting:");
         }
 
@@ -64,12 +60,11 @@ public class SeeEventScheduleController extends Controller{
 
     private void setEventListField() {
         eventListView.getItems().clear();
-        if(userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE) ||
+        if (userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE) ||
                 userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.VIP)) {
             List<Event> events = eventManager.sortedEventsWithAttendees(userManager.getCurrentlyLoggedIn());
             eventListView.getItems().addAll(getEventLabelsAttendee(events));
-        }
-        else{ //They are a speaker
+        } else { //They are a speaker
             UUID currentUserId = userManager.getCurrentlyLoggedIn().getId();
             List<Event> events = eventManager.getEventsWithSpeaker(currentUserId);
             eventListView.getItems().addAll(getEventLabelsSpeaker(events));
@@ -79,7 +74,7 @@ public class SeeEventScheduleController extends Controller{
 
     private List<Label> getEventLabelsAttendee(List<Event> events) {
         ArrayList<Label> labels = new ArrayList<>();
-        for(Event event: events){
+        for (Event event : events) {
             String labelText = eventManager.getIndividualTitle(event)
                     + "  Time: " + eventManager.getIndividualTime(event, "yyyy-MM-dd HH:mm:ss")
                     + "  Room: " + eventManager.getIndividualRoom(event)
@@ -94,7 +89,7 @@ public class SeeEventScheduleController extends Controller{
         ArrayList<Label> labels = new ArrayList<>();
         for (Event event : events) {
             String labelText = eventManager.getIndividualTitle(event) + " on "
-                             + eventManager.getIndividualTime(event, "MMMM dd, HH:mm") + ".";
+                    + eventManager.getIndividualTime(event, "MMMM dd, HH:mm") + ".";
             Label eventLabel = new Label(labelText);
             labels.add(eventLabel);
         }

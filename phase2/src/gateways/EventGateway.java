@@ -5,7 +5,7 @@ import com.google.firebase.database.DatabaseError;
 import entities.Event;
 import useCaseClasses.EventManager;
 
-import java.util.*;
+import java.util.List;
 
 public class EventGateway extends FirebaseGateway<Event> {
 

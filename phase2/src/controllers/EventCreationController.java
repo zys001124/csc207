@@ -23,10 +23,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-/**
- * Controller class that handles the input for the event creation scene that the user puts in to create
- * a new event
- */
+
 public class EventCreationController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -65,10 +62,6 @@ public class EventCreationController extends Controller {
     @FXML // fx:id="vipOnlyCheck"
     private CheckBox vipOnlyCheck; // Value injected by FXMLLoader
 
-    /**
-     * Method that returns the user to their corresponding main menu scene
-     * @param event Action event when method is called upon (not used)
-     */
     @FXML
     void onBackButtonClicked(ActionEvent event) {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
@@ -79,12 +72,6 @@ public class EventCreationController extends Controller {
         }
     }
 
-    /**
-     * Method that runs when user clicks the button to create a new event.
-     * Will put a label on the scene on if the event is created or not and what went wrong if an
-     * exception is found.
-     * @param event
-     */
     @FXML
     void onCreateButtonClicked(ActionEvent event) {
 
@@ -94,10 +81,9 @@ public class EventCreationController extends Controller {
         LocalDateTime sDateTime = getLocalDateTime(startTimeField.getText());
         LocalDateTime eDateTime = getLocalDateTime(endTimeField.getText());
         String[] speakersUserName;
-        if(!speakerUsernamesField.getText().equals("")){
+        if (!speakerUsernamesField.getText().equals("")) {
             speakersUserName = speakerUsernamesField.getText().split(":");
-        }
-        else{
+        } else {
             speakersUserName = new String[0];
         }
         int roomNum = Integer.parseInt(roomNumberField.getText());
@@ -111,7 +97,7 @@ public class EventCreationController extends Controller {
             label = "At least one of the speakers could not be found.";
         } else if (result == InputProcessResult.USER_NOT_SPEAKER) {
             label = "At least one of the speakers is not a speaker.";
-        } else if(result == InputProcessResult.EVENT_NAME_TAKEN){
+        } else if (result == InputProcessResult.EVENT_NAME_TAKEN) {
             label = "That event name is taken.";
         } else if (result == InputProcessResult.TIMESLOT_FULL) {
             label = "This room is occupied at this time.";
@@ -119,7 +105,7 @@ public class EventCreationController extends Controller {
             label = "At least one of the speakers is occupied.";
         } else if (result == InputProcessResult.ROOM_FULL) {
             label = "That room is full.";
-        } else if (result == InputProcessResult.CAPACITY_OVER){
+        } else if (result == InputProcessResult.CAPACITY_OVER) {
             label = "The capacity can't be over 60.";
         } else {
             label = "Event created successfully.";
@@ -128,10 +114,6 @@ public class EventCreationController extends Controller {
         createMessageLabel.setText(label);
     }
 
-    /**
-     * Button that sets a variable to decide if the event to be made is VIP only or not.
-     * @param event
-     */
     @FXML
     void onVipOnlyCheck(ActionEvent event) {
         if (vipOnlyCheck.isSelected()) {
@@ -141,9 +123,6 @@ public class EventCreationController extends Controller {
         }
     }
 
-    /**
-     * Initializes the input fields for this controller
-     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -162,22 +141,12 @@ public class EventCreationController extends Controller {
 
     }
 
-    /**
-     * Helper method for the create button when clicked. Used to return an input process result to help
-     * the scene display the right text
-     * @param eventTitle the event title for this event creation
-     * @param startTime the start time for this event creation
-     * @param endTime the end time for this event creation
-     * @param speakersUserName the list of speakers for this event
-     * @param roomNum the room number for this event
-     * @param roomCapacity the capacity for this event
-     * @param vip boolean on if this event should be VIP only
-     * @return an InputProcessResult to help the method decide what the textbox should say
-     */
     public InputProcessResult createEvent(String eventTitle, LocalDateTime startTime, LocalDateTime endTime, String[] speakersUserName,
                                           int roomNum, int roomCapacity, Boolean vip) {
+
         UUID eventID = getUuid();
         ArrayList<User> speakers = new ArrayList<>();
+
 
         try {
             for (String speaker : speakersUserName) {
@@ -194,14 +163,15 @@ public class EventCreationController extends Controller {
             }
         }
 
-        for(Event event : eventManager.getEvents()){
-            if(event.getEventTitle().equals(eventTitle)){
+        for (Event event : eventManager.getEvents()) {
+            if (event.getEventTitle().equals(eventTitle)) {
                 return InputProcessResult.EVENT_NAME_TAKEN;
             }
         }
 
-        ArrayList<UUID> speakersID = userManager.listOfID(speakers);
+        ArrayList<UUID> speakersID = getSpeakersID(speakers);
         UUID organizerID = userManager.getCurrentlyLoggedIn().getId();
+
 
         Boolean occupiedRoom = eventManager.availabilityInTime(startTime, endTime, roomNum);
         if (occupiedRoom) {
@@ -215,32 +185,29 @@ public class EventCreationController extends Controller {
             }
         }
 
-        if(roomCapacity > 60){
+//        if (occupiedRoom.contains(roomNum)) {
+//            return InputProcessResult.ROOM_FULL;
+//        }
+
+        if (roomCapacity > 60) {
             return InputProcessResult.CAPACITY_OVER;
         }
 
         Event eventCreated = new Event(eventTitle, startTime, endTime, eventID, organizerID, speakersID,
                 new ArrayList<>(), roomNum, roomCapacity, vip);
 
+
         eventManager.addEvent(eventCreated);
         return InputProcessResult.SUCCESS;
+
     }
 
-    /**
-     * Helper method that gets the local date time of the input put into the time slot
-     * @param parameter the string value of the what the user put in the textbox
-     * @return the LocalDateTime of the string input
-     */
     private LocalDateTime getLocalDateTime(String parameter) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         formatter = formatter.withZone(ZoneId.of("UTC-5"));
         return LocalDateTime.parse(parameter, formatter);
     }
 
-    /**
-     * Helper method that generates a UUID for this event
-     * @return a UUID for this event
-     */
     private UUID getUuid() {
         ArrayList<UUID> eID = new ArrayList<>();
         ArrayList<UUID> uID = new ArrayList<>();
@@ -263,14 +230,14 @@ public class EventCreationController extends Controller {
         return eventID;
     }
 
-    /**
-     * Helper method that determins if the speaker given is occupied during the given start time and
-     * end time
-     * @param sDateTime the start time to be checked for the speaker
-     * @param eDateTime the end time to be checked for the speaker
-     * @param speaker the speaker to be checked if bust
-     * @return a boolean TRUE if occupied during timeframe. FALSE otherwise
-     */
+    private ArrayList<UUID> getSpeakersID(ArrayList<User> speakers) {
+        ArrayList<UUID> speakersID = new ArrayList<>();
+        for (User speaker : speakers) {
+            speakersID.add(speaker.getId());
+        }
+        return speakersID;
+    }
+
     private boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {
         for (String e : eventManager.listOfEventsHosting(speaker)) {
             Event eventHosting = eventManager.getEvent(e);

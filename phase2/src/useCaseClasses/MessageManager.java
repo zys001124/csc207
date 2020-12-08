@@ -41,30 +41,29 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
      * @param message  the message that is sent
      */
     public void sendIndividualMessage(User.UserType senderType, UUID sender, User.UserType receiverType, UUID receiver, String message) throws InvalidUserTypeException, NoMessageException {
-        switch(senderType) {
+        switch (senderType) {
             case ATTENDEE: {
-                if(receiverType.equals(User.UserType.ORGANIZER) || receiverType.equals(User.UserType.VIP) || receiverType.equals(User.UserType.ADMIN)){
+                if (receiverType.equals(User.UserType.ORGANIZER) || receiverType.equals(User.UserType.VIP) || receiverType.equals(User.UserType.ADMIN)) {
                     throw new InvalidUserTypeException(receiverType);
                 }
                 break;
             }
             case ORGANIZER: {
-                if(receiverType.equals(User.UserType.ADMIN)){
+                if (receiverType.equals(User.UserType.ADMIN)) {
                     throw new InvalidUserTypeException(receiverType);
                 }
                 break;
             }
             case SPEAKER: {
-                if(receiverType.equals(User.UserType.ADMIN)){
+                if (receiverType.equals(User.UserType.ADMIN)) {
                     throw new InvalidUserTypeException(receiverType);
-                }
-                else if(receiverType.equals(User.UserType.ATTENDEE) && !messageSentBy(receiver, sender)){
+                } else if (receiverType.equals(User.UserType.ATTENDEE) && !messageSentBy(receiver, sender)) {
                     throw new NoMessageException();
                 }
                 break;
             }
             case VIP: {
-                if(receiverType.equals(User.UserType.ADMIN)){
+                if (receiverType.equals(User.UserType.ADMIN)) {
                     throw new InvalidUserTypeException(receiverType);
                 }
             }
@@ -84,9 +83,9 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         notifyObservers(messagesToAdd, true, false);
     }
 
-    public void sendMessageToGroup(UUID sender, Collection<UUID> receivers, String message){
+    public void sendMessageToGroup(UUID sender, Collection<UUID> receivers, String message) {
         List<Message> messagesToAdd = new ArrayList<>();
-        for(UUID receiverId: receivers){
+        for (UUID receiverId : receivers) {
             messagesToAdd.add(new Message(message, sender, receiverId, UUID.randomUUID()));
         }
         messages.addAll(messagesToAdd);
