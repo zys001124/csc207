@@ -1,6 +1,7 @@
 package gateways;
 
 import com.google.firebase.database.*;
+import gateways.snapshotreaders.DataSnapshotReader;
 
 import java.util.List;
 
@@ -14,6 +15,7 @@ public abstract class FirebaseGateway<T> {
 
     private final FirebaseDatabase database;
     protected DatabaseReference databaseReference;
+    protected DataSnapshotReader<T> snapshotReader;
 
     /**
      * Constructor for a FirebaseGateway object
@@ -26,6 +28,7 @@ public abstract class FirebaseGateway<T> {
         this.database = database;
         databaseReference = database.getReference().child(referencePath);
         databaseReference.keepSynced(true);
+        snapshotReader = getSnapshotReader();
         addListeners();
     }
 
@@ -120,4 +123,10 @@ public abstract class FirebaseGateway<T> {
      */
     protected void onCancelled(DatabaseError databaseError) {
     }
+
+    /**
+     * Gets the snapshotReader from a subclass
+     * @return a DataSnapshotReader
+     */
+    protected abstract DataSnapshotReader<T> getSnapshotReader();
 }

@@ -9,6 +9,10 @@ import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
+/**
+ * A class that creates and holds the gateway classes necessary for
+ * this specific program to function
+ */
 public class GatewayInitializer {
 
     // Gateways

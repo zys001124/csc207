@@ -4,6 +4,7 @@ import com.google.firebase.database.DataSnapshot;
 import entities.Event;
 import entities.User;
 import exceptions.*;
+import gateways.snapshotreaders.DataSnapshotReader;
 import observers.Observable;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,7 @@ import java.util.*;
 /**
  * Represents an eventManager that can modify events of the conference
  */
-public class EventManager extends Observable implements DataSnapshotReader<Event> {
+public class EventManager extends Observable {
 
     private final List<Event> events;
 
@@ -45,9 +46,8 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
      *
      * @param dataSnapshot the snapshot to be processed for the event to be added
      */
-    public void addEventFromDataSnapshot(DataSnapshot dataSnapshot) {
+    public void addEventFromDatabase(Event event) {
 
-        Event event = getFromDataSnapshot(dataSnapshot);
         if (!eventExists(event.getId())) {
             List<Event> eventsToAdd = new ArrayList<>();
             eventsToAdd.add(event);
@@ -119,15 +119,12 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Removes an event from the conference system based on the firebase snapshot passed in
-     *
-     * @param dataSnapshot the snapshot of the event to be removed
      */
-    public void removeEventFromDataSnapshot(DataSnapshot dataSnapshot) {
-        Event eventChanged = getFromDataSnapshot(dataSnapshot);
+    public void removeEventFromDatabase(Event eventRemoved) { ;
         List<Event> eventsToRemove = new ArrayList<>();
         for (Event event : events) {
             int index = events.indexOf(event);
-            if (event.getId().equals(eventChanged.getId())) {
+            if (event.getId().equals(eventRemoved.getId())) {
                 eventsToRemove.add(events.remove(index));
                 notifyObservers(eventsToRemove, false, true);
                 return;
@@ -272,8 +269,8 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
      *
      * @param dataSnapshot the snapshot that stores info on what changes about the event
      */
-    public void updateEventFromDataSnapshot(DataSnapshot dataSnapshot) {
-        Event event = getFromDataSnapshot(dataSnapshot);
+    public void updateEventFromDatabase(Event event) {
+
         Event.EventData eventData = event.getEventData();
         // Find event
         List<Event> eventsToChange = new ArrayList<>();
@@ -537,52 +534,5 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
             ids.add(event.getSpeakerId());
         }
         return ids;
-    }
-
-    /**
-     * Gets the event entity from the given data snapshot from firebase
-     *
-     * @param dataSnapshot the snapshot from firebase that is updated automatically
-     * @return Event entity of this conference system
-     */
-    @Override
-    public Event getFromDataSnapshot(DataSnapshot dataSnapshot) {
-        Event.EventData data = eventDataFromDataSnapshot(dataSnapshot);
-        return Event.fromEventData(data);
-    }
-
-    /**
-     * All of the data of the event from a given firebase data snapshot that is to be updated
-     * automatically
-     *
-     * @param dataSnapshot the snapshot of the data to be passed
-     * @return EventData of the entire EventManager
-     */
-    private Event.EventData eventDataFromDataSnapshot(DataSnapshot dataSnapshot) {
-
-        Map eventMap = (Map<String, Object>) dataSnapshot.getValue();
-        Event.EventData eventData = new Event.EventData();
-        if (eventMap.containsKey("attendees")) {
-            eventData.attendees = (Collection<String>) eventMap.get("attendees");
-        } else {
-            eventData.attendees = new ArrayList<>();
-        }
-
-        if (eventMap.containsKey("speakerIds")) {
-            eventData.speakerIds = (Collection<String>) eventMap.get("speakerIds");
-        } else {
-            eventData.speakerIds = new ArrayList<>();
-        }
-        eventData.eventSTime = (String) eventMap.get("eventSTime");
-        eventData.eventETime = (String) eventMap.get("eventETime");
-        eventData.organizerId = (String) eventMap.get("organizerId");
-        eventData.VIPonly = (String) eventMap.get("VIPonly");
-        eventData.eventCapacity = (String) eventMap.get("eventCapacity");
-        eventData.eventRoom = (String) eventMap.get("eventRoom");
-        eventData.eventId = (String) eventMap.get("eventId");
-        eventData.eventTitle = (String) eventMap.get("eventTitle");
-
-        return eventData;
-
     }
 }

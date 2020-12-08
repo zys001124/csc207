@@ -3,6 +3,8 @@ package gateways;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import entities.Message;
+import gateways.snapshotreaders.DataSnapshotReader;
+import gateways.snapshotreaders.MessageDataSnapshotReader;
 import useCaseClasses.MessageManager;
 
 import java.util.List;
@@ -64,7 +66,8 @@ public class MessageGateway extends FirebaseGateway<Message> {
      */
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-        messageManager.addMessageFromDataSnapshot(dataSnapshot);
+        Message m = snapshotReader.getFromDataSnapshot(dataSnapshot);
+        messageManager.addMessageFromDatabase(m);
     }
 
     /**
@@ -90,4 +93,15 @@ public class MessageGateway extends FirebaseGateway<Message> {
 
     }
 
+    /**
+     * Gets the snapshotReader
+     * @return a MessageDataSnapshotReader
+     */
+    @Override
+    protected DataSnapshotReader<Message> getSnapshotReader() {
+        if(snapshotReader == null){
+            snapshotReader = new MessageDataSnapshotReader();
+        }
+        return snapshotReader;
+    }
 }

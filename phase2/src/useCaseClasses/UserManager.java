@@ -4,6 +4,7 @@ package useCaseClasses;
 import com.google.firebase.database.DataSnapshot;
 import entities.User;
 import exceptions.*;
+import gateways.snapshotreaders.DataSnapshotReader;
 import observers.Observable;
 
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.UUID;
 /**
  * A manager for managing all the users in the tech conference
  */
-public class UserManager extends Observable implements DataSnapshotReader<User> {
+public class UserManager extends Observable {
 
     private final List<User> users;
 
@@ -107,16 +108,13 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
     /**
      * Method that removes the user given a data snapshot that is taken in from firebase for live
      * updates
-     *
-     * @param dataSnapshot the data snapshot of what user to remove
      */
-    public void removeUserFromDataSnapshot(DataSnapshot dataSnapshot) {
-        UUID id = getFromDataSnapshot(dataSnapshot).getId();
-
+    public void removeUserFromDatabase(User user) {
+        UUID userId = user.getId();
         List<User> usersToRemove = new ArrayList<>();
-        for (User user : users) {
+        for (User u : users) {
             int index = users.indexOf(user);
-            if (user.getId().equals(id)) {
+            if (user.getId().equals(userId)) {
                 usersToRemove.add(users.remove(index));
                 notifyObservers(usersToRemove, false, true);
             }
@@ -160,11 +158,8 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
 
     /**
      * Adds new users from a data snapshot that is linked to firebase for live updates
-     *
-     * @param dataSnapshot the data snapshot to be passed
      */
-    public void addUserFromDataSnapshot(DataSnapshot dataSnapshot) {
-        User user = getFromDataSnapshot(dataSnapshot);
+    public void addUserFromDatabase(User user) {
         List<User> usersToAdd = new ArrayList<>();
         if (!doesUserExist(user.getUsername())) {
             usersToAdd.add(user);
@@ -175,14 +170,11 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
 
     /**
      * Changes the user from the data snapshot that is given which is linked to firebase
-     *
-     * @param dataSnapshot the given data snapshot to be passed
      */
-    public void changeUserFromDataSnapshot(DataSnapshot dataSnapshot) {
-        User user = getFromDataSnapshot(dataSnapshot);
+    public void changeUserFromDatabase(User user) {
         List<User> usersToAdd = new ArrayList<>();
         usersToAdd.add(user);
-        removeUserFromDataSnapshot(dataSnapshot);
+        removeUserFromDatabase(user);
         users.addAll(usersToAdd);
         notifyObservers(usersToAdd, true, true);
     }
@@ -418,15 +410,4 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         }
     }
 
-    /**
-     * gets the data snapshot from the firebase database
-     *
-     * @param dataSnapshot the data snapshot to be passed
-     * @return a User from the data snapshot
-     */
-    @Override
-    public User getFromDataSnapshot(DataSnapshot dataSnapshot) {
-        User.UserData userData = dataSnapshot.getValue(User.UserData.class);
-        return User.fromUserData(userData);
-    }
 }

@@ -6,6 +6,7 @@ import entities.Message;
 import entities.User;
 import exceptions.InvalidUserTypeException;
 import exceptions.NoMessageException;
+import gateways.snapshotreaders.DataSnapshotReader;
 import observers.Observable;
 
 import java.time.LocalDateTime;
@@ -17,7 +18,7 @@ import java.util.UUID;
 /**
  * Represents an messageManager that can store/create messages sent by users of the conference
  */
-public class MessageManager extends Observable implements DataSnapshotReader<Message> {
+public class MessageManager extends Observable {
 
     private final List<Message> messages;
 
@@ -117,11 +118,8 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
     /**
      * Adds a message to the conference system from the firebase update data snapshot
      *
-     * @param dataSnapshot the snapshot that contains the message to be added
      */
-    public void addMessageFromDataSnapshot(DataSnapshot dataSnapshot) {
-        Message message = getFromDataSnapshot(dataSnapshot);
-
+    public void addMessageFromDatabase(Message message) {
         if (!messageExists(message.getId())) {
             List<Message> messagesToAdd = new ArrayList<>();
             messagesToAdd.add(message);
@@ -207,17 +205,5 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         }
         Collections.sort(theMessages);
         return theMessages;
-    }
-
-    /**
-     * Gets the message entity from the data snapshot given linked to firebase updates
-     *
-     * @param dataSnapshot the data snapshot to be passed in for the Message
-     * @return Message entity for this system
-     */
-    @Override
-    public Message getFromDataSnapshot(DataSnapshot dataSnapshot) {
-        Message.MessageData mData = dataSnapshot.getValue(Message.MessageData.class);
-        return Message.fromMessageData(mData);
     }
 }

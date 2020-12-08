@@ -3,6 +3,8 @@ package gateways;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.FirebaseDatabase;
 import entities.User;
+import gateways.snapshotreaders.DataSnapshotReader;
+import gateways.snapshotreaders.UserDataSnapshotReader;
 import useCaseClasses.UserManager;
 
 import java.util.List;
@@ -64,7 +66,8 @@ public class UserGateway extends FirebaseGateway<User> {
      */
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-        userManager.addUserFromDataSnapshot(dataSnapshot);
+        User u = snapshotReader.getFromDataSnapshot(dataSnapshot);
+        userManager.addUserFromDatabase(u);
     }
 
     /**
@@ -76,7 +79,8 @@ public class UserGateway extends FirebaseGateway<User> {
      */
     @Override
     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
-        userManager.changeUserFromDataSnapshot(dataSnapshot);
+        User u = snapshotReader.getFromDataSnapshot(dataSnapshot);
+        userManager.changeUserFromDatabase(u);
     }
 
     /**
@@ -87,6 +91,19 @@ public class UserGateway extends FirebaseGateway<User> {
      */
     @Override
     public void onChildRemoved(DataSnapshot dataSnapshot) {
-        userManager.removeUserFromDataSnapshot(dataSnapshot);
+        User u = snapshotReader.getFromDataSnapshot(dataSnapshot);
+        userManager.removeUserFromDatabase(u);
+    }
+
+    /**
+     * Gets the snapshotReader
+     * @return a UserDataSnapshotReader
+     */
+    @Override
+    protected DataSnapshotReader<User> getSnapshotReader() {
+        if(snapshotReader == null) {
+            snapshotReader = new UserDataSnapshotReader();
+        }
+        return snapshotReader;
     }
 }
