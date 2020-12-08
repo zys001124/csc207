@@ -13,7 +13,7 @@ listens for a successful login.
     a given user type is different depending on the user type. So we have to wait for a successful login
     before initializing the rest of the scenes
     -Classes involved in implementation: Observable, Observer, ObserversInitializer, UpdateDatabaseOvserver
-    MessageUserSceneController, ConferenceSystem, UseCaseHolder
+    most controllers add an observer to at least one of the managers so that they can keep the GUI updated
 
 - (Improvement) Compartmentalizing code
     - In phase 1, ConferenceSystem.java was responsible for creating instances of every object necessary to
