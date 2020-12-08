@@ -5,7 +5,7 @@ import exceptions.EventFullException;
 import exceptions.EventNotFoundException;
 import exceptions.InvalidUserTypeException;
 import exceptions.UserAlreadyEnrolledException;
-import handlers.SceneNavigator;
+import holders.SceneNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

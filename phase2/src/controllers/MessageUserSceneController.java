@@ -6,7 +6,7 @@ import exceptions.IncorrectObjectTypeException;
 import exceptions.InvalidUserTypeException;
 import exceptions.NoMessageException;
 import exceptions.UserNotFoundException;
-import handlers.SceneNavigator;
+import holders.SceneNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

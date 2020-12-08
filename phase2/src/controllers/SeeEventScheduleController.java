@@ -2,7 +2,7 @@ package controllers;
 
 import entities.Event;
 import entities.User;
-import handlers.SceneNavigator;
+import holders.SceneNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

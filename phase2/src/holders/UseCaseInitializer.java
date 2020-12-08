@@ -1,4 +1,4 @@
-package handlers;
+package holders;
 
 import com.google.firebase.database.FirebaseDatabase;
 import entities.Event;

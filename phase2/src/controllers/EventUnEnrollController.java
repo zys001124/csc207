@@ -3,7 +3,7 @@ package controllers;
 import entities.Event;
 import exceptions.EventNotFoundException;
 import exceptions.UserNotEnrolledInEventException;
-import handlers.SceneNavigator;
+import holders.SceneNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

@@ -1,4 +1,4 @@
-package handlers;
+package holders;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
