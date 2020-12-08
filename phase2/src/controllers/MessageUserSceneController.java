@@ -45,17 +45,17 @@ public class MessageUserSceneController extends Controller {
     @FXML
     private Button sendMessageButton;
 
-    @FXML // fx:id="cantSendToUserMessage"
-    private Label cantSendToUserMessage; // Value injected by FXMLLoader
-
     private DateTimeFormatter dateTimeFormatter;
+
+    @FXML
+    private Label cantSendToUserLabel;
 
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert userListView != null : "fx:id=\"userListView\" was not injected: check your FXML file 'Message User.fxml'.";
         dateTimeFormatter = DateTimeFormatter.RFC_1123_DATE_TIME;
-        assert cantSendToUserMessage != null : "fx:id=\"cantSendToUserMessage\" was not injected: check your FXML file 'Message User.fxml'.";
+        assert cantSendToUserLabel != null : "fx:id=\"cantSendToUserMessage\" was not injected: check your FXML file 'Message User.fxml'.";
 
         userListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> setMessageList());
@@ -145,7 +145,7 @@ public class MessageUserSceneController extends Controller {
         } catch (NoMessageException e) {
             label = "You can't send a message to this attendee right now.";
         }
-        cantSendToUserMessage.setText(label);
+        cantSendToUserLabel.setText(label);
     }
 
     @FXML
