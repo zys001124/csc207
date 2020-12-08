@@ -14,22 +14,38 @@ From here you will be prompted with a user login. We have provided some pre defi
 menu options you want. The pre defined users are:
 
 Attendees: (username, password)
-
+-Kevin, Malone
+-Angela, Martin
+-Creed, Bratton
+-Kelly, Kapour
+-Stanley, Hudson
+-Phyllis, Vance
+-Meredith, Palmer
 
 Speakers: (username, password)
-
+-Ryan, Howard
+-Robert, California
+-Gabe, Lewis
+-Toby, Flenderson
+-Darryl, Philbin
 
 Organizers: (username, password)
 -Michael, Scott
 -Jim, Halpert
 -Dwight, Schrute
 -Pam, Beasley
+-Andy, Bernard
 
 VIPs: (username, password)
-
+-Karen, Filippelli
+-Erin, Hannon
+-Oscar, Martinez
+-Holly, Flax
 
 Admins: (username, password)
-
+-admin, admin
+-David, Wallace
+-Jan, Levison
 
 
 Usernames and Passwords are case sensitive so make sure you are careful when entering those names.
