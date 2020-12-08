@@ -18,7 +18,7 @@ public class UserGateway extends FirebaseGateway<User> {
     /**
      * The constructor for an UserGateway object
      *
-     * @param mm       - The UserManager the program is using
+     * @param um       - The UserManager the program is using
      * @param database - A FirebaseDatabase object that will be used to create
      *                 a reference to the directory in the database holding
      *                 User information

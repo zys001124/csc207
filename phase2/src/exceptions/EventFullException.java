@@ -1,8 +1,7 @@
 package exceptions;
 
 /**
- * An exception meant to be used when an EventManager is unable to find
- * a requested event
+ * An exception meant to be used when the requested event is full
  */
 public class EventFullException extends Exception {
     /**
