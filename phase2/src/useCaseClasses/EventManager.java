@@ -41,15 +41,10 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         notifyObservers(eventsToAdd, true, false);
     }
 
-    public void addEvent(String title, LocalDateTime startTime, LocalDateTime endTime, UUID id, UUID organizerId, List<UUID> speakerId,
-                         List<UUID> attendees, int room, int capacity, boolean VIPonly) {
-
-        Event e = new Event(title, startTime, endTime, id, organizerId, speakerId,
-                attendees, room, capacity, VIPonly);
-
-        addEvent(e);
-    }
-
+    /**
+     * Adds an event from a given firebase data snapshot for live updates
+     * @param dataSnapshot the snapshot to be processed for the event to be added
+     */
     public void addEventFromDataSnapshot(DataSnapshot dataSnapshot) {
 
         Event event = getFromDataSnapshot(dataSnapshot);
@@ -61,6 +56,11 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         }
     }
 
+    /**
+     * Checks to see if an event exists based on its UUID
+     * @param eventId the UUID of the event that is to be found in the conference system
+     * @return boolean on if the event is found
+     */
     private boolean eventExists(UUID eventId) {
         for (Event event : events) {
             if (eventId.equals(event.getId())) {
@@ -116,6 +116,10 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return null;
     }
 
+    /**
+     * Removes an event from the conference system based on the firebase snapshot passed in
+     * @param dataSnapshot the snapshot of the event to be removed
+     */
     public void removeEventFromDataSnapshot(DataSnapshot dataSnapshot) {
         Event eventChanged = getFromDataSnapshot(dataSnapshot);
         List<Event> eventsToRemove = new ArrayList<>();
@@ -179,6 +183,11 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return result;
     }
 
+    /**
+     * gets a list of events that a speaker is hosting
+     * @param speakerId the UUID of the speakers
+     * @return A list of events that the given speaker is hosting
+     */
     public List<Event> getEventsWithSpeaker(UUID speakerId) {
         List<Event> speakerEvents = new ArrayList<>();
         for (Event e : events) {
@@ -242,6 +251,11 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         throw new EventNotFoundException(eventInput);
     }
 
+    /**
+     * Adds a user to an event
+     * @param attendee the User to be added to the event
+     * @param event the event for the user to join
+     */
     private void addingUser(User attendee, Event event) {
         List<Event> eventsChanged = new ArrayList<>();
         event.addAttendee(attendee);
@@ -249,29 +263,10 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         notifyObservers(eventsChanged, true, false);
     }
 
-    public void addUserToEventFromDataBase(String eventInput, User attendee) throws EventNotFoundException,
-            NumberFormatException, UserAlreadyEnrolledException, EventFullException, InvalidUserTypeException {
-        for (Event event : events) {
-            if (event.getEventTitle().equals(eventInput)) {
-                if (event.getViponly() && !attendee.getType().equals(User.UserType.VIP)) {
-                    throw new InvalidUserTypeException(attendee.getType());
-                }
-                if (event.isFull()) {
-                    throw new EventFullException(eventInput);
-                }
-                if (event.hasAttendee(attendee.getId())) {
-                    throw new UserAlreadyEnrolledException();
-                }
-                List<Event> eventsChanged = new ArrayList<>();
-                event.addAttendee(attendee);
-                eventsChanged.add(event);
-                notifyObservers(eventsChanged, true, true);
-                return;
-            }
-        }
-        throw new EventNotFoundException(eventInput);
-    }
-
+    /**
+     * updates the information of an event based on the firebase updates for the data snapshot
+     * @param dataSnapshot the snapshot that stores info on what changes about the event
+     */
     public void updateEventFromDataSnapshot(DataSnapshot dataSnapshot) {
         Event event = getFromDataSnapshot(dataSnapshot);
         Event.EventData eventData = event.getEventData();
@@ -315,6 +310,11 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         throw new EventNotFoundException(eventInput);
     }
 
+    /**
+     * Removes a user from an event
+     * @param attendee the attendee that is to be removed from an event
+     * @param event the event the user is going to leave
+     */
     private void removingUser(User attendee, Event event) {
         List<Event> eventsChanged = new ArrayList<>();
         event.removeAttendee(attendee);
@@ -322,22 +322,6 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         notifyObservers(eventsChanged, true, false);
     }
 
-    public void removeUserFromEventFromDatabase(String eventInput, User attendee) throws EventNotFoundException,
-            NumberFormatException, UserNotEnrolledInEventException {
-        for (Event event : events) {
-            if (event.getEventTitle().equals(eventInput)) {
-                if (!event.hasAttendee(attendee.getId())) {
-                    throw new UserNotEnrolledInEventException();
-                }
-                List<Event> eventsChanged = new ArrayList<>();
-                event.removeAttendee(attendee);
-                eventsChanged.add(event);
-                notifyObservers(eventsChanged, false, true);
-                return;
-            }
-        }
-        throw new EventNotFoundException(eventInput);
-    }
 
     /**
      * This method sorts the event list in the order of date and time
@@ -350,6 +334,10 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return result;
     }
 
+    /**
+     * Helper method that sorts the events based on their time
+     * @param result the sorted arraylist of events based on their time
+     */
     private void insertionSortEvents(ArrayList<Event> result) {
         for (int i = 1; i < result.size(); i++) {
             Event cur = result.get(i);
@@ -362,38 +350,85 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         }
     }
 
+    /**
+     * Gets an arraylist of events where the events are sorted with attendees
+     * @param user the user for the sorted events
+     * @return ArrayList of events with attendees
+     */
     public ArrayList<Event> sortedEventsWithAttendees(User user) {
         return eventSortTime(getEventsWithAttendee(user));
     }
 
+    /**
+     * Gets the title of an event
+     * @param event the event to get the title of
+     * @return String of the title of this event
+     */
     public String getIndividualTitle(Event event) {
         return event.getEventTitle();
     }
 
+    /**
+     * gets the time of the event based on the given format
+     * @param event the event we want the time of
+     * @param format the format of the time we want in this case
+     * @return the String version of the event
+     */
     public String getIndividualTime(Event event, String format) {
         return event.getEventTime().format(DateTimeFormatter.ofPattern(format));
     }
 
+    /**
+     * Gets the room of the event
+     * @param event the event of the room we want
+     * @return String of the room number
+     */
     public String getIndividualRoom(Event event) {
         return String.valueOf(event.getEventRoom());
     }
 
+    /**
+     * The capacity of the event given
+     * @param event the event we want to get the capacity of
+     * @return String value of the capacity
+     */
     public String getIndividualCapacity(Event event) {
         return String.valueOf(event.getEventCapacity());
     }
 
+    /**
+     * gets The number of users enrolled in an event
+     * @param event the event we want to get the number of users enrolled in
+     * @return String value of the enrollment number
+     */
     public String getIndividualEnrolledNumber(Event event) {
         return String.valueOf(event.getEventEnrolledNumber());
     }
 
+    /**
+     * The type of event that is being passed in
+     * @param event the event we want the type of
+     * @return String value of the type of event
+     */
     public String getIndividualType(Event event) {
         return String.valueOf(event.getEventType().toString());
     }
 
+    /**
+     * Returns on if the event is VIP only
+     * @param event the event we want to check if it is VIP only
+     * @return String value of the VIP only message
+     */
     public String getIndividualVIP(Event event) {
         return String.valueOf(event.getViponly());
     }
 
+    /**
+     * Changes the event capacity of the event passed in
+     * @param eventTitle the title of the event as a string
+     * @param newCapacity the capacity of the event we want to change to
+     * @param changeFromDatabase boolean on changes from database
+     */
     public void changeEventCapacity(String eventTitle, int newCapacity, boolean changeFromDatabase) {
         List<Event> eventsToChange = new ArrayList<>();
         Event event = getEvent(eventTitle);
@@ -402,6 +437,11 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         notifyObservers(eventsToChange, true, changeFromDatabase);
     }
 
+    /**
+     * gets a list of events the user passed in is hosting
+     * @param u the user that is hosting the returned events
+     * @return A list of strings of the event user u is hosting
+     */
     public List<String> listOfEventsHosting(User u) {
         //returns a list of the events a presenter is hosting
         List<String> theList = new ArrayList<>();
@@ -491,12 +531,23 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
         return ids;
     }
 
+    /**
+     * Gets the event entity from the given data snapshot from firebase
+     * @param dataSnapshot the snapshot from firebase that is updated automatically
+     * @return Event entity of this conference system
+     */
     @Override
     public Event getFromDataSnapshot(DataSnapshot dataSnapshot) {
         Event.EventData data = eventDataFromDataSnapshot(dataSnapshot);
         return Event.fromEventData(data);
     }
 
+    /**
+     * All of the data of the event from a given firebase data snapshot that is to be updated
+     * automatically
+     * @param dataSnapshot the snapshot of the data to be passed
+     * @return EventData of the entire EventManager
+     */
     private Event.EventData eventDataFromDataSnapshot(DataSnapshot dataSnapshot) {
 
         Map eventMap = (Map<String, Object>) dataSnapshot.getValue();

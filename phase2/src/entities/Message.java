@@ -118,11 +118,20 @@ public class Message implements Serializable, Comparable<Message> {
         return timeSent.compareTo(o.timeSent);
     }
 
+    /**
+     * the message text string
+     * @return String of the message
+     */
     @Override
     public String toString() {
         return messageText;
     }
 
+    /**
+     * Returns boolean on if the object is the same as a message
+     * @param o object to be checked
+     * @return True if ti is a certain message, False otherwise
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -135,11 +144,19 @@ public class Message implements Serializable, Comparable<Message> {
                 Objects.equals(timeSent, message.timeSent);
     }
 
+    /**
+     * Hashes the code of the format of each message
+     * @return an int of the hashed code
+     */
     @Override
     public int hashCode() {
         return Objects.hash(messageId, messageText, senderId, recipientId, timeSent);
     }
 
+    /**
+     * gets the message data of this message
+     * @return the MessageData of this message
+     */
     public MessageData getMessageData() {
         MessageData data = new MessageData();
         data.messageId = messageId.toString();
@@ -150,6 +167,9 @@ public class Message implements Serializable, Comparable<Message> {
         return data;
     }
 
+    /**
+     * The message data for a certain message in this conference system
+     */
     public static class MessageData {
         public String messageId;
 

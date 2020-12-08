@@ -80,6 +80,12 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         notifyObservers(messagesToAdd, true, false);
     }
 
+    /**
+     * Sends a messages to users by their given UUID. Can be up to multiple messages
+     * @param sender the UUID of the sender
+     * @param recipient the UUID of the recipient
+     * @param message message that is to be sent
+     */
     public void sendMessageById(UUID sender, UUID recipient, String message){
 
         List<Message> messagesToAdd = new ArrayList<>();
@@ -89,6 +95,14 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         notifyObservers(messagesToAdd, true, false);
     }
 
+    /**
+     * Messages that are to be added to the conference system
+     * @param sender the UUID of the sender
+     * @param receiver the UUID of the receiver
+     * @param message the message to be sent
+     * @param timeSent time of message sent
+     * @param messageId UUID of the message sent
+     */
     public void addMessage(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
         List<Message> messagesToAdd = new ArrayList<>();
         messagesToAdd.add(new Message(message, sender, receiver, messageId, timeSent));
@@ -96,17 +110,10 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         notifyObservers(messagesToAdd, true, false);
     }
 
-    public void sendMessageToGroup(UUID sender, Collection<UUID> receivers, String message) {
-        List<Message> messagesToAdd = new ArrayList<>();
-        for (UUID receiverId : receivers) {
-            messagesToAdd.add(new Message(message, sender, receiverId, UUID.randomUUID()));
-        }
-        messages.addAll(messagesToAdd);
-        notifyObservers(messagesToAdd, true, false);
-    }
-
-    //public void sendMessageToAttendees()
-
+    /**
+     * Adds a message to the conference system from the firebase update data snapshot
+     * @param dataSnapshot the snapshot that contains the message to be added
+     */
     public void addMessageFromDataSnapshot(DataSnapshot dataSnapshot) {
         Message message = getFromDataSnapshot(dataSnapshot);
 
@@ -127,6 +134,12 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         return messages;
     }
 
+    /**
+     * Messages all of the users attending a certain event
+     * @param message Message that is to be sent to all the users in the event
+     * @param e the event that the speaker is messaging all of the usres in
+     * @param sender the UUID of the speaker sending the message
+     */
     public void messageAllAttendingEvent(String message, Event e, UUID sender) {
         List<Message> messagesToAdd = new ArrayList<>();
         for (UUID userId : e) {
@@ -155,6 +168,11 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         return false;
     }
 
+    /**
+     * Checks to see if a message exists in the conference system based off of the UUID
+     * @param messageID UUID of the message to be checked in the conference system
+     * @return boolean on if the message is found
+     */
     private boolean messageExists(UUID messageID) {
         for (Message m : messages) {
             if (m.getId().equals(messageID)) {
@@ -184,6 +202,11 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
         return theMessages;
     }
 
+    /**
+     * Gets the message entity from the data snapshot given linked to firebase updates
+     * @param dataSnapshot the data snapshot to be passed in for the Message
+     * @return Message entity for this system
+     */
     @Override
     public Message getFromDataSnapshot(DataSnapshot dataSnapshot) {
         Message.MessageData mData = dataSnapshot.getValue(Message.MessageData.class);

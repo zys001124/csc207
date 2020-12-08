@@ -1,6 +1,8 @@
 package controllers;
 
 import entities.User;
+import exceptions.NoPasswordException;
+import exceptions.NoUsernameException;
 import exceptions.UserTypeDoesNotExistException;
 import exceptions.UsernameAlreadyExistsException;
 import handlers.SceneNavigator;
@@ -116,6 +118,10 @@ public class CreateAccountController extends Controller {
             return InputProcessResult.USERNAME_TAKEN;
         } catch (UserTypeDoesNotExistException e) {
             return InputProcessResult.INVALID_USER_TYPE;
+        } catch (NoPasswordException e) {
+            return InputProcessResult.NO_PASSWORD_GIVEN;
+        } catch (NoUsernameException e) {
+            return InputProcessResult.NO_USERNAME_GIVEN;
         }
     }
 }

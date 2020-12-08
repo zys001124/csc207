@@ -15,13 +15,21 @@ menu options you want. The pre defined users are:
 
 Attendees: (username, password)
 
+
 Speakers: (username, password)
 
+
 Organizers: (username, password)
+-Michael, Scott
+-Jim, Halpert
+-Dwight, Schrute
+-Pam, Beasley
 
 VIPs: (username, password)
 
+
 Admins: (username, password)
+
 
 
 Usernames and Passwords are case sensitive so make sure you are careful when entering those names.

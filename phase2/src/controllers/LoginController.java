@@ -46,6 +46,10 @@ public class LoginController extends Controller {
 
     }
 
+    /**
+     * Method that takes the user to their corresponding menu page when they put their
+     * Username and password in the login scene
+     */
     @FXML
     void onLoginButtonClicked() {
         String username = usernameField.getText();

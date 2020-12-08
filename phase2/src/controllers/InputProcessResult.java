@@ -53,4 +53,6 @@ public enum InputProcessResult {
     NO_MESSAGE_HISTORY,
     NO_MESSAGE_DETECTED,
     EVENT_NAME_TAKEN,
+    NO_PASSWORD_GIVEN,
+    NO_USERNAME_GIVEN,
 }

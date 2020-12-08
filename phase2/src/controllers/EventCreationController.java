@@ -23,7 +23,10 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-
+/**
+ * Controller class that handles the input for the event creation scene that the user puts in to create
+ * a new event
+ */
 public class EventCreationController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -62,6 +65,10 @@ public class EventCreationController extends Controller {
     @FXML // fx:id="vipOnlyCheck"
     private CheckBox vipOnlyCheck; // Value injected by FXMLLoader
 
+    /**
+     * Method that returns the user to their corresponding main menu scene
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onBackButtonClicked(ActionEvent event) {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
@@ -72,6 +79,12 @@ public class EventCreationController extends Controller {
         }
     }
 
+    /**
+     * Method that runs when user clicks the button to create a new event.
+     * Will put a label on the scene on if the event is created or not and what went wrong if an
+     * exception is found.
+     * @param event
+     */
     @FXML
     void onCreateButtonClicked(ActionEvent event) {
 
@@ -114,6 +127,10 @@ public class EventCreationController extends Controller {
         createMessageLabel.setText(label);
     }
 
+    /**
+     * Button that sets a variable to decide if the event to be made is VIP only or not.
+     * @param event
+     */
     @FXML
     void onVipOnlyCheck(ActionEvent event) {
         if (vipOnlyCheck.isSelected()) {
@@ -123,6 +140,9 @@ public class EventCreationController extends Controller {
         }
     }
 
+    /**
+     * Initializes the input fields for this controller
+     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -141,6 +161,18 @@ public class EventCreationController extends Controller {
 
     }
 
+    /**
+     * Helper method for the create button when clicked. Used to return an input process result to help
+     * the scene display the right text
+     * @param eventTitle the event title for this event creation
+     * @param startTime the start time for this event creation
+     * @param endTime the end time for this event creation
+     * @param speakersUserName the list of speakers for this event
+     * @param roomNum the room number for this event
+     * @param roomCapacity the capacity for this event
+     * @param vip boolean on if this event should be VIP only
+     * @return an InputProcessResult to help the method decide what the textbox should say
+     */
     public InputProcessResult createEvent(String eventTitle, LocalDateTime startTime, LocalDateTime endTime, String[] speakersUserName,
                                           int roomNum, int roomCapacity, Boolean vip) {
 
@@ -169,7 +201,7 @@ public class EventCreationController extends Controller {
             }
         }
 
-        ArrayList<UUID> speakersID = getSpeakersID(speakers);
+        ArrayList<UUID> speakersID = userManager.listOfID(speakers);
         UUID organizerID = userManager.getCurrentlyLoggedIn().getId();
 
 
@@ -185,10 +217,6 @@ public class EventCreationController extends Controller {
             }
         }
 
-//        if (occupiedRoom.contains(roomNum)) {
-//            return InputProcessResult.ROOM_FULL;
-//        }
-
         if (roomCapacity > 60) {
             return InputProcessResult.CAPACITY_OVER;
         }
@@ -202,12 +230,21 @@ public class EventCreationController extends Controller {
 
     }
 
+    /**
+     * Helper method that gets the local date time of the input put into the time slot
+     * @param parameter the string value of the what the user put in the textbox
+     * @return the LocalDateTime of the string input
+     */
     private LocalDateTime getLocalDateTime(String parameter) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         formatter = formatter.withZone(ZoneId.of("UTC-5"));
         return LocalDateTime.parse(parameter, formatter);
     }
 
+    /**
+     * Helper method that generates a UUID for this event
+     * @return a UUID for this event
+     */
     private UUID getUuid() {
         ArrayList<UUID> eID = new ArrayList<>();
         ArrayList<UUID> uID = new ArrayList<>();
@@ -230,14 +267,15 @@ public class EventCreationController extends Controller {
         return eventID;
     }
 
-    private ArrayList<UUID> getSpeakersID(ArrayList<User> speakers) {
-        ArrayList<UUID> speakersID = new ArrayList<>();
-        for (User speaker : speakers) {
-            speakersID.add(speaker.getId());
-        }
-        return speakersID;
-    }
 
+    /**
+     * Helper method that determins if the speaker given is occupied during the given start time and
+     * end time
+     * @param sDateTime the start time to be checked for the speaker
+     * @param eDateTime the end time to be checked for the speaker
+     * @param speaker the speaker to be checked if bust
+     * @return a boolean TRUE if occupied during timeframe. FALSE otherwise
+     */
     private boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {
         for (String e : eventManager.listOfEventsHosting(speaker)) {
             Event eventHosting = eventManager.getEvent(e);
@@ -254,155 +292,4 @@ public class EventCreationController extends Controller {
         return false;
     }
 }
-//public class EventCreationController {
-//
-//    private final EventManager eManager;
-//    private final UserManager uManager;
-//
-//    /**
-//     * Creates a EventCreationController with the given UserManager and EventManager
-//     *
-//     * @param manager  - The EventManager this controller will use
-//     * @param uManager - The UserManager this controller will use
-//     */
-//    public EventCreationController(EventManager manager, UserManager uManager) {
-//        eManager = manager;
-//        this.uManager = uManager;
-//    }
-//
-//    /**
-//     * Handles the input given by the user
-//     *
-//     * @param input the users input of string that
-//     *              include information of eventTitle, Date, speakerUsername, and RoomNum
-//     * @return an InputProcessResult enum that details what happened
-//     * as a result of the given input
-//     * <p>
-//     * Precondition: the roomNum is between 0 to 5.
-//     */
-//    public InputProcessResult createEvent(String input){
-//        if (input.equals("back")) {
-//            return InputProcessResult.BACK;
-//        }
-//
-//        String[] parametersForEvent = input.split(",");
-//        if(parametersForEvent.length !=7) {
-//            return InputProcessResult.INVALID_INPUT;
-//        }
-//
-//        UUID eventID = getUuid();
-//
-//        String[] speakersUserName = parametersForEvent[3].split(":");
-//        ArrayList<User> speakers = new ArrayList<>();
-//
-//        try{
-//            for (String speaker:speakersUserName){
-//                uManager.getUser(speaker);
-//                speakers.add(uManager.getUser(speaker));
-//            }
-//        }catch(UserNotFoundException e) {
-//            return InputProcessResult.USER_NOT_FOUND;
-//        }
-//
-//        for (User speaker:speakers){
-//            if (!(speaker.getType().equals(User.UserType.SPEAKER))) {
-//                return InputProcessResult.USER_NOT_SPEAKER;
-//            }
-//        }
-//
-//        ArrayList<UUID> speakersID = getSpeakersID(speakers);
-//        UUID organizerID = uManager.getCurrentlyLoggedIn().getId();
-//
-//        LocalDateTime sDateTime = getLocalDateTime(parametersForEvent[1]);
-//        LocalDateTime eDateTime = getLocalDateTime(parametersForEvent[2]);
-//
-//        ArrayList<Integer> occupiedRoom = eManager.availabilityInTime(sDateTime, eDateTime);
-//        if (6 == occupiedRoom.size()) {
-//            return InputProcessResult.TIMESLOT_FULL;
-//        }
-//
-//        for (User speaker:speakers){
-//            boolean speakerOccupied = speakerOccupied(sDateTime, eDateTime, speaker);
-//            if (speakerOccupied){
-//                return InputProcessResult.SPEAKER_OCCUPIED;
-//            }
-//        }
-//
-//        int roomNum = Integer.parseInt(parametersForEvent[4]);
-//
-//        if (occupiedRoom.contains(roomNum)){return InputProcessResult.ROOM_FULL;}
-//        int capacity = Integer.parseInt(parametersForEvent[5]);
-//        if(VIPonlytypo(parametersForEvent[6])){
-//            return InputProcessResult.INVALID_INPUT;
-//        }
-//        boolean VIPonly = Boolean.parseBoolean(parametersForEvent[6]);
-//
-//        int roomCapacity = 60;
-//        if (capacity > roomCapacity){
-//            return InputProcessResult.CAPACITY_OVER;
-//        }
-//        Event eventCreated = new Event(parametersForEvent[0], sDateTime, eDateTime, eventID, organizerID, speakersID,
-//                new ArrayList<>(), roomNum, capacity, VIPonly);
-//
-//
-//        eManager.addEvent(eventCreated);
-//        return InputProcessResult.SUCCESS;
-//
-//    }
-//
-//    private LocalDateTime getLocalDateTime(String parameter) {
-//        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-//        formatter = formatter.withZone(ZoneId.of("UTC-5"));
-//        return LocalDateTime.parse(parameter, formatter);
-//    }
-//
-//    private boolean VIPonlytypo(String b){
-//        return !b.equals("true") && !b.equals("false");
-//    }
-//
-//    private boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {
-//        for (String e : eManager.listOfEventsHosting(speaker)) {
-//            Event eventHosting = eManager.getEvent(e);
-//            LocalDateTime startTime = eventHosting.getEventTime();
-//            LocalDateTime endTime = eventHosting.getEventETime();
-//
-//            if (sDateTime.isBefore(startTime) && eDateTime.isAfter(startTime)|
-//                    (sDateTime.isBefore(endTime) && eDateTime.isAfter(endTime))|
-//                    (sDateTime.isAfter(startTime) && eDateTime.isBefore(endTime))
-//            ){
-//                return true;
-//            }
-//        }
-//        return false;
-//    }
-//
-//    private UUID getUuid() {
-//        ArrayList<UUID> eID = new ArrayList<>();
-//        ArrayList<UUID> uID = new ArrayList<>();
-//        for (Event e : eManager.getEvents()) {
-//            eID.add(e.getId());
-//        }
-//        for (User u : uManager.getUsers()) {
-//            uID.add(u.getId());
-//        }
-//
-//        boolean uuidExist = true;
-//        UUID eventID = UUID.randomUUID();
-//        while (uuidExist) {
-//            if (!(eID.contains(eventID) || uID.contains(eventID))) {
-//                uuidExist = false;
-//            } else {
-//                eventID = UUID.randomUUID();
-//            }
-//        }
-//        return eventID;
-//    }
-//
-//    private ArrayList<UUID> getSpeakersID(ArrayList<User> speakers) {
-//        ArrayList<UUID> speakersID = new ArrayList<>();
-//        for (User speaker : speakers) {
-//            speakersID.add(speaker.getId());
-//        }
-//        return speakersID;
-//    }
-//}
+

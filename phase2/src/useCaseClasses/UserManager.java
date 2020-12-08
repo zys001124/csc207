@@ -3,10 +3,7 @@ package useCaseClasses;
 
 import com.google.firebase.database.DataSnapshot;
 import entities.User;
-import exceptions.IncorrectPasswordException;
-import exceptions.UserNotFoundException;
-import exceptions.UserTypeDoesNotExistException;
-import exceptions.UsernameAlreadyExistsException;
+import exceptions.*;
 import gateways.DataSnapshotReader;
 import observers.Observable;
 
@@ -108,6 +105,11 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         return null;
     }
 
+    /**
+     * Method that removes the user given a data snapshot that is taken in from firebase for live
+     * updates
+     * @param dataSnapshot the data snapshot of what user to remove
+     */
     public void removeUserFromDataSnapshot(DataSnapshot dataSnapshot) {
         UUID id = getFromDataSnapshot(dataSnapshot).getId();
 
@@ -138,9 +140,16 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
      * @param password the password of the user to be added
      * @throws UsernameAlreadyExistsException - if the username is already seen in the system
      */
-    public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException {
+    public void addUser(User.UserType type, String username, String password) throws UsernameAlreadyExistsException,
+            NoPasswordException, NoUsernameException {
         if (doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
+        }
+        if(username.equals("")){
+            throw new NoUsernameException("Username not given.");
+        }
+        if(password.equals("")){
+            throw new NoPasswordException("Password not given.");
         }
         User user = new User(type, username, password, UUID.randomUUID());
         List<User> usersToAdd = new ArrayList<>();
@@ -149,6 +158,10 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         notifyObservers(usersToAdd, true, false);
     }
 
+    /**
+     * Adds new users from a data snapshot that is linked to firebase for live updates
+     * @param dataSnapshot the data snapshot to be passed
+     */
     public void addUserFromDataSnapshot(DataSnapshot dataSnapshot) {
         User user = getFromDataSnapshot(dataSnapshot);
         List<User> usersToAdd = new ArrayList<>();
@@ -159,6 +172,10 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         }
     }
 
+    /**
+     * Changes the user from the data snapshot that is given which is linked to firebase
+     * @param dataSnapshot the given data snapshot to be passed
+     */
     public void changeUserFromDataSnapshot(DataSnapshot dataSnapshot) {
         User user = getFromDataSnapshot(dataSnapshot);
         List<User> usersToAdd = new ArrayList<>();
@@ -214,6 +231,11 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         return users;
     }
 
+    /**
+     * Returns a sorted user list in the order of attendees, organizers, speakers, vips, and admins
+     * respectively
+     * @return A list of Users sorted by user type
+     */
     public List<User> getUsersSorted() {
 
         List<User> usersSorted = new ArrayList<>();
@@ -278,16 +300,24 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         throw new UserNotFoundException(username);
     }
 
-    public List<UUID> getUserId(User.UserType userType) {
-        ArrayList<UUID> attendees = new ArrayList<>();
-        for (User user : users) {
-            if (user.getType() == userType) {
-                attendees.add(user.getId());
-            }
+    /**
+     * returns an array list of UUIDs of the given array list of user inputs
+     * @param u an array list of user inputs
+     * @return an array list of UUIDS for the corresponding users
+     */
+    public ArrayList<UUID> listOfID(ArrayList<User> u){
+        ArrayList<UUID> usersID = new ArrayList<>();
+        for (User user : u) {
+            usersID.add(user.getId());
         }
-        return attendees;
+        return usersID;
     }
 
+
+    /**
+     * gets a list of all the attendees in the conference system
+     * @return List of attendees in the conference system
+     */
     public List<User> getAttendees() {
         ArrayList<User> attendees = new ArrayList<>();
         for (User user : users) {
@@ -298,6 +328,10 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         return attendees;
     }
 
+    /**
+     * gets a list of all the speakers in the conference system
+     * @return List of speakers in the conference system
+     */
     public List<User> getOrganizers() {
         ArrayList<User> organizers = new ArrayList<>();
         for (User user : users) {
@@ -308,26 +342,10 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         return organizers;
     }
 
-    public List<User> getVips() {
-        ArrayList<User> vips = new ArrayList<>();
-        for (User user : users) {
-            if (user.getType() == User.UserType.VIP) {
-                vips.add(user);
-            }
-        }
-        return vips;
-    }
-
-    public List<User> getAdmins() {
-        ArrayList<User> admins = new ArrayList<>();
-        for (User user : users) {
-            if (user.getType() == User.UserType.ADMIN) {
-                admins.add(user);
-            }
-        }
-        return admins;
-    }
-
+    /**
+     * Method that gets all of the speakers in the conference system
+     * @return A list of speakers in the conference system
+     */
     public List<User> getSpeakers() {
         ArrayList<User> speakers = new ArrayList<>();
         for (User user : users) {
@@ -393,6 +411,11 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         }
     }
 
+    /**
+     * gets the data snapshot from the firebase database
+     * @param dataSnapshot the data snapshot to be passed
+     * @return a User from the data snapshot
+     */
     @Override
     public User getFromDataSnapshot(DataSnapshot dataSnapshot) {
         User.UserData userData = dataSnapshot.getValue(User.UserData.class);

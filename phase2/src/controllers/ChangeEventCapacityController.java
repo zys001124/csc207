@@ -41,6 +41,10 @@ public class ChangeEventCapacityController extends Controller {
     @FXML // fx:id="createMessageLabel"
     private Label createMessageLabel; // Value injected by FXMLLoader
 
+    /**
+     * Method that sends the user back to their corresponding main menu
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onBackButtonClicked(ActionEvent event) {
         if (userManager.checkOrganizer(userManager.getCurrentlyLoggedIn())) {
@@ -50,6 +54,11 @@ public class ChangeEventCapacityController extends Controller {
         }
     }
 
+    /**
+     * Method that handles the program input when the change button is clicked and
+     * changes the capacity of the event
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onChangeButtonClicked(ActionEvent event) {
 
@@ -79,6 +88,9 @@ public class ChangeEventCapacityController extends Controller {
     }
 
 
+    /**
+     * Initializes the scene buttons and labels and text boxes
+     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -89,6 +101,12 @@ public class ChangeEventCapacityController extends Controller {
         assert eventListField != null : "fx:id=\"eventListField\" was not injected: check your FXML file 'Change Event Capacity.fxml'.";
     }
 
+    /**
+     * Changes the event capacity based on if the event is found within the conference system
+     * @param c String of the event capacity to be changed to
+     * @param event the event for the capacity to change
+     * @return an InputProcessResult based on if changing the event is succesful
+     */
     private InputProcessResult changeEventCapacity(String c, String event) {
         if (checkIntFormat(c)) {
             return InputProcessResult.INVALID_INPUT;
@@ -104,6 +122,11 @@ public class ChangeEventCapacityController extends Controller {
         return InputProcessResult.SUCCESS;
     }
 
+    /**
+     * Checks the int format based off the capacity string
+     * @param capacity the capacity of the event as a string
+     * @return True if the string can be parsed as an int. False otherwise
+     */
     private boolean checkIntFormat(String capacity) {
         try {
             Integer.parseInt(capacity);
@@ -114,6 +137,10 @@ public class ChangeEventCapacityController extends Controller {
     }
 
 
+    /**
+     * Sets the event manager for this scene
+     * @param eventManager the event manager to be set to
+     */
     @Override
     public void setEventManager(EventManager eventManager) {
         super.setEventManager(eventManager);
@@ -124,6 +151,10 @@ public class ChangeEventCapacityController extends Controller {
         });
     }
 
+    /**
+     * Gets a list of the event labels to be put out to the scrollview
+     * @return
+     */
     private List<Label> getEventLabels() {
         List<String> labels = eventManager.getEventCapacityLabels();
         ArrayList<Label> result = new ArrayList<>();
@@ -133,6 +164,9 @@ public class ChangeEventCapacityController extends Controller {
         return result;
     }
 
+    /**
+     * Sets the event list format for the event to be put out to the scene
+     */
     private void setEventList() {
         eventListField.getItems().clear();
         eventListField.refresh();

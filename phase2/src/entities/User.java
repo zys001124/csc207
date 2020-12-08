@@ -104,6 +104,9 @@ public class User implements Serializable {
         ADMIN
     }
 
+    /**
+     * The User Data for each user
+     */
     public static class UserData {
         public String uuid;
         public String username;

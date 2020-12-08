@@ -54,6 +54,11 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         this.VIPonly = VIPonly;
     }
 
+    /**
+     * Gets an event based on the corresponding event data passed in
+     * @param data the event data to be found for an event
+     * @return Event for this event data
+     */
     public static Event fromEventData(EventData data) {
 
         List<UUID> speakerIds = new ArrayList<>();
@@ -236,11 +241,20 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         return attendees.iterator();
     }
 
+    /**
+     * compares the passed in event id to the this event id
+     * @param o the event of the eventId to be checked
+     * @return int on that compare to.
+     */
     @Override
     public int compareTo(Event o) {
         return eventId.compareTo(o.eventId);
     }
 
+    /**
+     * Gets the event data of this particular event
+     * @return the event data of this event
+     */
     public EventData getEventData() {
         EventData data = new EventData();
 
@@ -271,6 +285,10 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         return data;
     }
 
+    /**
+     * Sets the event data given the event data passed in
+     * @param data the event data to be set for this event
+     */
     public void set(EventData data) {
         try {
             eventId = UUID.fromString(data.eventId);
@@ -308,6 +326,9 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
         PANEL,
     }
 
+    /**
+     * The Event data for this event
+     */
     public static class EventData {
         public String eventSTime;
         public String eventETime;
