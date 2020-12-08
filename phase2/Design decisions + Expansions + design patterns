@@ -1,4 +1,5 @@
-List of design decisions and explanations about how our code has improved since Phase 2:
+List of design decisions + patterns we used and explanations about how our
+code has improved since Phase 2:
 
 - (Improvement) Minimized/eliminated references to entity methods in classes outside the use case layer
 - (Design Pattern) Implemented the Observer design pattern to act when the amount/content of entities change
@@ -11,6 +12,8 @@ listens for a successful login.
     - Implemented this because the information required for the program to function properly for
     a given user type is different depending on the user type. So we have to wait for a successful login
     before initializing the rest of the scenes
+    -Classes involved in implementation: Observable, Observer, ObserversInitializer, UpdateDatabaseOvserver
+    MessageUserSceneController, ConferenceSystem, UseCaseHolder
 
 - (Improvement) Compartmentalizing code
     - In phase 1, ConferenceSystem.java was responsible for creating instances of every object necessary to
@@ -22,3 +25,4 @@ listens for a successful login.
 
 - (Design Pattern) Various factory methods used in ConferenceSystem to create the Initializers/holders
 listed above
+    -Classes involved: ConferenceSystem
