@@ -5,7 +5,6 @@
 package controllers;
 
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -38,37 +37,33 @@ public class SpeakerMainMenuController extends Controller {
 
     /**
      * Method that directs the user to the login scene when this button is clicked.
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onLogoutClicked(ActionEvent event) {
+    void onLogoutClicked() {
         setSceneView(SceneNavigator.SceneViewType.LOGIN);
     }
 
     /**
      * Method that directs the user to the message all attending event scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onMessageAllAttendeesClicked(ActionEvent event) {
+    void onMessageAllAttendeesClicked() {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_ATTENDING_EVENT);
     }
 
     /**
      * Method that directs the user to the message user scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onMessageAttendeeClicked(ActionEvent event) {
+    void onMessageAttendeeClicked() {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
     }
 
     /**
      * Method that directs the user to the event schedule scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onSeeEventScheduleClicked(ActionEvent event) {
+    void onSeeEventScheduleClicked() {
         setSceneView(SceneNavigator.SceneViewType.EVENT_SCHEDULE);
     }
 
@@ -77,7 +72,7 @@ public class SpeakerMainMenuController extends Controller {
      * initialize method to initialize the buttons in the scene and the controller to be clicked
      */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert messageAllAttendeesOfEventButton != null : "fx:id=\"messageAllAttendeesOfEventButton\" was not injected: check your FXML file 'Speaker Main Menu.fxml'.";
         assert messageAttendeeButton != null : "fx:id=\"messageAttendeeButton\" was not injected: check your FXML file 'Speaker Main Menu.fxml'.";

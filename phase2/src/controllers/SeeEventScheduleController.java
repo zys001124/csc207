@@ -3,7 +3,6 @@ package controllers;
 import entities.Event;
 import entities.User;
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,10 +41,9 @@ public class SeeEventScheduleController extends Controller {
 
     /**
      * Takes the user back to their corresponding main menu
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    void onBackButtonClicked() {
         if (userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE) ||
                 userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.VIP)) {
             setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
@@ -57,6 +55,7 @@ public class SeeEventScheduleController extends Controller {
 
     /**
      * Sets the event manager for this system
+     *
      * @param eventManager the eventManager to be set to
      */
     @Override
@@ -89,6 +88,7 @@ public class SeeEventScheduleController extends Controller {
 
     /**
      * Gets the event labels to be shown on the scene scroll view
+     *
      * @param events the events the user is either hosting or attending
      * @return List of labels for the scene
      */
@@ -107,6 +107,7 @@ public class SeeEventScheduleController extends Controller {
 
     /**
      * Gets the label for the speaker hosting the event
+     *
      * @param events the events to see which speaker(s) are hosting
      * @return List of speaker labels
      */

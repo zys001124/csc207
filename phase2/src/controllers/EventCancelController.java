@@ -1,7 +1,6 @@
 package controllers;
 
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,7 +41,7 @@ public class EventCancelController extends Controller {
      * Initializes the scene buttons and labels and text boxes
      */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert eventListView != null : "fx:id=\"eventListView\" was not injected: check your FXML file 'Cancel Event.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Cancel Event.fxml'.";
@@ -53,10 +52,9 @@ public class EventCancelController extends Controller {
 
     /**
      * Method that sends the user back to their corresponding main menu
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    void onBackButtonClicked() {
         if (!checkUserType()) {
             setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
         }
@@ -68,10 +66,9 @@ public class EventCancelController extends Controller {
     /**
      * Method that handles the program input when the change button is clicked and
      * cancel the event
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onCancelButtonClicked(ActionEvent event) {
+    void onCancelButtonClicked() {
 
         String label = "";
 
@@ -109,6 +106,7 @@ public class EventCancelController extends Controller {
 
     /**
      * Sets the event manager for this scene
+     *
      * @param eventManager the event manager to be set to
      */
     @Override

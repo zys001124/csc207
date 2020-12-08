@@ -56,6 +56,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
     /**
      * Gets an event based on the corresponding event data passed in
+     *
      * @param data the event data to be found for an event
      * @return Event for this event data
      */
@@ -243,6 +244,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
     /**
      * compares the passed in event id to the this event id
+     *
      * @param o the event of the eventId to be checked
      * @return int on that compare to.
      */
@@ -253,6 +255,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
     /**
      * Gets the event data of this particular event
+     *
      * @return the event data of this event
      */
     public EventData getEventData() {
@@ -287,6 +290,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
     /**
      * Sets the event data given the event data passed in
+     *
      * @param data the event data to be set for this event
      */
     public void set(EventData data) {

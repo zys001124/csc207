@@ -20,10 +20,14 @@ public abstract class Controller {
     private SceneNavigator sceneNavigator;
 
     @FXML
+    /**
+     * This method is called by the FXMLLoader when initialization is complete
+     */
     abstract void initialize();
 
     /**
      * Sets the user manager to the corresponding userManager
+     *
      * @param userManager the userManager to be set to
      */
     public void setUserManager(UserManager userManager) {
@@ -32,6 +36,7 @@ public abstract class Controller {
 
     /**
      * Sets the message manager to the corresponding messageManager
+     *
      * @param messageManager the messageManager to be set to
      */
     public void setMessageManager(MessageManager messageManager) {
@@ -40,6 +45,7 @@ public abstract class Controller {
 
     /**
      * Sets the event manager to the corresponding eventManager
+     *
      * @param eventManager the eventManager to be set to
      */
     public void setEventManager(EventManager eventManager) {
@@ -48,6 +54,7 @@ public abstract class Controller {
 
     /**
      * sets the sceneNavigator to the corresponding sceneNavigator
+     *
      * @param sceneNavigator the sceneNavigator to be set to
      */
     public void setSceneNavigator(SceneNavigator sceneNavigator) {
@@ -56,6 +63,7 @@ public abstract class Controller {
 
     /**
      * Switches the sccene to the corresponding scene type
+     *
      * @param sceneViewType The scene type for the new Scene to be set to
      */
     protected void setSceneView(SceneViewType sceneViewType) {

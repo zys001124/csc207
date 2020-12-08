@@ -1,7 +1,6 @@
 package controllers;
 
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -43,10 +42,9 @@ public class ChangeEventCapacityController extends Controller {
 
     /**
      * Method that sends the user back to their corresponding main menu
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    void onBackButtonClicked() {
         if (userManager.checkOrganizer(userManager.getCurrentlyLoggedIn())) {
             setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
         } else {
@@ -57,10 +55,9 @@ public class ChangeEventCapacityController extends Controller {
     /**
      * Method that handles the program input when the change button is clicked and
      * changes the capacity of the event
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onChangeButtonClicked(ActionEvent event) {
+    void onChangeButtonClicked() {
 
         String label = "";
         Label eventLabel = eventListField.getSelectionModel().getSelectedItem();
@@ -92,7 +89,7 @@ public class ChangeEventCapacityController extends Controller {
      * Initializes the scene buttons and labels and text boxes
      */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert capacityField != null : "fx:id=\"capacityField\" was not injected: check your FXML file 'Change Event Capacity.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Change Event Capacity.fxml'.";
@@ -103,7 +100,8 @@ public class ChangeEventCapacityController extends Controller {
 
     /**
      * Changes the event capacity based on if the event is found within the conference system
-     * @param c String of the event capacity to be changed to
+     *
+     * @param c     String of the event capacity to be changed to
      * @param event the event for the capacity to change
      * @return an InputProcessResult based on if changing the event is succesful
      */
@@ -124,6 +122,7 @@ public class ChangeEventCapacityController extends Controller {
 
     /**
      * Checks the int format based off the capacity string
+     *
      * @param capacity the capacity of the event as a string
      * @return True if the string can be parsed as an int. False otherwise
      */
@@ -139,6 +138,7 @@ public class ChangeEventCapacityController extends Controller {
 
     /**
      * Sets the event manager for this scene
+     *
      * @param eventManager the event manager to be set to
      */
     @Override
@@ -153,6 +153,7 @@ public class ChangeEventCapacityController extends Controller {
 
     /**
      * Gets a list of the event labels to be put out to the scrollview
+     *
      * @return
      */
     private List<Label> getEventLabels() {

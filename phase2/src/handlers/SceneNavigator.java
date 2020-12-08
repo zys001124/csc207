@@ -13,7 +13,7 @@ public class SceneNavigator {
     private static final int HEIGHT = 600;
 
     private final Stage applicationStage;
-    private final UseCaseHandler useCaseHandler;
+    private final UseCaseInitializer useCaseInitializer;
 
     private Scene loginScene;
     private Scene speakerMenuInputScene;
@@ -34,9 +34,9 @@ public class SceneNavigator {
     private Scene changeEventCapacityScene;
     private Scene deleteAccountScene;
 
-    public SceneNavigator(Stage applicationStage, UseCaseHandler useCaseHandler) {
+    public SceneNavigator(Stage applicationStage, UseCaseInitializer useCaseInitializer) {
         this.applicationStage = applicationStage;
-        this.useCaseHandler = useCaseHandler;
+        this.useCaseInitializer = useCaseInitializer;
     }
 
     public void switchSceneView(SceneViewType sceneViewType) {

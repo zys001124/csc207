@@ -6,7 +6,6 @@ import exceptions.EventNotFoundException;
 import exceptions.InvalidUserTypeException;
 import exceptions.UserAlreadyEnrolledException;
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -51,12 +50,12 @@ public class EventEnrollController extends Controller {
     }
 
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    void onBackButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
     }
 
     @FXML
-    void onEnrollButtonClicked(ActionEvent event) {
+    void onEnrollButtonClicked() {
         String eventTitle = eventListView.getSelectionModel().getSelectedItem().getText().split("  Time:")[0];
         String label;
         InputProcessResult result = enrollEvent(eventTitle);

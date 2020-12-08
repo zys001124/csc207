@@ -1,4 +1,4 @@
-package gateways;
+package useCaseClasses;
 
 import com.google.firebase.database.DataSnapshot;
 

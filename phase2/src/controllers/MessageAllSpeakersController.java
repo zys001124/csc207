@@ -6,16 +6,13 @@ package controllers;
 
 import entities.User;
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
-import java.util.UUID;
 
 
 /**
@@ -43,10 +40,9 @@ public class MessageAllSpeakersController extends Controller {
 
     /**
      * Method that navigates the user back to their corresponding main menu
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    void onBackButtonClicked() {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
         if (currentUserType == User.UserType.ORGANIZER) {
             setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
@@ -59,10 +55,9 @@ public class MessageAllSpeakersController extends Controller {
     /**
      * Method that executes what to do when the send button is pushed
      * Puts a message on the scene on what happens
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onSendButtonClicked(ActionEvent event) {
+    void onSendButtonClicked() {
         String screenMessage;
         String message = messageInput.getText();
         InputProcessResult result = sendMessage(message);
@@ -79,7 +74,7 @@ public class MessageAllSpeakersController extends Controller {
      * Initializes the input fields for this controller
      */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert messageInput != null : "fx:id=\"messageInput\" was not injected: check your FXML file 'Message All Attendees.fxml'.";
         assert sendButton != null : "fx:id=\"sendButton\" was not injected: check your FXML file 'Message All Attendees.fxml'.";
@@ -90,6 +85,7 @@ public class MessageAllSpeakersController extends Controller {
 
     /**
      * Helper method that sends the message to all the speakers if a message is detected
+     *
      * @param message the message to be sent to the speakers
      * @return InputProcessResult on if there is a success or not
      */
@@ -99,7 +95,7 @@ public class MessageAllSpeakersController extends Controller {
         }
 
         // Use ID to override normal checks
-        for(User speaker : userManager.getSpeakers()){
+        for (User speaker : userManager.getSpeakers()) {
             messageManager.sendMessageById(userManager.getCurrentlyLoggedIn().getId(), speaker.getId(), message);
         }
 

@@ -5,7 +5,6 @@
 package controllers;
 
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -41,46 +40,41 @@ public class VIPMainMenuController extends Controller {
 
     /**
      * Method that directs the user to the enrol in event scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onEnrollInEventButtonClicked(ActionEvent event) {
+    void onEnrollInEventButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.ENROLL_IN_EVENT);
     }
 
     /**
      * Method that directs the user to the login scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onLogoutButtonClicked(ActionEvent event) {
+    void onLogoutButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.LOGIN);
     }
 
     /**
      * Method that directs the user to the message user scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onMessageUserButtonClicked(ActionEvent event) {
+    void onMessageUserButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
     }
 
     /**
      * method that directs the user to the event schedule scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onSeeEventScheduleButtonClicked(ActionEvent event) {
+    void onSeeEventScheduleButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.EVENT_SCHEDULE);
     }
 
     /**
      * Method that directs the user to the unenroll in event scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onUnenrollInEventButtonClicked(ActionEvent event) {
+    void onUnenrollInEventButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.UNENROLL_IN_EVENT);
     }
 
@@ -89,7 +83,7 @@ public class VIPMainMenuController extends Controller {
      * initialize method that makes initializes the button fields for both the controller and class
      */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert messageUserButton != null : "fx:id=\"messageUserButton\" was not injected: check your FXML file 'VIP Main Menu.fxml'.";
         assert enrollInEventButton != null : "fx:id=\"enrollInEventButton\" was not injected: check your FXML file 'VIP Main Menu.fxml'.";

@@ -120,6 +120,7 @@ public class Message implements Serializable, Comparable<Message> {
 
     /**
      * the message text string
+     *
      * @return String of the message
      */
     @Override
@@ -129,6 +130,7 @@ public class Message implements Serializable, Comparable<Message> {
 
     /**
      * Returns boolean on if the object is the same as a message
+     *
      * @param o object to be checked
      * @return True if ti is a certain message, False otherwise
      */
@@ -146,6 +148,7 @@ public class Message implements Serializable, Comparable<Message> {
 
     /**
      * Hashes the code of the format of each message
+     *
      * @return an int of the hashed code
      */
     @Override
@@ -155,6 +158,7 @@ public class Message implements Serializable, Comparable<Message> {
 
     /**
      * gets the message data of this message
+     *
      * @return the MessageData of this message
      */
     public MessageData getMessageData() {

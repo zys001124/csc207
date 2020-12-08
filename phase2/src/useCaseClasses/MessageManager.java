@@ -6,11 +6,13 @@ import entities.Message;
 import entities.User;
 import exceptions.InvalidUserTypeException;
 import exceptions.NoMessageException;
-import gateways.DataSnapshotReader;
 import observers.Observable;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents an messageManager that can store/create messages sent by users of the conference
@@ -36,9 +38,9 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
     /**
      * Adds a message to the list of messages
      *
-     * @param sender   the User sending the message
+     * @param sender    the User sending the message
      * @param recipient the User receiving the message
-     * @param message  the message that is sent
+     * @param message   the message that is sent
      */
     public void sendMessage(User sender, User recipient, String message) throws InvalidUserTypeException, NoMessageException {
 
@@ -82,11 +84,12 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
 
     /**
      * Sends a messages to users by their given UUID. Can be up to multiple messages
-     * @param sender the UUID of the sender
+     *
+     * @param sender    the UUID of the sender
      * @param recipient the UUID of the recipient
-     * @param message message that is to be sent
+     * @param message   message that is to be sent
      */
-    public void sendMessageById(UUID sender, UUID recipient, String message){
+    public void sendMessageById(UUID sender, UUID recipient, String message) {
 
         List<Message> messagesToAdd = new ArrayList<>();
 
@@ -97,10 +100,11 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
 
     /**
      * Messages that are to be added to the conference system
-     * @param sender the UUID of the sender
-     * @param receiver the UUID of the receiver
-     * @param message the message to be sent
-     * @param timeSent time of message sent
+     *
+     * @param sender    the UUID of the sender
+     * @param receiver  the UUID of the receiver
+     * @param message   the message to be sent
+     * @param timeSent  time of message sent
      * @param messageId UUID of the message sent
      */
     public void addMessage(UUID sender, UUID receiver, String message, LocalDateTime timeSent, UUID messageId) {
@@ -112,6 +116,7 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
 
     /**
      * Adds a message to the conference system from the firebase update data snapshot
+     *
      * @param dataSnapshot the snapshot that contains the message to be added
      */
     public void addMessageFromDataSnapshot(DataSnapshot dataSnapshot) {
@@ -136,9 +141,10 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
 
     /**
      * Messages all of the users attending a certain event
+     *
      * @param message Message that is to be sent to all the users in the event
-     * @param e the event that the speaker is messaging all of the usres in
-     * @param sender the UUID of the speaker sending the message
+     * @param e       the event that the speaker is messaging all of the usres in
+     * @param sender  the UUID of the speaker sending the message
      */
     public void messageAllAttendingEvent(String message, Event e, UUID sender) {
         List<Message> messagesToAdd = new ArrayList<>();
@@ -170,6 +176,7 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
 
     /**
      * Checks to see if a message exists in the conference system based off of the UUID
+     *
      * @param messageID UUID of the message to be checked in the conference system
      * @return boolean on if the message is found
      */
@@ -204,6 +211,7 @@ public class MessageManager extends Observable implements DataSnapshotReader<Mes
 
     /**
      * Gets the message entity from the data snapshot given linked to firebase updates
+     *
      * @param dataSnapshot the data snapshot to be passed in for the Message
      * @return Message entity for this system
      */

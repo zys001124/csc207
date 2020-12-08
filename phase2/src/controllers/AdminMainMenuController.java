@@ -1,7 +1,6 @@
 package controllers;
 
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
@@ -51,7 +50,7 @@ public class AdminMainMenuController extends Controller {
      * method from the Controller class
      */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert createEventButton != null : "fx:id=\"createEventButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
         assert cancelEventButton != null : "fx:id=\"cancelEventButton\" was not injected: check your FXML file 'Admin Main Menu.fxml'.";
@@ -68,7 +67,7 @@ public class AdminMainMenuController extends Controller {
      * Method that directs the program to the cancel event scene when this button is clicked
      */
     @FXML
-    void onCancelEventButtonClicked(ActionEvent event) {
+    void onCancelEventButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.CANCEL_EVENT);
     }
 
@@ -76,16 +75,15 @@ public class AdminMainMenuController extends Controller {
      * Method that directs the program to the create event scene when this button is clicked
      */
     @FXML
-    void onCreateEventButtonClicked(ActionEvent event) {
+    void onCreateEventButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.CREATE_EVENT);
     }
 
     /**
      * Method that directs the program to create account scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onCreateUserAccountButtonClicked(ActionEvent event) {
+    void onCreateUserAccountButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.CREATE_ACCOUNT);
     }
 
@@ -93,52 +91,47 @@ public class AdminMainMenuController extends Controller {
      * Method that directs the program to the delete account scene when this button is clicked
      */
     @FXML
-    void onDeleteUserAccountButtonClicked(ActionEvent event) {
+    void onDeleteUserAccountButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.DELETE_ACCOUNT);
     }
 
     /**
      * Method that directs the program to the login scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onLogoutButtonClicked(ActionEvent event) {
+    void onLogoutButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.LOGIN);
     }
 
     /**
      * Method that directs the program to the Message All Attendees scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onMessageAllAttendeesButtonClicked(ActionEvent event) {
+    void onMessageAllAttendeesButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_ATTENDEES);
     }
 
     /**
      * Method that directs the program to the message all speakers scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onMessageAllSpeakersButtonClicked(ActionEvent event) {
+    void onMessageAllSpeakersButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_SPEAKERS);
     }
 
     /**
      * Method that directs the program to the message user scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onMessageUserButtonClicked(ActionEvent event) {
+    void onMessageUserButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
     }
 
     /**
      * Method that directs the program to the change capacity scene when this button is clicked
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onChangeCapacityClicked(ActionEvent event) {
+    void onChangeCapacityClicked() {
         setSceneView(SceneNavigator.SceneViewType.CHANGE_CAPACITY);
 
     }

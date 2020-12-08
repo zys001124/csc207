@@ -4,7 +4,6 @@ import com.google.firebase.database.DataSnapshot;
 import entities.Event;
 import entities.User;
 import exceptions.*;
-import gateways.DataSnapshotReader;
 import observers.Observable;
 
 import java.time.LocalDateTime;
@@ -43,6 +42,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Adds an event from a given firebase data snapshot for live updates
+     *
      * @param dataSnapshot the snapshot to be processed for the event to be added
      */
     public void addEventFromDataSnapshot(DataSnapshot dataSnapshot) {
@@ -58,6 +58,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Checks to see if an event exists based on its UUID
+     *
      * @param eventId the UUID of the event that is to be found in the conference system
      * @return boolean on if the event is found
      */
@@ -118,6 +119,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Removes an event from the conference system based on the firebase snapshot passed in
+     *
      * @param dataSnapshot the snapshot of the event to be removed
      */
     public void removeEventFromDataSnapshot(DataSnapshot dataSnapshot) {
@@ -185,6 +187,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * gets a list of events that a speaker is hosting
+     *
      * @param speakerId the UUID of the speakers
      * @return A list of events that the given speaker is hosting
      */
@@ -253,8 +256,9 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Adds a user to an event
+     *
      * @param attendee the User to be added to the event
-     * @param event the event for the user to join
+     * @param event    the event for the user to join
      */
     private void addingUser(User attendee, Event event) {
         List<Event> eventsChanged = new ArrayList<>();
@@ -265,6 +269,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * updates the information of an event based on the firebase updates for the data snapshot
+     *
      * @param dataSnapshot the snapshot that stores info on what changes about the event
      */
     public void updateEventFromDataSnapshot(DataSnapshot dataSnapshot) {
@@ -310,8 +315,9 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Removes a user from an event
+     *
      * @param attendee the attendee that is to be removed from an event
-     * @param event the event the user is going to leave
+     * @param event    the event the user is going to leave
      */
     private void removingUser(User attendee, Event event) {
         List<Event> eventsChanged = new ArrayList<>();
@@ -334,6 +340,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Helper method that sorts the events based on their time
+     *
      * @param result the sorted arraylist of events based on their time
      */
     private void insertionSortEvents(ArrayList<Event> result) {
@@ -350,6 +357,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Gets an arraylist of events where the events are sorted with attendees
+     *
      * @param user the user for the sorted events
      * @return ArrayList of events with attendees
      */
@@ -359,6 +367,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Gets the title of an event
+     *
      * @param event the event to get the title of
      * @return String of the title of this event
      */
@@ -368,7 +377,8 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * gets the time of the event based on the given format
-     * @param event the event we want the time of
+     *
+     * @param event  the event we want the time of
      * @param format the format of the time we want in this case
      * @return the String version of the event
      */
@@ -378,6 +388,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Gets the room of the event
+     *
      * @param event the event of the room we want
      * @return String of the room number
      */
@@ -387,6 +398,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * The capacity of the event given
+     *
      * @param event the event we want to get the capacity of
      * @return String value of the capacity
      */
@@ -396,6 +408,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * gets The number of users enrolled in an event
+     *
      * @param event the event we want to get the number of users enrolled in
      * @return String value of the enrollment number
      */
@@ -405,6 +418,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * The type of event that is being passed in
+     *
      * @param event the event we want the type of
      * @return String value of the type of event
      */
@@ -414,6 +428,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Returns on if the event is VIP only
+     *
      * @param event the event we want to check if it is VIP only
      * @return String value of the VIP only message
      */
@@ -423,8 +438,9 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Changes the event capacity of the event passed in
-     * @param eventTitle the title of the event as a string
-     * @param newCapacity the capacity of the event we want to change to
+     *
+     * @param eventTitle         the title of the event as a string
+     * @param newCapacity        the capacity of the event we want to change to
      * @param changeFromDatabase boolean on changes from database
      */
     public void changeEventCapacity(String eventTitle, int newCapacity, boolean changeFromDatabase) {
@@ -437,6 +453,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * gets a list of events the user passed in is hosting
+     *
      * @param u the user that is hosting the returned events
      * @return A list of strings of the event user u is hosting
      */
@@ -524,6 +541,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
 
     /**
      * Gets the event entity from the given data snapshot from firebase
+     *
      * @param dataSnapshot the snapshot from firebase that is updated automatically
      * @return Event entity of this conference system
      */
@@ -536,6 +554,7 @@ public class EventManager extends Observable implements DataSnapshotReader<Event
     /**
      * All of the data of the event from a given firebase data snapshot that is to be updated
      * automatically
+     *
      * @param dataSnapshot the snapshot of the data to be passed
      * @return EventData of the entire EventManager
      */

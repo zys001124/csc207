@@ -1,12 +1,11 @@
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
-import com.google.firebase.database.FirebaseDatabase;
 import controllers.Controller;
 import controllers.LoginController;
 import controllers.LoginListener;
 import handlers.SceneNavigator;
-import handlers.UseCaseHandler;
+import handlers.UseCaseInitializer;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -23,23 +22,21 @@ import java.net.URL;
  */
 public class ConferenceSystem {
 
-    // global final variables
-    public static final String USER_DATA_PATH = "userData.txt";
-    public static final String MESSAGE_DATA_PATH = "messageData.txt";
-    public static final String EVENT_DATA_PATH = "eventData.txt";
-
-    private UseCaseHandler useCaseHandler;
+    private UseCaseInitializer useCaseInitializer;
     private SceneNavigator sceneNavigator;
 
     /**
-     * Loads all entities, runs the program, saves all entities
+     * Constructor for a ConferenceSystem object
+     * Sets up the program such that it can run properly
      */
-
     public ConferenceSystem(Stage primaryStage) {
         initializeFirebase();
         initializeSceneNavigator(primaryStage);
     }
 
+    /**
+     * Begins process of running the program
+     */
     public void run() {
 
         Scene loginScene = initializeLoginScene("loginScene.fxml", sceneNavigator,
@@ -51,7 +48,7 @@ public class ConferenceSystem {
         sceneNavigator.getApplicationStage().show();
     }
 
-    public void initializeFirebase() {
+    private void initializeFirebase() {
         try {
             FileInputStream serviceAccount =
                     new FileInputStream("conference-system-key.json");
@@ -68,9 +65,9 @@ public class ConferenceSystem {
         }
     }
 
-    public void initializeSceneNavigator(Stage primaryStage) {
-        useCaseHandler = new UseCaseHandler();
-        sceneNavigator = new SceneNavigator(primaryStage, useCaseHandler);
+    private void initializeSceneNavigator(Stage primaryStage) {
+        useCaseInitializer = new UseCaseInitializer();
+        sceneNavigator = new SceneNavigator(primaryStage, useCaseInitializer);
     }
 
     private void initializeScenes() {
@@ -135,9 +132,9 @@ public class ConferenceSystem {
             FXMLLoader loader = new FXMLLoader(url);
             scene = new Scene(loader.load());
             Controller controller = loader.getController();
-            controller.setUserManager(useCaseHandler.getUserManager());
-            controller.setMessageManager(useCaseHandler.getMessageManager());
-            controller.setEventManager(useCaseHandler.getEventManager());
+            controller.setUserManager(useCaseInitializer.getUserManager());
+            controller.setMessageManager(useCaseInitializer.getMessageManager());
+            controller.setEventManager(useCaseInitializer.getEventManager());
             controller.setSceneNavigator(sceneNavigator);
         } catch (IOException e) {
             scene = new Scene(new VBox(), 800, 600);
@@ -152,9 +149,9 @@ public class ConferenceSystem {
             FXMLLoader loader = new FXMLLoader(url);
             scene = new Scene(loader.load());
             LoginController controller = loader.getController();
-            controller.setUserManager(useCaseHandler.getUserManager());
-            controller.setMessageManager(useCaseHandler.getMessageManager());
-            controller.setEventManager(useCaseHandler.getEventManager());
+            controller.setUserManager(useCaseInitializer.getUserManager());
+            controller.setMessageManager(useCaseInitializer.getMessageManager());
+            controller.setEventManager(useCaseInitializer.getEventManager());
             controller.setSceneNavigator(sceneNavigator);
             controller.addLoginListener(listener);
         } catch (IOException e) {

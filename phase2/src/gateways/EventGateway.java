@@ -1,47 +1,72 @@
 package gateways;
 
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import entities.Event;
 import useCaseClasses.EventManager;
 
 import java.util.List;
 
+/**
+ * A gateway for handling the saving/loading of Event data from
+ * a Firebase Realtime Database
+ */
 public class EventGateway extends FirebaseGateway<Event> {
 
     private final EventManager eventManager;
 
+    /**
+     * The constructor for an EventGateway object
+     *
+     * @param em       - The EventManager the program is using
+     * @param database - A FirebaseDatabase object that will be used to create
+     *                 a reference to the directory in the database holding
+     *                 Event information
+     */
     public EventGateway(EventManager em, FirebaseDatabase database) {
         super("Events", database);
         eventManager = em;
     }
 
+    /**
+     * This method is called when a piece of information is added under
+     * the directory in the database that holds Event information
+     * @param dataSnapshot - an object containing the information that has been added
+     * @param s - the name of the node before being added (it will be null since the node didnt
+     *          exist before)
+     */
     @Override
-    public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+    protected void onChildAdded(DataSnapshot dataSnapshot, String s) {
         eventManager.addEventFromDataSnapshot(dataSnapshot);
     }
 
+    /**
+     * This method is called when a piece of information is changed under
+     * the directory in the database that holds Event information
+     * @param dataSnapshot - an object containing the information that has been changed
+     * @param s - the name of the node before being added
+     */
     @Override
-    public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+    protected void onChildChanged(DataSnapshot dataSnapshot, String s) {
         eventManager.updateEventFromDataSnapshot(dataSnapshot);
     }
 
+    /**
+     * This method is called when a piece of information is removed under
+     * the directory in the database that holds Event information
+     * @param dataSnapshot - an object containing the information that has been removed
+     */
     @Override
-    public void onChildRemoved(DataSnapshot dataSnapshot) {
+    protected void onChildRemoved(DataSnapshot dataSnapshot) {
         eventManager.removeEventFromDataSnapshot(dataSnapshot);
     }
 
+    /**
+     * This method pushes the information of a list of Events to
+     * the Firebase Realtime Database
+     * @param events - the list of Events to save information of
+     */
     @Override
-    public void onChildMoved(DataSnapshot dataSnapshot, String s) {
-
-    }
-
-    @Override
-    public void onCancelled(DatabaseError databaseError) {
-
-    }
-
     public void pushEntities(List<Event> events) {
         for (Event event : events) {
             Event.EventData eventData = event.getEventData();
@@ -51,6 +76,12 @@ public class EventGateway extends FirebaseGateway<Event> {
         }
     }
 
+    /**
+     * This method removes the information of a list of Events to
+     * the Firebase Realtime Database
+     * @param events - the list of Events to remove information of
+     */
+    @Override
     public void removeEntities(List<Event> events) {
         for (Event event : events) {
             databaseReference.child(event.getId().toString()).removeValueAsync();

@@ -2,7 +2,6 @@ package controllers;
 
 import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -45,20 +44,18 @@ public class DeleteAccountController extends Controller {
 
     /**
      * Method that sends the user back to their corresponding main menu
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    void onBackButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
     }
 
     /**
      * Method that handles the program input when the change button is clicked and
      * delete user account
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onDeleteButtonClicked(ActionEvent event) {
+    void onDeleteButtonClicked() {
 
         String label = "";
 
@@ -80,7 +77,7 @@ public class DeleteAccountController extends Controller {
      * Initializes the scene buttons and labels and text boxes
      */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert userNameField != null : "fx:id=\"userNameField\" was not injected: check your FXML file 'Delete User Account.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Delete User Account.fxml'.";
@@ -111,6 +108,7 @@ public class DeleteAccountController extends Controller {
 
     /**
      * Sets the event manager for this scene
+     *
      * @param userManager the user manager to be set to
      */
     @Override

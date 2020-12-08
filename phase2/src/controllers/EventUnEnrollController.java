@@ -4,7 +4,6 @@ import entities.Event;
 import exceptions.EventNotFoundException;
 import exceptions.UserNotEnrolledInEventException;
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -49,12 +48,12 @@ public class EventUnEnrollController extends Controller {
     }
 
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    void onBackButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
     }
 
     @FXML
-    void onUnEnrollButtonClicked(ActionEvent event) {
+    void onUnEnrollButtonClicked() {
         String eventTitle = eventListView.getSelectionModel().getSelectedItem().getText().split("  Time: ")[0];
         String label;
         InputProcessResult result = unEnrollEvent(eventTitle);

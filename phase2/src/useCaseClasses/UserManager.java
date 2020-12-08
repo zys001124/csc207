@@ -4,7 +4,6 @@ package useCaseClasses;
 import com.google.firebase.database.DataSnapshot;
 import entities.User;
 import exceptions.*;
-import gateways.DataSnapshotReader;
 import observers.Observable;
 
 import java.util.ArrayList;
@@ -108,6 +107,7 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
     /**
      * Method that removes the user given a data snapshot that is taken in from firebase for live
      * updates
+     *
      * @param dataSnapshot the data snapshot of what user to remove
      */
     public void removeUserFromDataSnapshot(DataSnapshot dataSnapshot) {
@@ -145,10 +145,10 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
         if (doesUserExist(username)) {
             throw new UsernameAlreadyExistsException("Username: " + username + " is taken");
         }
-        if(username.equals("")){
+        if (username.equals("")) {
             throw new NoUsernameException("Username not given.");
         }
-        if(password.equals("")){
+        if (password.equals("")) {
             throw new NoPasswordException("Password not given.");
         }
         User user = new User(type, username, password, UUID.randomUUID());
@@ -160,6 +160,7 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
 
     /**
      * Adds new users from a data snapshot that is linked to firebase for live updates
+     *
      * @param dataSnapshot the data snapshot to be passed
      */
     public void addUserFromDataSnapshot(DataSnapshot dataSnapshot) {
@@ -174,6 +175,7 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
 
     /**
      * Changes the user from the data snapshot that is given which is linked to firebase
+     *
      * @param dataSnapshot the given data snapshot to be passed
      */
     public void changeUserFromDataSnapshot(DataSnapshot dataSnapshot) {
@@ -234,6 +236,7 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
     /**
      * Returns a sorted user list in the order of attendees, organizers, speakers, vips, and admins
      * respectively
+     *
      * @return A list of Users sorted by user type
      */
     public List<User> getUsersSorted() {
@@ -302,10 +305,11 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
 
     /**
      * returns an array list of UUIDs of the given array list of user inputs
+     *
      * @param u an array list of user inputs
      * @return an array list of UUIDS for the corresponding users
      */
-    public ArrayList<UUID> listOfID(ArrayList<User> u){
+    public ArrayList<UUID> listOfID(ArrayList<User> u) {
         ArrayList<UUID> usersID = new ArrayList<>();
         for (User user : u) {
             usersID.add(user.getId());
@@ -316,6 +320,7 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
 
     /**
      * gets a list of all the attendees in the conference system
+     *
      * @return List of attendees in the conference system
      */
     public List<User> getAttendees() {
@@ -330,6 +335,7 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
 
     /**
      * gets a list of all the speakers in the conference system
+     *
      * @return List of speakers in the conference system
      */
     public List<User> getOrganizers() {
@@ -344,6 +350,7 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
 
     /**
      * Method that gets all of the speakers in the conference system
+     *
      * @return A list of speakers in the conference system
      */
     public List<User> getSpeakers() {
@@ -413,6 +420,7 @@ public class UserManager extends Observable implements DataSnapshotReader<User> 
 
     /**
      * gets the data snapshot from the firebase database
+     *
      * @param dataSnapshot the data snapshot to be passed
      * @return a User from the data snapshot
      */

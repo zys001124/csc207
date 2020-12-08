@@ -12,7 +12,10 @@ import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;
 
-public class UseCaseHandler {
+/**
+ * An object responsible for initializing the use case classes
+ */
+public class UseCaseInitializer {
 
     // Managers
     private final UserManager userManager;
@@ -24,17 +27,24 @@ public class UseCaseHandler {
     private final UpdateDatabaseObserver<Message> messageUpdateDatabaseObserver;
     private final UpdateDatabaseObserver<Event> eventUpdateDatabaseObserver;
 
+    // Gateways
     private final UserGateway userGateway;
     private final MessageGateway messageGateway;
     private final EventGateway eventGateway;
 
-    public UseCaseHandler() {
+    /**
+     * The constructor for a UseCaseInitializer object
+     *
+     * Sets up use case classes, FirebaseGateways, and observers so
+     * that each use case class has the correct program information the entire
+     * time the program is run
+     */
+    public UseCaseInitializer() {
 
         userManager = new UserManager();
         messageManager = new MessageManager();
         eventManager = new EventManager();
 
-//        fbg = new FirebaseGatewayOld(userManager, eventManager, messageManager);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         userGateway = new UserGateway(userManager, database);

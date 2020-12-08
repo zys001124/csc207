@@ -3,7 +3,6 @@ package controllers;
 
 import entities.Event;
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -42,12 +41,12 @@ public class MessageAllAttendingEventController extends Controller {
     private Label createMessageLabel; // Value injected by FXMLLoader
 
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    void onBackButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
     }
 
     @FXML
-    void onSendButtonClicked(ActionEvent event) {
+    void onSendButtonClicked() {
 
         String label = "Message successfully sent. \nReturning to Main Menu";
 

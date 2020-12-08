@@ -8,7 +8,6 @@ import entities.Event;
 import entities.User;
 import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -67,10 +66,9 @@ public class EventCreationController extends Controller {
 
     /**
      * Method that returns the user to their corresponding main menu scene
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    void onBackButtonClicked() {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
         if (currentUserType == User.UserType.ORGANIZER) {
             setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
@@ -83,10 +81,11 @@ public class EventCreationController extends Controller {
      * Method that runs when user clicks the button to create a new event.
      * Will put a label on the scene on if the event is created or not and what went wrong if an
      * exception is found.
+     *
      * @param event
      */
     @FXML
-    void onCreateButtonClicked(ActionEvent event) {
+    void onCreateButtonClicked() {
 
         String label = "";
 
@@ -129,10 +128,11 @@ public class EventCreationController extends Controller {
 
     /**
      * Button that sets a variable to decide if the event to be made is VIP only or not.
+     *
      * @param event
      */
     @FXML
-    void onVipOnlyCheck(ActionEvent event) {
+    void onVipOnlyCheck() {
         if (vipOnlyCheck.isSelected()) {
             createMessageLabel.setText("Vip only selected.");
         } else {
@@ -144,7 +144,7 @@ public class EventCreationController extends Controller {
      * Initializes the input fields for this controller
      */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert eventTitleField != null : "fx:id=\"eventTitleField\" was not injected: check your FXML file 'Create Event.fxml'.";
         assert startTimeField != null : "fx:id=\"startTimeField\" was not injected: check your FXML file 'Create Event.fxml'.";
@@ -164,13 +164,14 @@ public class EventCreationController extends Controller {
     /**
      * Helper method for the create button when clicked. Used to return an input process result to help
      * the scene display the right text
-     * @param eventTitle the event title for this event creation
-     * @param startTime the start time for this event creation
-     * @param endTime the end time for this event creation
+     *
+     * @param eventTitle       the event title for this event creation
+     * @param startTime        the start time for this event creation
+     * @param endTime          the end time for this event creation
      * @param speakersUserName the list of speakers for this event
-     * @param roomNum the room number for this event
-     * @param roomCapacity the capacity for this event
-     * @param vip boolean on if this event should be VIP only
+     * @param roomNum          the room number for this event
+     * @param roomCapacity     the capacity for this event
+     * @param vip              boolean on if this event should be VIP only
      * @return an InputProcessResult to help the method decide what the textbox should say
      */
     public InputProcessResult createEvent(String eventTitle, LocalDateTime startTime, LocalDateTime endTime, String[] speakersUserName,
@@ -232,6 +233,7 @@ public class EventCreationController extends Controller {
 
     /**
      * Helper method that gets the local date time of the input put into the time slot
+     *
      * @param parameter the string value of the what the user put in the textbox
      * @return the LocalDateTime of the string input
      */
@@ -243,6 +245,7 @@ public class EventCreationController extends Controller {
 
     /**
      * Helper method that generates a UUID for this event
+     *
      * @return a UUID for this event
      */
     private UUID getUuid() {
@@ -271,9 +274,10 @@ public class EventCreationController extends Controller {
     /**
      * Helper method that determins if the speaker given is occupied during the given start time and
      * end time
+     *
      * @param sDateTime the start time to be checked for the speaker
      * @param eDateTime the end time to be checked for the speaker
-     * @param speaker the speaker to be checked if bust
+     * @param speaker   the speaker to be checked if bust
      * @return a boolean TRUE if occupied during timeframe. FALSE otherwise
      */
     private boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {

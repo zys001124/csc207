@@ -7,7 +7,6 @@ import exceptions.InvalidUserTypeException;
 import exceptions.NoMessageException;
 import exceptions.UserNotFoundException;
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -121,7 +120,11 @@ public class MessageUserSceneController extends Controller {
     }
 
     @FXML
-    void onSendMessageButtonClicked(ActionEvent event) {
+    /**
+     * This method is called when the "send" button is clicked on the
+     * message user screen
+     */
+    void onSendMessageButtonClicked() {
         String label = "";
 
         String text = messageField.getText();
@@ -149,7 +152,10 @@ public class MessageUserSceneController extends Controller {
     }
 
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    /**
+     * This method is called when the back button is clicked
+     */
+    void onBackButtonClicked() {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
         if (currentUserType == User.UserType.SPEAKER) {
             setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);

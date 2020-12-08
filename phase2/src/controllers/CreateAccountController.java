@@ -6,7 +6,6 @@ import exceptions.NoUsernameException;
 import exceptions.UserTypeDoesNotExistException;
 import exceptions.UsernameAlreadyExistsException;
 import handlers.SceneNavigator;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -47,10 +46,9 @@ public class CreateAccountController extends Controller {
 
     /**
      * Method that takes the user back to their corresponding main menu scene
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onBackButtonClicked(ActionEvent event) {
+    void onBackButtonClicked() {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
         if (currentUserType == User.UserType.ORGANIZER) {
             setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
@@ -62,10 +60,9 @@ public class CreateAccountController extends Controller {
     /**
      * Method that handles the input for the scene when the user tries to create an account
      * Will output whether or not a user has been created
-     * @param event Action event when method is called upon (not used)
      */
     @FXML
-    void onCreateButtonClicked(ActionEvent event) {
+    void onCreateButtonClicked() {
         String username = usernameField.getText();
         String password = passwordField.getText();
         String type = userTypeField.getText();
@@ -90,7 +87,7 @@ public class CreateAccountController extends Controller {
      * Initializes the input fields for this controller
      */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert usernameField != null : "fx:id=\"usernameField\" was not injected: check your FXML file 'Create User Account.fxml'.";
         assert passwordField != null : "fx:id=\"passwordField\" was not injected: check your FXML file 'Create User Account.fxml'.";
@@ -103,9 +100,10 @@ public class CreateAccountController extends Controller {
     /**
      * Helper method for handling the input of the user.
      * Creates the user if no exception is found
+     *
      * @param username the username of the account to be created
      * @param password the password of the account to be created
-     * @param type the type of account to be created
+     * @param type     the type of account to be created
      * @return InputProcessResult to help the button method decide on what to output if the user has
      * been created or not
      */
