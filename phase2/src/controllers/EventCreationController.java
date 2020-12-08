@@ -81,8 +81,6 @@ public class EventCreationController extends Controller {
      * Method that runs when user clicks the button to create a new event.
      * Will put a label on the scene on if the event is created or not and what went wrong if an
      * exception is found.
-     *
-     * @param event
      */
     @FXML
     void onCreateButtonClicked() {
@@ -128,8 +126,6 @@ public class EventCreationController extends Controller {
 
     /**
      * Button that sets a variable to decide if the event to be made is VIP only or not.
-     *
-     * @param event
      */
     @FXML
     void onVipOnlyCheck() {

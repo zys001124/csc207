@@ -13,8 +13,8 @@ import java.net.URL;
 import java.util.*;
 
 /**
- * The class controller for seeing the schedule of events a user is either hosting
- * or attending
+ * The class controller for seeing the schedule of events a user that is
+ * either hosting or attending
  */
 public class SeeEventScheduleController extends Controller {
     @FXML // ResourceBundle that was given to the FXMLLoader

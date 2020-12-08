@@ -16,8 +16,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 /**
- * A controller for handling inputs when the Attendee is un-enrolling
- * from an Event
+ * Controller for the un-enroll event scene that un-enrolls an attendee from an event
  */
 public class EventUnEnrollController extends Controller {
 
@@ -39,6 +38,9 @@ public class EventUnEnrollController extends Controller {
     @FXML // fx:id="unEnrollMessageLabel"
     private Label unEnrollMessageLabel; // Value injected by FXMLLoader
 
+    /**
+     * Initializes the input fields for this controller
+     */
     @FXML
     void initialize() {
         assert eventListView != null : "fx:id=\"eventListView\" was not injected: check your FXML file 'Unenroll Event.fxml'.";
@@ -47,11 +49,18 @@ public class EventUnEnrollController extends Controller {
         assert unEnrollMessageLabel != null : "fx:id=\"unEnrollMessageLabel\" was not injected: check your FXML file 'Unenroll Event.fxml'.";
     }
 
+    /**
+     * Method that navigates the user back to their corresponding main menu
+     */
     @FXML
     void onBackButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
     }
 
+    /**
+     * Method that executes what to do when the un-enroll button is pushed
+     * and print a message on the scene of the result
+     */
     @FXML
     void onUnEnrollButtonClicked() {
         String eventTitle = eventListView.getSelectionModel().getSelectedItem().getText().split("  Time: ")[0];
@@ -67,6 +76,10 @@ public class EventUnEnrollController extends Controller {
         unEnrollMessageLabel.setText(label);
     }
 
+    /**
+     * Set up the event manager for this scene
+     * @param eventManager the eventManager to be set to
+     */
     @Override
     public void setEventManager(EventManager eventManager) {
         super.setEventManager(eventManager);
@@ -74,11 +87,20 @@ public class EventUnEnrollController extends Controller {
         eventManager.addObserver((o, changes, addedOrChanged, retrievedFromDatabase) -> setEventListField());
     }
 
+    /**
+     * Helper Method to set up all the events this attendee is currently enrolled in
+     * to be displayed in this scene
+     */
     private void setEventListField() {
         eventListView.getItems().setAll(getEventLabels(eventManager.getEvents()));
         eventListView.refresh();
     }
 
+    /**
+     * Helper Method to set up the all the information for each event on a label
+     * @param events List of events to be displayed
+     * @return A list of label with information on them
+     */
     private List<Label> getEventLabels(List<Event> events) {
         ArrayList<Label> labels = new ArrayList<>();
         for (Event event : events) {
@@ -98,9 +120,10 @@ public class EventUnEnrollController extends Controller {
     }
 
     /**
-     * Handles the input given by the user
+     * Helper Method for when the un-enroll button is clicked. Used to determine whether
+     * the attendee is successfully un-enrolled from an event and to help generate message
      *
-     * @param eventInput The user input
+     * @param eventInput The input from the scene
      * @return An InputProcessResult enum that details what happened as a result of the given input
      */
     public InputProcessResult unEnrollEvent(String eventInput) {
