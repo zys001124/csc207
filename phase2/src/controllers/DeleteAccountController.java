@@ -43,11 +43,20 @@ public class DeleteAccountController extends Controller {
     @FXML // fx:id="createMessageLabel"
     private Label createMessageLabel; // Value injected by FXMLLoader
 
+    /**
+     * Method that sends the user back to their corresponding main menu
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onBackButtonClicked(ActionEvent event) {
         setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
     }
 
+    /**
+     * Method that handles the program input when the change button is clicked and
+     * delete user account
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onDeleteButtonClicked(ActionEvent event) {
 
@@ -67,6 +76,9 @@ public class DeleteAccountController extends Controller {
         createMessageLabel.setText(label);
     }
 
+    /**
+     * Initializes the scene buttons and labels and text boxes
+     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -97,6 +109,10 @@ public class DeleteAccountController extends Controller {
         return InputProcessResult.SUCCESS;
     }
 
+    /**
+     * Sets the event manager for this scene
+     * @param userManager the user manager to be set to
+     */
     @Override
     public void setUserManager(UserManager userManager) {
         super.setUserManager(userManager);

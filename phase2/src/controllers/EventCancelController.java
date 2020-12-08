@@ -38,6 +38,9 @@ public class EventCancelController extends Controller {
     @FXML // fx:id="createMessageLabel"
     private Label createMessageLabel; // Value injected by FXMLLoader
 
+    /**
+     * Initializes the scene buttons and labels and text boxes
+     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -48,6 +51,10 @@ public class EventCancelController extends Controller {
 
     }
 
+    /**
+     * Method that sends the user back to their corresponding main menu
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onBackButtonClicked(ActionEvent event) {
         if (!checkUserType()) {
@@ -58,6 +65,11 @@ public class EventCancelController extends Controller {
         }
     }
 
+    /**
+     * Method that handles the program input when the change button is clicked and
+     * cancel the event
+     * @param event Action event when method is called upon (not used)
+     */
     @FXML
     void onCancelButtonClicked(ActionEvent event) {
 
@@ -95,6 +107,10 @@ public class EventCancelController extends Controller {
         return userManager.checkOrganizer(userManager.getCurrentlyLoggedIn()); //False if Admin, True if Organizer
     }
 
+    /**
+     * Sets the event manager for this scene
+     * @param eventManager the event manager to be set to
+     */
     @Override
     public void setEventManager(EventManager eventManager) {
         super.setEventManager(eventManager);
