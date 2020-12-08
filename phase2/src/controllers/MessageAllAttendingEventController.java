@@ -40,11 +40,18 @@ public class MessageAllAttendingEventController extends Controller {
     @FXML // fx:id="createMessageLabel"
     private Label createMessageLabel; // Value injected by FXMLLoader
 
+    /**
+     * Method that sends the user back to their corresponding main menu
+     */
     @FXML
     void onBackButtonClicked() {
         setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
     }
 
+    /**
+     * Method that executes what to do when the send button is pushed
+     * Puts a message on the scene on what happens
+     */
     @FXML
     void onSendButtonClicked() {
 
@@ -63,7 +70,9 @@ public class MessageAllAttendingEventController extends Controller {
         }
         createMessageLabel.setText(label);
     }
-
+    /**
+     * Initializes the scene buttons and labels and text boxes
+     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -73,7 +82,11 @@ public class MessageAllAttendingEventController extends Controller {
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
 
     }
-
+    /**
+     * Sets the event manager for this scene
+     *
+     * @param eventManager the event manager to be set to
+     */
     @Override
     public void setEventManager(EventManager eventManager) {
         super.setEventManager(eventManager);
@@ -94,22 +107,6 @@ public class MessageAllAttendingEventController extends Controller {
     public void sendMessage(String message, String event) {
         messageManager.messageAllAttendingEvent(message, eventManager.getEvent(event),
                 userManager.getCurrentlyLoggedIn().getId());
-    }
-
-    /**
-     * Finds out if the speaker user put in a 'back' instead of the event for an input
-     * Returns whether or not they put in back or not
-     *
-     * @param name the input to see if the speaker put in 'back'.
-     * @return and InputProcessResult where if given BACK it will take the user back to the main menu
-     * if SUCCESS the program proceeds
-     */
-    public InputProcessResult findBack(String name) {
-        if (name.equals("back")) {
-            return InputProcessResult.BACK;
-        } else {
-            return InputProcessResult.SUCCESS;
-        }
     }
 
     /**
