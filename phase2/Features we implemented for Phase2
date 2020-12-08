@@ -15,5 +15,5 @@ List of features we implemented for Phase2:
 3. Create Your Own Features:
     -Used Googles database system (firebase) in order to store information from our Conference System. (We asked our TA Sami
     and he said that firebase can count as both an Optional extension under database and as a create your own feature)
-    -Messaging system updates live between two users logged in at the same time.
+    -Messaging system updates live between two users logged in at the same time (thanks to firebase).
     -GUI automatically updates any changes to the conference system like changing the capacity, and deleting a event.
