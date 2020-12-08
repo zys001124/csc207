@@ -76,8 +76,7 @@ public class EventUnEnrollController extends Controller {
     }
 
     private void setEventListField() {
-        eventListView.getItems().clear();
-        eventListView.getItems().addAll(getEventLabels(eventManager.getEvents()));
+        eventListView.getItems().setAll(getEventLabels(eventManager.getEvents()));
         eventListView.refresh();
     }
 
