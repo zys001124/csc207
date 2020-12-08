@@ -4,7 +4,6 @@
 
 package controllers;
 
-import holders.SceneNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 

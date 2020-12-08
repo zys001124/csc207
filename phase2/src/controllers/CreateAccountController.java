@@ -5,7 +5,6 @@ import exceptions.NoPasswordException;
 import exceptions.NoUsernameException;
 import exceptions.UserTypeDoesNotExistException;
 import exceptions.UsernameAlreadyExistsException;
-import holders.SceneNavigator;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;

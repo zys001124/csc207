@@ -1,13 +1,24 @@
 List of design decisions and explanations about how our code has improved since Phase 2:
 
-- Minimized/eliminated references to entity methods in classes outside the use case layer
-- Implemented the Observer design pattern to act when the amount/content of entities change
+- (Improvement) Minimized/eliminated references to entity methods in classes outside the use case layer
+- (Design Pattern) Implemented the Observer design pattern to act when the amount/content of entities change
     - This was done so that both the GUI and Firebase Realtime Database could be updated
       should the contents of any use case classes change
 
-- Implemented another kind of observer (LoginListener). This was necessary because the Observer
+- (Design Pattern) Implemented another kind of observer (LoginListener). This was necessary because the Observer
 design pattern we implemented above listened for changes in lists of objects. This listener just
 listens for a successful login.
     - Implemented this because the information required for the program to function properly for
     a given user type is different depending on the user type. So we have to wait for a successful login
     before initializing the rest of the scenes
+
+- (Improvement) Compartmentalizing code
+    - In phase 1, ConferenceSystem.java was responsible for creating instances of every object necessary to
+    for the program to run properly. These things have been compartmentalized into new classes.
+    - UseCaseHolder builds all of the Managers and can add Observers to them.
+    - GatewayInitializer builds and stores the gateway classes.
+    - ObserversInitializer builds and stores the specific observers responsible for updating
+      the Firebase Realtime Database
+
+- (Design Pattern) Various factory methods used in ConferenceSystem to create the Initializers/holders
+listed above

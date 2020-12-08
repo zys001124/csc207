@@ -4,8 +4,10 @@ import com.google.firebase.FirebaseOptions;
 import controllers.Controller;
 import controllers.LoginController;
 import controllers.LoginListener;
-import holders.SceneNavigator;
-import holders.UseCaseInitializer;
+import controllers.SceneNavigator;
+import gateways.GatewayInitializer;
+import observers.ObserversInitializer;
+import useCaseClasses.UseCaseHolder;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -22,8 +24,10 @@ import java.net.URL;
  */
 public class ConferenceSystem {
 
-    private UseCaseInitializer useCaseInitializer;
+    private UseCaseHolder useCaseHolder;
     private SceneNavigator sceneNavigator;
+    private GatewayInitializer gatewayInitializer;
+    private ObserversInitializer observersInitializer;
 
     /**
      * Constructor for a ConferenceSystem object
@@ -31,6 +35,10 @@ public class ConferenceSystem {
      */
     public ConferenceSystem(Stage primaryStage) {
         initializeFirebase();
+        useCaseHolder = new UseCaseHolder();
+        gatewayInitializer = getGatewayInitializer(useCaseHolder);
+        observersInitializer = getObserversInitializer(gatewayInitializer);
+        addUseCaseObservers(useCaseHolder, observersInitializer);
         initializeSceneNavigator(primaryStage);
     }
 
@@ -65,9 +73,26 @@ public class ConferenceSystem {
         }
     }
 
+    private GatewayInitializer getGatewayInitializer(UseCaseHolder holder) {
+        gatewayInitializer = new GatewayInitializer(holder.getUserManager(),
+                holder.getMessageManager(), holder.getEventManager());
+        return gatewayInitializer;
+    }
+
+    private ObserversInitializer getObserversInitializer(GatewayInitializer gatewayInitializer) {
+        return new ObserversInitializer(gatewayInitializer.getUserGateway(),
+                gatewayInitializer.getMessageGateway(),
+                gatewayInitializer.getEventGateway());
+    }
+
+    private void addUseCaseObservers(UseCaseHolder useCaseHolder, ObserversInitializer observersInitializer) {
+        useCaseHolder.addUserManagerDatabaseObserver(observersInitializer.getUserUpdateDatabaseObserver());
+        useCaseHolder.addMessageManagerDatabaseObserver(observersInitializer.getMessageUpdateDatabaseObserver());
+        useCaseHolder.addEventManagerDatabaseObserver(observersInitializer.getEventUpdateDatabaseObserver());
+    }
+
     private void initializeSceneNavigator(Stage primaryStage) {
-        useCaseInitializer = new UseCaseInitializer();
-        sceneNavigator = new SceneNavigator(primaryStage, useCaseInitializer);
+        sceneNavigator = new SceneNavigator(primaryStage);
     }
 
     private void initializeScenes() {
@@ -132,9 +157,9 @@ public class ConferenceSystem {
             FXMLLoader loader = new FXMLLoader(url);
             scene = new Scene(loader.load());
             Controller controller = loader.getController();
-            controller.setUserManager(useCaseInitializer.getUserManager());
-            controller.setMessageManager(useCaseInitializer.getMessageManager());
-            controller.setEventManager(useCaseInitializer.getEventManager());
+            controller.setUserManager(useCaseHolder.getUserManager());
+            controller.setMessageManager(useCaseHolder.getMessageManager());
+            controller.setEventManager(useCaseHolder.getEventManager());
             controller.setSceneNavigator(sceneNavigator);
         } catch (IOException e) {
             scene = new Scene(new VBox(), 800, 600);
@@ -149,9 +174,9 @@ public class ConferenceSystem {
             FXMLLoader loader = new FXMLLoader(url);
             scene = new Scene(loader.load());
             LoginController controller = loader.getController();
-            controller.setUserManager(useCaseInitializer.getUserManager());
-            controller.setMessageManager(useCaseInitializer.getMessageManager());
-            controller.setEventManager(useCaseInitializer.getEventManager());
+            controller.setUserManager(useCaseHolder.getUserManager());
+            controller.setMessageManager(useCaseHolder.getMessageManager());
+            controller.setEventManager(useCaseHolder.getEventManager());
             controller.setSceneNavigator(sceneNavigator);
             controller.addLoginListener(listener);
         } catch (IOException e) {
