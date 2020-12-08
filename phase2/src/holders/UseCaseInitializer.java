@@ -34,7 +34,7 @@ public class UseCaseInitializer {
 
     /**
      * The constructor for a UseCaseInitializer object
-     *
+     * <p>
      * Sets up use case classes, FirebaseGateways, and observers so
      * that each use case class has the correct program information the entire
      * time the program is run

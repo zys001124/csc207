@@ -122,6 +122,11 @@ public class LoginController extends Controller {
         }
     }
 
+    /**
+     * Adds a LoginListener to this controller
+     *
+     * @param listener - the LoginListener
+     */
     public void addLoginListener(LoginListener listener) {
         this.listener = listener;
     }

@@ -1,7 +1,6 @@
 package gateways;
 
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.FirebaseDatabase;
 import entities.User;
 import useCaseClasses.UserManager;
@@ -32,6 +31,7 @@ public class UserGateway extends FirebaseGateway<User> {
     /**
      * This method pushes the information of a list of Users to
      * the Firebase Realtime Database
+     *
      * @param users - the list of Users to save information of
      */
     @Override
@@ -44,6 +44,7 @@ public class UserGateway extends FirebaseGateway<User> {
     /**
      * This method removes the information of a list of Users to
      * the Firebase Realtime Database
+     *
      * @param users - the list of Users to remove information of
      */
     @Override
@@ -56,9 +57,10 @@ public class UserGateway extends FirebaseGateway<User> {
     /**
      * This method is called when a piece of information is added under
      * the directory in the database that holds User information
+     *
      * @param dataSnapshot - an object containing the information that has been added
-     * @param s - the name of the node before being added (it will be null since the node didnt
-     *          exist before)
+     * @param s            - the name of the node before being added (it will be null since the node didnt
+     *                     exist before)
      */
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -68,8 +70,9 @@ public class UserGateway extends FirebaseGateway<User> {
     /**
      * This method is called when a piece of information is changed under
      * the directory in the database that holds User information
+     *
      * @param dataSnapshot - an object containing the information that has been changed
-     * @param s - the name of the node before being added
+     * @param s            - the name of the node before being added
      */
     @Override
     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -79,6 +82,7 @@ public class UserGateway extends FirebaseGateway<User> {
     /**
      * This method is called when a piece of information is removed under
      * the directory in the database that holds User information
+     *
      * @param dataSnapshot - an object containing the information that has been removed
      */
     @Override

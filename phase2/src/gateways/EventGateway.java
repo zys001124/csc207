@@ -31,9 +31,10 @@ public class EventGateway extends FirebaseGateway<Event> {
     /**
      * This method is called when a piece of information is added under
      * the directory in the database that holds Event information
+     *
      * @param dataSnapshot - an object containing the information that has been added
-     * @param s - the name of the node before being added (it will be null since the node didnt
-     *          exist before)
+     * @param s            - the name of the node before being added (it will be null since the node didnt
+     *                     exist before)
      */
     @Override
     protected void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -43,8 +44,9 @@ public class EventGateway extends FirebaseGateway<Event> {
     /**
      * This method is called when a piece of information is changed under
      * the directory in the database that holds Event information
+     *
      * @param dataSnapshot - an object containing the information that has been changed
-     * @param s - the name of the node before being added
+     * @param s            - the name of the node before being added
      */
     @Override
     protected void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -54,6 +56,7 @@ public class EventGateway extends FirebaseGateway<Event> {
     /**
      * This method is called when a piece of information is removed under
      * the directory in the database that holds Event information
+     *
      * @param dataSnapshot - an object containing the information that has been removed
      */
     @Override
@@ -64,6 +67,7 @@ public class EventGateway extends FirebaseGateway<Event> {
     /**
      * This method pushes the information of a list of Events to
      * the Firebase Realtime Database
+     *
      * @param events - the list of Events to save information of
      */
     @Override
@@ -79,6 +83,7 @@ public class EventGateway extends FirebaseGateway<Event> {
     /**
      * This method removes the information of a list of Events to
      * the Firebase Realtime Database
+     *
      * @param events - the list of Events to remove information of
      */
     @Override

@@ -31,6 +31,7 @@ public class MessageGateway extends FirebaseGateway<Message> {
     /**
      * This method pushes the information of a list of Messages to
      * the Firebase Realtime Database
+     *
      * @param messages - the list of Messages to save information of
      */
     @Override
@@ -43,6 +44,7 @@ public class MessageGateway extends FirebaseGateway<Message> {
     /**
      * This method removes the information of a list of Messages to
      * the Firebase Realtime Database
+     *
      * @param messages - the list of Messages to remove information of
      */
     @Override
@@ -55,9 +57,10 @@ public class MessageGateway extends FirebaseGateway<Message> {
     /**
      * This method is called when a piece of information is added under
      * the directory in the database that holds Message information
+     *
      * @param dataSnapshot - an object containing the information that has been added
-     * @param s - the name of the node before being added (it will be null since the node didnt
-     *          exist before)
+     * @param s            - the name of the node before being added (it will be null since the node didnt
+     *                     exist before)
      */
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
@@ -67,8 +70,9 @@ public class MessageGateway extends FirebaseGateway<Message> {
     /**
      * This method is called when a piece of information is changed under
      * the directory in the database that holds Message information
+     *
      * @param dataSnapshot - an object containing the information that has been changed
-     * @param s - the name of the node before being added
+     * @param s            - the name of the node before being added
      */
     @Override
     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
@@ -78,6 +82,7 @@ public class MessageGateway extends FirebaseGateway<Message> {
     /**
      * This method is called when a piece of information is removed under
      * the directory in the database that holds Message information
+     *
      * @param dataSnapshot - an object containing the information that has been removed
      */
     @Override
