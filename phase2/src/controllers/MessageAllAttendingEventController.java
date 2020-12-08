@@ -104,7 +104,7 @@ public class MessageAllAttendingEventController extends Controller {
      * @param message the message that will be sent to all the users
      * @param event   the event that all the users are in that are getting sent a message
      */
-    public void sendMessage(String message, String event) {
+    private void sendMessage(String message, String event) {
         messageManager.messageAllAttendingEvent(message, eventManager.getEvent(event),
                 userManager.getCurrentlyLoggedIn().getId());
     }
@@ -120,7 +120,7 @@ public class MessageAllAttendingEventController extends Controller {
      * @return an InputProcessResult which will be given to the UI to determine to either go back
      * to the main menu or prompt user again.
      */
-    public InputProcessResult handleInput(String name, String message) {
+    private InputProcessResult handleInput(String name, String message) {
         FindEvent verify = verifyEvent(name);
         if (verify == FindEvent.FAIL) {
             return InputProcessResult.INVALID_INPUT;
@@ -140,7 +140,7 @@ public class MessageAllAttendingEventController extends Controller {
      * @return a FindEvent where SUCCESS will continue the program but FAIL will prompt user to put
      * input in again.
      */
-    public FindEvent verifyEvent(String name) {
+    private FindEvent verifyEvent(String name) {
         //Should we be using userManager.getCurrentlyLoggedIn() or should we just use the user field?
         if (eventManager.listOfEventsHosting(userManager.getCurrentlyLoggedIn()).contains(name)) {
             return FindEvent.SUCCESS;
@@ -169,7 +169,7 @@ public class MessageAllAttendingEventController extends Controller {
      * returns a enum for verifyEvent where SUCCESS is when the event is found and FAIL is when
      * it is not found.
      */
-    public enum FindEvent {
+    private enum FindEvent {
         SUCCESS,
         FAIL
     }

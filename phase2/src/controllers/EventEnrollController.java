@@ -132,7 +132,7 @@ public class EventEnrollController extends Controller {
      * @param eventInput The input from the scene
      * @return An InputProcessResult enum that details what happened as a result of the given input
      */
-    public InputProcessResult enrollEvent(String eventInput) {
+    private InputProcessResult enrollEvent(String eventInput) {
         try {
             eventManager.addUserToEvent(eventInput, userManager.getCurrentlyLoggedIn());
         } catch (EventNotFoundException e) {

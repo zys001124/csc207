@@ -107,7 +107,7 @@ public class CreateAccountController extends Controller {
      * @return InputProcessResult to help the button method decide on what to output if the user has
      * been created or not
      */
-    public InputProcessResult handleInput(String username, String password, String type) {
+    private InputProcessResult handleInput(String username, String password, String type) {
         try {
             User.UserType userType = userManager.parseType(type);
             userManager.addUser(userType, username, password);

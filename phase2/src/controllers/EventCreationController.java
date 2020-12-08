@@ -85,7 +85,7 @@ public class EventCreationController extends Controller {
     @FXML
     void onCreateButtonClicked() {
 
-        String label = "";
+        String label;
 
         String eventTitle = eventTitleField.getText();
         LocalDateTime sDateTime = getLocalDateTime(startTimeField.getText());
@@ -170,7 +170,7 @@ public class EventCreationController extends Controller {
      * @param vip              boolean on if this event should be VIP only
      * @return an InputProcessResult to help the method decide what the textbox should say
      */
-    public InputProcessResult createEvent(String eventTitle, LocalDateTime startTime, LocalDateTime endTime, String[] speakersUserName,
+    private InputProcessResult createEvent(String eventTitle, LocalDateTime startTime, LocalDateTime endTime, String[] speakersUserName,
                                           int roomNum, int roomCapacity, Boolean vip) {
 
         UUID eventID = getUuid();

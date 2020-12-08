@@ -95,7 +95,7 @@ public class LoginController extends Controller {
      * @param password - The password passed as input
      * @return an InputProcessResult - The result of the input handling
      */
-    public InputProcessResult verifyLogin(String username, String password) {
+    private InputProcessResult verifyLogin(String username, String password) {
         try {
             userManager.userLogin(username, password);
         } catch (IncorrectPasswordException e) {

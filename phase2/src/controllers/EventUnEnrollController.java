@@ -126,7 +126,7 @@ public class EventUnEnrollController extends Controller {
      * @param eventInput The input from the scene
      * @return An InputProcessResult enum that details what happened as a result of the given input
      */
-    public InputProcessResult unEnrollEvent(String eventInput) {
+    private InputProcessResult unEnrollEvent(String eventInput) {
         try {
             eventManager.removeUserFromEvent(eventInput, userManager.getCurrentlyLoggedIn());
         } catch (EventNotFoundException e) {

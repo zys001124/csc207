@@ -89,7 +89,7 @@ public class MessageAllSpeakersController extends Controller {
      * @param message the message to be sent to the speakers
      * @return InputProcessResult on if there is a success or not
      */
-    public InputProcessResult sendMessage(String message) {
+    private InputProcessResult sendMessage(String message) {
         if (message.equals("")) {
             return InputProcessResult.NO_MESSAGE_DETECTED;
         }
