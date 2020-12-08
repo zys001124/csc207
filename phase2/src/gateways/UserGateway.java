@@ -2,6 +2,7 @@ package gateways;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 import entities.User;
 import useCaseClasses.UserManager;
 
@@ -11,8 +12,8 @@ public class UserGateway extends FirebaseGateway<User> {
 
     public UserManager userManager;
 
-    public UserGateway(UserManager um) {
-        super("Users");
+    public UserGateway(UserManager um, FirebaseDatabase database) {
+        super("Users", database);
         userManager = um;
     }
 

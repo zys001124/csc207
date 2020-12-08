@@ -1,5 +1,6 @@
 package handlers;
 
+import com.google.firebase.database.FirebaseDatabase;
 import entities.Event;
 import entities.Message;
 import entities.User;
@@ -34,9 +35,11 @@ public class UseCaseHandler {
         eventManager = new EventManager();
 
 //        fbg = new FirebaseGatewayOld(userManager, eventManager, messageManager);
-        userGateway = new UserGateway(userManager);
-        messageGateway = new MessageGateway(messageManager);
-        eventGateway = new EventGateway(eventManager);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        userGateway = new UserGateway(userManager, database);
+        messageGateway = new MessageGateway(messageManager, database);
+        eventGateway = new EventGateway(eventManager, database);
 
         userUpdateDatabaseObserver = new UpdateDatabaseObserver(userGateway);
         messageUpdateDatabaseObserver = new UpdateDatabaseObserver(messageGateway);

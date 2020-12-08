@@ -1,6 +1,7 @@
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import com.google.firebase.database.FirebaseDatabase;
 import controllers.Controller;
 import controllers.LoginController;
 import controllers.LoginListener;
