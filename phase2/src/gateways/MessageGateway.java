@@ -2,6 +2,7 @@ package gateways;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 import entities.Message;
 import useCaseClasses.MessageManager;
 
@@ -11,8 +12,8 @@ public class MessageGateway extends FirebaseGateway<Message> {
 
     private final MessageManager messageManager;
 
-    public MessageGateway(MessageManager mm) {
-        super("Messages");
+    public MessageGateway(MessageManager mm, FirebaseDatabase database) {
+        super("Messages", database);
         messageManager = mm;
     }
 

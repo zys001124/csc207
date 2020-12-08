@@ -2,6 +2,7 @@ package gateways;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.FirebaseDatabase;
 import entities.Event;
 import useCaseClasses.EventManager;
 
@@ -11,8 +12,8 @@ public class EventGateway extends FirebaseGateway<Event> {
 
     private final EventManager eventManager;
 
-    public EventGateway(EventManager em) {
-        super("Events");
+    public EventGateway(EventManager em, FirebaseDatabase database) {
+        super("Events", database);
         eventManager = em;
     }
 
