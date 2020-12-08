@@ -1,4 +1,4 @@
-package holders;
+package useCaseClasses;
 
 import com.google.firebase.database.FirebaseDatabase;
 import entities.Event;
@@ -15,22 +15,12 @@ import useCaseClasses.UserManager;
 /**
  * An object responsible for initializing the use case classes
  */
-public class UseCaseInitializer {
+public class UseCaseHolder {
 
     // Managers
     private final UserManager userManager;
     private final MessageManager messageManager;
     private final EventManager eventManager;
-
-    // Observers
-    private final UpdateDatabaseObserver<User> userUpdateDatabaseObserver;
-    private final UpdateDatabaseObserver<Message> messageUpdateDatabaseObserver;
-    private final UpdateDatabaseObserver<Event> eventUpdateDatabaseObserver;
-
-    // Gateways
-    private final UserGateway userGateway;
-    private final MessageGateway messageGateway;
-    private final EventGateway eventGateway;
 
     /**
      * The constructor for a UseCaseInitializer object
@@ -39,25 +29,11 @@ public class UseCaseInitializer {
      * that each use case class has the correct program information the entire
      * time the program is run
      */
-    public UseCaseInitializer() {
+    public UseCaseHolder() {
 
         userManager = new UserManager();
         messageManager = new MessageManager();
         eventManager = new EventManager();
-
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-
-        userGateway = new UserGateway(userManager, database);
-        messageGateway = new MessageGateway(messageManager, database);
-        eventGateway = new EventGateway(eventManager, database);
-
-        userUpdateDatabaseObserver = new UpdateDatabaseObserver(userGateway);
-        messageUpdateDatabaseObserver = new UpdateDatabaseObserver(messageGateway);
-        eventUpdateDatabaseObserver = new UpdateDatabaseObserver(eventGateway);
-
-        userManager.addObserver(userUpdateDatabaseObserver);
-        messageManager.addObserver(messageUpdateDatabaseObserver);
-        eventManager.addObserver(eventUpdateDatabaseObserver);
     }
 
     public UserManager getUserManager() {
@@ -70,5 +46,17 @@ public class UseCaseInitializer {
 
     public EventManager getEventManager() {
         return eventManager;
+    }
+    
+    public void addUserManagerDatabaseObserver(UpdateDatabaseObserver<User> userManagerObserver) {
+        userManager.addObserver(userManagerObserver);
+    }
+
+    public void addMessageManagerDatabaseObserver(UpdateDatabaseObserver<Message> messageManagerObserver) {
+        messageManager.addObserver(messageManagerObserver);
+    }
+
+    public void addEventManagerDatabaseObserver(UpdateDatabaseObserver<Event> eventManagerObserver) {
+        eventManager.addObserver(eventManagerObserver);
     }
 }

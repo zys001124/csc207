@@ -1,7 +1,6 @@
 package controllers;
 
-import holders.SceneNavigator;
-import holders.SceneNavigator.SceneViewType;
+import controllers.SceneNavigator.SceneViewType;
 import javafx.fxml.FXML;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;

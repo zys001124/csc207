@@ -1,4 +1,4 @@
-package holders;
+package controllers;
 
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -13,7 +13,6 @@ public class SceneNavigator {
     private static final int HEIGHT = 600;
 
     private final Stage applicationStage;
-    private final UseCaseInitializer useCaseInitializer;
 
     private Scene loginScene;
     private Scene speakerMenuInputScene;
@@ -34,9 +33,8 @@ public class SceneNavigator {
     private Scene changeEventCapacityScene;
     private Scene deleteAccountScene;
 
-    public SceneNavigator(Stage applicationStage, UseCaseInitializer useCaseInitializer) {
+    public SceneNavigator(Stage applicationStage) {
         this.applicationStage = applicationStage;
-        this.useCaseInitializer = useCaseInitializer;
     }
 
     public void switchSceneView(SceneViewType sceneViewType) {
