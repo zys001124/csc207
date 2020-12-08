@@ -17,9 +17,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-/**
- * Controller for the message all attendees scene that sends a message to all attendees
- */
 public class MessageAllAttendeesController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -40,10 +37,6 @@ public class MessageAllAttendeesController extends Controller {
     @FXML // fx:id="noInputMessage"
     private Label noInputMessage; // Value injected by FXMLLoader
 
-    /**
-     * Method that navigates the user back to their corresponding main menu
-     * @param event Action event when method is called upon (not used)
-     */
     @FXML
     void onBackButtonClicked(ActionEvent event) {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
@@ -54,11 +47,6 @@ public class MessageAllAttendeesController extends Controller {
         }
     }
 
-    /**
-     * Method that executes what to do when the send button is pushed
-     * Puts a message on the scene on what happens
-     * @param event Action event when method is called upon (not used)
-     */
     @FXML
     void onSendButtonClicked(ActionEvent event) {
         String screenMessage;
@@ -73,9 +61,6 @@ public class MessageAllAttendeesController extends Controller {
         noInputMessage.setText(screenMessage);
     }
 
-    /**
-     * Initializes the input fields for this controller
-     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -86,18 +71,15 @@ public class MessageAllAttendeesController extends Controller {
 
     }
 
-    /**
-     * Helper method that sends the message to all the attendees if a message is detcted
-     * @param message the message to be sent to the attendees
-     * @return InputProcessResult on if there is a success or not
-     */
     public InputProcessResult sendMessage(String message) {
         if (message.equals("")) {
             return InputProcessResult.NO_MESSAGE_DETECTED;
         }
-        List<UUID> attendeesId = userManager.getUserId(User.UserType.ATTENDEE);
 
-        messageManager.sendMessageToGroup(userManager.getCurrentlyLoggedIn().getId(), attendeesId, message);
+        // Use ID to override normal checks
+        for(User attendee : userManager.getAttendees()){
+            messageManager.sendMessageById(userManager.getCurrentlyLoggedIn().getId(), attendee.getId(), message);
+        }
 
         return InputProcessResult.SUCCESS;
     }

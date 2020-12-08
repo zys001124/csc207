@@ -17,9 +17,6 @@ import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
-/**
- * Controller for the message all speakers scene that sends a message to all speakers
- */
 public class MessageAllSpeakersController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -40,10 +37,6 @@ public class MessageAllSpeakersController extends Controller {
     @FXML // fx:id="noInputMessage"
     private Label noInputMessage; // Value injected by FXMLLoader
 
-    /**
-     * Method that navigates the user back to their corresponding main menu
-     * @param event Action event when method is called upon (not used)
-     */
     @FXML
     void onBackButtonClicked(ActionEvent event) {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
@@ -54,11 +47,6 @@ public class MessageAllSpeakersController extends Controller {
         }
     }
 
-    /**
-     * Method that executes what to do when the send button is pushed
-     * Puts a message on the scene on what happens
-     * @param event Action event when method is called upon (not used)
-     */
     @FXML
     void onSendButtonClicked(ActionEvent event) {
         String screenMessage;
@@ -73,9 +61,6 @@ public class MessageAllSpeakersController extends Controller {
         noInputMessage.setText(screenMessage);
     }
 
-    /**
-     * Initializes the input fields for this controller
-     */
     @FXML
         // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
@@ -86,18 +71,16 @@ public class MessageAllSpeakersController extends Controller {
 
     }
 
-    /**
-     * Helper method that sends the message to all the speakers if a message is detected
-     * @param message the message to be sent to the speakers
-     * @return InputProcessResult on if there is a success or not
-     */
     public InputProcessResult sendMessage(String message) {
         if (message.equals("")) {
             return InputProcessResult.NO_MESSAGE_DETECTED;
         }
-        List<UUID> speakersId = userManager.getUserId(User.UserType.SPEAKER);
 
-        messageManager.sendMessageToGroup(userManager.getCurrentlyLoggedIn().getId(), speakersId, message);
+        // Use ID to override normal checks
+        for(User speaker : userManager.getSpeakers()){
+            messageManager.sendMessageById(userManager.getCurrentlyLoggedIn().getId(), speaker.getId(), message);
+        }
+
         return InputProcessResult.SUCCESS;
     }
 }
