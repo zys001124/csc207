@@ -5,7 +5,7 @@ import exceptions.IncorrectObjectTypeException;
 import java.util.List;
 
 /**
- * An interfrace for classes that which to observe other objects to implement
+ * An interface for classes that which to observe other objects to implement
  *
  * @param <T> They type of object that gets changed (Not necessarily the observable)
  */

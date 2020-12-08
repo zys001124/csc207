@@ -1,2 +1,13 @@
 List of design decisions and explanations about how our code has improved since Phase 2:
 
+- Minimized/eliminated references to entity methods in classes outside the use case layer
+- Implemented the Observer design pattern to act when the amount/content of entities change
+    - This was done so that both the GUI and Firebase Realtime Database could be updated
+      should the contents of any use case classes change
+
+- Implemented another kind of observer (LoginListener). This was necessary because the Observer
+design pattern we implemented above listened for changes in lists of objects. This listener just
+listens for a successful login.
+    - Implemented this because the information required for the program to function properly for
+    a given user type is different depending on the user type. So we have to wait for a successful login
+    before initializing the rest of the scenes
