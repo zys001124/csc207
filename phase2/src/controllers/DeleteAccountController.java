@@ -29,9 +29,6 @@ public class DeleteAccountController extends Controller {
     @FXML // fx:id="userListField"
     private ListView<Label> userListField; // Value injected by FXMLLoader
 
-    @FXML // fx:id="userNameField"
-    private TextField userNameField; // Value injected by FXMLLoader
-
     @FXML // fx:id="backButton"
     private Button backButton; // Value injected by FXMLLoader
 
@@ -58,7 +55,7 @@ public class DeleteAccountController extends Controller {
 
         String label = "";
 
-        String userName = userNameField.getText();
+        String userName = userListField.getSelectionModel().getSelectedItem().getText().split(":")[0];
 
         InputProcessResult result = deleteAccount(userName);
 
@@ -78,7 +75,6 @@ public class DeleteAccountController extends Controller {
     @FXML
     // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
-        assert userNameField != null : "fx:id=\"userNameField\" was not injected: check your FXML file 'Delete User Account.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Delete User Account.fxml'.";
         assert deleteButton != null : "fx:id=\"deleteButton\" was not injected: check your FXML file 'Delete User Account.fxml'.";
         assert createMessageLabel != null : "fx:id=\"createMessageLabel\" was not injected: check your FXML file 'Delete User Account.fxml'.";
