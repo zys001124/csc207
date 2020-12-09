@@ -190,17 +190,6 @@ public class EventManager extends Observable {
         return e.getOrganizerId().equals(u.getId());
     }
 
-    /**
-     * Check whether the given user u is the speaker of the given event e
-     * return true if u is the speaker of e and false if u is not
-     *
-     * @param u the given user
-     * @param e the given event
-     * @return true if u is the speaker of e and false if u is not
-     */
-    public boolean isSpeakerForEvent(User u, Event e) {
-        return e.getSpeakerId().contains(u.getId());
-    }
 
     /**
      * Find the event in the list based on user input index and add this user to the event

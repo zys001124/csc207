@@ -330,20 +330,6 @@ public class UserManager extends Observable {
         return attendees;
     }
 
-    /**
-     * gets a list of all the speakers in the conference system
-     *
-     * @return List of speakers in the conference system
-     */
-    public List<User> getOrganizers() {
-        ArrayList<User> organizers = new ArrayList<>();
-        for (User user : users) {
-            if (user.getType() == User.UserType.ORGANIZER) {
-                organizers.add(user);
-            }
-        }
-        return organizers;
-    }
 
     /**
      * Method that gets all of the speakers in the conference system

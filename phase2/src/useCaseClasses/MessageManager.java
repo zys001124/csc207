@@ -29,16 +29,6 @@ public class MessageManager extends Observable {
 
 
     /**
-     * /**
-     * Create a new MessageManager with all messages contained in <messages>
-     *
-     * @param messages the messages to be stored
-     */
-    public MessageManager(List<Message> messages) {
-        this.messages = messages;
-    }
-
-    /**
      * Adds a message to the list of messages.
      * Throws InvalidUserTypeException if <recipient> has a type which cannot be messaged by <sender>.
      * Throws NoMessageException if the type of <sender> needs to have previous message history
@@ -132,14 +122,6 @@ public class MessageManager extends Observable {
         notifyObservers(messagesToAdd, true);
     }
 
-    /**
-     * Gets a list of all the messages given in this conference system.
-     *
-     * @return a list of messages
-     */
-    public List<Message> getMessages() {
-        return messages;
-    }
 
     /**
      * Messages all of the users attending a certain event
@@ -176,20 +158,6 @@ public class MessageManager extends Observable {
         return false;
     }
 
-    /**
-     * Checks to see if a message exists in the conference system based off of the UUID
-     *
-     * @param messageID UUID of the message to be checked in the conference system
-     * @return boolean on if the message is found
-     */
-    private boolean messageExists(UUID messageID) {
-        for (Message m : messages) {
-            if (m.getId().equals(messageID)) {
-                return true;
-            }
-        }
-        return false;
-    }
 
     /**
      * Gets an ordered list of the messages sent between two users and returns that list
