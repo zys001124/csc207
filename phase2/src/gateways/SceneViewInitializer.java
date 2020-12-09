@@ -124,7 +124,7 @@ public class SceneViewInitializer {
             controller.setSceneNavigator(sceneNavigator);
             controller.addLoginListener(listener);
         } catch (IOException e) {
-            scene = new Scene(new VBox(), WIDTH, WIDTH);
+            scene = new Scene(new VBox(), WIDTH, HEIGHT);
         }
         return scene;
     }
