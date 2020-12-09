@@ -142,7 +142,7 @@ public class MessageAllAttendingEventController extends Controller {
      */
     private FindEvent verifyEvent(String name) {
         //Should we be using userManager.getCurrentlyLoggedIn() or should we just use the user field?
-        if (eventManager.listOfEventsHosting(userManager.getCurrentlyLoggedIn()).contains(name)) {
+        if (eventManager.listOfEventsHosting(userManager.getCurrentlyLoggedIn().getId()).contains(name)) {
             return FindEvent.SUCCESS;
         } else {
             return FindEvent.FAIL;

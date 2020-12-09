@@ -56,6 +56,11 @@ public class Message implements Serializable, Comparable<Message> {
         this.timeSent = timeSent;
     }
 
+    /**
+     * Builds a Message object from a MessageData object
+     * @param data - The data to be used in the creation of a Message object
+     * @return the constructed Message object
+     */
     public static Message fromMessageData(MessageData data) {
         return new Message(data.messageText, UUID.fromString(data.senderId),
                 UUID.fromString(data.recipientId), UUID.fromString(data.messageId),
@@ -89,14 +94,6 @@ public class Message implements Serializable, Comparable<Message> {
         return messageId;
     }
 
-    /**
-     * Gets the content of the message
-     *
-     * @return a String - the text the sender sent to the recipient
-     */
-    public String getMessageText() {
-        return messageText;
-    }
 
     /**
      * Gets the time this message was sent

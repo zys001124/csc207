@@ -1,5 +1,6 @@
 package useCaseClasses;
 
+import controllers.InputProcessResult;
 import entities.Event;
 import entities.User;
 import exceptions.*;
@@ -38,20 +39,51 @@ public class EventManager extends Observable {
      *add an given event if the conditions check out
      * @param e the event that is gonna be added
      */
-    public void addEvent(Event e) {
+    public void addEvent(Event e) throws Exception {
+        Exception eventAddException = checkValidAddition(e);
+        if(eventAddException != null) {
+            throw eventAddException;
+        }
         List<Event> eventsToAdd = new ArrayList<>();
         eventsToAdd.add(e);
         events.addAll(eventsToAdd);
         notifyObservers(eventsToAdd, true);
     }
 
+    private Exception checkValidAddition(Event e){
+
+        for (Event event : events) {
+            if (event.getEventTitle().equals(e.getEventTitle())) {
+                return new EventNameTakenException();
+            }
+        }
+
+        if(e.getEventTime().isAfter(e.getEventETime())){
+            return new InvalidEventTimeRangeException();
+        }
+
+        if(isOccupiedDuringTime(e.getEventTime(), e.getEventETime(), e.getEventRoom())) {
+            return new EventBookingOverlapException();
+        }
+
+        if(checkSpeakersOccupied(e.getSpeakerId(), e.getEventTime(), e.getEventETime())) {
+            return new SpeakerOccupiedException();
+        }
+
+        if(e.getEventCapacity() > 60) {
+            return new EventCapacityExceedsRoomCapacityException();
+        }
+
+        return null;
+    }
+
     /***
      * checks the availability of rooms in the given time
      * @param sTime the start time of the event to be checked
      * @param eTime the end time of the event to be checked
-     * @return ArrayList<Integer> rooms occupied at some point on the interval [sTime, eTime]
+     * @return Boolean - if the room is occupied at some point on the interval [sTime, eTime]
      */
-    public Boolean availabilityInTime(LocalDateTime sTime, LocalDateTime eTime, int roomNumber) {
+    public Boolean isOccupiedDuringTime(LocalDateTime sTime, LocalDateTime eTime, int roomNumber) {
 
         for (Event temp : events) {
             LocalDateTime timeStart = temp.getEventTime();
@@ -68,6 +100,16 @@ public class EventManager extends Observable {
             }
         }
 
+        return false;
+    }
+
+    private boolean checkSpeakersOccupied(List<UUID> speakers, LocalDateTime startTime, LocalDateTime endTime) {
+        for (UUID speaker : speakers) {
+            boolean speakerOccupied = speakerOccupied(startTime, endTime, speaker);
+            if (speakerOccupied) {
+                return true;
+            }
+        }
         return false;
     }
 
@@ -89,21 +131,6 @@ public class EventManager extends Observable {
             }
         }
         return null;
-    }
-
-    /**
-     * Removes an event from the conference system based on the firebase snapshot passed in
-     */
-    public void removeEventFromDatabase(Event eventRemoved) {
-        List<Event> eventsToRemove = new ArrayList<>();
-        for (Event event : events) {
-            int index = events.indexOf(event);
-            if (event.getId().equals(eventRemoved.getId())) {
-                eventsToRemove.add(events.remove(index));
-                notifyObservers(eventsToRemove, false);
-                return;
-            }
-        }
     }
 
     /**
@@ -417,14 +444,14 @@ public class EventManager extends Observable {
     /**
      * gets a list of events the user passed in is hosting
      *
-     * @param u the user that is hosting the returned events
+     * @param id the user that is hosting the returned events
      * @return A list of strings of the event user u is hosting
      */
-    public List<String> listOfEventsHosting(User u) {
+    public List<String> listOfEventsHosting(UUID id) {
         //returns a list of the events a presenter is hosting
         List<String> theList = new ArrayList<>();
         for (Event e : events) {
-            if (e.getSpeakerId().contains(u.getId())) {
+            if (e.getSpeakerId().contains(id)) {
                 theList.add(e.getEventTitle());
             }
         }
@@ -522,7 +549,7 @@ public class EventManager extends Observable {
      * @param speaker   the speaker to be checked if bust
      * @return a boolean TRUE if occupied during timeframe. FALSE otherwise
      */
-    public boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {
+    public boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, UUID speaker) {
         for (String e : listOfEventsHosting(speaker)) {
             Event eventHosting = getEvent(e);
             LocalDateTime startTime = eventHosting.getEventTime();

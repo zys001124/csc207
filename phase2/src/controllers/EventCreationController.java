@@ -2,7 +2,7 @@ package controllers;
 
 import entities.Event;
 import entities.User;
-import exceptions.UserNotFoundException;
+import exceptions.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -15,6 +15,7 @@ import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.UUID;
 
@@ -119,7 +120,10 @@ public class EventCreationController extends Controller {
             label = "End time is before start time.";
         } else if(result == InputProcessResult.INVALID_TIME_INPUT){
             label = "Start time or end time input valid.";
-        } else {
+        } else if(result == InputProcessResult.INVALID_INPUT) {
+            label = "At least one of your inputs is incorrect. Please try again.";
+        }
+        else {
             label = "Event created successfully.";
         }
 
@@ -177,94 +181,72 @@ public class EventCreationController extends Controller {
     private InputProcessResult createEvent(String eventTitle, String sTime, String eTime, String[] speakersUserName,
                                            int roomNum, int roomCapacity, Boolean vip) {
 
-        UUID eventID = getUuid();
-        ArrayList<User> speakers = new ArrayList<>();
-
-        LocalDateTime startTime;
-        LocalDateTime endTime;
-        try{
-            startTime = getLocalDateTime(sTime);
-            endTime = getLocalDateTime(eTime);
-        }
-        catch (DateTimeException e){
-            return InputProcessResult.INVALID_TIME_INPUT;
-        }
-
-        InputProcessResult userNotFound = checkSpeakers(speakersUserName, speakers);
-        if (userNotFound != null) return userNotFound;
-
-        for (User speaker : speakers) {
-            if (!(speaker.getType().equals(User.UserType.SPEAKER))) {
-                return InputProcessResult.USER_NOT_SPEAKER;
-            }
-        }
-
-        for (Event event : eventManager.getEvents()) {
-            if (event.getEventTitle().equals(eventTitle)) {
-                return InputProcessResult.EVENT_NAME_TAKEN;
-            }
-        }
-
-        if(startTime.isAfter(endTime)){
-            return InputProcessResult.INVALID_TIME;
-        }
-
-        ArrayList<UUID> speakersID = userManager.listOfID(speakers);
-        UUID organizerID = userManager.getCurrentlyLoggedIn().getId();
-
-        Boolean occupiedRoom = eventManager.availabilityInTime(startTime, endTime, roomNum);
-        if (occupiedRoom) {
-            return InputProcessResult.TIMESLOT_FULL;
-        }
-
-        InputProcessResult speakerOccupied = checkSpeakersOccupied(speakers, startTime, endTime);
-        if (speakerOccupied != null) return speakerOccupied;
-
-        if (roomCapacity > 60) { return InputProcessResult.CAPACITY_OVER; }
-
-        Event eventCreated = new Event(eventTitle, startTime, endTime, eventID, organizerID, speakersID,
-                new ArrayList<>(), roomNum, roomCapacity, vip);
-
-        eventManager.addEvent(eventCreated);
-        return InputProcessResult.SUCCESS;
-
-    }
-
-    private InputProcessResult checkSpeakersOccupied(ArrayList<User> speakers, LocalDateTime startTime, LocalDateTime endTime) {
-        for (User speaker : speakers) {
-            boolean speakerOccupied = eventManager.speakerOccupied(startTime, endTime, speaker);
-            if (speakerOccupied) {
-                return InputProcessResult.SPEAKER_OCCUPIED;
-            }
-        }
-        return null;
-    }
-
-    private InputProcessResult checkSpeakers(String[] speakersUserName, ArrayList<User> speakers) {
         try {
-            for (String speaker : speakersUserName) {
-                userManager.getUser(speaker);
-                speakers.add(userManager.getUser(speaker));
-            }
-        } catch (UserNotFoundException e) {
+            Event.EventData eventData = new Event.EventData();
+            eventData.eventTitle = eventTitle;
+            eventData.eventSTime = sTime.replace(" ", "T"); // For date time formatting
+            eventData.eventETime = eTime.replace(" ", "T"); // For date time formatting
+            eventData.speakerIds = getSpeakerIdStrings(speakersUserName);
+            eventData.attendees = new ArrayList<String>();
+            eventData.eventRoom = String.valueOf(roomNum);
+            eventData.eventCapacity = String.valueOf(roomCapacity);
+            eventData.VIPonly = String.valueOf(vip);
+            eventData.eventId = getUuid().toString();
+            eventData.organizerId = userManager.getCurrentlyLoggedIn().getId().toString();
+
+            eventManager.addEvent(Event.fromEventData(eventData));
+        } catch (Exception e) {
+            return parseException(e);
+        }
+
+
+        return InputProcessResult.SUCCESS;
+    }
+
+    private InputProcessResult parseException(Exception e) {
+
+        if(e instanceof UserNotFoundException) {
             return InputProcessResult.USER_NOT_FOUND;
         }
-        return null;
+        else if(e instanceof DateTimeException) {
+            return InputProcessResult.INVALID_TIME_INPUT;
+        }
+        else if(e instanceof EventNameTakenException) {
+            return InputProcessResult.EVENT_NAME_TAKEN;
+        }
+        else if(e instanceof InvalidEventTimeRangeException) {
+            return InputProcessResult.INVALID_TIME;
+        }
+        else if(e instanceof EventBookingOverlapException) {
+            return InputProcessResult.TIMESLOT_FULL;
+        }
+        else if(e instanceof SpeakerOccupiedException) {
+            return InputProcessResult.SPEAKER_OCCUPIED;
+        }
+        else if(e instanceof EventCapacityExceedsRoomCapacityException) {
+            return InputProcessResult.CAPACITY_OVER;
+        }
+        else if(e instanceof InvalidUserTypeException) {
+            return InputProcessResult.USER_NOT_SPEAKER;
+        }
+        else {
+            return InputProcessResult.INVALID_INPUT;
+        }
     }
 
-    /**
-     * Helper method that gets the local date time of the input put into the time slot
-     *
-     * @param parameter the string value of the what the user put in the textbox
-     * @return the LocalDateTime of the string input
-     */
-    private LocalDateTime getLocalDateTime(String parameter){
+    private List<String> getSpeakerIdStrings(String[] usernames) throws UserNotFoundException, InvalidUserTypeException {
+        List<String> speakers = new ArrayList<>();
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-        formatter = formatter.withZone(ZoneId.of("UTC-5"));
-        return LocalDateTime.parse(parameter, formatter);
+        for (String speaker : usernames) {
+            userManager.getUser(speaker);
+            User user = userManager.getUser(speaker);
+            if(!user.getType().equals(User.UserType.SPEAKER)) {
+                throw new InvalidUserTypeException(user.getType());
+            }
+            speakers.add(user.getId().toString());
+        }
 
-
+        return speakers;
     }
 
     /**
@@ -293,8 +275,5 @@ public class EventCreationController extends Controller {
         }
         return eventID;
     }
-
-
-
 }
 

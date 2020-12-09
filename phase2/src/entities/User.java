@@ -30,6 +30,11 @@ public class User implements Serializable {
         this.type = type;
     }
 
+    /**
+     * Builds a user object from UserData
+     * @param data - The UserData to construct the user from
+     * @return A User object - The user constructed from the data
+     */
     public static User fromUserData(UserData data) {
         return new User(UserType.valueOf(data.type), data.username,
                 data.password, UUID.fromString(data.uuid));
@@ -75,14 +80,10 @@ public class User implements Serializable {
     }
 
     /**
-     * Gets the Users password
-     *
-     * @return a String - the Users password
+     * Returns the information of this User object packaged
+     * as UserData
+     * @return the UserData of this User
      */
-    public final String getPassword() {
-        return password;
-    }
-
     public UserData getUserData() {
         UserData data = new UserData();
 
@@ -94,6 +95,11 @@ public class User implements Serializable {
         return data;
     }
 
+    /**
+     * Checks content equality
+     * @param o
+     * @return Whether or not this and o are equal
+     */
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -105,6 +111,10 @@ public class User implements Serializable {
                 type == user.type;
     }
 
+    /**
+     * Hashes the information of this user
+     * @return the hash int
+     */
     @Override
     public int hashCode() {
         return Objects.hash(id, username, password, type);

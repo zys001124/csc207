@@ -40,9 +40,13 @@ public class EventGateway extends FirebaseGateway<Event> {
      */
     @Override
     protected void onChildAdded(DataSnapshot dataSnapshot, String s) {
-        Event e = snapshotReader.getFromDataSnapshot(dataSnapshot);
+        Event event = snapshotReader.getFromDataSnapshot(dataSnapshot);
 
-        if (!eventManager.isEventInManager(e)) eventManager.addEvent(e);
+        try {
+            if (!eventManager.isEventInManager(event)) eventManager.addEvent(event);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
     /**
