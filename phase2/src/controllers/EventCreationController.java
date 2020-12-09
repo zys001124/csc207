@@ -161,6 +161,9 @@ public class EventCreationController extends Controller {
     /**
      * Helper method for the create button when clicked. Used to return an input process result to help
      * the scene display the right text
+     * This Method is long but it has to be this way because there are so many checks when creating an event
+     * Adding more helper methods to try and make the method shorter will just make the class look more messy
+     * So we kept the method the way it is.
      *
      * @param eventTitle       the event title for this event creation
      * @param sTime         the start time for this event creation
@@ -181,25 +184,14 @@ public class EventCreationController extends Controller {
         LocalDateTime endTime;
         try{
             startTime = getLocalDateTime(sTime);
-        }
-        catch (DateTimeException e){
-            return InputProcessResult.INVALID_TIME_INPUT;
-        }
-        try{
             endTime = getLocalDateTime(eTime);
         }
         catch (DateTimeException e){
             return InputProcessResult.INVALID_TIME_INPUT;
         }
 
-        try {
-            for (String speaker : speakersUserName) {
-                userManager.getUser(speaker);
-                speakers.add(userManager.getUser(speaker));
-            }
-        } catch (UserNotFoundException e) {
-            return InputProcessResult.USER_NOT_FOUND;
-        }
+        InputProcessResult userNotFound = checkSpeakers(speakersUserName, speakers);
+        if (userNotFound != null) return userNotFound;
 
         for (User speaker : speakers) {
             if (!(speaker.getType().equals(User.UserType.SPEAKER))) {
@@ -220,30 +212,44 @@ public class EventCreationController extends Controller {
         ArrayList<UUID> speakersID = userManager.listOfID(speakers);
         UUID organizerID = userManager.getCurrentlyLoggedIn().getId();
 
-
         Boolean occupiedRoom = eventManager.availabilityInTime(startTime, endTime, roomNum);
         if (occupiedRoom) {
             return InputProcessResult.TIMESLOT_FULL;
         }
 
+        InputProcessResult speakerOccupied = checkSpeakersOccupied(speakers, startTime, endTime);
+        if (speakerOccupied != null) return speakerOccupied;
+
+        if (roomCapacity > 60) { return InputProcessResult.CAPACITY_OVER; }
+
+        Event eventCreated = new Event(eventTitle, startTime, endTime, eventID, organizerID, speakersID,
+                new ArrayList<>(), roomNum, roomCapacity, vip);
+
+        eventManager.addEvent(eventCreated);
+        return InputProcessResult.SUCCESS;
+
+    }
+
+    private InputProcessResult checkSpeakersOccupied(ArrayList<User> speakers, LocalDateTime startTime, LocalDateTime endTime) {
         for (User speaker : speakers) {
             boolean speakerOccupied = eventManager.speakerOccupied(startTime, endTime, speaker);
             if (speakerOccupied) {
                 return InputProcessResult.SPEAKER_OCCUPIED;
             }
         }
+        return null;
+    }
 
-        if (roomCapacity > 60) {
-            return InputProcessResult.CAPACITY_OVER;
+    private InputProcessResult checkSpeakers(String[] speakersUserName, ArrayList<User> speakers) {
+        try {
+            for (String speaker : speakersUserName) {
+                userManager.getUser(speaker);
+                speakers.add(userManager.getUser(speaker));
+            }
+        } catch (UserNotFoundException e) {
+            return InputProcessResult.USER_NOT_FOUND;
         }
-
-        Event eventCreated = new Event(eventTitle, startTime, endTime, eventID, organizerID, speakersID,
-                new ArrayList<>(), roomNum, roomCapacity, vip);
-
-
-        eventManager.addEvent(eventCreated);
-        return InputProcessResult.SUCCESS;
-
+        return null;
     }
 
     /**
