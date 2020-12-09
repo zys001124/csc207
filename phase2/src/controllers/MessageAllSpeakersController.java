@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'Message All Attendees.fxml' Controller Class
- */
-
 package controllers;
 
 import entities.User;

@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'VIP Main Menu.fxml' Controller Class
- */
-
 package controllers;
 
 import javafx.fxml.FXML;

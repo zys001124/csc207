@@ -1,6 +1,5 @@
 package controllers;
 
-
 import entities.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;

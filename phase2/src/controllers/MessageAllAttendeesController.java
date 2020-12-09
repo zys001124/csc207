@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'Message All Attendees.fxml' Controller Class
- */
-
 package controllers;
 
 import entities.User;
@@ -81,7 +77,7 @@ public class MessageAllAttendeesController extends Controller {
     }
 
     /**
-     * Helper method that sends the message to all the attendees if a message is detcted
+     * Helper method that sends the message to all the attendees if a message is detected
      *
      * @param message the message to be sent to the attendees
      * @return InputProcessResult on if there is a success or not

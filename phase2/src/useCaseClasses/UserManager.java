@@ -1,6 +1,5 @@
 package useCaseClasses;
 
-
 import entities.User;
 import exceptions.*;
 import observers.Observable;

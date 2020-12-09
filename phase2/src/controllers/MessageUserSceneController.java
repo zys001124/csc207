@@ -121,11 +121,11 @@ public class MessageUserSceneController extends Controller {
         return new Label(timeSent + " from " + senderUsername + ": " + message);
     }
 
-    @FXML
     /**
      * This method is called when the "send" button is clicked on the
      * message user screen
      */
+    @FXML
     void onSendMessageButtonClicked() {
         String label = "";
 
@@ -158,10 +158,11 @@ public class MessageUserSceneController extends Controller {
         cantSendToUserLabel.setText(label);
     }
 
-    @FXML
+
     /**
      * This method is called when the back button is clicked. Used to return to the appropriate main menu.
      */
+    @FXML
     void onBackButtonClicked() {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
         if (currentUserType == User.UserType.SPEAKER) {

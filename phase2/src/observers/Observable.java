@@ -50,7 +50,6 @@ public class Observable {
      *
      * @param changes               - The list of objects that have been changed (added/changed/removed)
      * @param addedOrChanged        - Whether or not these changes are either new additions or changes of existing objects
-     * @param retrievedFromDataBase - Whether or not these changes came from the database
      */
     public void notifyObservers(List<?> changes, boolean addedOrChanged) {
 

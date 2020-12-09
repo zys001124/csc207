@@ -17,10 +17,10 @@ public abstract class Controller {
 
     private SceneNavigator sceneNavigator;
 
-    @FXML
     /**
      * This method is called by the FXMLLoader when initialization is complete
      */
+    @FXML
     abstract void initialize();
 
     /**
@@ -60,7 +60,7 @@ public abstract class Controller {
     }
 
     /**
-     * Switches the sccene to the corresponding scene type
+     * Switches the scene to the corresponding scene type
      *
      * @param sceneViewType The scene type for the new Scene to be set to
      */

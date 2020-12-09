@@ -1,7 +1,3 @@
-/**
- * Sample Skeleton for 'Create Event.fxml' Controller Class
- */
-
 package controllers;
 
 import entities.Event;

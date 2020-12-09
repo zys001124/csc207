@@ -18,8 +18,7 @@ public interface Observer<T> {
      * @param changes               - the List of changes that were made
      * @param addedOrChanged        - whether or not the changes were either additions or changes
      *                              within the objects
-     * @param retrievedFromDatabase - whether or not these changes were retrieved from the database
-     * @throws IncorrectObjectTypeException
+     * @throws IncorrectObjectTypeException - if the object type does not match
      */
     void update(Observable o, List<T> changes, boolean addedOrChanged) throws IncorrectObjectTypeException;
 }

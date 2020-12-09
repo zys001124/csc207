@@ -11,7 +11,6 @@ import javafx.scene.control.TextField;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-
 /**
  * A controller for the login screen
  */
