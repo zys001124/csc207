@@ -19,6 +19,7 @@ public class GatewayInitializer {
     /**
      * Initialize a UserGateway, a MessageGateway, and a EventGateWay
      * from a a Firebase Realtime Database
+     *
      * @param um - The UserManager the program will be using
      * @param mm - The MessageManager the program will be using
      * @param em - The EventManager the program will be using
@@ -34,6 +35,7 @@ public class GatewayInitializer {
 
     /**
      * Getter method for the UserGateway
+     *
      * @return the UserGateway the program is currently using
      */
     public UserGateway getUserGateway() {
@@ -42,6 +44,7 @@ public class GatewayInitializer {
 
     /**
      * Getter method for the MessageGateway
+     *
      * @return the MessageGateway the program is currently using
      */
     public MessageGateway getMessageGateway() {
@@ -50,6 +53,7 @@ public class GatewayInitializer {
 
     /**
      * Getter method for the EventGateway
+     *
      * @return the EventGateway the program is currently using
      */
     public EventGateway getEventGateway() {

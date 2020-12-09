@@ -31,6 +31,7 @@ public class UseCaseHolder {
 
     /**
      * Getter for userManager
+     *
      * @return the userManager field
      */
     public UserManager getUserManager() {
@@ -39,6 +40,7 @@ public class UseCaseHolder {
 
     /**
      * Getter for messageManager
+     *
      * @return the messageManager field
      */
     public MessageManager getMessageManager() {
@@ -47,6 +49,7 @@ public class UseCaseHolder {
 
     /**
      * Getter for eventManager
+     *
      * @return the eventManager field
      */
     public EventManager getEventManager() {
@@ -55,6 +58,7 @@ public class UseCaseHolder {
 
     /**
      * Adds an UpdateDatabaseObserver<User> to the userManager
+     *
      * @param userManagerObserver - the Observer to add
      */
     public void addUserManagerDatabaseObserver(UpdateDatabaseObserver<User> userManagerObserver) {
@@ -63,6 +67,7 @@ public class UseCaseHolder {
 
     /**
      * Adds an UpdateDatabaseObserver<Message> to the messageManager
+     *
      * @param messageManagerObserver - the Observer to add
      */
     public void addMessageManagerDatabaseObserver(UpdateDatabaseObserver<Message> messageManagerObserver) {
@@ -71,6 +76,7 @@ public class UseCaseHolder {
 
     /**
      * Adds an UpdateDatabaseObserver<Event> to the eventManager
+     *
      * @param eventManagerObserver - the Observer to add
      */
     public void addEventManagerDatabaseObserver(UpdateDatabaseObserver<Event> eventManagerObserver) {

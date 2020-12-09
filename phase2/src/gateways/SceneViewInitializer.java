@@ -77,7 +77,7 @@ public class SceneViewInitializer {
         return sceneNavigator;
     }
 
-    private void prepareSceneNavigatorForStartup(){
+    private void prepareSceneNavigatorForStartup() {
         Scene loginScene = initializeLoginScene(SceneViewType.LOGIN.getFxmlPath(), sceneNavigator, this::initializeNonLoginScenes);
         sceneNavigator.setSceneView(SceneViewType.LOGIN, loginScene);
         sceneNavigator.switchSceneView(SceneViewType.LOGIN);

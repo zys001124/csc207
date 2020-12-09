@@ -7,6 +7,7 @@ package exceptions;
 public class UsernameAlreadyExistsException extends Exception {
     /**
      * The constructor for UsernameAlreadyExistsException
+     *
      * @param message - the error message
      */
     public UsernameAlreadyExistsException(String message) {

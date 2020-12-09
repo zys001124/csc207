@@ -32,6 +32,7 @@ public class User implements Serializable {
 
     /**
      * Builds a user object from UserData
+     *
      * @param data - The UserData to construct the user from
      * @return A User object - The user constructed from the data
      */
@@ -82,6 +83,7 @@ public class User implements Serializable {
     /**
      * Returns the information of this User object packaged
      * as UserData
+     *
      * @return the UserData of this User
      */
     public UserData getUserData() {
@@ -97,7 +99,8 @@ public class User implements Serializable {
 
     /**
      * Checks content equality
-     * @param o
+     *
+     * @param o - the object we wish to compare
      * @return Whether or not this and o are equal
      */
     @Override
@@ -113,6 +116,7 @@ public class User implements Serializable {
 
     /**
      * Hashes the information of this user
+     *
      * @return the hash int
      */
     @Override

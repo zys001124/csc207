@@ -2,7 +2,6 @@ package entities;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -182,6 +181,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
     /**
      * Getter for eventETime
+     *
      * @return the eventETime field - the end time of the event
      */
     public LocalDateTime getEventETime() {
@@ -208,6 +208,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
     /**
      * Sets the event capacity
+     *
      * @param eventCapacity - the new event capacity
      */
     public void setEventCapacity(Integer eventCapacity) {
@@ -264,6 +265,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
     /**
      * Checks content equality
+     *
      * @param o - the object we want to compare with
      * @return a boolean - whether or not <this> and <o> are equal
      */
@@ -287,6 +289,7 @@ public class Event implements Serializable, Iterable<UUID>, Comparable<Event> {
 
     /**
      * Hashes event data
+     *
      * @return the hash int of the event data
      */
     @Override

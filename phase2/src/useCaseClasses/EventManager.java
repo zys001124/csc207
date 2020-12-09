@@ -1,6 +1,5 @@
 package useCaseClasses;
 
-import controllers.InputProcessResult;
 import entities.Event;
 import entities.User;
 import exceptions.*;
@@ -41,7 +40,7 @@ public class EventManager extends Observable {
      */
     public void addEvent(Event e) throws Exception {
         Exception eventAddException = checkValidAddition(e);
-        if(eventAddException != null) {
+        if (eventAddException != null) {
             throw eventAddException;
         }
         List<Event> eventsToAdd = new ArrayList<>();
@@ -50,7 +49,7 @@ public class EventManager extends Observable {
         notifyObservers(eventsToAdd, true);
     }
 
-    private Exception checkValidAddition(Event e){
+    private Exception checkValidAddition(Event e) {
 
         for (Event event : events) {
             if (event.getEventTitle().equals(e.getEventTitle())) {
@@ -58,19 +57,19 @@ public class EventManager extends Observable {
             }
         }
 
-        if(e.getEventTime().isAfter(e.getEventETime())){
+        if (e.getEventTime().isAfter(e.getEventETime())) {
             return new InvalidEventTimeRangeException();
         }
 
-        if(isOccupiedDuringTime(e.getEventTime(), e.getEventETime(), e.getEventRoom())) {
+        if (isOccupiedDuringTime(e.getEventTime(), e.getEventETime(), e.getEventRoom())) {
             return new EventBookingOverlapException();
         }
 
-        if(checkSpeakersOccupied(e.getSpeakerId(), e.getEventTime(), e.getEventETime())) {
+        if (checkSpeakersOccupied(e.getSpeakerId(), e.getEventTime(), e.getEventETime())) {
             return new SpeakerOccupiedException();
         }
 
-        if(e.getEventCapacity() > 60) {
+        if (e.getEventCapacity() > 60) {
             return new EventCapacityExceedsRoomCapacityException();
         }
 

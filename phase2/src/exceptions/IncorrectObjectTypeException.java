@@ -6,6 +6,7 @@ package exceptions;
 public class IncorrectObjectTypeException extends Exception {
     /**
      * Constructor for IncorrectObjectTypeException
+     *
      * @param message - the error message
      */
     public IncorrectObjectTypeException(String message) {

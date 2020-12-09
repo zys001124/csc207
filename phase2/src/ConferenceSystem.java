@@ -18,8 +18,8 @@ import java.io.IOException;
 public class ConferenceSystem {
 
     private final UseCaseHolder useCaseHolder;
-    private GatewayInitializer gatewayInitializer;
     private final ObserversInitializer observersInitializer;
+    private GatewayInitializer gatewayInitializer;
     private SceneViewInitializer sceneViewInitializer;
 
     /**

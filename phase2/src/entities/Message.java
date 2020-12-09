@@ -58,6 +58,7 @@ public class Message implements Serializable, Comparable<Message> {
 
     /**
      * Builds a Message object from a MessageData object
+     *
      * @param data - The data to be used in the creation of a Message object
      * @return the constructed Message object
      */

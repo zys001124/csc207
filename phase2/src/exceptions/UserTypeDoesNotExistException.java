@@ -7,6 +7,7 @@ public class UserTypeDoesNotExistException extends Exception {
 
     /**
      * The constructor for UserTypeDoesNotExistException
+     *
      * @param message - the error message
      */
     public UserTypeDoesNotExistException(String message) {

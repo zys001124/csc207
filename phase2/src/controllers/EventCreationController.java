@@ -11,9 +11,6 @@ import javafx.scene.control.TextField;
 
 import java.net.URL;
 import java.time.DateTimeException;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -82,7 +79,7 @@ public class EventCreationController extends Controller {
     @FXML
     void onCreateButtonClicked() {
 
-        String label = "";
+        String label;
 
         String eventTitle = eventTitleField.getText();
         String startTime = startTimeField.getText();
@@ -118,12 +115,11 @@ public class EventCreationController extends Controller {
             label = "The capacity can't be over 60.";
         } else if (result == InputProcessResult.INVALID_TIME) {
             label = "End time is before start time.";
-        } else if(result == InputProcessResult.INVALID_TIME_INPUT){
+        } else if (result == InputProcessResult.INVALID_TIME_INPUT) {
             label = "Start time or end time input valid.";
-        } else if(result == InputProcessResult.INVALID_INPUT) {
+        } else if (result == InputProcessResult.INVALID_INPUT) {
             label = "At least one of your inputs is incorrect. Please try again.";
-        }
-        else {
+        } else {
             label = "Event created successfully.";
         }
 
@@ -170,8 +166,8 @@ public class EventCreationController extends Controller {
      * So we kept the method the way it is.
      *
      * @param eventTitle       the event title for this event creation
-     * @param sTime         the start time for this event creation
-     * @param eTime         the end time for this event creation
+     * @param sTime            the start time for this event creation
+     * @param eTime            the end time for this event creation
      * @param speakersUserName the list of speakers for this event
      * @param roomNum          the room number for this event
      * @param roomCapacity     the capacity for this event
@@ -187,7 +183,7 @@ public class EventCreationController extends Controller {
             eventData.eventSTime = sTime.replace(" ", "T"); // For date time formatting
             eventData.eventETime = eTime.replace(" ", "T"); // For date time formatting
             eventData.speakerIds = getSpeakerIdStrings(speakersUserName);
-            eventData.attendees = new ArrayList<String>();
+            eventData.attendees = new ArrayList<>();
             eventData.eventRoom = String.valueOf(roomNum);
             eventData.eventCapacity = String.valueOf(roomCapacity);
             eventData.VIPonly = String.valueOf(vip);
@@ -205,31 +201,23 @@ public class EventCreationController extends Controller {
 
     private InputProcessResult parseException(Exception e) {
 
-        if(e instanceof UserNotFoundException) {
+        if (e instanceof UserNotFoundException) {
             return InputProcessResult.USER_NOT_FOUND;
-        }
-        else if(e instanceof DateTimeException) {
+        } else if (e instanceof DateTimeException) {
             return InputProcessResult.INVALID_TIME_INPUT;
-        }
-        else if(e instanceof EventNameTakenException) {
+        } else if (e instanceof EventNameTakenException) {
             return InputProcessResult.EVENT_NAME_TAKEN;
-        }
-        else if(e instanceof InvalidEventTimeRangeException) {
+        } else if (e instanceof InvalidEventTimeRangeException) {
             return InputProcessResult.INVALID_TIME;
-        }
-        else if(e instanceof EventBookingOverlapException) {
+        } else if (e instanceof EventBookingOverlapException) {
             return InputProcessResult.TIMESLOT_FULL;
-        }
-        else if(e instanceof SpeakerOccupiedException) {
+        } else if (e instanceof SpeakerOccupiedException) {
             return InputProcessResult.SPEAKER_OCCUPIED;
-        }
-        else if(e instanceof EventCapacityExceedsRoomCapacityException) {
+        } else if (e instanceof EventCapacityExceedsRoomCapacityException) {
             return InputProcessResult.CAPACITY_OVER;
-        }
-        else if(e instanceof InvalidUserTypeException) {
+        } else if (e instanceof InvalidUserTypeException) {
             return InputProcessResult.USER_NOT_SPEAKER;
-        }
-        else {
+        } else {
             return InputProcessResult.INVALID_INPUT;
         }
     }
@@ -240,7 +228,7 @@ public class EventCreationController extends Controller {
         for (String speaker : usernames) {
             userManager.getUser(speaker);
             User user = userManager.getUser(speaker);
-            if(!user.getType().equals(User.UserType.SPEAKER)) {
+            if (!user.getType().equals(User.UserType.SPEAKER)) {
                 throw new InvalidUserTypeException(user.getType());
             }
             speakers.add(user.getId().toString());
