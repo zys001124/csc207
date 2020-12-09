@@ -26,6 +26,10 @@ public class EventManager extends Observable {
         this.events = events;
     }
 
+    /**
+     * Creates a new EventManager object.
+     * Initializes <events> field to an empty ArrayList
+     */
     public EventManager() {
         this.events = new ArrayList<>();
     }
@@ -142,6 +146,11 @@ public class EventManager extends Observable {
         return events;
     }
 
+    /**
+     * Gets a list of events where a specific user is enrolled
+     * @param user - The user that we wish to fined the enrolled events of
+     * @return A list of Event objects - All the events where <user> is enrolled
+     */
     public List<Event> getEventsWithAttendee(User user) {
         List<Event> result = new ArrayList<>();
         for (Event event : events) {

@@ -20,6 +20,9 @@ import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * A controller for the Message User screen
+ */
 public class MessageUserSceneController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
