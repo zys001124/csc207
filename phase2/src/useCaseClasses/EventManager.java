@@ -523,4 +523,29 @@ public class EventManager extends Observable {
     public boolean isEventInManager(Event e) {
         return events.contains(e);
     }
+
+    /**
+     * Helper method that determines if the speaker given is occupied during the given start time and
+     * end time
+     *
+     * @param sDateTime the start time to be checked for the speaker
+     * @param eDateTime the end time to be checked for the speaker
+     * @param speaker   the speaker to be checked if bust
+     * @return a boolean TRUE if occupied during timeframe. FALSE otherwise
+     */
+    public boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {
+        for (String e : listOfEventsHosting(speaker)) {
+            Event eventHosting = getEvent(e);
+            LocalDateTime startTime = eventHosting.getEventTime();
+            LocalDateTime endTime = eventHosting.getEventETime();
+
+            if (sDateTime.isBefore(startTime) && eDateTime.isAfter(startTime) |
+                    (sDateTime.isBefore(endTime) && eDateTime.isAfter(endTime)) |
+                    (sDateTime.isAfter(startTime) && eDateTime.isBefore(endTime))
+            ) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

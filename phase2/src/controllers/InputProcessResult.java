@@ -55,4 +55,5 @@ public enum InputProcessResult {
     EVENT_NAME_TAKEN,
     NO_PASSWORD_GIVEN,
     NO_USERNAME_GIVEN,
+    INVALID_TIME_INPUT,
 }

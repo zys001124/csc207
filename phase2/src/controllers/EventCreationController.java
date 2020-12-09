@@ -14,6 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
+import java.time.DateTimeException;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -84,11 +85,12 @@ public class EventCreationController extends Controller {
     @FXML
     void onCreateButtonClicked() {
 
-        String label;
+        String label = "";
 
         String eventTitle = eventTitleField.getText();
-        LocalDateTime sDateTime = getLocalDateTime(startTimeField.getText());
-        LocalDateTime eDateTime = getLocalDateTime(endTimeField.getText());
+        String startTime = startTimeField.getText();
+        String endTime = endTimeField.getText();
+
         String[] speakersUserName;
         if (!speakerUsernamesField.getText().equals("")) {
             speakersUserName = speakerUsernamesField.getText().split(":");
@@ -99,7 +101,8 @@ public class EventCreationController extends Controller {
         int capacity = Integer.parseInt(eventCapacityField.getText());
         Boolean vipSelected = vipOnlyCheck.isSelected();
 
-        InputProcessResult result = createEvent(eventTitle, sDateTime, eDateTime, speakersUserName, roomNum,
+
+        InputProcessResult result = createEvent(eventTitle, startTime, endTime, speakersUserName, roomNum,
                 capacity, vipSelected);
 
         if (result == InputProcessResult.USER_NOT_FOUND) {
@@ -116,9 +119,14 @@ public class EventCreationController extends Controller {
             label = "That room is full.";
         } else if (result == InputProcessResult.CAPACITY_OVER) {
             label = "The capacity can't be over 60.";
+        } else if (result == InputProcessResult.INVALID_TIME) {
+            label = "End time is before start time.";
+        } else if(result == InputProcessResult.INVALID_TIME_INPUT){
+            label = "Start time or end time input valid.";
         } else {
             label = "Event created successfully.";
         }
+
 
         createMessageLabel.setText(label);
     }
@@ -147,8 +155,6 @@ public class EventCreationController extends Controller {
         assert speakerUsernamesField != null : "fx:id=\"speakerUsernamesField\" was not injected: check your FXML file 'Create Event.fxml'.";
         assert roomNumberField != null : "fx:id=\"roomNumberField\" was not injected: check your FXML file 'Create Event.fxml'.";
         assert eventCapacityField != null : "fx:id=\"eventCapacityField\" was not injected: check your FXML file 'Create Event.fxml'.";
-        //assert vipYesButton != null : "fx:id=\"vipYesButton\" was not injected: check your FXML file 'Create Event.fxml'.";
-        //assert vipNoButton != null : "fx:id=\"vipNoButton\" was not injected: check your FXML file 'Create Event.fxml'.";
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Create Event.fxml'.";
         assert createButton != null : "fx:id=\"createButton\" was not injected: check your FXML file 'Create Event.fxml'.";
         assert createMessageLabel != null : "fx:id=\"createMessageLabel\" was not injected: check your FXML file 'Create Event.fxml'.";
@@ -161,20 +167,34 @@ public class EventCreationController extends Controller {
      * the scene display the right text
      *
      * @param eventTitle       the event title for this event creation
-     * @param startTime        the start time for this event creation
-     * @param endTime          the end time for this event creation
+     * @param sTime         the start time for this event creation
+     * @param eTime         the end time for this event creation
      * @param speakersUserName the list of speakers for this event
      * @param roomNum          the room number for this event
      * @param roomCapacity     the capacity for this event
      * @param vip              boolean on if this event should be VIP only
      * @return an InputProcessResult to help the method decide what the textbox should say
      */
-    private InputProcessResult createEvent(String eventTitle, LocalDateTime startTime, LocalDateTime endTime, String[] speakersUserName,
+    private InputProcessResult createEvent(String eventTitle, String sTime, String eTime, String[] speakersUserName,
                                            int roomNum, int roomCapacity, Boolean vip) {
 
         UUID eventID = getUuid();
         ArrayList<User> speakers = new ArrayList<>();
 
+        LocalDateTime startTime;
+        LocalDateTime endTime;
+        try{
+            startTime = getLocalDateTime(sTime);
+        }
+        catch (DateTimeException e){
+            return InputProcessResult.INVALID_TIME_INPUT;
+        }
+        try{
+            endTime = getLocalDateTime(eTime);
+        }
+        catch (DateTimeException e){
+            return InputProcessResult.INVALID_TIME_INPUT;
+        }
 
         try {
             for (String speaker : speakersUserName) {
@@ -197,6 +217,10 @@ public class EventCreationController extends Controller {
             }
         }
 
+        if(startTime.isAfter(endTime)){
+            return InputProcessResult.INVALID_TIME;
+        }
+
         ArrayList<UUID> speakersID = userManager.listOfID(speakers);
         UUID organizerID = userManager.getCurrentlyLoggedIn().getId();
 
@@ -207,7 +231,7 @@ public class EventCreationController extends Controller {
         }
 
         for (User speaker : speakers) {
-            boolean speakerOccupied = speakerOccupied(startTime, endTime, speaker);
+            boolean speakerOccupied = eventManager.speakerOccupied(startTime, endTime, speaker);
             if (speakerOccupied) {
                 return InputProcessResult.SPEAKER_OCCUPIED;
             }
@@ -232,10 +256,13 @@ public class EventCreationController extends Controller {
      * @param parameter the string value of the what the user put in the textbox
      * @return the LocalDateTime of the string input
      */
-    private LocalDateTime getLocalDateTime(String parameter) {
+    private LocalDateTime getLocalDateTime(String parameter){
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         formatter = formatter.withZone(ZoneId.of("UTC-5"));
         return LocalDateTime.parse(parameter, formatter);
+
+
     }
 
     /**
@@ -266,29 +293,6 @@ public class EventCreationController extends Controller {
     }
 
 
-    /**
-     * Helper method that determins if the speaker given is occupied during the given start time and
-     * end time
-     *
-     * @param sDateTime the start time to be checked for the speaker
-     * @param eDateTime the end time to be checked for the speaker
-     * @param speaker   the speaker to be checked if bust
-     * @return a boolean TRUE if occupied during timeframe. FALSE otherwise
-     */
-    private boolean speakerOccupied(LocalDateTime sDateTime, LocalDateTime eDateTime, User speaker) {
-        for (String e : eventManager.listOfEventsHosting(speaker)) {
-            Event eventHosting = eventManager.getEvent(e);
-            LocalDateTime startTime = eventHosting.getEventTime();
-            LocalDateTime endTime = eventHosting.getEventETime();
 
-            if (sDateTime.isBefore(startTime) && eDateTime.isAfter(startTime) |
-                    (sDateTime.isBefore(endTime) && eDateTime.isAfter(endTime)) |
-                    (sDateTime.isAfter(startTime) && eDateTime.isBefore(endTime))
-            ) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
 

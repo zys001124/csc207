@@ -4,9 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EventCreationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controllers.EventCreationController">
    <children>
-      <TextArea accessibleRole="LIST_VIEW" editable="false" layoutX="40.0" layoutY="94.0" prefHeight="94.0" prefWidth="520.0" text="There are 6 possible rooms for speeches.The room number is from 0-5. &#10;The event has to be between 9am-5pm.&#10;if there is multiple speakers separate each speaker with ':' for no speaker leave it empty.&#10;Time should be written in this form yyyy-MM-dd HH:mm" wrapText="true">
+      <TextArea accessibleRole="LIST_VIEW" editable="false" layoutX="40.0" layoutY="94.0" prefHeight="94.0" prefWidth="520.0" text="There are 6 possible rooms for speeches.The room number is from 0-5. &#10;The event has to be between 9am-5pm.&#10;if there is multiple speakers separate each speaker with ':' for no speaker leave it empty.&#10;Time should be written in this form yyyy-MM-dd HH:mm (Must be in military time)" wrapText="true">
          <font>
             <Font size="13.0" />
          </font>
