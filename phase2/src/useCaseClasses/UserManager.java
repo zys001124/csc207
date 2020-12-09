@@ -97,6 +97,11 @@ public class UserManager extends Observable {
         return null;
     }
 
+    /**
+     * Removes a user from the stored list of Users
+     * @param user - The user to remove
+     * @return the User object that was removed
+     */
     public User removeUser(User user) {
         List<User> usersToRemove = new ArrayList<>();
         if(users.remove(user)){
