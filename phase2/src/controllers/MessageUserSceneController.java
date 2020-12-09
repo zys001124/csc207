@@ -164,15 +164,15 @@ public class MessageUserSceneController extends Controller {
     void onBackButtonClicked() {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
         if (currentUserType == User.UserType.SPEAKER) {
-            setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
+            setSceneView(SceneViewType.SPEAKER_MAIN_MENU);
         } else if (currentUserType == User.UserType.ORGANIZER) {
-            setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+            setSceneView(SceneViewType.ORGANIZER_MAIN_MENU);
         } else if (currentUserType == User.UserType.ADMIN) {
-            setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+            setSceneView(SceneViewType.ADMIN_MAIN_MENU);
         } else if (currentUserType == User.UserType.ATTENDEE) {
-            setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
+            setSceneView(SceneViewType.ATTENDEE_MAIN_MENU);
         } else if (currentUserType == User.UserType.VIP) {
-            setSceneView(SceneNavigator.SceneViewType.VIP_MAIN_MENU);
+            setSceneView(SceneViewType.VIP_MAIN_MENU);
         }
     }
 

@@ -65,19 +65,19 @@ public class LoginController extends Controller {
             // change scene
             if (result == InputProcessResult.SUCCESSFUL_ATTENDEE_LOGIN) {
                 listener.onSuccessfulLogin();
-                setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
+                setSceneView(SceneViewType.ATTENDEE_MAIN_MENU);
             } else if (result == InputProcessResult.SUCCESSFUL_ORGANIZER_LOGIN) {
                 listener.onSuccessfulLogin();
-                setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+                setSceneView(SceneViewType.ORGANIZER_MAIN_MENU);
             } else if (result == InputProcessResult.SUCCESSFUL_SPEAKER_LOGIN) {
                 listener.onSuccessfulLogin();
-                setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
+                setSceneView(SceneViewType.SPEAKER_MAIN_MENU);
             } else if (result == InputProcessResult.SUCCESSFUL_ADMIN_LOGIN) {
                 listener.onSuccessfulLogin();
-                setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+                setSceneView(SceneViewType.ADMIN_MAIN_MENU);
             } else if (result == InputProcessResult.SUCCESSFUL_VIP_LOGIN) {
                 listener.onSuccessfulLogin();
-                setSceneView(SceneNavigator.SceneViewType.VIP_MAIN_MENU);
+                setSceneView(SceneViewType.VIP_MAIN_MENU);
             } else {
                 labelText = "ERROR";
             }

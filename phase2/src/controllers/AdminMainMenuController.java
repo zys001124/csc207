@@ -67,7 +67,7 @@ public class AdminMainMenuController extends Controller {
      */
     @FXML
     void onCancelEventButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.CANCEL_EVENT);
+        setSceneView(SceneViewType.CANCEL_EVENT);
     }
 
     /**
@@ -75,7 +75,7 @@ public class AdminMainMenuController extends Controller {
      */
     @FXML
     void onCreateEventButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.CREATE_EVENT);
+        setSceneView(SceneViewType.CREATE_EVENT);
     }
 
     /**
@@ -83,7 +83,7 @@ public class AdminMainMenuController extends Controller {
      */
     @FXML
     void onCreateUserAccountButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.CREATE_ACCOUNT);
+        setSceneView(SceneViewType.CREATE_ACCOUNT);
     }
 
     /**
@@ -91,7 +91,7 @@ public class AdminMainMenuController extends Controller {
      */
     @FXML
     void onDeleteUserAccountButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.DELETE_ACCOUNT);
+        setSceneView(SceneViewType.DELETE_ACCOUNT);
     }
 
     /**
@@ -99,7 +99,7 @@ public class AdminMainMenuController extends Controller {
      */
     @FXML
     void onLogoutButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.LOGIN);
+        setSceneView(SceneViewType.LOGIN);
     }
 
     /**
@@ -107,7 +107,7 @@ public class AdminMainMenuController extends Controller {
      */
     @FXML
     void onMessageAllAttendeesButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_ATTENDEES);
+        setSceneView(SceneViewType.MESSAGE_ALL_ATTENDEES);
     }
 
     /**
@@ -115,7 +115,7 @@ public class AdminMainMenuController extends Controller {
      */
     @FXML
     void onMessageAllSpeakersButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_SPEAKERS);
+        setSceneView(SceneViewType.MESSAGE_ALL_SPEAKERS);
     }
 
     /**
@@ -123,7 +123,7 @@ public class AdminMainMenuController extends Controller {
      */
     @FXML
     void onMessageUserButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
+        setSceneView(SceneViewType.MESSAGE_USER);
     }
 
     /**
@@ -131,7 +131,7 @@ public class AdminMainMenuController extends Controller {
      */
     @FXML
     void onChangeCapacityClicked() {
-        setSceneView(SceneNavigator.SceneViewType.CHANGE_CAPACITY);
+        setSceneView(SceneViewType.CHANGE_CAPACITY);
 
     }
 }

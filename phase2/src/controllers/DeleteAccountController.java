@@ -46,7 +46,7 @@ public class DeleteAccountController extends Controller {
      */
     @FXML
     void onBackButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+        setSceneView(SceneViewType.ADMIN_MAIN_MENU);
     }
 
     /**

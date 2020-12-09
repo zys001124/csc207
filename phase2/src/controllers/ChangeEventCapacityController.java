@@ -45,9 +45,9 @@ public class ChangeEventCapacityController extends Controller {
     @FXML
     void onBackButtonClicked() {
         if (userManager.checkOrganizer(userManager.getCurrentlyLoggedIn())) {
-            setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+            setSceneView(SceneViewType.ORGANIZER_MAIN_MENU);
         } else {
-            setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+            setSceneView(SceneViewType.ADMIN_MAIN_MENU);
         }
     }
 

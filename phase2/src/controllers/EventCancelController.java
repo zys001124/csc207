@@ -55,10 +55,10 @@ public class EventCancelController extends Controller {
     @FXML
     void onBackButtonClicked() {
         if (!checkUserType()) {
-            setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+            setSceneView(SceneViewType.ADMIN_MAIN_MENU);
         }
         if (checkUserType()) {
-            setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+            setSceneView(SceneViewType.ORGANIZER_MAIN_MENU);
         }
     }
 

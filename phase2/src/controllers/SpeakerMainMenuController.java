@@ -39,7 +39,7 @@ public class SpeakerMainMenuController extends Controller {
      */
     @FXML
     void onLogoutClicked() {
-        setSceneView(SceneNavigator.SceneViewType.LOGIN);
+        setSceneView(SceneViewType.LOGIN);
     }
 
     /**
@@ -47,7 +47,7 @@ public class SpeakerMainMenuController extends Controller {
      */
     @FXML
     void onMessageAllAttendeesClicked() {
-        setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_ATTENDING_EVENT);
+        setSceneView(SceneViewType.MESSAGE_ALL_ATTENDING_EVENT);
     }
 
     /**
@@ -55,7 +55,7 @@ public class SpeakerMainMenuController extends Controller {
      */
     @FXML
     void onMessageAttendeeClicked() {
-        setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
+        setSceneView(SceneViewType.MESSAGE_USER);
     }
 
     /**
@@ -63,7 +63,7 @@ public class SpeakerMainMenuController extends Controller {
      */
     @FXML
     void onSeeEventScheduleClicked() {
-        setSceneView(SceneNavigator.SceneViewType.EVENT_SCHEDULE);
+        setSceneView(SceneViewType.EVENT_SCHEDULE);
     }
 
 

@@ -55,7 +55,7 @@ public class EventEnrollController extends Controller {
      */
     @FXML
     void onBackButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
+        setSceneView(SceneViewType.ATTENDEE_MAIN_MENU);
     }
 
     /**

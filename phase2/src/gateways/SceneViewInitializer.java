@@ -1,9 +1,6 @@
 package gateways;
 
-import controllers.Controller;
-import controllers.LoginController;
-import controllers.LoginListener;
-import controllers.SceneNavigator;
+import controllers.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -30,25 +27,6 @@ public class SceneViewInitializer {
 
     private SceneNavigator sceneNavigator;
 
-    private String loginScenePath;
-    private String speakerMenuInputScenePath;
-    private String organizerMenuInputScenePath;
-    private String attendeeMenuInputScenePath;
-    private String vipMenuInputScenePath;
-    private String adminMenuInputScenePath;
-    private String messageUserScenePath;
-    private String createAccountScenePath;
-    private String eventEnrollScenePath;
-    private String eventUnEnrollScenePath;
-    private String eventCancelScenePath;
-    private String eventCreationScenePath;
-    private String messageAllAttendingEventScenePath;
-    private String messageAllSpeakersScenePath;
-    private String messageAllAttendeesScenePath;
-    private String seeScheduleScenePath;
-    private String changeEventCapacityScenePath;
-    private String deleteAccountScenePath;
-
     /**
      * Creates a new SceneViewInitializer. Creates a new SceneNavigator in the process which allows for scene switching.
      * After this is called scenes in SceneNavigator are still not initialized yet, and need to be loaded with loadScenes()
@@ -71,34 +49,34 @@ public class SceneViewInitializer {
      * Setting up all file paths for the javafx scenes
      */
     private void initializeFilePaths() {
-        loginScenePath = "loginScene.fxml";
-        speakerMenuInputScenePath = "Speaker Main Menu.fxml";
-        organizerMenuInputScenePath = "Organizer Main Menu.fxml";
-        attendeeMenuInputScenePath = "Attendee Main Menu.fxml";
-        vipMenuInputScenePath = "VIP Main Menu.fxml";
-        adminMenuInputScenePath = "Admin Main Menu.fxml";
-        messageUserScenePath = "Message User.fxml";
-        createAccountScenePath = "Create User Account.fxml";
-        eventEnrollScenePath = "Enroll Event.fxml";
-        eventUnEnrollScenePath = "Unenroll Event.fxml";
-        eventCancelScenePath = "Cancel Event.fxml";
-        eventCreationScenePath = "Create Event.fxml";
-        messageAllAttendingEventScenePath = "Message All Event Attendees.fxml";
-        messageAllSpeakersScenePath = "Message All Speakers.fxml";
-        messageAllAttendeesScenePath = "Message All Attendees.fxml";
-        seeScheduleScenePath = "See Event Schedule.fxml";
-        changeEventCapacityScenePath = "Change Event Capacity.fxml";
-        deleteAccountScenePath = "Delete User Account.fxml";
+        SceneViewType.LOGIN.setFxmlPath("loginScene.fxml");
+        SceneViewType.SPEAKER_MAIN_MENU.setFxmlPath("Speaker Main Menu.fxml");
+        SceneViewType.ORGANIZER_MAIN_MENU.setFxmlPath("Organizer Main Menu.fxml");
+        SceneViewType.ATTENDEE_MAIN_MENU.setFxmlPath("Attendee Main Menu.fxml");
+        SceneViewType.VIP_MAIN_MENU.setFxmlPath("VIP Main Menu.fxml");
+        SceneViewType.ADMIN_MAIN_MENU.setFxmlPath("Admin Main Menu.fxml");
+        SceneViewType.MESSAGE_USER.setFxmlPath("Message User.fxml");
+        SceneViewType.CREATE_ACCOUNT.setFxmlPath("Create User Account.fxml");
+        SceneViewType.ENROLL_IN_EVENT.setFxmlPath("Enroll Event.fxml");
+        SceneViewType.UNENROLL_IN_EVENT.setFxmlPath("Unenroll Event.fxml");
+        SceneViewType.CANCEL_EVENT.setFxmlPath("Cancel Event.fxml");
+        SceneViewType.CREATE_EVENT.setFxmlPath("Create Event.fxml");
+        SceneViewType.MESSAGE_ALL_ATTENDING_EVENT.setFxmlPath("Message All Event Attendees.fxml");
+        SceneViewType.MESSAGE_ALL_SPEAKERS.setFxmlPath("Message All Speakers.fxml");
+        SceneViewType.MESSAGE_ALL_ATTENDEES.setFxmlPath("Message All Attendees.fxml");
+        SceneViewType.EVENT_SCHEDULE.setFxmlPath("See Event Schedule.fxml");
+        SceneViewType.CHANGE_CAPACITY.setFxmlPath("Change Event Capacity.fxml");
+        SceneViewType.DELETE_ACCOUNT.setFxmlPath("Delete User Account.fxml");
     }
 
     /**
      * Loads up all javafx scenes for program startup and displays the login scene
      */
     public void loadScenes() {
-        Scene loginScene = initializeLoginScene(loginScenePath, sceneNavigator, this::initializeSceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.LOGIN, loginScene);
+        Scene loginScene = initializeLoginScene(SceneViewType.LOGIN.getFxmlPath(), sceneNavigator, this::initializeSceneNavigator);
+        sceneNavigator.setSceneView(SceneViewType.LOGIN, loginScene);
 
-        sceneNavigator.switchSceneView(SceneNavigator.SceneViewType.LOGIN);
+        sceneNavigator.switchSceneView(SceneViewType.LOGIN);
         sceneNavigator.getApplicationStage().show();
     }
 
@@ -106,62 +84,20 @@ public class SceneViewInitializer {
      * Sets up all javafx Scenes used in this program's SceneNavigator based on file paths.
      */
     private void initializeSceneNavigator() {
-        Scene speakerMenuInputScene = initializeScene(speakerMenuInputScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU, speakerMenuInputScene);
 
-        Scene organizerMenuInputScene = initializeScene(organizerMenuInputScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU, organizerMenuInputScene);
-
-        Scene attendeeMenuInputScene = initializeScene(attendeeMenuInputScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU, attendeeMenuInputScene);
-
-        Scene vipMenuInputScene = initializeScene(vipMenuInputScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.VIP_MAIN_MENU, vipMenuInputScene);
-
-        Scene adminMenuInputScene = initializeScene(adminMenuInputScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU, adminMenuInputScene);
-
-        Scene messageUserScene = initializeScene(messageUserScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER, messageUserScene);
-
-        Scene createAccountScene = initializeScene(createAccountScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.CREATE_ACCOUNT, createAccountScene);
-
-        Scene eventEnrollScene = initializeScene(eventEnrollScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.ENROLL_IN_EVENT, eventEnrollScene);
-
-        Scene eventUnEnrollScene = initializeScene(eventUnEnrollScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.UNENROLL_IN_EVENT, eventUnEnrollScene);
-
-        Scene eventCancelScene = initializeScene(eventCancelScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.CANCEL_EVENT, eventCancelScene);
-
-        Scene eventCreationScene = initializeScene(eventCreationScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.CREATE_EVENT, eventCreationScene);
-
-        Scene messageAllAttendingEventScene = initializeScene(messageAllAttendingEventScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_ATTENDING_EVENT, messageAllAttendingEventScene);
-
-        Scene messageAllSpeakersScene = initializeScene(messageAllSpeakersScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_SPEAKERS, messageAllSpeakersScene);
-
-        Scene messageAllAttendeesScene = initializeScene(messageAllAttendeesScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.MESSAGE_ALL_ATTENDEES, messageAllAttendeesScene);
-
-        Scene seeScheduleScene = initializeScene(seeScheduleScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.EVENT_SCHEDULE, seeScheduleScene);
-
-        Scene changeEventCapacityScene = initializeScene(changeEventCapacityScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.CHANGE_CAPACITY, changeEventCapacityScene);
-
-        Scene deleteAccountScene = initializeScene(deleteAccountScenePath, sceneNavigator);
-        sceneNavigator.setSceneView(SceneNavigator.SceneViewType.DELETE_ACCOUNT, deleteAccountScene);
+        // Loops through all SceneViewType's (besides login scene)
+        // and initializes the scene, adds it to sceneNavigator
+        for(SceneViewType viewType: SceneViewType.values()) {
+            if(!viewType.equals(SceneViewType.LOGIN)){
+                initializeAndLoadSceneIntoNavigator(viewType, sceneNavigator);
+            }
+        }
     }
 
-    private Scene initializeScene(String fxmlPath, SceneNavigator sceneNavigator) {
+    private void initializeAndLoadSceneIntoNavigator(SceneViewType viewType, SceneNavigator sceneNavigator) {
         Scene scene;
         try {
-            URL url = new File(fxmlPath).toURI().toURL();
+            URL url = new File(viewType.getFxmlPath()).toURI().toURL();
             FXMLLoader loader = new FXMLLoader(url);
             scene = new Scene(loader.load());
             Controller controller = loader.getController();
@@ -172,7 +108,7 @@ public class SceneViewInitializer {
         } catch (IOException e) {
             scene = new Scene(new VBox(), WIDTH, HEIGHT);
         }
-        return scene;
+        sceneNavigator.setSceneView(viewType, scene);
     }
 
     private Scene initializeLoginScene(String fxmlPath, SceneNavigator sceneNavigator, LoginListener listener) {

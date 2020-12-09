@@ -53,7 +53,7 @@ public class AttendeeMainMenuController extends Controller {
      */
     @FXML
     void onEnrollInEventButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.ENROLL_IN_EVENT);
+        setSceneView(SceneViewType.ENROLL_IN_EVENT);
     }
 
     /**
@@ -61,7 +61,7 @@ public class AttendeeMainMenuController extends Controller {
      */
     @FXML
     void onLogoutButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.LOGIN);
+        setSceneView(SceneViewType.LOGIN);
     }
 
     /**
@@ -69,7 +69,7 @@ public class AttendeeMainMenuController extends Controller {
      */
     @FXML
     void onMessageUserButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.MESSAGE_USER);
+        setSceneView(SceneViewType.MESSAGE_USER);
     }
 
     /**
@@ -77,7 +77,7 @@ public class AttendeeMainMenuController extends Controller {
      */
     @FXML
     void onSeeEventScheduleButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.EVENT_SCHEDULE);
+        setSceneView(SceneViewType.EVENT_SCHEDULE);
     }
 
     /**
@@ -85,7 +85,7 @@ public class AttendeeMainMenuController extends Controller {
      */
     @FXML
     void onUnenrollInEventButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.UNENROLL_IN_EVENT);
+        setSceneView(SceneViewType.UNENROLL_IN_EVENT);
     }
 
 }

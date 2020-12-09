@@ -43,9 +43,9 @@ public class MessageAllAttendeesController extends Controller {
     void onBackButtonClicked() {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
         if (currentUserType == User.UserType.ORGANIZER) {
-            setSceneView(SceneNavigator.SceneViewType.ORGANIZER_MAIN_MENU);
+            setSceneView(SceneViewType.ORGANIZER_MAIN_MENU);
         } else if (currentUserType == User.UserType.ADMIN) {
-            setSceneView(SceneNavigator.SceneViewType.ADMIN_MAIN_MENU);
+            setSceneView(SceneViewType.ADMIN_MAIN_MENU);
         }
     }
 

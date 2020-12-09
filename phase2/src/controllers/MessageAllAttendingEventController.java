@@ -44,7 +44,7 @@ public class MessageAllAttendingEventController extends Controller {
      */
     @FXML
     void onBackButtonClicked() {
-        setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
+        setSceneView(SceneViewType.SPEAKER_MAIN_MENU);
     }
 
     /**

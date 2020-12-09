@@ -45,9 +45,9 @@ public class SeeEventScheduleController extends Controller {
     void onBackButtonClicked() {
         if (userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.ATTENDEE) ||
                 userManager.getCurrentlyLoggedIn().getType().equals(User.UserType.VIP)) {
-            setSceneView(SceneNavigator.SceneViewType.ATTENDEE_MAIN_MENU);
+            setSceneView(SceneViewType.ATTENDEE_MAIN_MENU);
         } else { //They are a speaker
-            setSceneView(SceneNavigator.SceneViewType.SPEAKER_MAIN_MENU);
+            setSceneView(SceneViewType.SPEAKER_MAIN_MENU);
         }
 
     }
