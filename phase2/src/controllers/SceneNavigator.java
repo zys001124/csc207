@@ -194,8 +194,8 @@ public class SceneNavigator {
      *
      * @return the programs main stage
      */
-    public Stage getApplicationStage() {
-        return applicationStage;
+    public void showGUI() {
+        applicationStage.show();
     }
 
 }

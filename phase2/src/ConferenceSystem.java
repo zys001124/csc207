@@ -1,6 +1,7 @@
 import com.google.auth.oauth2.GoogleCredentials;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
+import controllers.SceneNavigator;
 import gateways.GatewayInitializer;
 import gateways.SceneViewInitializer;
 import javafx.stage.Stage;
@@ -38,7 +39,8 @@ public class ConferenceSystem {
      * Begins process of running the program
      */
     public void run() {
-        sceneViewInitializer.loadScenes();
+        SceneNavigator sceneNavigator = sceneViewInitializer.getSceneNavigator();
+        sceneNavigator.showGUI();
 //        Scene loginScene = initializeLoginScene("loginScene.fxml", sceneNavigator,
 //                this::initializeScenes);
 //        sceneNavigator.setLoginScene(loginScene);

@@ -72,18 +72,21 @@ public class SceneViewInitializer {
     /**
      * Loads up all javafx scenes for program startup and displays the login scene
      */
-    public void loadScenes() {
-        Scene loginScene = initializeLoginScene(SceneViewType.LOGIN.getFxmlPath(), sceneNavigator, this::initializeSceneNavigator);
-        sceneNavigator.setSceneView(SceneViewType.LOGIN, loginScene);
+    public SceneNavigator getSceneNavigator() {
+        prepareSceneNavigatorForStartup();
+        return sceneNavigator;
+    }
 
+    private void prepareSceneNavigatorForStartup(){
+        Scene loginScene = initializeLoginScene(SceneViewType.LOGIN.getFxmlPath(), sceneNavigator, this::initializeNonLoginScenes);
+        sceneNavigator.setSceneView(SceneViewType.LOGIN, loginScene);
         sceneNavigator.switchSceneView(SceneViewType.LOGIN);
-        sceneNavigator.getApplicationStage().show();
     }
 
     /**
      * Sets up all javafx Scenes used in this program's SceneNavigator based on file paths.
      */
-    private void initializeSceneNavigator() {
+    private void initializeNonLoginScenes() {
 
         // Loops through all SceneViewType's (besides login scene)
         // and initializes the scene, adds it to sceneNavigator
