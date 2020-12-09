@@ -69,11 +69,12 @@ public class MessageAllAttendingEventController extends Controller {
         }
         createMessageLabel.setText(label);
     }
+
     /**
      * Initializes the scene buttons and labels and text boxes
      */
     @FXML
-        // This method is called by the FXMLLoader when initialization is complete
+    // This method is called by the FXMLLoader when initialization is complete
     void initialize() {
         assert eventList != null : "fx:id=\"eventList\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
         assert messageField != null : "fx:id=\"messageField\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
@@ -81,6 +82,7 @@ public class MessageAllAttendingEventController extends Controller {
         assert backButton != null : "fx:id=\"backButton\" was not injected: check your FXML file 'Message All Event Attendees.fxml'.";
 
     }
+
     /**
      * Sets the event manager for this scene
      *

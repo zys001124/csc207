@@ -42,7 +42,7 @@ public class EventGateway extends FirebaseGateway<Event> {
     protected void onChildAdded(DataSnapshot dataSnapshot, String s) {
         Event e = snapshotReader.getFromDataSnapshot(dataSnapshot);
 
-        if(!eventManager.isEventInManager(e)) eventManager.addEvent(e);
+        if (!eventManager.isEventInManager(e)) eventManager.addEvent(e);
     }
 
     /**
@@ -55,7 +55,7 @@ public class EventGateway extends FirebaseGateway<Event> {
     @Override
     protected void onChildChanged(DataSnapshot dataSnapshot, String s) {
         Event e = snapshotReader.getFromDataSnapshot(dataSnapshot);
-        if(!eventManager.isEventInManager(e)) eventManager.updateStoredEvent(e);
+        if (!eventManager.isEventInManager(e)) eventManager.updateStoredEvent(e);
     }
 
     /**
@@ -67,7 +67,7 @@ public class EventGateway extends FirebaseGateway<Event> {
     @Override
     protected void onChildRemoved(DataSnapshot dataSnapshot) {
         Event e = snapshotReader.getFromDataSnapshot(dataSnapshot);
-        if(eventManager.isEventInManager(e)) eventManager.removeEvent(e.getId());
+        if (eventManager.isEventInManager(e)) eventManager.removeEvent(e.getId());
     }
 
     /**
@@ -101,11 +101,12 @@ public class EventGateway extends FirebaseGateway<Event> {
 
     /**
      * Gets the snapshotReader
+     *
      * @return an EventDataSnapshotReader
      */
     @Override
     protected DataSnapshotReader<Event> getSnapshotReader() {
-        if(snapshotReader == null) {
+        if (snapshotReader == null) {
             snapshotReader = new EventDataSnapshotReader();
         }
         return snapshotReader;

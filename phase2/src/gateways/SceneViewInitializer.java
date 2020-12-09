@@ -21,11 +21,11 @@ public class SceneViewInitializer {
     private static final int WIDTH = 800;
     private static final int HEIGHT = 600;
 
-    private UserManager um;
-    private MessageManager mm;
-    private EventManager em;
+    private final UserManager um;
+    private final MessageManager mm;
+    private final EventManager em;
 
-    private SceneNavigator sceneNavigator;
+    private final SceneNavigator sceneNavigator;
 
     /**
      * Creates a new SceneViewInitializer. Creates a new SceneNavigator in the process which allows for scene switching.
@@ -87,8 +87,8 @@ public class SceneViewInitializer {
 
         // Loops through all SceneViewType's (besides login scene)
         // and initializes the scene, adds it to sceneNavigator
-        for(SceneViewType viewType: SceneViewType.values()) {
-            if(!viewType.equals(SceneViewType.LOGIN)){
+        for (SceneViewType viewType : SceneViewType.values()) {
+            if (!viewType.equals(SceneViewType.LOGIN)) {
                 initializeAndLoadSceneIntoNavigator(viewType, sceneNavigator);
             }
         }

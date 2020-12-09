@@ -1,12 +1,10 @@
 package useCaseClasses;
 
-import com.google.firebase.database.DataSnapshot;
 import entities.Event;
 import entities.Message;
 import entities.User;
 import exceptions.InvalidUserTypeException;
 import exceptions.NoMessageException;
-import gateways.snapshotreaders.DataSnapshotReader;
 import observers.Observable;
 
 import java.time.LocalDateTime;
@@ -215,6 +213,7 @@ public class MessageManager extends Observable {
 
     /**
      * Checks if this instance of the manager contains a given message
+     *
      * @param message - the message we wish to check
      * @return a boolean - whether or not the message is being kept track of
      * by this instance of MessageManager

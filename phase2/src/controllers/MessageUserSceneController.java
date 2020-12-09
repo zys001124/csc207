@@ -145,11 +145,12 @@ public class MessageUserSceneController extends Controller {
 
         InputProcessResult result = sendMessage(sender, recipient, text);
 
-        switch(result) {
+        switch (result) {
             case INVALID_USER_TYPE: {
                 label = "You can't message this user.";
                 break;
-            } case NO_MESSAGE_HISTORY: {
+            }
+            case NO_MESSAGE_HISTORY: {
                 label = "There is no message to reply to.";
             }
         }
@@ -176,14 +177,15 @@ public class MessageUserSceneController extends Controller {
         }
     }
 
-    private InputProcessResult sendMessage(User sender, User recipient, String message){
+    private InputProcessResult sendMessage(User sender, User recipient, String message) {
         try {
             messageManager.sendMessage(sender, recipient, message);
         } catch (InvalidUserTypeException e) {
             return InputProcessResult.INVALID_USER_TYPE;
         } catch (NoMessageException e) {
             return InputProcessResult.NO_MESSAGE_HISTORY;
-        } return InputProcessResult.SUCCESS;
+        }
+        return InputProcessResult.SUCCESS;
     }
 
     private void setMessageList() {

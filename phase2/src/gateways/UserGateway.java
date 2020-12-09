@@ -67,7 +67,7 @@ public class UserGateway extends FirebaseGateway<User> {
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         User u = snapshotReader.getFromDataSnapshot(dataSnapshot);
-        if(!userManager.isUserInManager(u)) userManager.addUser(u);
+        if (!userManager.isUserInManager(u)) userManager.addUser(u);
     }
 
     /**
@@ -80,7 +80,7 @@ public class UserGateway extends FirebaseGateway<User> {
     @Override
     public void onChildChanged(DataSnapshot dataSnapshot, String s) {
         User u = snapshotReader.getFromDataSnapshot(dataSnapshot);
-        if(!userManager.isUserInManager(u)) userManager.changeUser(u);
+        if (!userManager.isUserInManager(u)) userManager.changeUser(u);
     }
 
     /**
@@ -92,16 +92,17 @@ public class UserGateway extends FirebaseGateway<User> {
     @Override
     public void onChildRemoved(DataSnapshot dataSnapshot) {
         User u = snapshotReader.getFromDataSnapshot(dataSnapshot);
-        if(userManager.isUserInManager(u)) userManager.removeUser(u);
+        if (userManager.isUserInManager(u)) userManager.removeUser(u);
     }
 
     /**
      * Gets the snapshotReader
+     *
      * @return a UserDataSnapshotReader
      */
     @Override
     protected DataSnapshotReader<User> getSnapshotReader() {
-        if(snapshotReader == null) {
+        if (snapshotReader == null) {
             snapshotReader = new UserDataSnapshotReader();
         }
         return snapshotReader;

@@ -39,6 +39,7 @@ public class SceneNavigator {
 
     /**
      * Switch the current scene displayed in the application window to <sceneViewType>
+     *
      * @param sceneViewType the scene to switch to
      */
     public void switchSceneView(SceneViewType sceneViewType) {
@@ -47,10 +48,11 @@ public class SceneNavigator {
 
     /**
      * Sets the old scene represented by <sceneViewType> to a new scene
+     *
      * @param sceneViewType the scene which needs to be set
      * @param scene         the new scene
      */
-    public void setSceneView(SceneViewType sceneViewType, Scene scene){
+    public void setSceneView(SceneViewType sceneViewType, Scene scene) {
         switch (sceneViewType) {
             case LOGIN: {
                 this.loginScene = scene;
@@ -127,7 +129,7 @@ public class SceneNavigator {
         }
     }
 
-    private Scene getSceneView(SceneViewType sceneViewType){
+    private Scene getSceneView(SceneViewType sceneViewType) {
         switch (sceneViewType) {
             case LOGIN: {
                 return loginScene;
@@ -189,6 +191,7 @@ public class SceneNavigator {
 
     /**
      * Returns the current stage (window). Used to call the show() method in order to display the window on program launch.
+     *
      * @return the programs main stage
      */
     public Stage getApplicationStage() {

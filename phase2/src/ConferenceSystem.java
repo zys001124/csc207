@@ -3,9 +3,9 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import gateways.GatewayInitializer;
 import gateways.SceneViewInitializer;
+import javafx.stage.Stage;
 import observers.ObserversInitializer;
 import useCaseClasses.UseCaseHolder;
-import javafx.stage.Stage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -16,9 +16,9 @@ import java.io.IOException;
  */
 public class ConferenceSystem {
 
-    private UseCaseHolder useCaseHolder;
+    private final UseCaseHolder useCaseHolder;
     private GatewayInitializer gatewayInitializer;
-    private ObserversInitializer observersInitializer;
+    private final ObserversInitializer observersInitializer;
     private SceneViewInitializer sceneViewInitializer;
 
     /**

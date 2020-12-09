@@ -7,6 +7,7 @@ import java.util.List;
 
 /**
  * An observer that will query a FirebaseGateway when changes are made
+ *
  * @param <T> The type of entity additions/removals/changes are being made to
  */
 public class UpdateDatabaseObserver<T> implements Observer<T> {
@@ -15,6 +16,7 @@ public class UpdateDatabaseObserver<T> implements Observer<T> {
 
     /**
      * The constructor for UpdateDatabaseObserver
+     *
      * @param gateway - the FirebaseGateway to be queried
      */
     public UpdateDatabaseObserver(FirebaseGateway<T> gateway) {
@@ -24,10 +26,10 @@ public class UpdateDatabaseObserver<T> implements Observer<T> {
     /**
      * Called when this observer is notified
      *
-     * @param o                     - The object that is being observed
-     * @param changes               - the List of changes that were made
-     * @param addedOrChanged        - whether or not the changes were either additions or changes
-     *                              within the objects
+     * @param o              - The object that is being observed
+     * @param changes        - the List of changes that were made
+     * @param addedOrChanged - whether or not the changes were either additions or changes
+     *                       within the objects
      * @throws IncorrectObjectTypeException
      */
     @Override

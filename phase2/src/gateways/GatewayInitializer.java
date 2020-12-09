@@ -1,10 +1,6 @@
 package gateways;
 
 import com.google.firebase.database.FirebaseDatabase;
-import entities.Event;
-import entities.Message;
-import entities.User;
-import observers.UpdateDatabaseObserver;
 import useCaseClasses.EventManager;
 import useCaseClasses.MessageManager;
 import useCaseClasses.UserManager;

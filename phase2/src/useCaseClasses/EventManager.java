@@ -1,15 +1,15 @@
 package useCaseClasses;
 
-import com.google.firebase.database.DataSnapshot;
 import entities.Event;
 import entities.User;
 import exceptions.*;
-import gateways.snapshotreaders.DataSnapshotReader;
 import observers.Observable;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 
 /**
  * Represents an eventManager that can modify events of the conference
@@ -94,7 +94,7 @@ public class EventManager extends Observable {
     /**
      * Removes an event from the conference system based on the firebase snapshot passed in
      */
-    public void removeEventFromDatabase(Event eventRemoved) { ;
+    public void removeEventFromDatabase(Event eventRemoved) {
         List<Event> eventsToRemove = new ArrayList<>();
         for (Event event : events) {
             int index = events.indexOf(event);
@@ -148,6 +148,7 @@ public class EventManager extends Observable {
 
     /**
      * Gets a list of events where a specific user is enrolled
+     *
      * @param user - The user that we wish to fined the enrolled events of
      * @return A list of Event objects - All the events where <user> is enrolled
      */
@@ -245,7 +246,6 @@ public class EventManager extends Observable {
 
     /**
      * updates the information of an event based on the firebase updates for the data snapshot
-     *
      */
     public void updateStoredEvent(Event event) {
 
@@ -515,6 +515,7 @@ public class EventManager extends Observable {
 
     /**
      * Checks if this instance of the manager contains a given event
+     *
      * @param e - the event we wish to check
      * @return a boolean - whether or not the event is being kept track of
      * by this instance of EventManager

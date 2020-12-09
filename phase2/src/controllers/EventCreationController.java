@@ -170,7 +170,7 @@ public class EventCreationController extends Controller {
      * @return an InputProcessResult to help the method decide what the textbox should say
      */
     private InputProcessResult createEvent(String eventTitle, LocalDateTime startTime, LocalDateTime endTime, String[] speakersUserName,
-                                          int roomNum, int roomCapacity, Boolean vip) {
+                                           int roomNum, int roomCapacity, Boolean vip) {
 
         UUID eventID = getUuid();
         ArrayList<User> speakers = new ArrayList<>();

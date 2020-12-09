@@ -77,6 +77,7 @@ public class EventUnEnrollController extends Controller {
 
     /**
      * Set up the event manager for this scene
+     *
      * @param eventManager the eventManager to be set to
      */
     @Override
@@ -97,6 +98,7 @@ public class EventUnEnrollController extends Controller {
 
     /**
      * Helper Method to set up the all the information for each event on a label
+     *
      * @param events List of events to be displayed
      * @return A list of label with information on them
      */

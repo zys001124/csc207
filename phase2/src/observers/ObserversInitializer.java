@@ -20,6 +20,7 @@ public class ObserversInitializer {
 
     /**
      * The constructor for ObserversInitializer
+     *
      * @param ug - The FirebaseGateway object responsible for keeping user information synced
      * @param mg - The FirebaseGateway object responsible for keeping message information synced
      * @param eg - The FirebaseGateway object responsible for keeping event information synced
@@ -32,6 +33,7 @@ public class ObserversInitializer {
 
     /**
      * Getter for userUpdateDatabaseObserver
+     *
      * @return userUpdateDatabaseObserver
      */
     public UpdateDatabaseObserver<User> getUserUpdateDatabaseObserver() {
@@ -40,6 +42,7 @@ public class ObserversInitializer {
 
     /**
      * Getter for messageUpdateDatabaseObserver
+     *
      * @return messageUpdateDatabaseObserver
      */
     public UpdateDatabaseObserver<Message> getMessageUpdateDatabaseObserver() {
@@ -48,6 +51,7 @@ public class ObserversInitializer {
 
     /**
      * Getter for eventUpdateDatabaseObserver
+     *
      * @return eventUpdateDatabaseObserver
      */
     public UpdateDatabaseObserver<Event> getEventUpdateDatabaseObserver() {

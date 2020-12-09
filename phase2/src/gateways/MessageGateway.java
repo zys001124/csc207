@@ -67,7 +67,7 @@ public class MessageGateway extends FirebaseGateway<Message> {
     @Override
     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
         Message m = snapshotReader.getFromDataSnapshot(dataSnapshot);
-        if(!messageManager.isMessageInManager(m)) messageManager.addMessage(m);
+        if (!messageManager.isMessageInManager(m)) messageManager.addMessage(m);
     }
 
     /**
@@ -95,11 +95,12 @@ public class MessageGateway extends FirebaseGateway<Message> {
 
     /**
      * Gets the snapshotReader
+     *
      * @return a MessageDataSnapshotReader
      */
     @Override
     protected DataSnapshotReader<Message> getSnapshotReader() {
-        if(snapshotReader == null){
+        if (snapshotReader == null) {
             snapshotReader = new MessageDataSnapshotReader();
         }
         return snapshotReader;

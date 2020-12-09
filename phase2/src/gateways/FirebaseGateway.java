@@ -126,6 +126,7 @@ public abstract class FirebaseGateway<T> {
 
     /**
      * Gets the snapshotReader from a subclass
+     *
      * @return a DataSnapshotReader
      */
     protected abstract DataSnapshotReader<T> getSnapshotReader();

@@ -1,11 +1,8 @@
 package useCaseClasses;
 
 
-import com.google.firebase.database.DataSnapshot;
-import entities.Message;
 import entities.User;
 import exceptions.*;
-import gateways.snapshotreaders.DataSnapshotReader;
 import observers.Observable;
 
 import java.util.ArrayList;
@@ -99,18 +96,17 @@ public class UserManager extends Observable {
 
     /**
      * Removes a user from the stored list of Users
+     *
      * @param user - The user to remove
      * @return the User object that was removed
      */
     public User removeUser(User user) {
         List<User> usersToRemove = new ArrayList<>();
-        if(users.remove(user)){
+        if (users.remove(user)) {
             usersToRemove.add(user);
             notifyObservers(usersToRemove, false);
             return usersToRemove.get(0);
-        }
-        else
-        {
+        } else {
             return null;
         }
     }
@@ -422,6 +418,7 @@ public class UserManager extends Observable {
 
     /**
      * Checks if this instance of the manager contains a given user
+     *
      * @param user - the user we wish to check
      * @return a boolean - whether or not the user is being kept track of
      * by this instance of UserManager
