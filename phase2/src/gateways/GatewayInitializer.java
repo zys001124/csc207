@@ -16,6 +16,13 @@ public class GatewayInitializer {
     private final MessageGateway messageGateway;
     private final EventGateway eventGateway;
 
+    /**
+     * Initialize a UserGateway, a MessageGateway, and a EventGateWay
+     * from a a Firebase Realtime Database
+     * @param um - The UserManager the program will be using
+     * @param mm - The MessageManager the program will be using
+     * @param em - The EventManager the program will be using
+     */
     public GatewayInitializer(UserManager um, MessageManager mm, EventManager em) {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -25,14 +32,26 @@ public class GatewayInitializer {
         eventGateway = new EventGateway(em, database);
     }
 
+    /**
+     * Getter method for the UserGateway
+     * @return the UserGateway the program is currently using
+     */
     public UserGateway getUserGateway() {
         return userGateway;
     }
 
+    /**
+     * Getter method for the MessageGateway
+     * @return the MessageGateway the program is currently using
+     */
     public MessageGateway getMessageGateway() {
         return messageGateway;
     }
 
+    /**
+     * Getter method for the EventGateway
+     * @return the EventGateway the program is currently using
+     */
     public EventGateway getEventGateway() {
         return eventGateway;
     }
