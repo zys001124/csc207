@@ -20,6 +20,9 @@ import java.net.URL;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * A controller for the Message User screen
+ */
 public class MessageUserSceneController extends Controller {
 
     @FXML // ResourceBundle that was given to the FXMLLoader
@@ -137,22 +140,26 @@ public class MessageUserSceneController extends Controller {
         Label userLabel = userListView.getSelectionModel().getSelectedItems().get(0);
         String recipientUsername = userLabel.getText().split(":")[0];
 
-        User recipient = userManager.getUser(userManager.getUserID(recipientUsername));
         User sender = userManager.getCurrentlyLoggedIn();
+        User recipient = userManager.getUser(userManager.getUserID(recipientUsername));
 
-        try {
-            messageManager.sendMessage(sender, recipient, text);
-        } catch (InvalidUserTypeException e) {
-            label = "You can't message this user.";
-        } catch (NoMessageException e) {
-            label = "You can't send a message to this attendee right now.";
+        InputProcessResult result = sendMessage(sender, recipient, text);
+
+        switch(result) {
+            case INVALID_USER_TYPE: {
+                label = "You can't message this user.";
+                break;
+            } case NO_MESSAGE_HISTORY: {
+                label = "There is no message to reply to.";
+            }
         }
+
         cantSendToUserLabel.setText(label);
     }
 
     @FXML
     /**
-     * This method is called when the back button is clicked
+     * This method is called when the back button is clicked. Used to return to the appropriate main menu.
      */
     void onBackButtonClicked() {
         User.UserType currentUserType = userManager.getCurrentlyLoggedIn().getType();
@@ -167,6 +174,16 @@ public class MessageUserSceneController extends Controller {
         } else if (currentUserType == User.UserType.VIP) {
             setSceneView(SceneNavigator.SceneViewType.VIP_MAIN_MENU);
         }
+    }
+
+    private InputProcessResult sendMessage(User sender, User recipient, String message){
+        try {
+            messageManager.sendMessage(sender, recipient, message);
+        } catch (InvalidUserTypeException e) {
+            return InputProcessResult.INVALID_USER_TYPE;
+        } catch (NoMessageException e) {
+            return InputProcessResult.NO_MESSAGE_HISTORY;
+        } return InputProcessResult.SUCCESS;
     }
 
     private void setMessageList() {

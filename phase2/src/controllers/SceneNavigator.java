@@ -4,13 +4,10 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Class which holds all possible scenes in the
+ * Class which holds all possible scenes in the program.
+ * Used to switch between scenes by the controllers on button clicks.
  */
-
 public class SceneNavigator {
-
-    private static final int WIDTH = 800;
-    private static final int HEIGHT = 600;
 
     private final Stage applicationStage;
 
@@ -33,236 +30,174 @@ public class SceneNavigator {
     private Scene changeEventCapacityScene;
     private Scene deleteAccountScene;
 
+    /**
+     * Create a new SceneNavigator with the stage <applicationStage>
+     */
     public SceneNavigator(Stage applicationStage) {
         this.applicationStage = applicationStage;
     }
 
+    /**
+     * Switch the current scene displayed in the application window to <sceneViewType>
+     * @param sceneViewType the scene to switch to
+     */
     public void switchSceneView(SceneViewType sceneViewType) {
+        applicationStage.setScene(getSceneView(sceneViewType));
+    }
+
+    /**
+     * Sets the old scene represented by <sceneViewType> to a new scene
+     * @param sceneViewType the scene which needs to be set
+     * @param scene         the new scene
+     */
+    public void setSceneView(SceneViewType sceneViewType, Scene scene){
         switch (sceneViewType) {
             case LOGIN: {
-                applicationStage.setScene(getLoginScene());
+                this.loginScene = scene;
                 break;
             }
             case SPEAKER_MAIN_MENU: {
-                applicationStage.setScene(getSpeakerMenuInputScene());
+                this.speakerMenuInputScene = scene;
                 break;
             }
             case ORGANIZER_MAIN_MENU: {
-                applicationStage.setScene(getOrganizerMenuInputScene());
+                this.organizerMenuInputScene = scene;
                 break;
             }
             case ATTENDEE_MAIN_MENU: {
-                applicationStage.setScene(getAttendeeMenuInputScene());
+                this.attendeeMenuInputScene = scene;
                 break;
             }
             case VIP_MAIN_MENU: {
-                applicationStage.setScene(getVipMenuInputScene());
+                this.vipMenuInputScene = scene;
                 break;
             }
             case ADMIN_MAIN_MENU: {
-                applicationStage.setScene(getAdminMenuInputScene());
+                this.adminMenuInputScene = scene;
                 break;
             }
             case MESSAGE_USER: {
-                applicationStage.setScene(getMessageUserScene());
+                this.messageUserScene = scene;
                 break;
             }
             case MESSAGE_ALL_ATTENDING_EVENT: {
-                applicationStage.setScene(getMessageAllAttendingEventScene());
+                this.messageAllAttendingEventScene = scene;
                 break;
             }
             case MESSAGE_ALL_SPEAKERS: {
-                applicationStage.setScene(getMessageAllSpeakersScene());
+                this.messageAllSpeakersScene = scene;
                 break;
             }
             case MESSAGE_ALL_ATTENDEES: {
-                applicationStage.setScene(getMessageAllAttendeesScene());
+                this.messageAllAttendeesScene = scene;
                 break;
             }
             case EVENT_SCHEDULE: {
-                applicationStage.setScene(getSeeScheduleScene());
+                this.seeScheduleScene = scene;
                 break;
             }
             case CREATE_EVENT: {
-                applicationStage.setScene(getEventCreationScene());
+                this.eventCreationScene = scene;
                 break;
             }
             case CANCEL_EVENT: {
-                applicationStage.setScene(getEventCancelScene());
+                this.eventCancelScene = scene;
                 break;
             }
             case ENROLL_IN_EVENT: {
-                applicationStage.setScene(getEventEnrollScene());
+                this.eventEnrollScene = scene;
                 break;
             }
             case UNENROLL_IN_EVENT: {
-                applicationStage.setScene(getEventUnEnrollScene());
+                this.eventUnEnrollScene = scene;
                 break;
             }
             case CREATE_ACCOUNT: {
-                applicationStage.setScene(getCreateAccountScene());
+                this.createAccountScene = scene;
                 break;
             }
             case DELETE_ACCOUNT: {
-                applicationStage.setScene(getDeleteAccountScene());
+                this.deleteAccountScene = scene;
                 break;
             }
             case CHANGE_CAPACITY: {
-                applicationStage.setScene(getChangeEventCapacityScene());
+                this.changeEventCapacityScene = scene;
                 break;
             }
         }
     }
 
+    private Scene getSceneView(SceneViewType sceneViewType){
+        switch (sceneViewType) {
+            case LOGIN: {
+                return loginScene;
+            }
+            case SPEAKER_MAIN_MENU: {
+                return speakerMenuInputScene;
+            }
+            case ORGANIZER_MAIN_MENU: {
+                return organizerMenuInputScene;
+            }
+            case ATTENDEE_MAIN_MENU: {
+                return attendeeMenuInputScene;
+            }
+            case VIP_MAIN_MENU: {
+                return vipMenuInputScene;
+            }
+            case ADMIN_MAIN_MENU: {
+                return adminMenuInputScene;
+            }
+            case MESSAGE_USER: {
+                return messageUserScene;
+            }
+            case MESSAGE_ALL_ATTENDING_EVENT: {
+                return messageAllAttendingEventScene;
+            }
+            case MESSAGE_ALL_SPEAKERS: {
+                return messageAllSpeakersScene;
+            }
+            case MESSAGE_ALL_ATTENDEES: {
+                return messageAllAttendeesScene;
+            }
+            case EVENT_SCHEDULE: {
+                return seeScheduleScene;
+            }
+            case CREATE_EVENT: {
+                return eventCreationScene;
+            }
+            case CANCEL_EVENT: {
+                return eventCancelScene;
+            }
+            case ENROLL_IN_EVENT: {
+                return eventEnrollScene;
+            }
+            case UNENROLL_IN_EVENT: {
+                return eventUnEnrollScene;
+            }
+            case CREATE_ACCOUNT: {
+                return createAccountScene;
+            }
+            case DELETE_ACCOUNT: {
+                return deleteAccountScene;
+            }
+            case CHANGE_CAPACITY: {
+                return changeEventCapacityScene;
+            }
+        }
+        return loginScene;
+    }
+
+    /**
+     * Returns the current stage (window). Used to call the show() method in order to display the window on program launch.
+     * @return the programs main stage
+     */
     public Stage getApplicationStage() {
         return applicationStage;
     }
 
-    public Scene getLoginScene() {
-        return loginScene;
-    }
-
-    public void setLoginScene(Scene loginScene) {
-        this.loginScene = loginScene;
-    }
-
-    public Scene getSpeakerMenuInputScene() {
-        return speakerMenuInputScene;
-    }
-
-    public void setSpeakerMenuInputScene(Scene menuInputScene) {
-        this.speakerMenuInputScene = menuInputScene;
-    }
-
-    public Scene getOrganizerMenuInputScene() {
-        return organizerMenuInputScene;
-    }
-
-    public void setOrganizerMenuInputScene(Scene menuInputScene) {
-        this.organizerMenuInputScene = menuInputScene;
-    }
-
-    public Scene getVipMenuInputScene() {
-        return vipMenuInputScene;
-    }
-
-    public void setVipMenuInputScene(Scene menuInputScene) {
-        this.vipMenuInputScene = menuInputScene;
-    }
-
-    public Scene getAdminMenuInputScene() {
-        return adminMenuInputScene;
-    }
-
-    public void setAdminMenuInputScene(Scene menuInputScene) {
-        this.adminMenuInputScene = menuInputScene;
-    }
-
-    public Scene getAttendeeMenuInputScene() {
-        return attendeeMenuInputScene;
-    }
-
-    public void setAttendeeMenuInputScene(Scene menuInputScene) {
-        this.attendeeMenuInputScene = menuInputScene;
-    }
-
-    public Scene getMessageUserScene() {
-        return messageUserScene;
-    }
-
-    public void setMessageUserScene(Scene messageUserScene) {
-        this.messageUserScene = messageUserScene;
-    }
-
-    public Scene getCreateAccountScene() {
-        return createAccountScene;
-    }
-
-    public void setCreateAccountScene(Scene createAccountScene) {
-        this.createAccountScene = createAccountScene;
-    }
-
-    public Scene getEventEnrollScene() {
-        return eventEnrollScene;
-    }
-
-    public void setEventEnrollScene(Scene eventEnrollScene) {
-        this.eventEnrollScene = eventEnrollScene;
-    }
-
-    public Scene getEventUnEnrollScene() {
-        return eventUnEnrollScene;
-    }
-
-    public void setEventUnEnrollScene(Scene eventUnEnrollScene) {
-        this.eventUnEnrollScene = eventUnEnrollScene;
-    }
-
-    public Scene getEventCancelScene() {
-        return eventCancelScene;
-    }
-
-    public void setEventCancelScene(Scene eventCancelScene) {
-        this.eventCancelScene = eventCancelScene;
-    }
-
-    public Scene getEventCreationScene() {
-        return eventCreationScene;
-    }
-
-    public void setEventCreationScene(Scene eventCreationScene) {
-        this.eventCreationScene = eventCreationScene;
-    }
-
-    public Scene getMessageAllAttendingEventScene() {
-        return messageAllAttendingEventScene;
-    }
-
-    public void setMessageAllAttendingEventScene(Scene messageAllAttendingEventScene) {
-        this.messageAllAttendingEventScene = messageAllAttendingEventScene;
-    }
-
-    public Scene getMessageAllSpeakersScene() {
-        return messageAllSpeakersScene;
-    }
-
-    public void setMessageAllSpeakersScene(Scene messageAllSpeakersScene) {
-        this.messageAllSpeakersScene = messageAllSpeakersScene;
-    }
-
-    public Scene getMessageAllAttendeesScene() {
-        return messageAllAttendeesScene;
-    }
-
-    public void setMessageAllAttendeesScene(Scene messageAllAttendeesScene) {
-        this.messageAllAttendeesScene = messageAllAttendeesScene;
-    }
-
-    public Scene getSeeScheduleScene() {
-        return seeScheduleScene;
-    }
-
-    public void setSeeScheduleScene(Scene seeScheduleScene) {
-        this.seeScheduleScene = seeScheduleScene;
-    }
-
-    public Scene getChangeEventCapacityScene() {
-        return changeEventCapacityScene;
-    }
-
-    public void setChangeEventCapacityScene(Scene changeEventCapacityScene) {
-        this.changeEventCapacityScene = changeEventCapacityScene;
-    }
-
-    public Scene getDeleteAccountScene() {
-        return deleteAccountScene;
-    }
-
-    public void setDeleteAccountScene(Scene deleteAccountScene) {
-        this.deleteAccountScene = deleteAccountScene;
-    }
-
-
+    /**
+     * Each value of the enum represents a View (a scene in javafx). Removes the need to pass around scene references.
+     */
     public enum SceneViewType {
         LOGIN, // Finished
         SPEAKER_MAIN_MENU, // Finished
@@ -272,8 +207,8 @@ public class SceneNavigator {
         VIP_MAIN_MENU, //Finished
         MESSAGE_USER, //Finished
         MESSAGE_ALL_ATTENDING_EVENT, //Finished
-        MESSAGE_ALL_SPEAKERS, //Finished - SMALL BUG
-        MESSAGE_ALL_ATTENDEES, //Finished - SMALL BUG
+        MESSAGE_ALL_SPEAKERS, //Finished
+        MESSAGE_ALL_ATTENDEES, //Finished
         EVENT_SCHEDULE, //Finished
         CREATE_EVENT, //Finished
         CANCEL_EVENT, //Finished

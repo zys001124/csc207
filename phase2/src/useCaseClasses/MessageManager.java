@@ -29,15 +29,22 @@ public class MessageManager extends Observable {
         messages = new ArrayList<>();
     }
 
+
     /**
+     * /**
      * Create a new MessageManager with all messages contained in <messages>
+     *
+     * @param messages the messages to be stored
      */
     public MessageManager(List<Message> messages) {
         this.messages = messages;
     }
 
     /**
-     * Adds a message to the list of messages
+     * Adds a message to the list of messages.
+     * Throws InvalidUserTypeException if <recipient> has a type which cannot be messaged by <sender>.
+     * Throws NoMessageException if the type of <sender> needs to have previous message history
+     * with the type of <recipient> in order to send the message.
      *
      * @param sender    the User sending the message
      * @param recipient the User receiving the message
@@ -84,7 +91,7 @@ public class MessageManager extends Observable {
     }
 
     /**
-     * Sends a messages to users by their given UUID. Can be up to multiple messages
+     * Sends a messages to users by their given UUID. Can be up to multiple messages.
      *
      * @param sender    the UUID of the sender
      * @param recipient the UUID of the recipient
@@ -128,7 +135,7 @@ public class MessageManager extends Observable {
     }
 
     /**
-     * gets a list of all the messages given in this conference system.
+     * Gets a list of all the messages given in this conference system.
      *
      * @return a list of messages
      */
@@ -155,16 +162,16 @@ public class MessageManager extends Observable {
 
 
     /**
-     * takes in two users and checks to see if a message was sent between the two
+     * Takes in two users and checks to see if a message was sent between the two
      *
-     * @param sender   UUID of the sender user
-     * @param receiver UUID of teh reciever user
+     * @param sender    UUID of the sender user
+     * @param recipient UUID of the recipient user
      * @return Boolean of if a message is sent between two senders
      */
-    public boolean messageSentBy(UUID sender, UUID receiver) {
+    public boolean messageSentBy(UUID sender, UUID recipient) {
         for (Message message : messages) {
             if (message.getSenderId().equals(sender) &&
-                    message.getRecipientId().equals(receiver)) {
+                    message.getRecipientId().equals(recipient)) {
                 return true;
             }
         }
@@ -187,7 +194,7 @@ public class MessageManager extends Observable {
     }
 
     /**
-     * gets an ordered list of the messages sent between two users and returns that list
+     * Gets an ordered list of the messages sent between two users and returns that list
      *
      * @param a1 the first user in the messaging exchange
      * @param a2 the second user in the messaging exchange
