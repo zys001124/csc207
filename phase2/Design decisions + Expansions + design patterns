@@ -22,6 +22,8 @@ listens for a successful login.
     - GatewayInitializer builds and stores the gateway classes.
     - ObserversInitializer builds and stores the specific observers responsible for updating
       the Firebase Realtime Database
+    - SceneViewInitializer creates a new SceneNavigator for the controllers to interact with in order to switch scenes.
+    It initializes the entire GUI and all the required file paths for the scenes/fxml files.
 
 - (Design Pattern) Various factory methods used in ConferenceSystem to create the Initializers/holders
 listed above
