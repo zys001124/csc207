@@ -4,15 +4,21 @@ code has improved since Phase 2:
 - (Improvement) Minimized/eliminated references to entity methods in classes outside the use case layer
 - (Design Pattern) Implemented the Observer design pattern to act when the amount/content of entities change
     - This was done so that both the GUI and Firebase Realtime Database could be updated
-      should the contents of any use case classes change
+      should the contents of any use case classes change. Classes involved: Observer.java (interface),
+      Observable.java, UpdateDatabaseObserver.java (implements Observer), EventManager.java (extends Observable),
+      UserManager.java (extends Observable), MessageManager.java (extends Observable),
+      ObserversInitializer.java (builds UpdateDatabaseObserver objects), many of the classes in controller
+      create anonymous observer objects to keep the information they display in sync with the managers
 
-- (Design Pattern) Implemented another kind of observer (LoginListener). This was necessary because the Observer
+
+- (Design Pattern) Implemented another kind of observer (LoginListener.java). This was necessary because the Observer
 design pattern we implemented above listened for changes in lists of objects. This listener just
 listens for a successful login.
     - Implemented this because the information required for the program to function properly for
     a given user type is different depending on the user type. So we have to wait for a successful login
     before initializing the rest of the scenes
-    -Classes involved in implementation: Observable, Observer, ObserversInitializer, UpdateDatabaseOvserver
+    -Classes involved in implementation: LoginListener.java, LoginController.java (composition),
+    SceneViewInitializer.java (creates anonymous LoginListener)
     most controllers add an observer to at least one of the managers so that they can keep the GUI updated
 
 - (Improvement) Compartmentalizing code
@@ -25,6 +31,7 @@ listens for a successful login.
     - SceneViewInitializer creates a new SceneNavigator for the controllers to interact with in order to switch scenes.
     It initializes the entire GUI and all the required file paths for the scenes/fxml files.
 
-- (Design Pattern) Various factory methods used in ConferenceSystem to create the Initializers/holders
+- (Design Pattern) Various factory methods create the Initializers/holders/Scenes/Entity data
 listed above
-    -Classes involved: ConferenceSystem
+    -Classes involved: ConferenceSystem.java, SceneViewInitializer.java,
+    Entity classes (get[entity name]Data() methods)
